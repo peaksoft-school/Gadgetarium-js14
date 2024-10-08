@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { styled, TextField, InputAdornment, Typography } from "@mui/material";
+import { styled, TextField, InputAdornment } from "@mui/material";
 
 const Input = forwardRef(
   (
@@ -17,12 +17,9 @@ const Input = forwardRef(
   ) => {
     return (
       <LabelDiv>
-        <Typography
-          sx={{ color: disabled ? "lightgray" : "#939292", margin: 0 }}
-        >
-          {label}
-        </Typography>
+        <StyledLabel htmlFor="1">{label}sdfgsd</StyledLabel>
         <StyledInput
+          id="1"
           value={value}
           onChange={onChange}
           type={type}
@@ -44,6 +41,8 @@ const Input = forwardRef(
 );
 
 export default Input;
+
+Input.displayName = "Input";
 
 const StyledInput = styled(TextField)(({ theme, error }) => ({
   width: "100%",
@@ -71,9 +70,15 @@ const StyledInput = styled(TextField)(({ theme, error }) => ({
   },
 }));
 
-const LabelDiv = styled("div")({
+const LabelDiv = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   margin: 0,
   padding: 0,
-});
+  alignItems: "start",
+  gap: "5px",
+}));
+const StyledLabel = styled("label")(({ disabled }) => ({
+  color: disabled ? "lightgray" : "#000",
+  fontWeight: 500,
+}));
