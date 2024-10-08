@@ -57,4 +57,4 @@ export { default as DefaultP } from '../icon/DefaultP.svg';
 export { default as eyes } from '../icon/eyes.svg';
 export { default as B } from '../icon/B.svg';
 export { default as U } from '../icon/U.svg';
-
+export { default as volume } from '../icon/volume-1.svg';
