@@ -1,11 +1,7 @@
-import { volume } from './assets/icon';
-
 const App = () => {
-  return (
-    <div>
-      <img src={volume} />
-    </div>
-  );
+  return <div>
+    <img src={} alt="" />
+  </div>;
 };
 
 export default App;
