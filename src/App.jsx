@@ -1,7 +1,5 @@
-import React from "react";
-
 const App = () => {
-  return <h1>Gadgetarium</h1>;
+  return <div></div>;
 };
 
 export default App;
