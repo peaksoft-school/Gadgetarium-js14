@@ -1,7 +1,12 @@
-import React from "react";
+import SidebarMenu from "./components/UI/SaidebarMenu";
 
 const App = () => {
-  return <h1>Gadgetarium</h1>;
+  return (
+    <div>
+      <SidebarMenu />
+   
+    </div>
+  );
 };
 
 export default App;
