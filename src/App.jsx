@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import ModalWindow from './components/UI/modalWindow/ModalWindow';
 
 const App = () => {
-  return <h1>Gadgetarium</h1>;
+  return (
+    <div>
+      <ModalWindow />
+    </div>
+  );
 };
 
 export default App;
