@@ -6,7 +6,7 @@ import { IconAdgetarium } from "../assets/icon";
 const Header = () => {
   return (
     <StyledBox>
-      {/* <IconAdgetarium /> */}
+      <IconAdgetarium />
       <img src={IconAdgetarium} alt="" />
     </StyledBox>
   );

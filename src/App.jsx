@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./components/Header";
+import DropDown from "./components/UI/DropDown";
 
 const App = () => {
   return (
     <div>
       <h1>Gadgetarium</h1>
-      <Header />
+      <DropDown />
     </div>
   );
 };
