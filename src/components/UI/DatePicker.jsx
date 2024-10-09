@@ -1,15 +1,14 @@
 import { TextField } from "@mui/material";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers";
-import React from "react";
 
-const DatePicker = ({ onChange, value }) => {
+const DatePickers = ({ onChange, value, label }) => {
   const formatDate = (value) => {
     onChange(value.format("YYYY-MM-DD"));
   };
 
   return (
     <MuiDatePicker
-      label="pick a date"
+      label={label}
       value={value}
       onChange={(newValue) => formatDate(newValue)}
       renderInput={(params) => <TextField {...params} fullWidth />}
@@ -17,4 +16,4 @@ const DatePicker = ({ onChange, value }) => {
   );
 };
 
-export default DatePicker;
+export default DatePickers;
