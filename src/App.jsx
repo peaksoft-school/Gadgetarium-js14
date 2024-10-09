@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-import MyDatePicker from "./components/UI/DatePicker";
+import React from "react";
+import Header from "./components/Header";
 
 const App = () => {
-  const [date, setDate] = useState();
-
-  const changeDate = (newVal) => {
-    console.log(newVal);
-  };
-
   return (
     <div>
       <h1>Gadgetarium</h1>
-      <MyDatePicker onChange={changeDate} />
+      <Header />
     </div>
   );
 };
