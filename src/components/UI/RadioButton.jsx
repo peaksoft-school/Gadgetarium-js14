@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { styled } from '@mui/system';
 
-const RadioButton = ({ options }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
+const RadioButton = ({ options, selectedOption, onChange }) => {
   const handleChange = (event) => {
     const value = event.target.value;
-
-    setSelectedOption(selectedOption === value ? null : value);
+    onChange(value === selectedOption ? null : value);
   };
 
   return (
