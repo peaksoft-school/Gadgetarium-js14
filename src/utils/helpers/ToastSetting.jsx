@@ -1,29 +1,27 @@
 import { Typography, styled } from "@mui/material";
 import { toast } from "react-toastify";
-import { deleteX } from "../../assets/icon";
+import { deleteX } from "../../assets/icon/index";
 
-// Стили для сообщения
 const StyledMessage = styled(Typography)(() => ({
   color: "#ffff",
   fontSize: "18px",
   fontWeight: 400,
   display: "flex",
-  alignItems: "center", // Центрируем текст и изображение по вертикали
-  justifyContent: "space-between", // Разделяем текст и ссылку
+  alignItems: "center",
+  justifyContent: "space-between",
   borderRadius: "4px",
-  width: "100%", // Занимаем всю ширину контейнера
-  whiteSpace: "normal", // Позволяет тексту переноситься
-  overflowWrap: "break-word", // Обеспечивает перенос длинных слов
+  width: "100%",
+  whiteSpace: "normal",
+  overflowWrap: "break-word",
 }));
 
-// Функция для отображения уведомлений
 export const toastifyMessage = ({
   message = "Успешно",
   status = "success",
   duration = 3000,
   imageUrl = deleteX,
   linkText = "Перейти в корзину",
-  linkUrl = "#", // URL для ссылки
+  linkUrl = "#", 
 }) => {
   let borderColor;
   let backgroundColor;
@@ -53,7 +51,6 @@ export const toastifyMessage = ({
     style,
   };
 
-  // Создаем компонент с изображением, сообщением и ссылкой
   const toastContent = (
     <StyledMessage>
       <span>{message}</span>
