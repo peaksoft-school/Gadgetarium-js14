@@ -223,26 +223,25 @@ const StyledButton = styled(Button)(({ selected }) => ({
   padding: "8px 16px",
   marginBottom: "8px",
   borderRadius: "8px",
-  backgroundColor: selected ? "#D600A5" : "#ffffff", // Цвет кнопки
-  color: selected ? "#ffffff" : "#000000", // Цвет текста
+  backgroundColor: selected ? "#D600A5" : "#ffffff", 
+  color: selected ? "#ffffff" : "#000000", 
   "&:hover": {
-    backgroundColor: selected ? "#D600A5" : "#F0F0F0", // Цвет при ховере
-    width: "336px", // Изменение ширины при ховере
-    height: "40px", // Изменение высоты при ховере
+    backgroundColor: selected ? "#D600A5" : "#F0F0F0", 
+    width: "336px", 
+    height: "40px",
   },
   "& .hello": {
     marginRight: "13px",
     width: "9px",
     filter: selected
-      ? "brightness(1) invert(0)" // Изменение цвета иконки при выборе
-      : "none", // Обычный цвет
+      ? "brightness(1) invert(0)" 
+      : "none", 
   },
   "&:hover .hello": {
-    filter: "brightness(0) invert(1)", // Цвет иконки при ховере
+    filter: "brightness(0) invert(1)", 
   },
 }));
 
-// Стили для общего списка
 const StyledLink = styled(List)({
   backgroundColor: "#ffffff",
   padding: "10px",
