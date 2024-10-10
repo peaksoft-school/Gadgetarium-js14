@@ -1,5 +1,7 @@
+import Futer from "./components/Futer";
+
 const App = () => {
-  return <div>
+  return <div><Futer />
   </div>;
 };
 
