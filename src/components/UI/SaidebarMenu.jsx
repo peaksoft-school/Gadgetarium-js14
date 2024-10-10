@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import {
-    Headphones,
+  Headphones,
   Monitor,
   Strelca,
   Telefon,
@@ -180,10 +180,7 @@ const SidebarMenu = () => {
 export default SidebarMenu;
 
 const Container = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "flex-start",
   position: "relative",
-  width: "850px",
 
   "& .textButton": {
     color: "grey",
@@ -211,7 +208,7 @@ const Container = styled(Box)(() => ({
   },
   "& .collapse": {
     position: "absolute",
-    right: "0",
+    left: "510px",
     top: 0,
   },
 }));
