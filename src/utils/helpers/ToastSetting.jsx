@@ -18,18 +18,19 @@ const StyledMessage = styled(Typography)(() => ({
 export const toastifyMessage = ({
   message = "Успешно",
   status = "success",
-  duration = 3000,
+  duration = 1111111111,
   imageUrl = deleteX,
-  linkText = "Перейти в корзину",
-  linkUrl = "#", 
+  linkText = "",
+  linkUrl = "#",
 }) => {
   let borderColor;
   let backgroundColor;
 
   switch (status) {
     case "error":
-      borderColor = "#000";
-      backgroundColor = "#000";
+      borderColor = "#f00";
+      backgroundColor = "#f00";
+
       break;
     default:
       borderColor = "#000";
@@ -53,7 +54,7 @@ export const toastifyMessage = ({
 
   const toastContent = (
     <StyledMessage>
-      <span>{message}</span>
+      <span style={{}}>{message}</span>
       <a
         href={linkUrl}
         style={{
