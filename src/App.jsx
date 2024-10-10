@@ -1,10 +1,8 @@
 
 const App = () => {
   return (
-    <div>
-      <h1>Gadgetarium</h1>
-    </div>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App
