@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Button as MuiButton, styled } from "@mui/material";
 
@@ -24,7 +25,7 @@ const Button = ({
 
 export default Button;
 
-const StyledBtn = styled(MuiButton)(({ variant, ...props }) => {
+const StyledBtn = styled(MuiButton)(({ variant }) => {
   switch (variant) {
     case "outlined":
       return {
