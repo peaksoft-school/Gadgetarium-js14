@@ -23,7 +23,7 @@ export { default as colorWhatsApp } from '../icon/colorWhatsApp.svg';
 export { default as colorFaceBook } from '../icon/colorFaceBook.svg';
 export { default as WhatsApp } from '../icon/WhatsApp.svg';
 export { default as Instagram } from '../icon/Instagram.svg';
-export { default as FaceBook } from '../icon/FaceBook.svg';
+// export { default as FaceBook } from '../icon/FaceBook.svg';
 export { default as Vector1 } from '../icon/Vector.svg';
 export { default as ulMenu } from '../icon/ulMenu.svg';
 export { default as menu } from '../icon/menu.svg';
