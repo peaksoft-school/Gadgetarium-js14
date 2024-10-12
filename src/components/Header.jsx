@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import {
-  catalog,
+  // catalog,
   CatalogText,
   IconAdgetarium,
   IconBasket,
@@ -48,8 +48,12 @@ const Header = () => {
   return (
     <HeaderBox>
       <FirstBox>
-        <Box>
-          <img src={IconG} alt="iconG" />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={IconG}
+            alt="iconG"
+            style={{ alignSelf: "start", marginTop: "3px", marginRight: "3px" }}
+          />
           <img src={IconAdgetarium} alt="adgetarium" />
         </Box>
         <LinkBox>
@@ -65,7 +69,7 @@ const Header = () => {
       <StyledDivider />
       <SecondBox>
         <Box>
-          <img src={catalog} alt="" />
+          {/* <img src={catalog} alt="" /> */}
           <img src={CatalogText} alt="" />
         </Box>
         <StyledAutcompled
@@ -76,9 +80,9 @@ const Header = () => {
             setInputValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField
+            <StyledTextField
               {...params}
-              label="Поиск по каталогу магазина"
+              placeholder="Поиск по каталогу магазина"
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -94,7 +98,7 @@ const Header = () => {
                         />
                       </InputAdornment>
                     ) : (
-                      <SearchIcon />
+                      <SearchIcon style={{}} />
                     )}
                   </InputAdornment>
                 ),
@@ -131,7 +135,7 @@ const FirstBox = styled(Box)(({}) => ({
   width: "100%",
   height: "60px",
   // position: "fixed",
-  backgroundColor: theme.palette.warning.main,
+  backgroundColor: theme.palette.black.dark,
   padding: "12px",
   display: "flex",
   justifyContent: "space-between",
@@ -145,7 +149,7 @@ const StyledDivider = styled(Divider)(({}) => ({
 const SecondBox = styled(Box)(({}) => ({
   width: "100%",
   padding: "12px",
-  backgroundColor: theme.palette.info.light,
+  backgroundColor: theme.palette.black.dark,
   display: "flex",
   justifyContent: "space-between",
 }));
@@ -157,8 +161,33 @@ const LinkBox = styled(Box)(() => ({
 }));
 
 const StyledAutcompled = styled(Autocomplete)((theme) => ({
-  width: "400px",
-  height: "40px",
-  border: "grey",
-  
+  width: "700px",
+  color: "#fff",
+}));
+
+const StyledTextField = styled(TextField)(({ theme, placeholder }) => ({
+  color: "#fff",
+  "& .MuiOutlinedInput-root": {
+    color: "#fff",
+    padding: "0",
+    "& fieldset": {
+      borderColor: theme.palette.darkGrey.dark, // Цвет границы
+      borderRadius: "8px",
+      color: "#fff",
+    },
+    "&:hover fieldset": {
+      borderColor: theme.palette.lightGrey.main, // Цвет границы при наведении
+      borderRadius: "8px",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.lightGrey.main, // Цвет границы при фокусе
+      borderRadius: "8px",
+      color: "#fff",
+    },
+    "&.s": {
+      path: {
+        fill: "#fff",
+      },
+    },
+  },
 }));
