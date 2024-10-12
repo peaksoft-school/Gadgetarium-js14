@@ -1,75 +1,164 @@
 import styled from "@emotion/styled";
-import { Box, Divider } from "@mui/material";
-import React from "react";
-import { IconAdgetarium, IconG, IconPersonal } from "../assets/icon";
+import {
+  Box,
+  Divider,
+  TextField,
+  InputAdornment,
+  Autocomplete,
+} from "@mui/material";
+import React, { useState } from "react";
+import {
+  catalog,
+  CatalogText,
+  IconAdgetarium,
+  IconBasket,
+  IconFacebook,
+  IconG,
+  IconInstagram,
+  IconLike,
+  IconPersonal,
+  IconWhatsApp,
+  Scales,
+} from "../assets/icon";
+import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear"; // Импортируем иконку "X"
 import theme from "../assets/theme/theme";
 
 const links = [
-  { id: 1, text: "Главная" },
-  { id: 2, text: "О магазине" },
-  { id: 3, text: "Доставка" },
-  { id: 4, text: "FAG" },
-  { id: 5, text: "Контакты" },
+  { id: 2, text: "Главная" },
+  { id: 3, text: "О магазине" },
+  { id: 5, text: "Доставка" },
+  { id: 7, text: "FAG" },
+  { id: 8, text: "Контакты" },
 ];
-console.log(links);
+
+const suggestions = [
+  "Электроника",
+  "Мобильные телефоны",
+  "Ноутбуки",
+  "Аксессуары",
+  "Смарт-часы",
+  "Гаджеты",
+];
 
 const Header = () => {
-  return (
-    <StyledBox>
-      <HeaderBox>
-        <IconBox>
-          <img src={IconG} alt="icon" />
-          <img src={IconAdgetarium} alt="icon" />
-        </IconBox>
+  const [inputValue, setInputValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState(null);
 
-        <Cards>
-          {links.map((item) => (
-            <span key={item.id}>{item.text}</span>
+  return (
+    <HeaderBox>
+      <FirstBox>
+        <Box>
+          <img src={IconG} alt="iconG" />
+          <img src={IconAdgetarium} alt="adgetarium" />
+        </Box>
+        <LinkBox>
+          {links.map(({ id, text }) => (
+            <span key={id}>{text}</span>
           ))}
-        </Cards>
-        <ContactBox>
-          +996 220-89-00-00
-          <img src={IconPersonal} alt="contact" />
-        </ContactBox>
-      </HeaderBox>
-      <Divider sx={{ backgroundColor: "grey", height: "2px" }} /> 
-    </StyledBox>
+        </LinkBox>
+        <Box>
+          +996 220-38-90-01
+          <img src={IconPersonal} alt="pr" />
+        </Box>
+      </FirstBox>
+      <StyledDivider />
+      <SecondBox>
+        <Box>
+          <img src={catalog} alt="" />
+          <img src={CatalogText} alt="" />
+        </Box>
+        <StyledAutcompled
+          options={suggestions}
+          value={selectedValue}
+          onChange={(event, newValue) => {
+            setSelectedValue(newValue);
+            setInputValue(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Поиск по каталогу магазина"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <InputAdornment position="start">
+                    {selectedValue ? (
+                      <InputAdornment position="end">
+                        <ClearIcon
+                          onClick={() => {
+                            setInputValue("");
+                            setSelectedValue(null);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </InputAdornment>
+                    ) : (
+                      <SearchIcon />
+                    )}
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
+          )}
+          freeSolo
+        />
+        <Box>
+          <img src={IconFacebook} alt="face" />
+          <img src={IconInstagram} alt="insta" />
+          <img src={IconWhatsApp} alt="whatsapp" />
+        </Box>
+        <Box>
+          <img src={Scales} alt="scales" />
+          <img src={IconLike} alt="like" />
+          <img src={IconBasket} alt="basket" />
+        </Box>
+      </SecondBox>
+    </HeaderBox>
   );
 };
 
 export default Header;
-const StyledBox = styled(Box)(({ theme }) => ({
+
+const HeaderBox = styled(Box)(({ theme }) => ({
   width: "100%",
-  position: "fixed",
-  zIndex: "1",
-  height: "173px",
+  height: "147px",
   backgroundColor: theme.palette.black.dark,
+}));
+
+const FirstBox = styled(Box)(({}) => ({
+  width: "100%",
+  height: "60px",
+  // position: "fixed",
+  backgroundColor: theme.palette.warning.main,
+  padding: "12px",
+  display: "flex",
+  justifyContent: "space-between",
+  color: theme.palette.lightGrey.light,
+}));
+
+const StyledDivider = styled(Divider)(({}) => ({
+  color: theme.palette.lightGrey.main,
+}));
+
+const SecondBox = styled(Box)(({}) => ({
+  width: "100%",
+  padding: "12px",
+  backgroundColor: theme.palette.info.light,
   display: "flex",
   justifyContent: "space-between",
 }));
 
-const IconBox = styled(Box)(({ theme }) => ({
+const LinkBox = styled(Box)(() => ({
+  width: "450px",
   display: "flex",
-  alignItems: "center",
-  gap: "2px",
-  justifyContent: "flex-start",
-  "& img:first-child": {
-    width: "25px",
-    backgroundColor: theme.palette.primary.main,
-  },
-}));
-
-const Cards = styled(Box)(() => ({
-  display: "flex",
-  color: theme.palette.lightGrey.light,
   gap: "20px",
 }));
-const HeaderBox = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  width: "100%",
-  padding: "15px 80px ",
-}));
-const ContactBox = styled(Box)(({ theme }) => ({
-  color: theme.palette.lightGrey.light,
+
+const StyledAutcompled = styled(Autocomplete)((theme) => ({
+  width: "400px",
+  height: "40px",
+  border: "grey",
+  
 }));
