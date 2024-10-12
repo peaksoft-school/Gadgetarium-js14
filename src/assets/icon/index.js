@@ -1,7 +1,6 @@
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconCatalog } from "../icon/Catalog.svg";
 export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
 export { default as IconG } from "../icon/G.svg";
@@ -21,7 +20,6 @@ export { default as Heart } from "../icon/Heart.svg";
 export { default as GroceryCart } from "../icon/GroceryCart.svg";
 export { default as GroceryCartTwo } from "../icon/GroceryCartTwo.svg";
 export { default as CheckMark } from "../icon/CheckMark.svg";
-export { default as catalog } from "../icon/catalog.svg";
 export { default as personalAccount } from "../icon/personalAccount.svg";
 export { default as colorInstagram } from "../icon/colorInstagram.svg";
 export { default as colorWhatsApp } from "../icon/colorWhatsApp.svg";
