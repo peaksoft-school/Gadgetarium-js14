@@ -1,8 +1,12 @@
-import Futer from "./components/Futer";
+import React from 'react'; 
+import Footer from "./components/Futer";
 
 const App = () => {
-  return <div><Futer />
-  </div>;
+  return (
+    <div>
+      <Footer />
+    </div>
+  );
 };
 
 export default App;
