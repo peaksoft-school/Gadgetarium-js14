@@ -1,8 +1,11 @@
+import SidebarMenu from "./components/UI/SaidebarMenu";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <div>
+      <SidebarMenu />
+    </div>
+  );
+};
 
-export default App
+export default App;
