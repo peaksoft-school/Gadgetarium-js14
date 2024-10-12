@@ -6,10 +6,12 @@ const Button = ({
   variant = 'outlined',
   size,
   type,
+  startIcon,
   ...props
 }) => {
   return (
     <StyledBtn
+    startIcon={startIcon}
       type={type}
       onClick={onClick}
       variant={variant}
