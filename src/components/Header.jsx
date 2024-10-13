@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import {
   // catalog,
-  CatalogText,
+  // CatalogText,
   IconAdgetarium,
   IconBasket,
   IconFacebook,
@@ -17,12 +17,14 @@ import {
   IconInstagram,
   IconLike,
   IconPersonal,
+  IconSearch,
   IconWhatsApp,
+  img,
   Scales,
 } from "../assets/icon";
-import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear"; // Импортируем иконку "X"
 import theme from "../assets/theme/theme";
+import SidebarMenu from "./UI/SaidebarMenu";
 
 const links = [
   { id: 2, text: "Главная" },
@@ -48,30 +50,27 @@ const Header = () => {
   return (
     <HeaderBox>
       <FirstBox>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={IconG}
-            alt="iconG"
-            style={{ alignSelf: "start", marginTop: "3px", marginRight: "3px" }}
-          />
+        <StyledAdgetariumImg>
+          <img src={IconG} alt="iconG" />
           <img src={IconAdgetarium} alt="adgetarium" />
-        </Box>
+        </StyledAdgetariumImg>
         <LinkBox>
           {links.map(({ id, text }) => (
             <span key={id}>{text}</span>
           ))}
         </LinkBox>
-        <Box>
-          +996 220-38-90-01
+        <StyledPersonBox>
+          <span> +996 220-38-90-01</span>
           <img src={IconPersonal} alt="pr" />
-        </Box>
+        </StyledPersonBox>
       </FirstBox>
-      <StyledDivider />
+      <StyledHr />
+
       <SecondBox>
-        <Box>
-          {/* <img src={catalog} alt="" /> */}
-          <img src={CatalogText} alt="" />
-        </Box>
+        <BoxCatalog>
+          <SidebarMenu />
+          <hr />
+        </BoxCatalog>
         <StyledAutcompled
           options={suggestions}
           value={selectedValue}
@@ -98,7 +97,7 @@ const Header = () => {
                         />
                       </InputAdornment>
                     ) : (
-                      <SearchIcon style={{}} />
+                      <img src={IconSearch} alt="search" />
                     )}
                   </InputAdornment>
                 ),
@@ -108,16 +107,16 @@ const Header = () => {
           )}
           freeSolo
         />
-        <Box>
+        <StyledImg>
           <img src={IconFacebook} alt="face" />
           <img src={IconInstagram} alt="insta" />
           <img src={IconWhatsApp} alt="whatsapp" />
-        </Box>
-        <Box>
+        </StyledImg>
+        <StyledImgBox>
           <img src={Scales} alt="scales" />
           <img src={IconLike} alt="like" />
           <img src={IconBasket} alt="basket" />
-        </Box>
+        </StyledImgBox>
       </SecondBox>
     </HeaderBox>
   );
@@ -125,47 +124,58 @@ const Header = () => {
 
 export default Header;
 
-const HeaderBox = styled(Box)(({ theme }) => ({
+const HeaderBox = styled(Box)(() => ({
   width: "100%",
-  height: "147px",
+  height: "163px",
   backgroundColor: theme.palette.black.dark,
 }));
 
-const FirstBox = styled(Box)(({}) => ({
+const FirstBox = styled(Box)(() => ({
   width: "100%",
   height: "60px",
   // position: "fixed",
   backgroundColor: theme.palette.black.dark,
-  padding: "12px",
+  padding: "15px",
   display: "flex",
   justifyContent: "space-between",
   color: theme.palette.lightGrey.light,
+  alignItems: "center",
 }));
 
-const StyledDivider = styled(Divider)(({}) => ({
-  color: theme.palette.lightGrey.main,
-}));
-
-const SecondBox = styled(Box)(({}) => ({
+const SecondBox = styled(Box)(() => ({
   width: "100%",
   padding: "12px",
   backgroundColor: theme.palette.black.dark,
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center ",
 }));
 
 const LinkBox = styled(Box)(() => ({
-  width: "450px",
   display: "flex",
-  gap: "20px",
+  gap: "18px",
+  fontSize: "17px",
+
+  "& span": {
+    alignContent: "center",
+    width: "85px",
+    height: "40px",
+    borderRadius: "4px",
+    textAlign: "center",
+    transition: "color 0.3s ease",
+    cursor: "pointer",
+  },
+  "& span:hover": {
+    backgroundColor: theme.palette.darkGrey.dark,
+  },
 }));
 
-const StyledAutcompled = styled(Autocomplete)((theme) => ({
+const StyledAutcompled = styled(Autocomplete)(() => ({
   width: "700px",
   color: "#fff",
 }));
 
-const StyledTextField = styled(TextField)(({ theme, placeholder }) => ({
+const StyledTextField = styled(TextField)(() => ({
   color: "#fff",
   "& .MuiOutlinedInput-root": {
     color: "#fff",
@@ -189,5 +199,81 @@ const StyledTextField = styled(TextField)(({ theme, placeholder }) => ({
         fill: "#fff",
       },
     },
+  },
+}));
+
+const StyledAdgetariumImg = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  "& img:first-of-type": {
+    alignSelf: "start",
+    marginTop: "-2px",
+    marginRight: "3px",
+    backgroundColor: theme.palette.primary.main,
+    padding: "5px 4px",
+  },
+}));
+
+const StyledPersonBox = styled(Box)(() => ({
+  display: "flex",
+  "& img": {
+    width: "25px",
+    height: "25px",
+    marginLeft: "30px",
+  },
+  "& span": {
+    marginTop: "2.5px",
+    fontSize: "20px",
+    fontWeight: "lighter",
+  },
+}));
+
+const StyledImg = styled(Box)(() => ({
+  display: "flex",
+  gap: "15px",
+  "& img": {
+    width: "30px",
+    height: "30px",
+  },
+  "& img:nth-of-type(2)": {
+    width: "26px",
+    height: "26px",
+    marginTop: "2px",
+  },
+}));
+
+const StyledImgBox = styled(Box)(() => ({
+  display: "flex",
+  padding: "0",
+  gap: "20px",
+  alignItems: "center",
+
+  "& img": {
+    width: "24px",
+    height: "24px",
+  },
+  "& img:nth-of-type(2)": {
+    width: "32px",
+    height: "32px",
+  },
+  "& img:nth-of-type(3)": {
+    marginTop: "8px",
+  },
+}));
+const StyledHr = styled("hr")(() => ({
+  width: "100%",
+  height: "2px",
+  backgroundColor: theme.palette.black.main,
+  border: "none",
+  margin: "10px 0",
+}));
+const BoxCatalog = styled(Box)(() => ({
+  display: "flex",
+  "& hr": {
+    width: "2px",
+    height: "40px",
+    backgroundColor: theme.palette.black.main,
+    border: "none",
+    marginLeft: "100px",
   },
 }));
