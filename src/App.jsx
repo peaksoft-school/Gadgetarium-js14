@@ -1,11 +1,8 @@
-import CommentsList from "./components/UI/Comments";
 
 const App = () => {
   return (
-    <div>
-      <CommentsList />
-    </div>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App

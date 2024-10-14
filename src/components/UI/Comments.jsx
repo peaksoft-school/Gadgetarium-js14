@@ -103,6 +103,15 @@ const CommentList = () => {
                     <Rating
                       name={`rating-${id}`}
                       value={rating || 0}
+                      size="small"
+                      sx={{
+                        "& .MuiRating-icon": {
+                          color: "gold",
+                        },
+                        "& .MuiRating-iconEmpty": {
+                          color: "gold",
+                        },
+                      }}
                       onChange={(event, newValue) =>
                         handleRatingChange(id, newValue)
                       }
@@ -230,7 +239,8 @@ const StyledTypography = styled(Typography)(() => ({
 
 const StyledCardContent = styled(CardContent)(() => ({
   "& span": {
-    fontWeight: "bold",
+    fontWeight: "bolder",
+    fontSize: "18px",
   },
 }));
 
@@ -239,7 +249,10 @@ const RatingBox = styled(Box)(() => ({
   alignItems: "center",
   justifyContent: "flex-start",
   margin: "10px 0px 10px 0px",
+  gap: "8px",
   "& span": {
     fontWeight: "bold",
+    color: "black",
+    fontSize: "18px",
   },
 }));
