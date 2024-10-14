@@ -1,9 +1,9 @@
-import SidebarMenu from "./components/UI/SaidebarMenu";
+import CommentsList from "./components/UI/Comments";
 
 const App = () => {
   return (
     <div>
-      <SidebarMenu />
+      <CommentsList />
     </div>
   );
 };
