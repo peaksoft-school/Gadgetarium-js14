@@ -6,10 +6,8 @@ import {
   InputAdornment,
   Autocomplete,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  // catalog,
-  // CatalogText,
   IconAdgetarium,
   IconBasket,
   IconFacebook,
@@ -18,11 +16,10 @@ import {
   IconLike,
   IconPersonal,
   IconSearch,
+  IconShoppingCard,
   IconWhatsApp,
-  img,
-  Scales,
 } from "../assets/icon";
-import ClearIcon from "@mui/icons-material/Clear"; // Импортируем иконку "X"
+import ClearIcon from "@mui/icons-material/Clear";
 import theme from "../assets/theme/theme";
 import SidebarMenu from "./UI/SaidebarMenu";
 
@@ -46,23 +43,52 @@ const suggestions = [
 const Header = () => {
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
+  const [showMainElements, setShowMainElements] = useState(true);
+  const [showAdgetariumImg, setShowAdgetariumImg] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setShowMainElements(false);
+      setShowAdgetariumImg(true);
+    } else {
+      setShowMainElements(true);
+      setShowAdgetariumImg(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <HeaderBox>
       <FirstBox>
-        <StyledAdgetariumImg>
-          <img src={IconG} alt="iconG" />
-          <img src={IconAdgetarium} alt="adgetarium" />
-        </StyledAdgetariumImg>
-        <LinkBox>
-          {links.map(({ id, text }) => (
-            <span key={id}>{text}</span>
-          ))}
-        </LinkBox>
-        <StyledPersonBox>
-          <span> +996 220-38-90-01</span>
-          <img src={IconPersonal} alt="pr" />
-        </StyledPersonBox>
+        {showMainElements && (
+          <>
+            <StyledAdgetariumImg>
+              <img src={IconG} alt="iconG" />
+              <img src={IconAdgetarium} alt="adgetarium" />
+            </StyledAdgetariumImg>
+            <LinkBox>
+              {links.map(({ id, text }) => (
+                <span key={id}>{text}</span>
+              ))}
+            </LinkBox>
+            <StyledPersonBox>
+              <span> +996 220-38-90-01</span>
+              <img src={IconPersonal} alt="pr" />
+            </StyledPersonBox>
+          </>
+        )}
+        {showAdgetariumImg && (
+          <StyledAdgetariumImg>
+            <img src={IconG} alt="iconG" />
+            <img src={IconAdgetarium} alt="adgetarium" />
+          </StyledAdgetariumImg>
+        )}
       </FirstBox>
       <StyledHr />
 
@@ -107,15 +133,17 @@ const Header = () => {
           )}
           freeSolo
         />
-        <StyledImg>
-          <img src={IconFacebook} alt="face" />
-          <img src={IconInstagram} alt="insta" />
-          <img src={IconWhatsApp} alt="whatsapp" />
-        </StyledImg>
+        {!showAdgetariumImg && (
+          <StyledImg>
+            <img src={IconFacebook} alt="face" />
+            <img src={IconInstagram} alt="insta" />
+            <img src={IconWhatsApp} alt="whatsapp" />
+          </StyledImg>
+        )}
         <StyledImgBox>
-          <img src={Scales} alt="scales" />
-          <img src={IconLike} alt="like" />
+          <img src={IconShoppingCard} alt="" />
           <img src={IconBasket} alt="basket" />
+          <img src={IconLike} alt="like" />
         </StyledImgBox>
       </SecondBox>
     </HeaderBox>
@@ -128,12 +156,12 @@ const HeaderBox = styled(Box)(() => ({
   width: "100%",
   height: "163px",
   backgroundColor: theme.palette.black.dark,
+  position: "fixed",
 }));
 
 const FirstBox = styled(Box)(() => ({
   width: "100%",
   height: "60px",
-  // position: "fixed",
   backgroundColor: theme.palette.black.dark,
   padding: "15px",
   display: "flex",
@@ -181,23 +209,18 @@ const StyledTextField = styled(TextField)(() => ({
     color: "#fff",
     padding: "0",
     "& fieldset": {
-      borderColor: theme.palette.darkGrey.dark, // Цвет границы
+      borderColor: theme.palette.darkGrey.dark,
       borderRadius: "8px",
       color: "#fff",
     },
     "&:hover fieldset": {
-      borderColor: theme.palette.lightGrey.main, // Цвет границы при наведении
+      borderColor: theme.palette.lightGrey.main,
       borderRadius: "8px",
     },
     "&.Mui-focused fieldset": {
-      borderColor: theme.palette.lightGrey.main, // Цвет границы при фокусе
+      borderColor: theme.palette.lightGrey.main,
       borderRadius: "8px",
       color: "#fff",
-    },
-    "&.s": {
-      path: {
-        fill: "#fff",
-      },
     },
   },
 }));
