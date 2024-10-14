@@ -64,39 +64,36 @@ const Header = () => {
   }, []);
 
   return (
-    <HeaderBox>
+    <>
       <FirstBox>
-        {showMainElements && (
-          <>
-            <StyledAdgetariumImg>
-              <img src={IconG} alt="iconG" />
-              <img src={IconAdgetarium} alt="adgetarium" />
-            </StyledAdgetariumImg>
-            <LinkBox>
-              {links.map(({ id, text }) => (
-                <span key={id}>{text}</span>
-              ))}
-            </LinkBox>
-            <StyledPersonBox>
-              <span> +996 220-38-90-01</span>
-              <img src={IconPersonal} alt="pr" />
-            </StyledPersonBox>
-          </>
-        )}
-        {showAdgetariumImg && (
+        <>
           <StyledAdgetariumImg>
             <img src={IconG} alt="iconG" />
             <img src={IconAdgetarium} alt="adgetarium" />
           </StyledAdgetariumImg>
-        )}
+          <LinkBox>
+            {links.map(({ id, text }) => (
+              <span key={id}>{text}</span>
+            ))}
+          </LinkBox>
+          <StyledPersonBox>
+            <span> +996 220-38-90-01</span>
+            <img src={IconPersonal} alt="pr" />
+          </StyledPersonBox>
+        </>
       </FirstBox>
-      <StyledHr />
 
       <SecondBox>
         <BoxCatalog>
+          {showAdgetariumImg && (
+            <StyledAdgetariumImg>
+              <img src={IconG} alt="iconG" />
+              <img src={IconAdgetarium} alt="adgetarium" />
+            </StyledAdgetariumImg>
+          )}
           <SidebarMenu />
-          <hr />
         </BoxCatalog>
+        <hr />
         <StyledAutcompled
           options={suggestions}
           value={selectedValue}
@@ -146,18 +143,11 @@ const Header = () => {
           <img src={IconLike} alt="like" />
         </StyledImgBox>
       </SecondBox>
-    </HeaderBox>
+    </>
   );
 };
 
 export default Header;
-
-const HeaderBox = styled(Box)(() => ({
-  width: "100%",
-  height: "163px",
-  backgroundColor: theme.palette.black.dark,
-  position: "fixed",
-}));
 
 const FirstBox = styled(Box)(() => ({
   width: "100%",
@@ -168,6 +158,8 @@ const FirstBox = styled(Box)(() => ({
   justifyContent: "space-between",
   color: theme.palette.lightGrey.light,
   alignItems: "center",
+  borderBottom: "1px solid",
+  borderColor: theme.palette.black.main,
 }));
 
 const SecondBox = styled(Box)(() => ({
@@ -177,6 +169,16 @@ const SecondBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center ",
+  position: "sticky",
+  top: "0",
+
+  "& hr": {
+    width: "2px",
+    height: "40px",
+    backgroundColor: theme.palette.black.main,
+    border: "none",
+    margin: "0 30px",
+  },
 }));
 
 const LinkBox = styled(Box)(() => ({
@@ -199,8 +201,9 @@ const LinkBox = styled(Box)(() => ({
 }));
 
 const StyledAutcompled = styled(Autocomplete)(() => ({
-  width: "700px",
+  width: "100%",
   color: "#fff",
+  margin: "0 150px 0 0",
 }));
 
 const StyledTextField = styled(TextField)(() => ({
@@ -254,6 +257,7 @@ const StyledPersonBox = styled(Box)(() => ({
 const StyledImg = styled(Box)(() => ({
   display: "flex",
   gap: "15px",
+  margin: "0 120px 0 0",
   "& img": {
     width: "30px",
     height: "30px",
@@ -270,33 +274,10 @@ const StyledImgBox = styled(Box)(() => ({
   padding: "0",
   gap: "20px",
   alignItems: "center",
+}));
 
-  "& img": {
-    width: "24px",
-    height: "24px",
-  },
-  "& img:nth-of-type(2)": {
-    width: "32px",
-    height: "32px",
-  },
-  "& img:nth-of-type(3)": {
-    marginTop: "8px",
-  },
-}));
-const StyledHr = styled("hr")(() => ({
-  width: "100%",
-  height: "2px",
-  backgroundColor: theme.palette.black.main,
-  border: "none",
-  margin: "10px 0",
-}));
 const BoxCatalog = styled(Box)(() => ({
   display: "flex",
-  "& hr": {
-    width: "2px",
-    height: "40px",
-    backgroundColor: theme.palette.black.main,
-    border: "none",
-    marginLeft: "100px",
-  },
+  gap: "30px",
+  alignItems: "center",
 }));
