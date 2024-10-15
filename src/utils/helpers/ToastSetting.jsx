@@ -1,6 +1,6 @@
 import { Typography, styled } from "@mui/material";
 import { toast } from "react-toastify";
-import { deleteX } from "../../assets/icon/index";
+import { deleteX } from "../../assets/icon";
 
 const StyledMessage = styled(Typography)(() => ({
   color: "#ffff",
@@ -18,7 +18,7 @@ const StyledMessage = styled(Typography)(() => ({
 export const toastifyMessage = ({
   message = "Успешно",
   status = "success",
-  duration = 1111111111,
+  duration = 3000,
   imageUrl = deleteX,
   linkText = "",
   linkUrl = "#",
@@ -30,7 +30,6 @@ export const toastifyMessage = ({
     case "error":
       borderColor = "#f00";
       backgroundColor = "#f00";
-
       break;
     default:
       borderColor = "#000";
@@ -54,7 +53,7 @@ export const toastifyMessage = ({
 
   const toastContent = (
     <StyledMessage>
-      <span style={{}}>{message}</span>
+      <span>{message}</span>
       <a
         href={linkUrl}
         style={{
@@ -71,7 +70,8 @@ export const toastifyMessage = ({
         <img
           src={imageUrl}
           alt="Notification"
-          style={{ marginLeft: "8px", width: "24px", height: "24px" }}
+          style={{ marginLeft: "8px", width: "24px", height: "24px", cursor: "pointer" }}
+          onClick={() => toast.dismiss()}  
         />
       )}
     </StyledMessage>
