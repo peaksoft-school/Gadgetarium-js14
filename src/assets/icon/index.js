@@ -65,3 +65,6 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
+export { default as Skitca} from '../icon/Skitca.1530.svg'
+export {default as Newican} from '../icon/Newican 3.svg';
+export {default as Klassaican} from '../icon/Klassaican.2.svg'
