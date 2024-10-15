@@ -5,18 +5,20 @@ import {
   ListItemText,
   Collapse,
   Typography,
-  Button,
   Box,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
 import {
   Headphones,
   Monitor,
   Strelca,
+  Talog,
   Telefon,
   Vector,
 } from "../../assets/icon";
 import styled from "@emotion/styled";
+// import Button from "./Button";
 
 const Arr = [
   {
@@ -104,7 +106,12 @@ const SidebarMenu = () => {
 
   return (
     <Container>
-      <Button variant="contained" onClick={toggleMenu}>
+      <Button
+        startIcon={<img src={Talog}/>}
+        className="button-ican"
+        variant="contained"
+        onClick={toggleMenu}
+      >
         Каталог
       </Button>
 
@@ -163,7 +170,6 @@ const SidebarMenu = () => {
                 <ListItem
                   className="textButton"
                   key={index}
-                  button
                   to={navigate}
                 >
                   <ListItemText className="text" primary={name} />
@@ -198,7 +204,7 @@ const Container = styled(Box)(() => ({
     padding: 16,
     top: 0,
     backgroundColor: "#ffffff",
-    left: 100,
+    left: 130,
   },
   "& .paperty": {
     marginLeft: 16,
@@ -211,9 +217,21 @@ const Container = styled(Box)(() => ({
     left: "510px",
     top: 0,
   },
+  "& .button-ican": {
+    background: "#D600A5",
+    borderRadius: "3px",
+    color: "white",
+    padding:"10px 25px",
+    "&:hover": {
+      backgroundColor: "#D600A5",
+      color: "white",
+    },
+    "&:img": {
+      top: "-6px",
+    },
+  },
 }));
 
-// Стили
 const StyledButton = styled(Button)(({ selected }) => ({
   width: "336px",
   height: "40px",
@@ -223,22 +241,20 @@ const StyledButton = styled(Button)(({ selected }) => ({
   padding: "8px 16px",
   marginBottom: "8px",
   borderRadius: "8px",
-  backgroundColor: selected ? "#D600A5" : "#ffffff", 
-  color: selected ? "#ffffff" : "#000000", 
+  backgroundColor: selected ? "#D600A5" : "#ffffff",
+  color: selected ? "#ffffff" : "#000000",
   "&:hover": {
-    backgroundColor: selected ? "#D600A5" : "#F0F0F0", 
-    width: "336px", 
+    backgroundColor: selected ? "#D600A5" : "#F0F0F0",
+    width: "336px",
     height: "40px",
   },
   "& .hello": {
     marginRight: "13px",
     width: "9px",
-    filter: selected
-      ? "brightness(1) invert(0)" 
-      : "none", 
+    filter: selected ? "brightness(1) invert(0)" : "none",
   },
   "&:hover .hello": {
-    filter: "brightness(0) invert(1)", 
+    filter: "brightness(0) invert(1)",
   },
 }));
 
