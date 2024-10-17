@@ -1,9 +1,9 @@
-import SidebarMenu from "./components/UI/SaidebarMenu";
+import AboutStore from "./components/AboutStore";
 
 const App = () => {
   return (
     <div>
-      <SidebarMenu />
+      <AboutStore/>
     </div>
   );
 };
