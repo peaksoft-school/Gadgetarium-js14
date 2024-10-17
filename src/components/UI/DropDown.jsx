@@ -77,6 +77,15 @@ const DropDown = ({ label }) => {
           value={brand}
           label={label}
           onChange={handleChange}
+          renderValue={(selected) => {
+            const item = brandArray.find((brand) => brand.title === selected);
+            return item ? (
+              <Box sx={{ display: "flex", gap: "12px", alignItems: "center" }}>
+                <img src={item.image} alt={selected} />
+                {selected}
+              </Box>
+            ) : null;
+          }}
         >
           {brandArray.length > 0 ? (
             brandArray.map((item) => (
