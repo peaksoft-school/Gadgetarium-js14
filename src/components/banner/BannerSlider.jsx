@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Box, styled } from '@mui/material';
 import { banner, iphone, macBook, product } from '../../assets/icon';
 
@@ -23,23 +23,40 @@ const BannerSlider = () => {
   const [currentSet, setCurrentSet] = useState(imageSets[0]);
   const [fade, setFade] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(true);
-      setTimeout(() => {
-        setCurrentSet((prev) => {
-          const currentIndex = imageSets.indexOf(prev);
-          const nextIndex = (currentIndex + 1) % imageSets.length;
-          setActiveIndex(nextIndex);
-          return imageSets[nextIndex];
-        });
-        setFade(false);
-      }, 500);
-    }, 5000);
+    startAutoSlide();
 
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalRef.current);
   }, []);
+
+  const startAutoSlide = () => {
+    intervalRef.current = setInterval(() => {
+      handleNextSlide();
+    }, 5000);
+  };
+
+  const handleNextSlide = () => {
+    setFade(true);
+    setTimeout(() => {
+      const nextIndex = (activeIndex + 1) % imageSets.length;
+      setActiveIndex(nextIndex);
+      setCurrentSet(imageSets[nextIndex]);
+      setFade(false);
+    }, 500);
+  };
+
+  const handleDotClick = (index) => {
+    clearInterval(intervalRef.current);
+    setFade(true);
+    setTimeout(() => {
+      setCurrentSet(imageSets[index]);
+      setActiveIndex(index);
+      setFade(false);
+      startAutoSlide();
+    }, 500);
+  };
 
   return (
     <div>
@@ -51,7 +68,11 @@ const BannerSlider = () => {
       </StyledBox>
       <DotContainer>
         {imageSets.map((_, index) => (
-          <Dot key={index} active={index === activeIndex} />
+          <Dot
+            key={index}
+            active={index === activeIndex}
+            onClick={() => handleDotClick(index)}
+          />
         ))}
       </DotContainer>
     </div>
@@ -86,6 +107,7 @@ const DotContainer = styled(Box)(() => ({
   justifyContent: 'center',
   marginTop: '20px',
   gap: '8px',
+  alignItems: 'center',
 }));
 
 const Dot = styled('div')(({ active }) => ({
@@ -94,4 +116,5 @@ const Dot = styled('div')(({ active }) => ({
   borderRadius: '50%',
   backgroundColor: active ? '#cb11ab' : '#e8c7e2',
   transition: 'background-color 0.3s, width 0.3s, height 0.3s',
+  cursor: 'pointer',
 }));
