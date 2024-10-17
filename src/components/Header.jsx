@@ -1,10 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Box,
-  TextField,
-  InputAdornment,
-  Autocomplete,
-} from "@mui/material";
+import { Box, TextField, InputAdornment, Autocomplete } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import {
   IconAdgetarium,
@@ -26,7 +21,7 @@ const links = [
   { id: 2, text: "Главная" },
   { id: 3, text: "О магазине" },
   { id: 5, text: "Доставка" },
-  { id: 7, text: "FAG" },
+  { id: 7, text: "FAQ" },
   { id: 8, text: "Контакты" },
 ];
 
@@ -65,21 +60,19 @@ const Header = () => {
   return (
     <>
       <FirstBox>
-        <>
-          <StyledAdgetariumImg>
-            <img src={IconG} alt="iconG" />
-            <img src={IconAdgetarium} alt="adgetarium" />
-          </StyledAdgetariumImg>
-          <LinkBox>
-            {links.map(({ id, text }) => (
-              <span key={id}>{text}</span>
-            ))}
-          </LinkBox>
-          <StyledPersonBox>
-            <span> +996 220-38-90-01</span>
-            <img src={IconPersonal} alt="pr" />
-          </StyledPersonBox>
-        </>
+        <StyledAdgetariumImg>
+          <img src={IconG} alt="iconG" />
+          <img src={IconAdgetarium} alt="adgetarium" />
+        </StyledAdgetariumImg>
+        <LinkBox>
+          {links.map(({ id, text }) => (
+            <span key={id}>{text}</span>
+          ))}
+        </LinkBox>
+        <StyledPersonBox>
+          <span> +996 220-38-90-01</span>
+          <img src={IconPersonal} alt="pr" />
+        </StyledPersonBox>
       </FirstBox>
 
       <SecondBox>
@@ -146,17 +139,13 @@ const Header = () => {
   );
 };
 
-
-
-
-
 export default Header;
 
 const FirstBox = styled(Box)(() => ({
   width: "100%",
   height: "60px",
   backgroundColor: theme.palette.black.dark,
-  padding: "15px",
+  padding: "10px 60px 10px 60px",
   display: "flex",
   justifyContent: "space-between",
   color: theme.palette.lightGrey.light,
@@ -167,7 +156,7 @@ const FirstBox = styled(Box)(() => ({
 
 const SecondBox = styled(Box)(() => ({
   width: "100%",
-  padding: "12px",
+  padding: "10px 60px 10px 60px",
   backgroundColor: theme.palette.black.dark,
   display: "flex",
   justifyContent: "space-between",
@@ -234,6 +223,7 @@ const StyledTextField = styled(TextField)(() => ({
 const StyledAdgetariumImg = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
+
   "& img:first-of-type": {
     alignSelf: "start",
     marginTop: "-2px",
@@ -261,6 +251,7 @@ const StyledImg = styled(Box)(() => ({
   display: "flex",
   gap: "15px",
   margin: "0 120px 0 0",
+  cursor: "pointer",
   "& img": {
     width: "30px",
     height: "30px",
@@ -277,6 +268,7 @@ const StyledImgBox = styled(Box)(() => ({
   padding: "0",
   gap: "20px",
   alignItems: "center",
+  cursor: "pointer",
 }));
 
 const BoxCatalog = styled(Box)(() => ({
