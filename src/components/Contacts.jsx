@@ -95,6 +95,9 @@ const Contacts = () => {
           </Box>
         </StyledForm>
       </SecondBox>
+      <Box>
+        <img src="" alt="" />
+      </Box>
     </WrapperMainBox>
   );
 };
