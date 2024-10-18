@@ -17,7 +17,7 @@ const Input = forwardRef(
   ) => {
     return (
       <LabelDiv>
-        <StyledLabel htmlFor="1">{label}sdfgsd</StyledLabel>
+        <StyledLabel htmlFor="1">{label}</StyledLabel>
         <StyledInput
           id="1"
           value={value}

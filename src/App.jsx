@@ -1,9 +1,9 @@
-import SidebarMenu from "./components/UI/SaidebarMenu";
+import Contacts from "./components/Contacts";
 
 const App = () => {
   return (
     <div>
-      <SidebarMenu />
+      <Contacts />
     </div>
   );
 };
