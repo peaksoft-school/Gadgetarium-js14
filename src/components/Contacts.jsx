@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
+import { Map } from "../assets/image";
 
 const adress = [
   { main: "Главная »", contacts: "Контакты" },
@@ -13,6 +14,7 @@ const adress = [
   { phone: "Телефон:", g: "+996(400)00-00-00" },
   { email: "Почта:", name: "Gadgetarium.kg" },
   { schedule: "Режим работы:", time: "10:00-21:00" },
+  { image: Map },
 ];
 
 const Contacts = () => {
@@ -89,15 +91,17 @@ const Contacts = () => {
             label="Сообщение"
             placeholder="Напишите cообщение"
             fullWidth
+            multiline
+            rows={4}
           />
           <Box>
             <Button variant="contained">Отправить</Button>
           </Box>
         </StyledForm>
       </SecondBox>
-      <Box>
-        <img src="" alt="" />
-      </Box>
+      <ImageBox>
+        <img src={Map} alt="mapIm" />
+      </ImageBox>
     </WrapperMainBox>
   );
 };
@@ -110,6 +114,7 @@ const WrapperMainBox = styled(Box)(({ theme }) => ({
 }));
 
 const FirstBox = styled(Box)`
+  font-size: 15px;
   span {
     display: inline-block;
     padding-bottom: 30px;
@@ -126,7 +131,7 @@ const FirstBox = styled(Box)`
 `;
 const StyledHr = styled.hr`
   width: 100%;
-  padding: 0.8px;
+  padding: 0.6px;
   border: none;
   background-color: #d1cfcf;
   margin-top: 10px;
@@ -136,6 +141,7 @@ const AddressBox = styled(Box)({
   marginBottom: "25px",
   "& h2": {
     marginTop: "80px",
+    marginBottom: "40px",
   },
 });
 const StyledAdress = styled(Box)(() => ({
@@ -153,7 +159,7 @@ const SecondBox = styled(Box)(() => ({
 }));
 
 const StyledForm = styled(Box)(() => ({
-  maxWidth: "580px",
+  maxWidth: "38%",
   width: "100%",
   height: "500px",
   paddingTop: "18px",
@@ -173,8 +179,24 @@ const StyledInputBox = styled(Box)((theme) => ({
 }));
 
 const StyledMassege = styled(Input)(() => ({
-  height: "130px",
+  width: "100%",
   backgroundColor: "white",
-  border: "none",
   marginBottom: "20px",
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "8px",
+    "& fieldset": {
+      border: "none",
+    },
+  },
+  "& .MuiOutlinedInput-input": {
+    padding: "10px",
+  },
+}));
+
+const ImageBox = styled(Box)(() => ({
+  textAlign: "center",
+  padding: "80px 0px ",
+  " & img": {
+    width: "83%",
+  },
 }));
