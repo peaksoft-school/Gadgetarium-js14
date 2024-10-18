@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
-import React from "react";
 import { Component, greyHeart, GroceryCart } from "../../assets/icon";
 
 const Card = ({
