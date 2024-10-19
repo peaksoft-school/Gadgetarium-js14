@@ -1,8 +1,14 @@
-export { default as IconAdgetarium } from "./svgs/Adgetarium.svg";
+export { default as Headphones } from './Headphones.svg';
+export { default as Monitor } from './Monitor.svg';
+export { default as Telefon } from './Telefon.svg';
+export { default as Vector } from './Vector.svg';
+export { default as Strelca } from './Vector (1).svg';
+export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconCatalog } from "../icon/Catalog.svg";
 export { default as IconFacebook } from "../icon/Facebook.svg";
+export { default as CatalogText } from "../icon/CatalogText.svg";
+export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
 export { default as IconPersonal } from "../icon/Personal.svg";
 export { default as IconSearch } from "../icon/Search.svg";
@@ -14,7 +20,8 @@ export { default as IconHuawei } from "../icon/Huawei.svg";
 export { default as IconSamsung } from "../icon/Samsung.svg";
 export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 
-// <<<<<<< HEAD
+
+
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
 // export { default as PropertyLeft } from "../icon/PropertyLeft.svg";
@@ -26,7 +33,6 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as GroceryCart } from "../icon/GroceryCart.svg";
 // export { default as GroceryCartTwo } from "../icon/GroceryCartTwo.svg";
 // export { default as CheckMark } from "../icon/CheckMark.svg";
-// export { default as catalog } from "../icon/catalog.svg";
 // export { default as personalAccount } from "../icon/personalAccount.svg";
 // export { default as colorInstagram } from "../icon/colorInstagram.svg";
 // export { default as colorWhatsApp } from "../icon/colorWhatsApp.svg";
@@ -73,9 +79,16 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
-// export { default as letterU } from "../icon/letterU.svg";
-// export { default as volume } from "../icon/volume-1.svg";
-// =======
+export {default as Headphones } from'./Headphones.svg'
+export {default as Monitor} from './Monitor.svg'
+export {default as Telefon} from './Telefon.svg'
+export {default as Vector} from './Vector.svg'
+export {default as Strelca} from './Vector (1).svg'
+
+export { default as banner } from '../image/banner.png';
+export { default as iphone } from '../image/iphone.jpg';
+export { default as macBook } from '../image/macBook.jpg';
+export { default as product } from '../image/product.webp';
 
 export { default as Group } from '../icon/Group.svg';
 export { default as Man } from '../icon/Man.svg';
@@ -137,4 +150,8 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
+<<<<<<< HEAD
 >>>>>>> ac457c9 (..)
+=======
+export { default as Talog } from '../icon/Talog.svg';
+>>>>>>> fab118abbd9712652eb9dde9d8efdb6d521e724c
