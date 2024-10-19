@@ -151,8 +151,4 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
-<<<<<<< HEAD
->>>>>>> ac457c9 (..)
-=======
 export { default as Talog } from '../icon/Talog.svg';
->>>>>>> fab118abbd9712652eb9dde9d8efdb6d521e724c
