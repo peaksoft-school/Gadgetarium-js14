@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
-import { Map } from "../assets/image";
 
 const adress = [
   { main: "Главная »", contacts: "Контакты" },
@@ -13,7 +12,6 @@ const adress = [
   { phone: "Телефон:", g: "+996(400)00-00-00" },
   { email: "Почта:", name: "Gadgetarium.kg" },
   { schedule: "Режим работы:", time: "10:00-21:00" },
-  { image: Map },
 ];
 
 const Contacts = () => {
@@ -26,9 +24,7 @@ const Contacts = () => {
             <span>{adress[0].contacts}</span>
           </FirstBox>
         )}
-        {adress[1].h1Contact && (
-          <Typography component="h2">{adress[1].h1Contact}</Typography>
-        )}
+        {adress[1].h1Contact && <h2>{adress[1].h1Contact}</h2>}
         <StyledHr />
       </Box>
 
@@ -121,12 +117,13 @@ const WrapperMainBox = styled(Box)(({ theme }) => ({
 
 const FirstBox = styled(Box)`
   font-size: 15px;
+
   span {
     display: inline-block;
     padding-bottom: 30px;
   }
 
-  span:first-child {
+  span:first-of-type {
     color: grey;
   }
 
@@ -135,6 +132,7 @@ const FirstBox = styled(Box)`
     padding-left: 3px;
   }
 `;
+
 const StyledHr = styled.hr`
   width: 100%;
   padding: 0.6px;
