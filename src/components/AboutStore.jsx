@@ -27,9 +27,9 @@ const contentData = [
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     text2:
       " Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam",
-    img: Kyrgyzstan,
   },
 ];
+
 
 const images = [{ image: Store }, { image: Kyrgyzstan }, { image: Store }];
 function SampleNextArrow({ onClick }) {
