@@ -79,6 +79,7 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
+
 export {default as Headphones } from'./Headphones.svg'
 export {default as Monitor} from './Monitor.svg'
 export {default as Telefon} from './Telefon.svg'
