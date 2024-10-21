@@ -1,21 +1,31 @@
+import React from 'react';
 import { Box } from '@mui/system';
 import {
+  Component44,
+  Fb,
+  FrameCard,
+  Gadgettarium,
   GroceryCartTwo,
   Group,
   Heart,
+  ico,
   Instagram,
+  Money,
   ScalesEight,
+  Systema,
+  Wallet,
   WhatsApp,
 } from '../../assets/icon/index';
 import { styled } from '@mui/material/styles';
-import { TextField } from '@mui/material';
+import { TextField, InputAdornment } from '@mui/material';
+import SidebarMenu from '../../components/UI/SaidebarMenu';
 
 const Delivery = () => {
   return (
-    <div>
-      <HeaderStyled>
+    <PapaDiv>
+      <header>
         <StyledDiv>
-          <h1>Gadgetarium</h1>
+          <img src={Gadgettarium} alt="" style={{ height: '45px' }} />
           <DivStyle>
             <p>Главная</p>
             <p>О Магазине</p>
@@ -23,58 +33,278 @@ const Delivery = () => {
             <p>FAG</p>
             <p>Контакты</p>
           </DivStyle>
-          <div>
-            +996700180919
-            <img src={Group} alt="" />
-          </div>
+          <StyledNumber>
+            +996 (700) 18-09-19
+            <img src={Group} alt="" style={{ width: '20px', height: '20px' }} />
+          </StyledNumber>
         </StyledDiv>
         <StyledDiv>
-          <div>Каталог</div>
+          <SidebarMenu />
           <div>
             <StyledInput
               id="myInput"
               label="Поиск по каталогу магазина"
               variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <img
+                      src={Systema}
+                      alt="search icon"
+                      style={{ width: '20px', height: '20px' }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />
           </div>
-          <div>
-            <img src="" alt="" />
-            <img src={WhatsApp} alt="" />
-            <img src={Instagram} alt="" />
-          </div>
-          <div>
-            <img src={ScalesEight} alt="" />
-            <img src={Heart} alt="" />
-            <img src={GroceryCartTwo} alt="" />
-          </div>
+          <SocialIcons>
+            <img src={Fb} alt="" style={{ width: '25px', height: '25px' }} />
+            <img
+              src={WhatsApp}
+              alt=""
+              style={{ width: '25px', height: '25px' }}
+            />
+            <img
+              src={Instagram}
+              alt=""
+              style={{ width: '20px', height: '20px' }}
+            />
+          </SocialIcons>
+          <CartIcons>
+            <img
+              src={ScalesEight}
+              alt=""
+              style={{ width: '25px', height: '25px' }}
+            />
+            <img src={Heart} alt="" style={{ width: '17px', height: '17px' }} />
+            <img
+              src={GroceryCartTwo}
+              alt=""
+              style={{ width: '27px', height: '27px' }}
+            />
+          </CartIcons>
         </StyledDiv>
-      </HeaderStyled>
-    </div>
+      </header>
+      <Divider>
+        <StyledBlock>
+          <p style={{ color: 'gray' }}>Главная</p>
+          <p>Контакты</p>
+        </StyledBlock>
+        <Block>
+          <h1 style={{ fontSize: '29px' }}>Доставка</h1>
+        </Block>
+        <Styledhr></Styledhr>
+      </Divider>
+      <div>
+        <CityDeliveryStyled>
+          <p>
+            Город доставки <span style={{ fontWeight: 'bold' }}>Бишкек</span>
+          </p>
+        </CityDeliveryStyled>
+        <DeliveryStyled>
+          <DeliveryOption
+            title="Самовывоз со склада"
+            description="Забрать в течение 14 дней"
+          />
+          <DeliveryOption
+            title="Самовывоз из магазина"
+            description="Забрать в течение 14 дней"
+          />
+          <DeliveryOption
+            title="Доставка"
+            description={
+              <>
+                По городу 200сом, по регионам Бесплатная доставка
+                <br /> при покупках свыше — 10 000с.
+              </>
+            }
+          />
+          <div>
+            <div>
+              <h3>Способы оплаты</h3>
+            </div>
+            <PaymentDelivery>
+              <PaymentRow>
+                <img src={Component44} alt="" />
+                <p>
+                  Оплата картой <br />
+                  онлайн
+                </p>
+              </PaymentRow>
+              <PaymentRow>
+                <img src={Money} alt="" />
+                <p>
+                  Наличные при <br />
+                  получении
+                </p>
+              </PaymentRow>
+              <PaymentRow>
+                <img src={FrameCard} alt="" />
+                <p>
+                  Картой <br />
+                  при получении
+                </p>
+              </PaymentRow>
+            </PaymentDelivery>
+          </div>
+        </DeliveryStyled>
+      </div>
+    </PapaDiv>
   );
 };
 
-export default Delivery;
+const DeliveryOption = ({ title, description }) => (
+  <DeliveryOptionStyled>
+    <Row>
+      <img src={ico} alt="" />
+      <TextBlock>
+        <p>{title}</p>
+        <p>{description}</p>
+      </TextBlock>
+    </Row>
+    <Row>
+      <img src={Wallet} alt="" />
+      <TextBlock>
+        <p className="no-bold">Предоплата не требуется</p>
+      </TextBlock>
+    </Row>
+  </DeliveryOptionStyled>
+);
+
+const PapaDiv = styled(Box)(({ theme }) => ({
+  boxSizing: 'border-box',
+  margin: '0 auto',
+}));
 
 const StyledDiv = styled(Box)(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '10px 20px',
-  backgroundColor: '#F2F2F2',
+  padding: '10px 95px',
+  backgroundColor: '#1a1a25',
+  flexWrap: 'wrap',
 }));
+
 const DivStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '15px',
+  gap: '10px',
+  color: 'white',
+  cursor: 'pointer',
+  fontSize: '14px',
 }));
-const HeaderStyled = styled(Box)(({ theme }) => ({
-  backgroundColor: '#1a1a25',
-}));
+
 const StyledInput = styled(TextField)(({ theme }) => ({
-  '&.MuiOutlinedInput-input': {
-    padding: '8px',
-    margin: 0,
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '10px',
+    height: '45px',
+    width: '687px',
+    display: 'flex',
+    alignItems: 'center',
+    color: 'white',
+    border: '1px solid white',
   },
-  width: '787px',
-  borderRadius1: '15px',
+  '& .MuiOutlinedInput-input': {
+    padding: '0 14px',
+    textAlign: 'center',
+    color: 'white',
+  },
+  '& .MuiInputLabel-root': {
+    color: 'white',
+    fontWeight: 500,
+  },
 }));
+
+const StyledNumber = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  fontSize: '18px',
+  fontWeight: 500,
+  color: 'white',
+  cursor: 'pointer',
+}));
+
+const SocialIcons = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '5px',
+}));
+
+const CartIcons = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '5px',
+}));
+
+const StyledBlock = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '5px',
+  marginTop: '30px',
+}));
+
+const Divider = styled(Box)(({ theme }) => ({
+  padding: '10px 95px',
+  flexWrap: 'wrap',
+}));
+
+const Block = styled(Box)(({ theme }) => ({
+  marginTop: '30px',
+}));
+
+const Styledhr = styled(Box)(({ theme }) => ({
+  marginTop: '10px',
+  border: '1px solid #cdcdcd',
+}));
+
+const DeliveryStyled = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '20px',
+  padding: '0 95px',
+}));
+
+const CityDeliveryStyled = styled(Box)(({ theme }) => ({
+  padding: '0px 99px',
+  marginTop: '30px',
+  marginBottom: '20px',
+}));
+
+const DeliveryOptionStyled = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+}));
+
+const Row = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+}));
+
+const TextBlock = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+
+  '& p:first-of-type:not(.no-bold)': {
+    fontWeight: 'bold',
+  },
+}));
+
+const PaymentDelivery = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '20px',
+  marginTop: '20px',
+}));
+
+const PaymentRow = styled(Box)(({ theme }) => ({
+  flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '10px',
+}));
+
+export default Delivery;

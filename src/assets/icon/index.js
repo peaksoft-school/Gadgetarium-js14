@@ -64,3 +64,6 @@ export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
 export { default as Talog } from '../icon/Talog.svg';
+export { default as Gadgettarium } from '../icon/Gadgettarium.svg';
+export { default as Systema } from '../icon/Systema.svg';
+export { default as Fb } from '../icon/Fb.svg';
