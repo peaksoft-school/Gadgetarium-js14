@@ -1,7 +1,11 @@
+import Table from "./components/UI/table/Table"
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+
+      <Table />
+    </div>
   )
 }
 
