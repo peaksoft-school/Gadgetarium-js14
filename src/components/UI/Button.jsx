@@ -1,9 +1,11 @@
-import { Button as MuiButton, styled } from '@mui/material';
+// eslint-disable-next-line no-unused-vars
+import React from "react";
+import { Button as MuiButton, styled } from "@mui/material";
 
 const Button = ({
   children,
   onClick,
-  variant = 'outlined',
+  variant = "outlined",
   size,
   type,
   startIcon,
@@ -25,86 +27,86 @@ const Button = ({
 
 export default Button;
 
-const StyledBtn = styled(MuiButton)(({ variant, ...props }) => {
+const StyledBtn = styled(MuiButton)(({ variant }) => {
   switch (variant) {
-    case 'outlined':
+    case "outlined":
       return {
-        '&.MuiButtonBase-root': {
-          width: '100%',
-          color: '#88226a',
-          fontSize: '18px',
-          borderRadius: '4px',
-          border: '1px solid #e313bf',
-          textTransform: 'uppercase',
-          backgroundColor: 'transparet',
-          '&:hover': {
-            color: 'white',
-            backgroundColor: '#cb11ab',
+        "&.MuiButtonBase-root": {
+          width: "100%",
+          color: "#88226a",
+          fontSize: "18px",
+          borderRadius: "4px",
+          border: "1px solid #e313bf",
+          textTransform: "uppercase",
+          backgroundColor: "transparet",
+          "&:hover": {
+            color: "white",
+            backgroundColor: "#cb11ab",
           },
-          '&:active': {
-            backgroundColor: '#e313bf',
-            color: 'white',
+          "&:active": {
+            backgroundColor: "#e313bf",
+            color: "white",
           },
         },
       };
-    case 'contained':
+    case "contained":
       return {
-        '&.MuiButtonBase-root': {
-          width: '100%',
-          color: '#fff',
-          fontSize: '18px',
-          borderRadius: '4px',
-          border: '1px solid #e313bf',
-          textTransform: 'uppercase',
-          backgroundColor: '#cb11ab',
-          '&:hover': {
-            color: 'white',
-            backgroundColor: '#cb11ab',
+        "&.MuiButtonBase-root": {
+          width: "100%",
+          color: "#fff",
+          fontSize: "18px",
+          borderRadius: "4px",
+          border: "1px solid #e313bf",
+          textTransform: "uppercase",
+          backgroundColor: "#cb11ab",
+          "&:hover": {
+            color: "white",
+            backgroundColor: "#cb11ab",
           },
-          '&:active': {
-            backgroundColor: '#e313bf',
-            color: 'white',
+          "&:active": {
+            backgroundColor: "#e313bf",
+            color: "white",
           },
         },
       };
 
-    case 'text':
+    case "text":
       return {
-        '&.MuiButtonBase-root': {
-          width: '100%',
-          color: '#e313bf',
-          fontSize: '18px',
-          borderRadius: '4px',
-          border: '1px solid #e313bf',
-          textTransform: 'uppercase',
-          backgroundColor: 'white',
-          '&:hover': {
-            color: 'white',
-            backgroundColor: '#cb11ab',
+        "&.MuiButtonBase-root": {
+          width: "100%",
+          color: "#e313bf",
+          fontSize: "18px",
+          borderRadius: "4px",
+          border: "1px solid #e313bf",
+          textTransform: "uppercase",
+          backgroundColor: "white",
+          "&:hover": {
+            color: "white",
+            backgroundColor: "#cb11ab",
           },
-          '&:active': {
-            backgroundColor: '#e313bf',
-            color: 'white',
+          "&:active": {
+            backgroundColor: "#e313bf",
+            color: "white",
           },
         },
       };
-    case 'text-outlined':
+    case "text-outlined":
       return {
-        '&.MuiButtonBase-root': {
-          width: '100%',
-          color: 'white',
-          fontSize: '18px',
-          borderRadius: '4px',
-          border: '1px solid #e313bf',
-          textTransform: 'uppercase',
-          backgroundColor: '#cb11ab',
-          '&:hover': {
-            color: 'white',
-            backgroundColor: '#cb11ab',
+        "&.MuiButtonBase-root": {
+          width: "100%",
+          color: "white",
+          fontSize: "18px",
+          borderRadius: "4px",
+          border: "1px solid #e313bf",
+          textTransform: "uppercase",
+          backgroundColor: "#cb11ab",
+          "&:hover": {
+            color: "white",
+            backgroundColor: "#cb11ab",
           },
-          '&:active': {
-            backgroundColor: '#e313bf',
-            color: 'white',
+          "&:active": {
+            backgroundColor: "#e313bf",
+            color: "white",
           },
         },
       };
