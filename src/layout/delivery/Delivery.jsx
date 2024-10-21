@@ -1,6 +1,14 @@
-import { Box, Container, style } from '@mui/system';
-import { Group } from '../../assets/icon/index';
+import { Box } from '@mui/system';
+import {
+  GroceryCartTwo,
+  Group,
+  Heart,
+  Instagram,
+  ScalesEight,
+  WhatsApp,
+} from '../../assets/icon/index';
 import { styled } from '@mui/material/styles';
+import { TextField } from '@mui/material';
 
 const Delivery = () => {
   return (
@@ -18,6 +26,26 @@ const Delivery = () => {
           <div>
             +996700180919
             <img src={Group} alt="" />
+          </div>
+        </StyledDiv>
+        <StyledDiv>
+          <div>Каталог</div>
+          <div>
+            <StyledInput
+              id="myInput"
+              label="Поиск по каталогу магазина"
+              variant="outlined"
+            />
+          </div>
+          <div>
+            <img src="" alt="" />
+            <img src={WhatsApp} alt="" />
+            <img src={Instagram} alt="" />
+          </div>
+          <div>
+            <img src={ScalesEight} alt="" />
+            <img src={Heart} alt="" />
+            <img src={GroceryCartTwo} alt="" />
           </div>
         </StyledDiv>
       </HeaderStyled>
@@ -41,4 +69,12 @@ const DivStyle = styled(Box)(({ theme }) => ({
 }));
 const HeaderStyled = styled(Box)(({ theme }) => ({
   backgroundColor: '#1a1a25',
+}));
+const StyledInput = styled(TextField)(({ theme }) => ({
+  '&.MuiOutlinedInput-input': {
+    padding: '8px',
+    margin: 0,
+  },
+  width: '787px',
+  borderRadius1: '15px',
 }));

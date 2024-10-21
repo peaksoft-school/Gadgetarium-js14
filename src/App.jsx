@@ -1,8 +1,11 @@
+import Delivery from './layout/delivery/Delivery';
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <div>
+      <Delivery />
+    </div>
+  );
+};
 
-export default App
+export default App;
