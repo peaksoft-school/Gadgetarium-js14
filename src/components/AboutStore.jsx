@@ -71,7 +71,6 @@ const AboutStore = () => {
     slidesToScroll: 1,
     centerPadding: "5px",
 
-    // afterChange: (current) => setActiveSlide(current),
   };
 
   return (
@@ -148,7 +147,6 @@ const WrapperBox = styled(Box)(({}) => ({
 
 const StyledSlider = styled(Slider)(() => ({
   "& .slick-active": {
-    // boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)",
     filter: "brightness(1) !important",
     transition: "500ms",
   },
@@ -231,7 +229,6 @@ const ImageContainer = styled("div")(({ isActive }) => ({
   width: "100%",
   marginLeft: "3px",
   position: "relative",
-  // filter: !isActive ? "brightness(0.3)" : "brightness(1)",
   transition: "filter 0.3s ease",
 }));
 
