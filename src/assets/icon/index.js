@@ -74,11 +74,11 @@ export { default as IconWhatsApp } from "../icon/WhatsApp.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
-export {default as Headphones } from'./Headphones.svg'
-export {default as Monitor} from './Monitor.svg'
-export {default as Telefon} from './Telefon.svg'
-export {default as Vector} from './Vector.svg'
-export {default as Strelca} from './Vector (1).svg'
+// export {default as Headphones } from'./Headphones.svg'
+// export {default as Monitor} from './Monitor.svg'
+// export {default as Telefon} from './Telefon.svg'
+// export {default as Vector} from './Vector.svg'
+// export {default as Strelca} from './Vector (1).svg'
 
 export { default as banner } from '../image/banner.png';
 export { default as iphone } from '../image/iphone.jpg';
@@ -145,10 +145,6 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
-<<<<<<< HEAD
-export { default as Skitca} from '../icon/Skitca.1530.svg'
-export {default as Newican} from '../icon/Newican 3.svg';
-export {default as Klassaican} from '../icon/Klassaican.2.svg'
-=======
 export { default as Talog } from '../icon/Talog.svg';
->>>>>>> fab118abbd9712652eb9dde9d8efdb6d521e724c
+export {default as DiscountClasIcon} from '../icon/DiscountClasIcon.svg'
+

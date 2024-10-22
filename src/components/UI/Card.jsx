@@ -2,12 +2,17 @@ import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
-import { Component, greyHeart, GroceryCart } from "../../assets/icon";
+import {
+  Component,
+  greyHeart,
+  GroceryCart,
+  DiscountClasIcon,
+} from "../../assets/icon";
 
 const Card = ({
   img,
   text,
-  discount,
+  discountIcon,
   title,
   reiting,
   reviews,
@@ -15,7 +20,6 @@ const Card = ({
   oldPrice,
   discountNew,
   discountClas,
-  ...rest
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
@@ -28,34 +32,36 @@ const Card = ({
           <img src={greyHeart} alt="" />
         </StyledIcanConteiner>
 
-        <Box>
-          {discount ? (
-            <img
-              className="scitca"
-              src={discount}
-              alt="Discount Icon"
-              style={{ position: "relative", top: "-35px", padding: "5px" }}
-            />
+        <BoxAicanContainer>
+          {discountIcon ? (
+            <DiscountContainer>
+              <ProtsetBox>-{discountIcon}%</ProtsetBox>
+            </DiscountContainer>
           ) : null}
 
           {discountNew ? (
-            <img
-              className="scitca"
-              src={discountNew}
-              alt="Icon One"
-              style={{ position: "relative", top: "-35px", padding: "5px" }}
-            />
+            <DiscountContainer>
+              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
+            </DiscountContainer>
           ) : null}
 
           {discountClas ? (
-            <img
-              className="scitca"
-              src={discountClas}
-              alt="Icon Two"
-              style={{ position: "relative", top: "-35px", padding: "5px" }}
-            />
+            <DiscountContainer>
+              <img
+                className="scitca"
+                src={DiscountClasIcon}
+                alt="Icon Two"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  position: "relative",
+                  top: "-35px",
+                }}
+              />
+            </DiscountContainer>
           ) : null}
-        </Box>
+        </BoxAicanContainer>
+
         <ImageContainer>
           <img className="img" src={img} alt={text} />
         </ImageContainer>
@@ -126,28 +132,17 @@ const StyledIcanConteiner = styled(Box)({
   zIndex: 1,
 });
 
+const DiscountContainer = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
+});
+
 const StyledBoxProject = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   gap: "8px",
-  "&.MuiButtonBase-root": {
-    width: "100%",
-    color: "#88226a",
-    fontSize: "18px",
-    borderRadius: "4px",
-    border: "1px solid #e313bf",
-    textTransform: "uppercase",
-    backgroundColor: "transparent",
-    "&:hover": {
-      color: "white",
-      backgroundColor: "#cb11ab",
-    },
-    "&:active": {
-      backgroundColor: "#e313bf",
-      color: "white",
-    },
-  },
 }));
 
 const StyledCard = styled(Box)({
@@ -207,3 +202,40 @@ const NewPrice = styled(Typography)({
   fontWeight: "bold",
   fontSize: "18px",
 });
+const ProtsetBox = styled(Box)(() => ({
+  borderRadius: "50%",
+  width: "40px",
+  height: "40px",
+  padding: "15px",
+  backgroundColor: "#f43333",
+  fontSize: "16px",
+  fontWeight: "bold",
+  color: "white",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "relative",
+  top: "-35px",
+}));
+
+const ProtsetBoxNew = styled(Box)(() => ({
+  borderRadius: "50%",
+  width: "40px",
+  height: "40px",
+  padding: "10px",
+  backgroundColor: "#2fc409",
+  fontSize: "16px",
+  fontWeight: "bold",
+  color: "white",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "relative",
+  top: "-35px",
+}));
+
+const BoxAicanContainer = styled(Box)(() => ({
+  display: "flex",
+  gap: "10px",
+  padding: "8px",
+}));
