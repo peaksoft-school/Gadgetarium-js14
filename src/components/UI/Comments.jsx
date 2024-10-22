@@ -104,6 +104,7 @@ const CommentList = () => {
                       name={`rating-${id}`}
                       value={rating || 0}
                       size="small"
+                      readOnly
                       sx={{
                         "& .MuiRating-icon": {
                           color: "gold",
@@ -124,7 +125,7 @@ const CommentList = () => {
 
                 {adminReplied && (
                   <AdminBox>
-                    <span sx={{ fontWeight: "bold" }}>
+                    <span style={{ fontWeight: "bold" }}>
                       Ответ от представителя:
                     </span>
                     <Typography variant="body2">{adminReplied}</Typography>
