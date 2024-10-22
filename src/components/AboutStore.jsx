@@ -1,9 +1,17 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
+import { Customer, HeadPhone, Kyrgyzstan } from "../assets/image";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { useRef, useState } from "react";
+import { IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import theme from "../assets/theme/theme";
-import { Kyrgyzstan, Store } from "../assets/image";
 
 const contentData = [
+  { main: "Главная »", store: "О магазине" },
   {
     id: 1,
     titleSection: "Магазин Gadgetarium",
@@ -27,93 +35,157 @@ const contentData = [
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     text2:
       " Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam",
+    img: Kyrgyzstan,
   },
 ];
 
-
-const images = [{ image: Store }, { image: Kyrgyzstan }, { image: Store }];
-function SampleNextArrow({ onClick }) {
-  return (
-    <NextButton onClick={onClick}>
-      <ArrowSlide />
-    </NextButton>
-  );
-}
-
-function SamplePrevArrow({ onClick }) {
-  return (
-    <PrevButton onClick={onClick}>
-      <ArrowSlide />
-    </PrevButton>
-  );
-}
+const images = [
+  { id: "1", image: HeadPhone },
+  { id: "2", image: HeadPhone },
+  { id: "3", image: Customer },
+];
 
 const AboutStore = () => {
-  const settings = {
-    centerMode: true,
-    infinite: true,
-    slidesToShow: 2.33,
-    slidesToScroll: 1,
-    speed: 500,
-    draggable: false,
-    prevArrow: <SamplePrevArrow />,
-    nextArrow: <SampleNextArrow />,
+  const [activeSlide, setActiveSlide] = useState(0);
+  const sliderRef = useRef(null);
+
+  const handlePrevious = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickPrev();
+    }
   };
+
+  const handleNext = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickNext();
+    }
+  };
+
+  const settings = {
+    className: "center",
+    centerMode: true,
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerPadding: "5px",
+
+    // afterChange: (current) => setActiveSlide(current),
+  };
+
   return (
-    <WrapperBox>
-      <h1>О магазине</h1>
-      <Container>
-        <SliderWrapper>
-          <SliderStyle {...settings} className="slick-list">
-            {slidePhotos.map((item) => (
-              <Slide key={item.id} className="slick-list">
-                <div className="box-img">
-                  <img src={item.url} alt="select photos" />
-                </div>
-              </Slide>
-            ))}
-          </SliderStyle>
-        </SliderWrapper>
-      </Container>
+    <Box>
+      <FirstBox>
+        <span>{contentData[0].main}</span>
+        <span>{contentData[0].store}</span>
+        <h1>О магазине</h1>
+        <StyledHr />
+      </FirstBox>
 
-      {contentData
-        .slice(0, contentData.length - 1)
-        .map(({ id, titleSection, text, list }) => (
-          <Box key={id}>
-            <h2>{titleSection}</h2>
-            {list ? (
-              <StyledUl>
-                {list.map((listItem, i) => (
-                  <li key={i}>{listItem}</li>
-                ))}
-              </StyledUl>
-            ) : (
-              <SecondSectionBox>{text}</SecondSectionBox>
-            )}
-          </Box>
+      <SliderWrapperBox>
+        <StyledSlider ref={sliderRef} {...settings}>
+          {images.map((img, index) => (
+            <ImageContainer key={index} isActive={index === activeSlide}>
+              <SlideImage
+                src={img.image}
+                alt={`Slide ${index}`}
+                isActive={index === activeSlide}
+              />
+            </ImageContainer>
+          ))}
+        </StyledSlider>
+        <ButtonContainer>
+          <IconButton onClick={handlePrevious}>
+            <ArrowBackIcon />
+          </IconButton>
+          <IconButton onClick={handleNext}>
+            <ArrowForwardIcon />
+          </IconButton>
+        </ButtonContainer>
+      </SliderWrapperBox>
+
+      <WrapperBox>
+        {contentData
+          .slice(0, contentData.length - 1)
+          .map(({ id, titleSection, text, list }) => (
+            <Box key={id}>
+              <h2>{titleSection}</h2>
+              {list ? (
+                <StyledUl>
+                  {list.map((listItem, i) => (
+                    <li key={i}>{listItem}</li>
+                  ))}
+                </StyledUl>
+              ) : (
+                <SecondSectionBox>{text}</SecondSectionBox>
+              )}
+            </Box>
+          ))}
+
+        {contentData.slice(-1).map(({ id, titleSection, text, img, text2 }) => (
+          <StyledBox key={id}>
+            <Box>
+              <h2>{titleSection}</h2>
+              <SmallTextBox>{text}</SmallTextBox>
+              <SmallTextBox>{text2}</SmallTextBox>
+            </Box>
+
+            <img src={img} alt="kyrgyzstanImage" />
+          </StyledBox>
         ))}
-
-      {contentData.slice(-1).map(({ id, titleSection, text, img, text2 }) => (
-        <StyledBox key={id}>
-          <Box>
-            <h2>{titleSection}</h2>
-            <SmallTextBox>{text}</SmallTextBox>
-            <SmallTextBox>{text2}</SmallTextBox>
-          </Box>
-
-          <img src={img} alt="kyrgyzstanImage" />
-        </StyledBox>
-      ))}
-    </WrapperBox>
+      </WrapperBox>
+    </Box>
   );
 };
 export default AboutStore;
 
-const WrapperBox = styled(Box)(() => ({
+const WrapperBox = styled(Box)(({}) => ({
   width: "100%",
-  backgroundColor: "#f4f4f4",
-  padding: "20px 0px 20px 40px",
+  backgroundColor: theme.palette.lightGrey.light,
+  padding: "60px 120px",
 }));
+
+const StyledSlider = styled(Slider)(() => ({
+  "& .slick-active": {
+    // boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)",
+    filter: "brightness(1) !important",
+    transition: "500ms",
+  },
+
+  "& .slick-center": {
+    filter: "brightness(0.3) !important",
+  },
+
+  "& .slick-slide": {
+    filter: "brightness(0.3)",
+  },
+}));
+
+const FirstBox = styled(Box)(({ theme }) => ({
+  fontSize: "15px",
+  padding: "60px 120px",
+  backgroundColor: theme.palette.lightGrey.light,
+  "& span": {
+    display: "inline-block",
+    paddingBottom: "30px",
+  },
+  "& span:first-of-type": {
+    color: "grey",
+    paddingRight: "6px",
+  },
+  "& span:last-child": {
+    fontWeight: "bold",
+  },
+}));
+
+const StyledHr = styled.hr`
+  width: 100%;
+  padding: 0.6px;
+  border: none;
+  background-color: #d1cfcf;
+  margin-top: 5px;
+`;
 
 const StyledUl = styled("ul")({
   lineHeight: "1.1",
@@ -138,7 +210,6 @@ const SecondSectionBox = styled(Box)(() => ({
 }));
 
 const SmallTextBox = styled(Box)(() => ({
-  //   width: "40%",
   lineHeight: "1.5",
   marginTop: "20px",
   fontSize: "17px",
@@ -148,36 +219,48 @@ const StyledBox = styled(Box)(() => ({
   display: "flex",
 }));
 
-const SliderStyle = styled(Slider)`
-  .slick-center {
-    filter: brightness(3.1);
-  }
+const SliderWrapperBox = styled(Box)(() => ({
+  width: "100%",
+  overflow: "hidden",
+}));
 
-  .slick-slide {
-    padding: 0 15px;
-  }
-`;
+const ImageContainer = styled("div")(({ isActive }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  marginLeft: "3px",
+  position: "relative",
+  // filter: !isActive ? "brightness(0.3)" : "brightness(1)",
+  transition: "filter 0.3s ease",
+}));
 
-const NextButton = styled("div")`
-  position: absolute;
-  top: 50%;
-  right: 20rem;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+const SlideImage = styled("img")(({ isActive }) => ({
+  width: "100%",
+  height: "auto",
+  maxWidth: "500px",
+  transition: "transform 0.5s",
+  boxShadow: isActive
+    ? "0 0 20px rgba(0, 0, 0, 0.5)"
+    : "inset 0 0 10px rgba(0, 0, 0, 0.8)",
+}));
 
-  z-index: 0;
-`;
+const ButtonContainer = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: 0,
+  right: 0,
+  display: "flex",
+  justifyContent: "center",
+  gap: "34rem",
+  transform: "translateY(-50%)",
 
-const PrevButton = styled("div")`
-  position: absolute;
-  top: 50%;
-  left: 20rem;
-  transform: translateY(-50%) rotate(180deg);
-  display: flex;
-  align-items: center;
-
-  z-index: 5;
-  cursor: pointer;
-`;
+  "& button": {
+    backgroundColor: "white",
+    borderRadius: "50%",
+    color: theme.palette.primary.main,
+    ":hover": {
+      backgroundColor: theme.palette.darkGrey.light,
+    },
+  },
+}));
