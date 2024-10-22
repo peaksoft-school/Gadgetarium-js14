@@ -13,7 +13,7 @@ const Button = ({
 }) => {
   return (
     <StyledBtn
-    startIcon={startIcon}
+      startIcon={startIcon}
       type={type}
       onClick={onClick}
       variant={variant}
@@ -37,7 +37,6 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
           fontSize: "18px",
           borderRadius: "4px",
           border: "1px solid #e313bf",
-          textTransform: "uppercase",
           backgroundColor: "transparet",
           "&:hover": {
             color: "white",
@@ -57,7 +56,6 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
           fontSize: "18px",
           borderRadius: "4px",
           border: "1px solid #e313bf",
-          textTransform: "uppercase",
           backgroundColor: "#cb11ab",
           "&:hover": {
             color: "white",
@@ -77,8 +75,6 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
           color: "#e313bf",
           fontSize: "18px",
           borderRadius: "4px",
-          border: "1px solid #e313bf",
-          textTransform: "uppercase",
           backgroundColor: "white",
           "&:hover": {
             color: "white",
@@ -94,12 +90,10 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
       return {
         "&.MuiButtonBase-root": {
           width: "100%",
-          color: "white",
           fontSize: "18px",
           borderRadius: "4px",
           border: "1px solid #e313bf",
-          textTransform: "uppercase",
-          backgroundColor: "#cb11ab",
+          color: "#e313bf",
           "&:hover": {
             color: "white",
             backgroundColor: "#cb11ab",
