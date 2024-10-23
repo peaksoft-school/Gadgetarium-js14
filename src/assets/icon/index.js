@@ -80,11 +80,11 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
 
-export {default as Headphones } from'./Headphones.svg'
-export {default as Monitor} from './Monitor.svg'
-export {default as Telefon} from './Telefon.svg'
-export {default as Vector} from './Vector.svg'
-export {default as Strelca} from './Vector (1).svg'
+// export {default as Headphones } from'./Headphones.svg'
+// export {default as Monitor} from './Monitor.svg'
+// export {default as Telefon} from './Telefon.svg'
+// export {default as Vector} from './Vector.svg'
+// export {default as Strelca} from './Vector (1).svg'
 
 export { default as banner } from '../image/banner.png';
 export { default as iphone } from '../image/iphone.jpg';
@@ -151,7 +151,7 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
-export {default as Telefon} from '../icon/Telefon (1).svg';
+// export {default as Telefon} from '../icon/Telefon (1).svg';
 export {default as Mestonahajdenie} from '../icon/Mestonahajdenie(1).svg'
 export {default as Chasy } from "../icon/Chasy.svg"
 export {default as Pochta} from '../icon/Pochta (1).svg'
