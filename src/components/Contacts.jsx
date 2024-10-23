@@ -1,22 +1,17 @@
 import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
-import { Map } from "../assets/image";
 
 const adress = [
   { main: "Главная »", contacts: "Контакты" },
   { h1Contact: "Контакты" },
   { store: "Магазин Gadgetarium" },
   { adress: "Адрес:", city: "г.Бишкек, ул.Гражданская 119" },
-
   { phone: "Телефон:", g: "+996(400)00-00-00" },
   { email: "Почта:", name: "Gadgetarium.kg" },
   { schedule: "Режим работы:", time: "10:00-21:00" },
-  { image: Map },
 ];
-
-
 
 const Contacts = () => {
   return (
@@ -28,17 +23,13 @@ const Contacts = () => {
             <span>{adress[0].contacts}</span>
           </FirstBox>
         )}
-        {adress[1].h1Contact && (
-          <Typography>
-            <h2> {adress[1].h1Contact}</h2>
-          </Typography>
-        )}
+        {adress[1].h1Contact && <h2>{adress[1].h1Contact}</h2>}
         <StyledHr />
       </Box>
 
       <SecondBox>
         <Box>
-          {adress.slice(2).map((item, index) => (
+          {adress.slice(2, 7).map((item, index) => (
             <AddressBox key={index}>
               {item.store && <h2>{item.store}</h2>}
               {item.adress && (
@@ -47,7 +38,6 @@ const Contacts = () => {
                   <span>{item.city}</span>
                 </StyledAdress>
               )}
-
               {item.phone && (
                 <StyledAdress>
                   <Box>{item.phone}</Box>
@@ -100,9 +90,19 @@ const Contacts = () => {
           </Box>
         </StyledForm>
       </SecondBox>
-      <ImageBox>
-        <img src={Map} alt="mapIm" />
-      </ImageBox>
+
+      <MapBox>
+        <iframe
+          width="83%"
+          height="500"
+          frameBorder="0"
+          scrolling="no"
+          marginHeight="0"
+          marginWidth="0"
+          src="https://maps.google.com/maps?width=100%25&amp;height=500&amp;hl=ru&amp;q=%D0%B3.%D0%91%D0%B8%D1%88%D0%BA%D0%B5%D0%BA,%20%D1%83%D0%BB.%D0%93%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20119+(%D1%83%D0%BB.%D0%93%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20119)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+          title="Google Map"
+        />
+      </MapBox>
     </WrapperMainBox>
   );
 };
@@ -121,7 +121,7 @@ const FirstBox = styled(Box)`
     padding-bottom: 30px;
   }
 
-  span:first-child {
+  span:first-of-type {
     color: grey;
   }
 
@@ -194,10 +194,8 @@ const StyledMassege = styled(Input)(() => ({
   },
 }));
 
-const ImageBox = styled(Box)(() => ({
+const MapBox = styled(Box)(() => ({
+  width: "100%",
   textAlign: "center",
-  padding: "80px 0px ",
-  " & img": {
-    width: "83%",
-  },
+  padding: "80px 0px",
 }));
