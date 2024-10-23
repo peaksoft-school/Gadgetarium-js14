@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import { Map } from "../assets/image";
@@ -170,7 +169,7 @@ const StyledForm = styled(Box)(() => ({
   },
 }));
 
-const StyledInputBox = styled(Box)((theme) => ({
+const StyledInputBox = styled(Box)(() => ({
   display: "grid",
   gap: "10px",
   marginBottom: "10px",
