@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Paper,
   List,
@@ -7,8 +8,8 @@ import {
   Typography,
   Box,
   Button,
-} from "@mui/material";
-import { useState } from "react";
+} from '@mui/material';
+import { useState } from 'react';
 import {
   Headphones,
   Monitor,
@@ -16,72 +17,71 @@ import {
   Talog,
   Telefon,
   Vector,
-} from "../../assets/icon";
-import styled from "@emotion/styled";
-// import Button from "./Button";
+} from '../../assets/icon';
+import styled from '@emotion/styled';
 
 const Arr = [
   {
     id: 1,
-    name: "Смартфоны",
+    name: 'Смартфоны',
     title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
+      { name: 'Ремешки для часов', navigate: '' },
+      { name: 'Зарядные устройства', navigate: '' },
+      { name: 'Защита экрана', navigate: '' },
+      { name: 'Чехлы и корпусы', navigate: '' },
+      { name: 'Подставки', navigate: '' },
+      { name: 'Кабели и адаптеры', navigate: '' },
+      { name: 'Внешние аккумуляторы', navigate: '' },
+      { name: 'Наушники', navigate: '' },
+      { name: 'Карта памяти и накопители', navigate: '' },
     ],
     img: Telefon,
   },
   {
     id: 2,
-    name: "Ноутбуки и планшеты",
+    name: 'Ноутбуки и планшеты',
     title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
+      { name: 'Ремешки для часов', navigate: '' },
+      { name: 'Зарядные устройства', navigate: '' },
+      { name: 'Защита экрана', navigate: '' },
+      { name: 'Чехлы и корпусы', navigate: '' },
+      { name: 'Подставки', navigate: '' },
+      { name: 'Кабели и адаптеры', navigate: '' },
+      { name: 'Внешние аккумуляторы', navigate: '' },
+      { name: 'Наушники', navigate: '' },
+      { name: 'Карта памяти и накопители', navigate: '' },
     ],
     img: Monitor,
   },
   {
     id: 3,
-    name: "Смарт-часы и браслеты",
+    name: 'Смарт-часы и браслеты',
     title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
+      { name: 'Ремешки для часов', navigate: '' },
+      { name: 'Зарядные устройства', navigate: '' },
+      { name: 'Защита экрана', navigate: '' },
+      { name: 'Чехлы и корпусы', navigate: '' },
+      { name: 'Подставки', navigate: '' },
+      { name: 'Кабели и адаптеры', navigate: '' },
+      { name: 'Внешние аккумуляторы', navigate: '' },
+      { name: 'Наушники', navigate: '' },
+      { name: 'Карта памяти и накопители', navigate: '' },
     ],
     img: Vector,
   },
   {
     id: 4,
-    name: "Аксессуары",
+    name: 'Аксессуары',
     title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
+      { name: 'Ремешки для часов', navigate: '' },
+      { name: 'Зарядные устройства', navigate: '' },
+      { name: 'Защита экрана', navigate: '' },
+      { name: 'Чехлы и корпусы', navigate: '' },
+      { name: 'Подставки', navigate: '' },
+      { name: 'Кабели и адаптеры', navigate: '' },
+      { name: 'Внешние аккумуляторы', navigate: '' },
+      { name: 'Наушники', navigate: '' },
+      { name: 'Карта памяти и накопители', navigate: '' },
     ],
     img: Headphones,
     icon: Strelca,
@@ -107,7 +107,7 @@ const SidebarMenu = () => {
   return (
     <Container>
       <Button
-        startIcon={<img src={Talog}/>}
+        startIcon={<img src={Talog} />}
         className="button-ican"
         variant="contained"
         onClick={toggleMenu}
@@ -117,7 +117,7 @@ const SidebarMenu = () => {
 
       {isMenuOpen && (
         <Paper elevation={3} className="paper">
-          <Typography variant="h6" style={{ marginBottom: "16px" }}>
+          <Typography variant="h6" style={{ marginBottom: '16px' }}>
             Категории
           </Typography>
           <StyledLink>
@@ -138,7 +138,7 @@ const SidebarMenu = () => {
                   className="img-icon hello"
                 />
                 <ListItemText
-                  sx={{ textAlign: "start", textTransform: "capitalize" }}
+                  sx={{ textAlign: 'start', textTransform: 'capitalize' }}
                   primary={name}
                 />
                 <img
@@ -167,11 +167,7 @@ const SidebarMenu = () => {
             <Typography variant="h6">{name}</Typography>
             <List>
               {title?.map(({ name, navigate }, index) => (
-                <ListItem
-                  className="textButton"
-                  key={index}
-                  to={navigate}
-                >
+                <ListItem className="textButton" key={index} to={navigate}>
                   <ListItemText className="text" primary={name} />
                 </ListItem>
               ))}
@@ -186,80 +182,80 @@ const SidebarMenu = () => {
 export default SidebarMenu;
 
 const Container = styled(Box)(() => ({
-  position: "relative",
+  position: 'relative',
 
-  "& .textButton": {
-    color: "grey",
-    cursor: "pointer",
-    borderRadius: "5px",
-    ":hover": {
-      backgroundColor: "#D600A5",
-      color: "white",
+  '& .textButton': {
+    color: 'grey',
+    cursor: 'pointer',
+    borderRadius: '5px',
+    ':hover': {
+      backgroundColor: '#D600A5',
+      color: 'white',
     },
   },
-  "& .paper": {
-    position: "absolute",
+  '& .paper': {
+    position: 'absolute',
     marginLeft: 16,
-    width: "372px",
+    width: '372px',
     padding: 16,
     top: 0,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     left: 130,
   },
-  "& .paperty": {
+  '& .paperty': {
     marginLeft: 16,
     width: 293,
     padding: 16,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
   },
-  "& .collapse": {
-    position: "absolute",
-    left: "510px",
+  '& .collapse': {
+    position: 'absolute',
+    left: '510px',
     top: 0,
   },
-  "& .button-ican": {
-    background: "#D600A5",
-    borderRadius: "3px",
-    color: "white",
-    padding:"10px 25px",
-    "&:hover": {
-      backgroundColor: "#D600A5",
-      color: "white",
+  '& .button-ican': {
+    background: '#D600A5',
+    borderRadius: '3px',
+    color: 'white',
+    padding: '10px 25px',
+    '&:hover': {
+      backgroundColor: '#D600A5',
+      color: 'white',
     },
-    "&:img": {
-      top: "-6px",
+    '&:img': {
+      top: '-6px',
     },
   },
 }));
 
 const StyledButton = styled(Button)(({ selected }) => ({
-  width: "336px",
-  height: "40px",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "8px 16px",
-  marginBottom: "8px",
-  borderRadius: "8px",
-  backgroundColor: selected ? "#D600A5" : "#ffffff",
-  color: selected ? "#ffffff" : "#000000",
-  "&:hover": {
-    backgroundColor: selected ? "#D600A5" : "#F0F0F0",
-    width: "336px",
-    height: "40px",
+  width: '336px',
+  height: '40px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '8px 16px',
+  marginBottom: '8px',
+  borderRadius: '8px',
+  backgroundColor: selected ? '#D600A5' : '#ffffff',
+  color: selected ? '#ffffff' : '#000000',
+  '&:hover': {
+    backgroundColor: selected ? '#D600A5' : '#F0F0F0',
+    width: '336px',
+    height: '40px',
   },
-  "& .hello": {
-    marginRight: "13px",
-    width: "9px",
-    filter: selected ? "brightness(1) invert(0)" : "none",
+  '& .hello': {
+    marginRight: '13px',
+    width: '9px',
+    filter: selected ? 'brightness(1) invert(0)' : 'none',
   },
-  "&:hover .hello": {
-    filter: "brightness(0) invert(1)",
+  '&:hover .hello': {
+    filter: 'brightness(0) invert(1)',
   },
 }));
 
 const StyledLink = styled(List)({
-  backgroundColor: "#ffffff",
-  padding: "10px",
-  borderRadius: "8px",
+  backgroundColor: '#ffffff',
+  padding: '10px',
+  borderRadius: '8px',
 });

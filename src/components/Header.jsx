@@ -1,41 +1,40 @@
-import styled from "@emotion/styled";
-import { Box, TextField, InputAdornment, Autocomplete } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import styled from '@emotion/styled';
+import { Box, TextField, InputAdornment, Autocomplete } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import {
-  IconAdgetarium,
   IconBasket,
   IconFacebook,
-  IconG,
   IconInstagram,
   IconLike,
   IconPersonal,
   IconSearch,
   IconShoppingCard,
   IconWhatsApp,
-} from "../assets/icon";
-import ClearIcon from "@mui/icons-material/Clear";
-import theme from "../assets/theme/theme";
-import SidebarMenu from "./UI/SaidebarMenu";
+  Gadgettarium,
+} from '../assets/icon';
+import ClearIcon from '@mui/icons-material/Clear';
+import theme from '../assets/theme/theme';
+import SidebarMenu from './UI/SaidebarMenu';
 
 const links = [
-  { id: 2, text: "Главная" },
-  { id: 3, text: "О магазине" },
-  { id: 5, text: "Доставка" },
-  { id: 7, text: "FAQ" },
-  { id: 8, text: "Контакты" },
+  { id: 2, text: 'Главная' },
+  { id: 3, text: 'О магазине' },
+  { id: 5, text: 'Доставка' },
+  { id: 7, text: 'FAQ' },
+  { id: 8, text: 'Контакты' },
 ];
 
 const suggestions = [
-  "Электроника",
-  "Мобильные телефоны",
-  "Ноутбуки",
-  "Аксессуары",
-  "Смарт-часы",
-  "Гаджеты",
+  'Электроника',
+  'Мобильные телефоны',
+  'Ноутбуки',
+  'Аксессуары',
+  'Смарт-часы',
+  'Гаджеты',
 ];
 
 const Header = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const [showMainElements, setShowMainElements] = useState(true);
   const [showAdgetariumImg, setShowAdgetariumImg] = useState(false);
@@ -51,9 +50,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -61,8 +60,7 @@ const Header = () => {
     <>
       <FirstBox>
         <StyledAdgetariumImg>
-          <img src={IconG} alt="iconG" />
-          <img src={IconAdgetarium} alt="adgetarium" />
+          <img src={Gadgettarium} alt="iconG" />
         </StyledAdgetariumImg>
         <LinkBox>
           {links.map(({ id, text }) => (
@@ -79,8 +77,7 @@ const Header = () => {
         <BoxCatalog>
           {showAdgetariumImg && (
             <StyledAdgetariumImg>
-              <img src={IconG} alt="iconG" />
-              <img src={IconAdgetarium} alt="adgetarium" />
+              <img src={Gadgettarium} alt="Gadgetarium" />
             </StyledAdgetariumImg>
           )}
           <SidebarMenu />
@@ -105,10 +102,10 @@ const Header = () => {
                       <InputAdornment position="end">
                         <ClearIcon
                           onClick={() => {
-                            setInputValue("");
+                            setInputValue('');
                             setSelectedValue(null);
                           }}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                         />
                       </InputAdornment>
                     ) : (
@@ -142,137 +139,136 @@ const Header = () => {
 export default Header;
 
 const FirstBox = styled(Box)(() => ({
-  width: "100%",
-  height: "60px",
+  width: '100%',
+  height: '60px',
   backgroundColor: theme.palette.black.dark,
-  padding: "10px 60px 10px 60px",
-  display: "flex",
-  justifyContent: "space-between",
+  padding: '10px 60px 10px 60px',
+  display: 'flex',
+  justifyContent: 'space-between',
   color: theme.palette.lightGrey.light,
-  alignItems: "center",
-  borderBottom: "1px solid",
+  alignItems: 'center',
+  borderBottom: '1px solid',
   borderColor: theme.palette.black.main,
 }));
 
 const SecondBox = styled(Box)(() => ({
-  width: "100%",
-  padding: "10px 60px 10px 60px",
+  width: '100%',
+  padding: '10px 60px 10px 60px',
   backgroundColor: theme.palette.black.dark,
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center ",
-  position: "sticky",
-  top: "0",
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center ',
+  position: 'sticky',
+  top: '0',
 
-  "& hr": {
-    width: "2px",
-    height: "40px",
+  '& hr': {
+    width: '2px',
+    height: '40px',
     backgroundColor: theme.palette.black.main,
-    border: "none",
-    margin: "0 30px",
+    border: 'none',
+    margin: '0 30px',
   },
 }));
 
 const LinkBox = styled(Box)(() => ({
-  display: "flex",
-  gap: "18px",
-  fontSize: "17px",
+  display: 'flex',
+  gap: '18px',
+  fontSize: '17px',
 
-  "& span": {
-    alignContent: "center",
-    width: "85px",
-    height: "40px",
-    borderRadius: "4px",
-    textAlign: "center",
-    transition: "color 0.3s ease",
-    cursor: "pointer",
+  '& span': {
+    alignContent: 'center',
+    width: '85px',
+    height: '40px',
+    borderRadius: '4px',
+    textAlign: 'center',
+    transition: 'color 0.3s ease',
+    cursor: 'pointer',
   },
-  "& span:hover": {
+  '& span:hover': {
     backgroundColor: theme.palette.darkGrey.dark,
   },
 }));
 
 const StyledAutcompled = styled(Autocomplete)(() => ({
-  width: "100%",
-  color: "#fff",
-  margin: "0 150px 0 0",
+  width: '100%',
+  color: '#fff',
+  margin: '0 150px 0 0',
 }));
 
 const StyledTextField = styled(TextField)(() => ({
-  color: "#fff",
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    padding: "0",
-    "& fieldset": {
+  color: '#fff',
+  '& .MuiOutlinedInput-root': {
+    color: '#fff',
+    padding: '0',
+    '& fieldset': {
       borderColor: theme.palette.darkGrey.dark,
-      borderRadius: "8px",
-      color: "#fff",
+      borderRadius: '8px',
+      color: '#fff',
     },
-    "&:hover fieldset": {
+    '&:hover fieldset': {
       borderColor: theme.palette.lightGrey.main,
-      borderRadius: "8px",
+      borderRadius: '8px',
     },
-    "&.Mui-focused fieldset": {
+    '&.Mui-focused fieldset': {
       borderColor: theme.palette.lightGrey.main,
-      borderRadius: "8px",
-      color: "#fff",
+      borderRadius: '8px',
+      color: '#fff',
     },
   },
 }));
 
 const StyledAdgetariumImg = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center",
+  display: 'flex',
+  alignItems: 'center',
 
-  "& img:first-of-type": {
-    alignSelf: "start",
-    marginTop: "-2px",
-    marginRight: "3px",
-    backgroundColor: theme.palette.primary.main,
-    padding: "5px 4px",
+  '& img:first-of-type': {
+    alignSelf: 'start',
+    marginTop: '-2px',
+    marginRight: '3px',
+    padding: '5px 4px',
   },
 }));
 
 const StyledPersonBox = styled(Box)(() => ({
-  display: "flex",
-  "& img": {
-    width: "25px",
-    height: "25px",
-    marginLeft: "30px",
+  display: 'flex',
+  '& img': {
+    width: '25px',
+    height: '25px',
+    marginLeft: '30px',
   },
-  "& span": {
-    marginTop: "2.5px",
-    fontSize: "20px",
-    fontWeight: "lighter",
+  '& span': {
+    marginTop: '2.5px',
+    fontSize: '20px',
+    fontWeight: 'lighter',
   },
 }));
 
 const StyledImg = styled(Box)(() => ({
-  display: "flex",
-  gap: "15px",
-  margin: "0 120px 0 0",
-  cursor: "pointer",
-  "& img": {
-    width: "30px",
-    height: "30px",
+  display: 'flex',
+  gap: '15px',
+  margin: '0 120px 0 0',
+  cursor: 'pointer',
+  '& img': {
+    width: '30px',
+    height: '30px',
   },
-  "& img:nth-of-type(2)": {
-    width: "26px",
-    height: "26px",
-    marginTop: "2px",
+  '& img:nth-of-type(2)': {
+    width: '26px',
+    height: '26px',
+    marginTop: '2px',
   },
 }));
 
 const StyledImgBox = styled(Box)(() => ({
-  display: "flex",
-  padding: "0",
-  gap: "20px",
-  alignItems: "center",
-  cursor: "pointer",
+  display: 'flex',
+  padding: '0',
+  gap: '20px',
+  alignItems: 'center',
+  cursor: 'pointer',
 }));
 
 const BoxCatalog = styled(Box)(() => ({
-  display: "flex",
-  gap: "30px",
-  alignItems: "center",
+  display: 'flex',
+  gap: '30px',
+  alignItems: 'center',
 }));
