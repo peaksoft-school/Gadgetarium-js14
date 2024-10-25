@@ -12,7 +12,7 @@ import {
 const Card = ({
   img,
   text,
-  discountIcon,
+  discount,
   title,
   reiting,
   reviews,
@@ -33,9 +33,9 @@ const Card = ({
         </StyledIcanConteiner>
 
         <BoxAicanContainer>
-          {discountIcon ? (
+          {discount ? (
             <DiscountContainer>
-              <ProtsetBox>-{discountIcon}%</ProtsetBox>
+              <ProtsetBox>-{discount}%</ProtsetBox>
             </DiscountContainer>
           ) : null}
 
