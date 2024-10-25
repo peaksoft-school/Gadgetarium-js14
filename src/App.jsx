@@ -1,11 +1,5 @@
-import Infografics from "./components/UI/Infografics";
-
 const App = () => {
-  return (
-    <div>
-      <Infografics />
-    </div>
-  );
+  return <div>app</div>;
 };
 
 export default App;
