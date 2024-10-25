@@ -6,9 +6,9 @@ export { default as Strelca } from './Vector (1).svg';
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconFacebook } from "../icon/Facebook.svg";
+// export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
-export { default as IconG } from "../icon/G.svg";
+// export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
 export { default as IconPersonal } from "../icon/Personal.svg";
 export { default as IconSearch } from "../icon/Search.svg";
@@ -19,8 +19,6 @@ export { default as IconHonor } from "../icon/Honor.svg";
 export { default as IconHuawei } from "../icon/Huawei.svg";
 export { default as IconSamsung } from "../icon/Samsung.svg";
 export { default as IconXiaomi } from "../icon/Xiaomi.svg";
-
-
 
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
