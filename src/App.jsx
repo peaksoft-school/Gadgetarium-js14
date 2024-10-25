@@ -1,9 +1,9 @@
-import SidebarMenu from "./components/UI/SaidebarMenu";
+import Infografics from "./components/UI/Infografics";
 
 const App = () => {
   return (
     <div>
-      <SidebarMenu />
+      <Infografics />
     </div>
   );
 };
