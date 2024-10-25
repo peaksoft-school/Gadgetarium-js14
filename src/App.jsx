@@ -1,13 +1,7 @@
 import React from 'react';
 
-import Delivery from './layout/delivery/Delivery';
-
 const App = () => {
-  return (
-    <div>
-      <Delivery />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default App;
