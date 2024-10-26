@@ -8,7 +8,6 @@ import { useRef, useState } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import theme from "../assets/theme/theme";
 
 const contentData = [
   { main: "Главная »", store: "О магазине" },
@@ -70,7 +69,6 @@ const AboutStore = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     centerPadding: "5px",
-
   };
 
   return (
@@ -139,7 +137,7 @@ const AboutStore = () => {
 };
 export default AboutStore;
 
-const WrapperBox = styled(Box)(({}) => ({
+const WrapperBox = styled(Box)(({ theme }) => ({
   width: "100%",
   backgroundColor: theme.palette.lightGrey.light,
   padding: "60px 120px",
@@ -215,6 +213,10 @@ const SmallTextBox = styled(Box)(() => ({
 
 const StyledBox = styled(Box)(() => ({
   display: "flex",
+  "& img": {
+    width: "750px",
+    height: "auto",
+  },
 }));
 
 const SliderWrapperBox = styled(Box)(() => ({
@@ -222,7 +224,7 @@ const SliderWrapperBox = styled(Box)(() => ({
   overflow: "hidden",
 }));
 
-const ImageContainer = styled("div")(({ isActive }) => ({
+const ImageContainer = styled("div")(() => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
