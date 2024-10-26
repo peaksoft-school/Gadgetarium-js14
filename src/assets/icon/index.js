@@ -6,9 +6,9 @@ export { default as Strelca } from './Vector (1).svg';
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconFacebook } from "../icon/Facebook.svg";
+// export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
-export { default as IconG } from "../icon/G.svg";
+// export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
 export { default as IconPersonal } from "../icon/Personal.svg";
 export { default as IconSearch } from "../icon/Search.svg";
@@ -19,8 +19,6 @@ export { default as IconHonor } from "../icon/Honor.svg";
 export { default as IconHuawei } from "../icon/Huawei.svg";
 export { default as IconSamsung } from "../icon/Samsung.svg";
 export { default as IconXiaomi } from "../icon/Xiaomi.svg";
-
-
 
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
@@ -79,12 +77,11 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
-
-export {default as Headphones } from'./Headphones.svg'
-export {default as Monitor} from './Monitor.svg'
-export {default as Telefon} from './Telefon.svg'
-export {default as Vector} from './Vector.svg'
-export {default as Strelca} from './Vector (1).svg'
+// export {default as Headphones } from'./Headphones.svg'
+// export {default as Monitor} from './Monitor.svg'
+// export {default as Telefon} from './Telefon.svg'
+// export {default as Vector} from './Vector.svg'
+// export {default as Strelca} from './Vector (1).svg'
 
 export { default as banner } from '../image/banner.png';
 export { default as iphone } from '../image/iphone.jpg';
@@ -151,9 +148,11 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
-export {default as Telefon} from '../icon/Telefon (1).svg';
+// export {default as Telefon} from '../icon/Telefon (1).svg';
 export {default as Mestonahajdenie} from '../icon/Mestonahajdenie(1).svg'
 export {default as Chasy } from "../icon/Chasy.svg"
 export {default as Pochta} from '../icon/Pochta (1).svg'
 export {default as Nathvania} from '../icon/Nathvania. 337505.svg'
 export { default as Talog } from '../icon/Talog.svg';
+export {default as DiscountClasIcon} from '../icon/DiscountClasIcon.svg'
+

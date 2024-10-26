@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, TextField, InputAdornment, Autocomplete } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import {
   IconAdgetarium,
   IconBasket,
