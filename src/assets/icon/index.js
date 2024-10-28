@@ -150,11 +150,13 @@ export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
 export { default as volume } from '../icon/volume-1.svg';
-// export {default as Telefon} from '../icon/Telefon (1).svg';
-export {default as Mestonahajdenie} from '../icon/Mestonahajdenie(1).svg'
-export {default as Chasy } from "../icon/Chasy.svg"
-export {default as Pochta} from '../icon/Pochta (1).svg'
-export {default as Nathvania} from '../icon/Nathvania. 337505.svg'
+// export { default as Telefon } from '../i    con/Telefon1.svg';
+export { default as Mestonahajdenie } from '../icon/Mestonahajdenie(1).svg';
+export { default as Chasy } from '../icon/Chasy.svg';
+export { default as Pochta } from '../icon/Pochta (1).svg';
+export { default as Nathvania } from '../icon/Nathvania. 337505.svg';
 export { default as Talog } from '../icon/Talog.svg';
+export { default as Gadgettarium } from '../icon/Gadgettarium.svg';
+// export {default as Telefon} from '../icon/Telefon (1).svg';
 export {default as DiscountClasIcon} from '../icon/DiscountClasIcon.svg'
 
