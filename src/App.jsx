@@ -1,9 +1,10 @@
-import SidebarMenu from "./components/UI/SaidebarMenu";
+import React from "react";
+import Registration from "./components/Registration";
 
 const App = () => {
   return (
     <div>
-      <SidebarMenu />
+      <Registration signUpModal={true} />
     </div>
   );
 };
