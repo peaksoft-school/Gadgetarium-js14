@@ -1,7 +1,7 @@
 import { IconButton, InputAdornment, Modal } from "@mui/material";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { SystemX } from "../assets/icon";
 import { Visibility, VisibilityOff } from "@mui/icons-material";

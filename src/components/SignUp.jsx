@@ -1,5 +1,5 @@
 import { IconButton, Modal, InputAdornment } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import { SystemX } from "../assets/icon";
