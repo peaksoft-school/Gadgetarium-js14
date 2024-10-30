@@ -6,6 +6,7 @@ const Button = ({
   variant = 'outlined',
   size,
   type,
+  sx,
   ...props
 }) => {
   return (
