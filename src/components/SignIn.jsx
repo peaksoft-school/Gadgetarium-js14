@@ -91,7 +91,7 @@ const StyledForm = styled("form")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "18px",
-  padding: "60px ",
+  padding: "60px",
   textAlign: "center",
   position: "relative",
 

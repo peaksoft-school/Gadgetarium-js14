@@ -49,15 +49,7 @@ const SignUp = ({ open, onClose, data, openSignIn }) => {
     const phoneNumber = Number(formData.phone.replace(/\D/g, ""));
     const { name, surename, email, password } = formData;
     const userData = { name, surename, phone: phoneNumber, email, password };
-
-    console.log("phone (type):", typeof phoneNumber);
-    console.log("phone (value):", phoneNumber);
-    console.log(name);
-    console.log(surename);
-    console.log(email);
-    console.log(password);
-
-    data(userData);
+   data(userData);
   };
 
   return (
