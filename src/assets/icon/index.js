@@ -6,9 +6,9 @@ export { default as Strelca } from './Vector (1).svg';
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconFacebook } from "../icon/Facebook.svg";
+// export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
-export { default as IconG } from "../icon/G.svg";
+// export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
 export { default as IconPersonal } from "../icon/Personal.svg";
 export { default as IconSearch } from "../icon/Search.svg";
@@ -157,3 +157,4 @@ export {default as Chasy } from "../icon/Chasy.svg"
 export {default as Pochta} from '../icon/Pochta (1).svg'
 export {default as Nathvania} from '../icon/Nathvania. 337505.svg'
 export { default as Talog } from '../icon/Talog.svg';
+export {default as DeleteAicanRed} from '../icon/DeleteAicanRed.svg'
