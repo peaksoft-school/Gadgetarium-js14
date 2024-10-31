@@ -8,7 +8,7 @@ export { default as IconInfografica } from "../icon/Infografic.svg";
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-// export { default as IconFacebook } from "../icon/Facebook.svg";
+export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
 // export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
@@ -86,6 +86,11 @@ export { default as IconDelete } from "../icon/DeleteIcon.svg";
 // export {default as Telefon} from './Telefon.svg'
 // export {default as Vector} from './Vector.svg'
 // export {default as Strelca} from './Vector (1).svg'
+export { default as Chasy } from "../icon/Chasy.svg";
+export { default as Mestonahajdenie } from "../icon/Mestonahajdenie(1).svg";
+export { default as Nathvania } from "../icon/Nathvania. 337505.svg";
+export { default as Pochta } from "../icon/Pochta (1).svg";
+export { default as Gadgettarium } from "../icon/Gadgettarium.svg";
 
 export { default as banner } from "../image/banner.png";
 export { default as iphone } from "../image/iphone.jpg";
@@ -110,7 +115,7 @@ export { default as colorWhatsApp } from "../icon/colorWhatsApp.svg";
 export { default as colorFaceBook } from "../icon/colorFaceBook.svg";
 export { default as WhatsApp } from "../icon/WhatsApp.svg";
 export { default as Instagram } from "../icon/Instagram.svg";
-// export { default as FaceBook } from '../icon/FaceBook.svg';
+export { default as FaceBook } from '../icon/FaceBook.svg';
 export { default as Vector1 } from "../icon/Vector.svg";
 export { default as ulMenu } from "../icon/ulMenu.svg";
 export { default as menu } from "../icon/menu.svg";
