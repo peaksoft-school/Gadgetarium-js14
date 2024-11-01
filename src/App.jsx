@@ -1,5 +1,6 @@
 import React from "react";
 import AdminReview from "./components/UI/admin/AdminReview";
+import OrderPro from "./components/UI/admin/OrderPro";
 
 const App = () => {
   const reviews = [
@@ -32,6 +33,7 @@ const App = () => {
     <div>
       <h1>Отзывы</h1>
       <AdminReview reviews={reviews} /> {/* Передача массива отзывов */}
+      <OrderPro reviews={reviews} />
     </div>
   );
 };

@@ -1,11 +1,10 @@
-Вы сказали:
 import React, { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper, Button } from "@mui/material";
 import styled from "@emotion/styled";
 import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon";
 import Input from "../Input";
 
-const AdminReview = ({ reviews }) => {
+const OrderPro = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
 
   const toggleExpandAll = () => setIsExpandedAll(!isExpandedAll);
@@ -125,15 +124,19 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
   );
 };
 
-export default AdminReview;
+export default OrderPro;
 
 
 const StyledBox = styled("div")(() => ({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr ",
+  gap: "10px",
+  width: "100%",
+  padding: "20px",
+  border: "1px solid red ",
+  
+  gridTemplateColumns: "4fr 1fr ",
 
 
-  width: "450px",
   flexWrap: "wrap",
 }));
 
