@@ -3,7 +3,7 @@ import AdminReview from "./components/UI/admin/AdminReview";
 import OrderPro from "./components/UI/admin/OrderPro";
 
 const App = () => {
-  const reviews = [
+     const reviews = [
     {
       id: 1,
       productName: 'Asus',

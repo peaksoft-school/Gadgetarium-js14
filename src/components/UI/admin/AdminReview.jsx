@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon"; // Убедитесь, что пути к иконкам правильные
 import Input from "../Input"; // Импорт Input, если он используется
 import Button from "../Button";
+import Infografics from "../Infografics";
 
 const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
@@ -124,7 +125,7 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
             </Box>
           </CommentBox>
         )}
-        <
+        <Infografics />
       </StyledDiv>
     </StyledRow>
   );

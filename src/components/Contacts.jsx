@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/material";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 
@@ -117,7 +116,6 @@ const WrapperMainBox = styled(Box)(({ theme }) => ({
 
 const FirstBox = styled(Box)`
   font-size: 15px;
-
   span {
     display: inline-block;
     padding-bottom: 30px;
@@ -132,7 +130,6 @@ const FirstBox = styled(Box)`
     padding-left: 3px;
   }
 `;
-
 const StyledHr = styled.hr`
   width: 100%;
   padding: 0.6px;
@@ -172,7 +169,7 @@ const StyledForm = styled(Box)(() => ({
   },
 }));
 
-const StyledInputBox = styled(Box)((theme) => ({
+const StyledInputBox = styled(Box)(() => ({
   display: "grid",
   gap: "10px",
   marginBottom: "10px",
