@@ -57,7 +57,7 @@ const SignIn = ({ data, open, onClose, openSignUp }) => {
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
-            ),
+            )
           }}
           error={!!errors.password}
           helperText={errors.password ? errors.password.message : ""}

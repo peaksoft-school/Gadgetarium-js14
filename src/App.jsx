@@ -1,11 +1,10 @@
-import MainLayout from "./layout/user/UserLayout";
 import React from "react";
-import Approuter from "./routes/AppRouter";
+import AppRouter from "./routes/AppRouter";
 
 const App = () => {
   return (
     <div>
-<AppRouter />
+      <AppRouter />
     </div>
   );
 };
