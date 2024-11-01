@@ -27,7 +27,6 @@ const AdminReview = ({ reviews }) => {
           index={index}
           isExpandedAll={isExpandedAll}
           toggleExpandAll={toggleExpandAll}
-
         />
       ))}
 
@@ -38,7 +37,7 @@ const AdminReview = ({ reviews }) => {
   );
 };
 
-const ReviewComponent = ({ review, index, isExpandedAll,toggleExpandAll }) => {
+const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [icon, setIcon] = useState(garbage);
   const [responseText, setResponseText] = useState("");
@@ -46,7 +45,6 @@ const ReviewComponent = ({ review, index, isExpandedAll,toggleExpandAll }) => {
   const handleMouseEnter = () => setIcon(DeleteAicanRed);
   const handleMouseLeave = () => setIcon(garbage);
   const handleOpenModal = () => setIsModalOpen(true);
-
 
   const handleSaveResponse = () => {
     console.log("Response saved:", responseText);
@@ -82,36 +80,36 @@ const ReviewComponent = ({ review, index, isExpandedAll,toggleExpandAll }) => {
           <Typography>{review.user}</Typography>
         </UserSection>
         <StyledDeleteIcon
-            src={icon}
-            alt="Delete"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleOpenModal}
-          />
+          src={icon}
+          alt="Delete"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleOpenModal}
+        />
         <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
-            <img src={StateDown} alt="Expand" />
-          </Box>
-
-      {(isExpanded || isExpandedAll) && (
-        <Box sx={{ mt: 1, gridColumn: 'span 6' }}>
-          <Typography variant="h6">Ответить на комментарий</Typography>
-          <Input
-            style={{ cursor: "pointer" }}
-            placeholder="Введите ваш ответ..."
-            multiline={true}
-            rows={4}
-            value={responseText}
-            onChange={(e) => setResponseText(e.target.value)} 
-            />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleSaveResponse}
-            >
-            Сохранить ответ
-          </Button>
+          <img src={StateDown} alt="Expand" />
         </Box>
-      )}
+
+        {(isExpanded || isExpandedAll) && (
+          <Box sx={{ mt: 1, gridColumn: "span 6" }}>
+            <Typography variant="h6">Ответить на комментарий</Typography>
+            <Input
+              style={{ cursor: "pointer" }}
+              placeholder="Введите ваш ответ..."
+              multiline={true}
+              rows={4}
+              value={responseText}
+              onChange={(e) => setResponseText(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleSaveResponse}
+            >
+              Сохранить ответ
+            </Button>
+          </Box>
+        )}
       </StyledDiv>
     </StyledRow>
   );
@@ -119,7 +117,7 @@ const ReviewComponent = ({ review, index, isExpandedAll,toggleExpandAll }) => {
 
 export default AdminReview;
 
-const StyledContainer = styled(Box)( {
+const StyledContainer = styled(Box)({
   width: "100%",
   padding: "20px",
   borderRadius: "8px",
@@ -156,7 +154,7 @@ const CommentSection = styled("div")({
   gap: "4px",
 });
 
-const RatingSection = styled(Box)( {
+const RatingSection = styled(Box)({
   marginLeft: "-70px",
 });
 
@@ -166,10 +164,10 @@ const UserSection = styled("div")({
   marginLeft: "10px",
 });
 
-const StyledDiv = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '10px',
+const StyledDiv = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  gap: "10px",
 }));
 const StyledDeleteIcon = styled("img")({
   border: "1px solid blue",
