@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Avatar, Box, Typography, Rating, Paper, Button } from "@mui/material";
+import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
 import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon"; // Убедитесь, что пути к иконкам правильные
 import Input from "../Input"; // Импорт Input, если он используется
+import Button from "../Button";
 
 const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
@@ -76,6 +77,7 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
         <RatingSection>
           <Rating value={review.rating} readOnly />
         </RatingSection>
+
         <UserSection>
           <Typography>{review.user}</Typography>
         </UserSection>
@@ -91,7 +93,7 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
         </Box>
 
         {(isExpanded || isExpandedAll) && (
-          <Box sx={{ mt: 1, gridColumn: "span 6" }}>
+          <CommentBox>
             <Typography variant="h6">Ответить на комментарий</Typography>
             <Input
               style={{ cursor: "pointer" }}
@@ -101,15 +103,28 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
               value={responseText}
               onChange={(e) => setResponseText(e.target.value)}
             />
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleSaveResponse}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 1,
+                mt: 2,
+              }}
             >
-              Сохранить ответ
-            </Button>
-          </Box>
+              <Button variant="text" color="secondary">
+                Отменить
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleSaveResponse}
+              >
+                Сохранить
+              </Button>
+            </Box>
+          </CommentBox>
         )}
+        <
       </StyledDiv>
     </StyledRow>
   );
@@ -178,3 +193,7 @@ const StyledDeleteIcon = styled("img")({
   marginLeft: "10px",
   transition: "filter 0.3s ease",
 });
+
+const CommentBox = styled(Box)(() => ({
+  width: "480px",
+}));

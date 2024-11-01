@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Avatar, Box, Typography, Rating, Paper, Button } from "@mui/material";
+import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
 import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon";
 import Input from "../Input";
+import Button from "../Button";
 
 const OrderPro = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
@@ -53,7 +54,7 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
     <StyledRow
       style={{
         display: "grid",
-        gap:'20px',
+        gap: "20px",
         gridTemplateColumns: "0.2fr 0.2fr 0.5fr 1fr 1fr 1fr",
       }}
     >
@@ -80,45 +81,50 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
       </StyledCommentBox>
 
       <StyledBox>
-        <Box sx={{ border: "1px solid red " }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Rating value={review.rating} readOnly />
+
+          <StyledUserInfo>
+            <Avatar src={review.userAvatar} alt={review.user} />
+            <Box>
+              <Typography>{review.user}</Typography>
+              <Typography variant="caption">{review.userEmail}</Typography>
+            </Box>
+            <StyledDeleteIcon
+              src={icon}
+              alt="Delete"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={handleOpenModal}
+            />
+            <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
+              <img src={StateDown} alt="Expand" />
+            </Box>
+          </StyledUserInfo>
         </Box>
-        <StyledUserInfo>
-          <Avatar src={review.userAvatar} alt={review.user} />
-          <Box>
-            <Typography>{review.user}</Typography>
-            <Typography variant="caption">{review.userEmail}</Typography>
-          </Box>
-          <StyledDeleteIcon
-            src={icon}
-            alt="Delete"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleOpenModal}
-          />
-          <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
-            <img src={StateDown} alt="Expand" />
-          </Box>
-        </StyledUserInfo>
-          {(isExpanded || isExpandedAll) && (
-            <Box sx={{ mt: 1 }}>
-              <Typography variant="h6">Ответить на комментарий</Typography>
-              <Input
-                style={{ cursor: "pointer" }}
-                placeholder="Введите ваш ответ..."
-                multiline={true}
-                rows={4}
-              />
+
+        {(isExpanded || isExpandedAll) && (
+          <CommentBox>
+            <Typography variant="h6">Ответить на комментарий</Typography>
+            <Input
+              style={{ cursor: "pointer" }}
+              placeholder="Введите ваш ответ..."
+              multiline={true}
+              rows={4}
+            />
+            <Box
+              sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}
+            >
               <Button
                 variant="contained"
                 color="secondary"
-                style={{ backgroundColor: "#ff00ff" }}
                 onClick={handleSaveResponse}
               >
                 sdfdas
               </Button>
             </Box>
-          )}
+          </CommentBox>
+        )}
       </StyledBox>
     </StyledRow>
   );
@@ -126,18 +132,11 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
 
 export default OrderPro;
 
-
 const StyledBox = styled("div")(() => ({
-  display: "grid",
   gap: "10px",
   width: "100%",
   padding: "20px",
   border: "1px solid red ",
-  
-  gridTemplateColumns: "4fr 1fr ",
-
-
-  flexWrap: "wrap",
 }));
 
 const StyledContainer = styled(Box)({
@@ -160,7 +159,7 @@ const StyledHeader = styled("div")({
 
 const StyledRow = styled("div")({
   display: "flex",
-  alignItems: "center",  
+  alignItems: "center",
   padding: "15px 20px",
   borderBottom: "1px solid black",
   width: "100%",
@@ -182,7 +181,6 @@ const StyledCommentBox = styled("div")({
 
 const StyledUserInfo = styled("div")({
   border: "1px solid blue",
-
   display: "flex",
   alignItems: "center",
   gap: "20px",
@@ -203,3 +201,11 @@ const StyledDeleteIcon = styled("img")({
   marginLeft: "10px",
   transition: "filter 0.3s ease",
 });
+
+const CommentBox = styled(Box)(() => ({
+  mt: 1,
+  width: "480px",
+  "& Input": {
+    width: "100%",
+  },
+}));

@@ -26,13 +26,13 @@ const App = () => {
       userEmail: 'Adyl@mail.com',
       date: '20.06.22 - 14:15'
     },
-    // Добавьте другие отзывы
+   
   ];
 
   return (
     <div>
       <h1>Отзывы</h1>
-      <AdminReview reviews={reviews} /> {/* Передача массива отзывов */}
+      <AdminReview reviews={reviews} />
       <OrderPro reviews={reviews} />
     </div>
   );
