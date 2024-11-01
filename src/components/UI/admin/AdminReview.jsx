@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
-import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon"; // Убедитесь, что пути к иконкам правильные
-import Input from "../Input"; // Импорт Input, если он используется
+import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon";
+import Input from "../Input";
 import Button from "../Button";
-import Infografics from "../Infografics";
 
 const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
@@ -31,66 +30,93 @@ const AdminReview = ({ reviews }) => {
           toggleExpandAll={toggleExpandAll}
         />
       ))}
-
-      <Button variant="outlined" onClick={toggleExpandAll}>
-        {isExpandedAll ? "Скрыть все ответы" : "Показать все ответы"}
-      </Button>
     </StyledContainer>
   );
 };
 
 const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [icon, setIcon] = useState(garbage);
-  const [responseText, setResponseText] = useState("");
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleMouseEnter = () => setIcon(DeleteAicanRed);
   const handleMouseLeave = () => setIcon(garbage);
+
   const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleSaveResponse = () => {
     console.log("Response saved:", responseText);
-    setResponseText(""); // Сброс текста ответа после сохранения
-    setIsExpanded(false); // Закрыть поле ответа после сохранения
+    handleCloseModal();
   };
 
   return (
-    <StyledRow>
+    <StyledRow
+      style={{
+        display: "grid",
+        alignItems: "start",
+        gap: "10px",
+        gridTemplateColumns: "0.1fr 0.20fr 0.46fr 1.5fr 0.2fr ",
+      }}
+    >
       <Typography>{index + 1}</Typography>
-      <Avatar
-        src={review.photo}
-        alt="Фото"
-        style={{ width: "40px", height: "40px" }}
-      />
-      <ProductInfo>
+      <Avatar src={review.productImage} alt="Product" />
+
+      <StyledProductInfo>
         <Typography>{review.productName}</Typography>
-        <Typography variant="caption">Модель: {review.model}</Typography>
-      </ProductInfo>
-      <CommentSection>
+        <StyledTextModel variant="caption">
+          Модель
+          <br />
+          {review.model}
+        </StyledTextModel>
+      </StyledProductInfo>
+
+      <StyledCommentBox>
         <Typography>{review.comment}</Typography>
         {(isExpanded || isExpandedAll) && (
-          <Box sx={{ mt: 1 }}>
-            <Typography>Дополнительная информация о комментарии...</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              width: "500px",
+
+              flexWrap: "wrap",
+            }}
+          >
+            <Typography>{review.cometntsSry}</Typography>
           </Box>
         )}
-      </CommentSection>
-      <StyledDiv>
-        <RatingSection>
-          <Rating value={review.rating} readOnly />
-        </RatingSection>
+        <Typography variant="caption">{review.date}</Typography>
+      </StyledCommentBox>
 
-        <UserSection>
-          <Typography>{review.user}</Typography>
-        </UserSection>
-        <StyledDeleteIcon
-          src={icon}
-          alt="Delete"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleOpenModal}
-        />
-        <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
-          <img src={StateDown} alt="Expand" />
+      <StyledBox>
+        <Box
+          sx={{
+            display: "flex",
+            width: "500px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Rating value={review.rating} readOnly />
+
+          <StyledUserInfo>
+            <Avatar src={review.userAvatar} alt={review.user} />
+            <Box>
+              <Typography>{review.user}</Typography>
+              <Typography style={{ color: "#dbdddf" }} variant="caption">
+                {review.userEmail}
+              </Typography>
+            </Box>
+            <StyledDeleteIcon
+              src={icon}
+              alt="Delete"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={handleOpenModal}
+            />
+            <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
+              <img src={StateDown} alt="Expand" />
+            </Box>
+          </StyledUserInfo>
         </Box>
 
         {(isExpanded || isExpandedAll) && (
@@ -101,37 +127,31 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
               placeholder="Введите ваш ответ..."
               multiline={true}
               rows={4}
-              value={responseText}
-              onChange={(e) => setResponseText(e.target.value)}
             />
             <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 1,
-                mt: 2,
-              }}
+              sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}
             >
-              <Button variant="text" color="secondary">
-                Отменить
-              </Button>
               <Button
                 variant="contained"
                 color="secondary"
                 onClick={handleSaveResponse}
               >
-                Сохранить
+                Отправить
               </Button>
             </Box>
           </CommentBox>
         )}
-        <Infografics />
-      </StyledDiv>
+      </StyledBox>
     </StyledRow>
   );
 };
 
 export default AdminReview;
+
+const StyledBox = styled("div")(() => ({
+  gap: "50px",
+  width: "100%",
+}));
 
 const StyledContainer = styled(Box)({
   width: "100%",
@@ -142,7 +162,7 @@ const StyledContainer = styled(Box)({
 
 const StyledHeader = styled("div")({
   display: "grid",
-  gridTemplateColumns: "0.1fr 0.15fr 0.35fr 1.5fr 0.2fr 0.25fr",
+  gridTemplateColumns: "0.1fr 0.22fr 0.45fr 1.5fr 0.6fr 0.45fr",
   padding: "10px 20px",
   backgroundColor: "#f5f5f5",
   fontWeight: "bold",
@@ -150,43 +170,37 @@ const StyledHeader = styled("div")({
 });
 
 const StyledRow = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "0.1fr 0.15fr 0.35fr 1.5fr 0.2fr 0.25fr",
+  display: "flex",
   alignItems: "center",
   padding: "15px 20px",
-  borderBottom: "1px solid #ddd",
+  borderBottom: "1px solid black",
+  width: "100%",
   boxSizing: "border-box",
 });
 
-const ProductInfo = styled("div")({
+const StyledProductInfo = styled("div")({
   display: "flex",
   flexDirection: "column",
-  gap: "4px",
 });
 
-const CommentSection = styled("div")({
+const StyledCommentBox = styled("div")({
+
   display: "flex",
   flexDirection: "column",
-  gap: "4px",
 });
 
-const RatingSection = styled(Box)({
-  marginLeft: "-70px",
-});
-
-const UserSection = styled("div")({
+const StyledUserInfo = styled("div")({
   display: "flex",
   alignItems: "center",
-  marginLeft: "10px",
+  gap: "10px",
 });
 
-const StyledDiv = styled("div")(() => ({
-  display: "flex",
-  justifyContent: "flex-end",
-  gap: "10px",
+const StyledTextModel = styled(Typography)(() => ({
+
+  color: "#909cb5",
 }));
+
 const StyledDeleteIcon = styled("img")({
-  border: "1px solid blue",
 
   cursor: "pointer",
   width: "24px",
@@ -196,5 +210,9 @@ const StyledDeleteIcon = styled("img")({
 });
 
 const CommentBox = styled(Box)(() => ({
+  mt: 1,
   width: "480px",
+  "& Input": {
+    width: "100%",
+  },
 }));
