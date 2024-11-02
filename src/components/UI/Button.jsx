@@ -15,6 +15,7 @@ const Button = ({
       onClick={onClick}
       variant={variant}
       size={size}
+      sx={sx}
       {...props}
     >
       {children}
