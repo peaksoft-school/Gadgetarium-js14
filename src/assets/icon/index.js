@@ -1,14 +1,16 @@
-export { default as Headphones } from './Headphones.svg';
-export { default as Monitor } from './Monitor.svg';
-export { default as Telefon } from './Telefon.svg';
-export { default as Vector } from './Vector.svg';
-export { default as Strelca } from './Vector (1).svg';
+export { default as Headphones } from "./Headphones.svg";
+export { default as Monitor } from "./Monitor.svg";
+export { default as Telefon } from "./Telefon.svg";
+export { default as Vector } from "./Vector.svg";
+export { default as Strelca } from "./Vector (1).svg";
+export { default as IconC } from "../icon/Summa.svg";
+export { default as IconInfografica } from "../icon/Infografic.svg";
 export { default as IconAdgetarium } from "../icon/Adgetarium.svg";
 export { default as IconInstagram } from "../icon/Instagram.svg";
 export { default as IconBasket } from "../icon/Basket.svg";
-export { default as IconFacebook } from "../icon/Facebook.svg";
+// export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
-export { default as IconG } from "../icon/G.svg";
+// export { default as IconG } from "../icon/G.svg";
 export { default as IconLike } from "../icon/Like.svg";
 export { default as IconPersonal } from "../icon/Personal.svg";
 export { default as IconSearch } from "../icon/Search.svg";
@@ -19,8 +21,8 @@ export { default as IconHonor } from "../icon/Honor.svg";
 export { default as IconHuawei } from "../icon/Huawei.svg";
 export { default as IconSamsung } from "../icon/Samsung.svg";
 export { default as IconXiaomi } from "../icon/Xiaomi.svg";
-
-
+export { default as IconAddPhoto } from "../icon/AddPhotoIcon.svg";
+export { default as IconDelete } from "../icon/DeleteIcon.svg";
 
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
@@ -79,36 +81,35 @@ export { default as IconXiaomi } from "../icon/Xiaomi.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
 // export { default as letterB } from "../icon/letterB.svg";
-
 // export {default as Headphones } from'./Headphones.svg'
 // export {default as Monitor} from './Monitor.svg'
 // export {default as Telefon} from './Telefon.svg'
 // export {default as Vector} from './Vector.svg'
 // export {default as Strelca} from './Vector (1).svg'
 
-export { default as banner } from '../image/banner.png';
-export { default as iphone } from '../image/iphone.jpg';
-export { default as macBook } from '../image/macBook.jpg';
-export { default as product } from '../image/product.webp';
+export { default as banner } from "../image/banner.png";
+export { default as iphone } from "../image/iphone.jpg";
+export { default as macBook } from "../image/macBook.jpg";
+export { default as product } from "../image/product.webp";
 
-export { default as Group } from '../icon/Group.svg';
-export { default as Man } from '../icon/Man.svg';
-export { default as PropertyLeft } from '../icon/PropertyLeft.svg';
-export { default as PropertyRight } from '../icon/PropertyRight.svg';
-export { default as Scales } from '../icon/Scales.svg';
-export { default as ScalesEight } from '../icon/ScalesEight.svg';
-export { default as HeartEight } from '../icon/HeartEight.svg';
-export { default as Heart } from '../icon/Heart.svg';
-export { default as GroceryCart } from '../icon/GroceryCart.svg';
-export { default as GroceryCartTwo } from '../icon/GroceryCartTwo.svg';
-export { default as CheckMark } from '../icon/CheckMark.svg';
-export { default as catalog } from '../icon/catalog.svg';
-export { default as personalAccount } from '../icon/personalAccount.svg';
-export { default as colorInstagram } from '../icon/colorInstagram.svg';
-export { default as colorWhatsApp } from '../icon/colorWhatsApp.svg';
-export { default as colorFaceBook } from '../icon/colorFaceBook.svg';
-export { default as WhatsApp } from '../icon/WhatsApp.svg';
-export { default as Instagram } from '../icon/Instagram.svg';
+export { default as Group } from "../icon/Group.svg";
+export { default as Man } from "../icon/Man.svg";
+export { default as PropertyLeft } from "../icon/PropertyLeft.svg";
+export { default as PropertyRight } from "../icon/PropertyRight.svg";
+export { default as Scales } from "../icon/Scales.svg";
+export { default as ScalesEight } from "../icon/ScalesEight.svg";
+export { default as HeartEight } from "../icon/HeartEight.svg";
+export { default as Heart } from "../icon/Heart.svg";
+export { default as GroceryCart } from "../icon/GroceryCart.svg";
+export { default as GroceryCartTwo } from "../icon/GroceryCartTwo.svg";
+export { default as CheckMark } from "../icon/CheckMark.svg";
+export { default as catalog } from "../icon/catalog.svg";
+export { default as personalAccount } from "../icon/personalAccount.svg";
+export { default as colorInstagram } from "../icon/colorInstagram.svg";
+export { default as colorWhatsApp } from "../icon/colorWhatsApp.svg";
+export { default as colorFaceBook } from "../icon/colorFaceBook.svg";
+export { default as WhatsApp } from "../icon/WhatsApp.svg";
+export { default as Instagram } from "../icon/Instagram.svg";
 // export { default as FaceBook } from '../icon/FaceBook.svg';
 export { default as Vector1 } from '../icon/Vector.svg';
 export { default as ulMenu } from '../icon/ulMenu.svg';

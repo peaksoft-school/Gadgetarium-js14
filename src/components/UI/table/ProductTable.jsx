@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-key */
-import { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Paper,
@@ -13,86 +12,12 @@ import {
   Box,
   Checkbox,
 } from "@mui/material";
-import { useTable, usePagination } from "react-table";
 import styled from "@emotion/styled";
-import { editLine, garbage } from "../../../assets/icon";
+import { usePagination, useTable } from "react-table";
 
-const ProductTable = ({ data }) => {
+const ProductTable = ({ data, columns }) => {
   const [hoveredRowId, setHoveredRowId] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "ID",
-        accessor: "id",
-        Cell: ({ row }) =>
-          hoveredRowId === row.original.id ? (
-            <Checkbox
-              checked={selectedIds.includes(row.original.id)}
-              onChange={() => handleCheckboxClick(row.original.id)}
-              disabled
-            />
-          ) : (
-            row.original.id
-          ),
-      },
-      {
-        Header: "Фото",
-        accessor: "photo",
-        Cell: ({ cell: { value } }) => <Avatar src={value} alt="Product" />,
-      },
-      {
-        Header: "Артикул",
-        accessor: "article",
-      },
-      {
-        Header: "Наименование товара",
-        accessor: "name",
-      },
-      {
-        Header: "Дата создания",
-        accessor: "date",
-      },
-      {
-        Header: "Цена товара",
-        accessor: "price",
-        Cell: ({ row }) => (
-          <>
-            <div>{row.original.price}</div>
-            <div style={{ color: "red", marginLeft: "5px" }}>
-              {row.original.discount}
-            </div>
-          </>
-        ),
-      },
-      {
-        Header: "Текущая цена",
-        accessor: "currentPrice",
-      },
-      {
-        Header: "Действия",
-        accessor: "actions",
-        Cell: ({ row }) => (
-          <div style={{ display: "flex", gap: "10px" }}>
-            <img
-              src={garbage}
-              alt="Удалить"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleDelete(row.original.id)}
-            />
-            <img
-              src={editLine}
-              alt="Редактировать"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleEdit(row.original.id)}
-            />
-          </div>
-        ),
-      },
-    ],
-    [hoveredRowId, selectedIds]
-  );
 
   const handleCheckboxClick = (id) => {
     setSelectedIds((prev) =>
@@ -100,14 +25,6 @@ const ProductTable = ({ data }) => {
         ? prev.filter((selectedId) => selectedId !== id)
         : [...prev, id]
     );
-  };
-
-  const handleDelete = (id) => {
-    console.log(`Удалить элемент с ID: ${id}`);
-  };
-
-  const handleEdit = (id) => {
-    console.log(`Редактировать элемент с ID: ${id}`);
   };
 
   const {
@@ -143,17 +60,33 @@ const ProductTable = ({ data }) => {
             <TableBody {...getTableBodyProps()}>
               {page.map((row) => {
                 prepareRow(row);
+                const rowId = row.original.id; // Получаем ID строки
                 return (
                   <TableRow
                     {...row.getRowProps()}
-                    onMouseEnter={() => setHoveredRowId(row.original.id)}
+                    onMouseEnter={() => setHoveredRowId(rowId)}
                     onMouseLeave={() => setHoveredRowId(null)}
                   >
-                    {row.cells.map((cell) => (
-                      <StyledBodyCell {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </StyledBodyCell>
-                    ))}
+                    <StyledBodyCell>
+                      {hoveredRowId === rowId ? ( // Проверяем, наведена ли строка
+                        <Checkbox
+                          checked={selectedIds.includes(rowId)} // Устанавливаем состояние флажка
+                          onChange={() => handleCheckboxClick(rowId)} // Обработчик клика
+                        />
+                      ) : (
+                        rowId // Отображаем ID, если строка не наведена
+                      )}
+                    </StyledBodyCell>
+                    {row.cells.map((cell, index) => {
+                      if (cell.column.id !== "id") { // Убираем отображение ID из других ячеек
+                        return (
+                          <StyledBodyCell {...cell.getCellProps()} key={index}>
+                            {cell.render("Cell")}
+                          </StyledBodyCell>
+                        );
+                      }
+                      return null; // Не отображаем ячейку с ID
+                    })}
                   </TableRow>
                 );
               })}
