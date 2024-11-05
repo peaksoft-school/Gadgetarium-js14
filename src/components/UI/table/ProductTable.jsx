@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Avatar,
+
   Paper,
   Table,
   TableCell,
@@ -60,7 +60,7 @@ const ProductTable = ({ data, columns }) => {
             <TableBody {...getTableBodyProps()}>
               {page.map((row) => {
                 prepareRow(row);
-                const rowId = row.original.id; // Получаем ID строки
+                const rowId = row.original.id; 
                 return (
                   <TableRow
                     {...row.getRowProps()}
@@ -68,24 +68,24 @@ const ProductTable = ({ data, columns }) => {
                     onMouseLeave={() => setHoveredRowId(null)}
                   >
                     <StyledBodyCell>
-                      {hoveredRowId === rowId ? ( // Проверяем, наведена ли строка
+                      {hoveredRowId === rowId ? ( 
                         <Checkbox
-                          checked={selectedIds.includes(rowId)} // Устанавливаем состояние флажка
-                          onChange={() => handleCheckboxClick(rowId)} // Обработчик клика
+                          checked={selectedIds.includes(rowId)}
+                          onChange={() => handleCheckboxClick(rowId)} 
                         />
                       ) : (
-                        rowId // Отображаем ID, если строка не наведена
+                        rowId 
                       )}
                     </StyledBodyCell>
                     {row.cells.map((cell, index) => {
-                      if (cell.column.id !== "id") { // Убираем отображение ID из других ячеек
+                      if (cell.column.id !== "id") {
                         return (
                           <StyledBodyCell {...cell.getCellProps()} key={index}>
                             {cell.render("Cell")}
                           </StyledBodyCell>
                         );
                       }
-                      return null; // Не отображаем ячейку с ID
+                      return null; 
                     })}
                   </TableRow>
                 );
