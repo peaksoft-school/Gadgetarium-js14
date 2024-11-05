@@ -19,6 +19,8 @@ export { default as IconHonor } from '../icon/Honor.svg';
 export { default as IconHuawei } from '../icon/Huawei.svg';
 export { default as IconSamsung } from '../icon/Samsung.svg';
 export { default as IconXiaomi } from '../icon/Xiaomi.svg';
+export { default as IconAddPhoto } from '../icon/AddPhotoIcon.svg';
+export { default as IconDelete } from '../icon/DeleteIcon.svg';
 
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
@@ -76,7 +78,11 @@ export { default as IconXiaomi } from '../icon/Xiaomi.svg';
 // export { default as greyHeart } from "../icon/greyHeart.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
-// export { default as letterB } from "../icon/letterB.svg";
+// export {default as Headphones } from'./Headphones.svg'
+// export {default as Monitor} from './Monitor.svg'
+// export {default as Telefon} from './Telefon.svg'
+// export {default as Vector} from './Vector.svg'
+// export {default as Strelca} from './Vector (1).svg'
 
 export { default as Group } from '../icon/Group.svg';
 export { default as Man } from '../icon/Man.svg';
@@ -132,12 +138,16 @@ export { default as Jurok } from '../icon/Jurok.svg';
 export { default as redHeart } from '../icon/redHeart.svg';
 export { default as YouTub } from '../icon/YouTub.svg';
 export { default as x } from '../icon/x.svg';
-export { default as greyHeart } from '../icon/greyHeart.svg';
 export { default as DefaultP } from '../icon/DefaultP.svg';
-export { default as eyes } from '../icon/eyes.svg';
 export { default as letterB } from '../icon/letterB.svg';
 export { default as letterU } from '../icon/letterU.svg';
-export { default as volume } from '../icon/volume-1.svg';
 export { default as Talog } from '../icon/Talog.svg';
 export { default as CtrelcaAican2 } from '../icon/CtrelcaAican2.svg';
 export { default as Gadget } from '../icon/Gadget.svg';
+export { default as banner } from '../image/banner.png';
+export { default as iphone } from '../image/iphone.jpg';
+export { default as macBook } from '../image/macBook.jpg';
+export { default as product } from '../image/product.webp';
+export { default as greyHeart } from '../icon/greyHeart.svg';
+export { default as eyes } from '../icon/eyes.svg';
+export { default as volume } from '../icon/volume-1.svg';

@@ -16,7 +16,7 @@ const AdminHeader = () => {
           <p>Отзывы и рейтинги</p>
         </StyledDiv>
         <StyledFlex>
-          <Button variant="contained" sx={{ borderRadius: '60px' }}>
+          <Button variant="rounded" sx={{ borderRadius: '50%' }}>
             Создать рыссылку
           </Button>
           <StyledI></StyledI>
