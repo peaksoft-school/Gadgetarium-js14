@@ -1,5 +1,5 @@
-import { Email } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
+import { signInRequest, signUpRequest } from "./authThank";
 
 const getInitialState = () => {
   const json = localStorage.getItem("Gadgetarium");
@@ -66,5 +66,10 @@ export const authSlice = createSlice({
       (state.userData = payload), (state.userData.isAuth = true);
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    addAsyncCases(builder, signInRequest, "userData");
+    addAsyncCases(builder, signUpRequest, "userData");
+  },
 });
+
+export const authAxtions = authSlice.actions;

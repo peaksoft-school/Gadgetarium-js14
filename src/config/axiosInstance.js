@@ -1,6 +1,7 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-export const axiosInstance = create({
-  baseURL: BASE_URL,
+import axios from "axios";
+
+export const axiosInstance = axios.create({
+  baseURL: "https://c7512915e314a74e.mokky.dev.user",
   headers: {
     "Content-Type": "application/json",
   },

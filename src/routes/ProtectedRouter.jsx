@@ -1,19 +1,18 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRouter = ({
+export const ProtectedRouter = ({
   isAuth,
-  components: Component,
+  component: Component,
   role,
   roles,
   fallbackPath,
 }) => {
   const isAllowed = roles.includes(role);
+
   if (isAuth && isAllowed) {
-    return <Component />;
+    return Component;
   }
 
   return <Navigate to={fallbackPath} />;
 };
-
-export default ProtectedRouter;

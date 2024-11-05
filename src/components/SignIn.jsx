@@ -8,6 +8,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const schema = yup.object().shape({
   email: yup
@@ -22,7 +24,9 @@ const schema = yup.object().shape({
     .required("Пароль обязателен"),
 });
 
-const SignIn = ({ data, open, onClose, openSignUp }) => {
+const SignIn = ({ data, onClose, openSignUp }) => {
+  const dispatch= useDispatch()
+  const {isLoading}=useSelector((state)=>state.auth)
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -33,7 +37,7 @@ const SignIn = ({ data, open, onClose, openSignUp }) => {
   });
 
   const onSubmit = (formData) => {
-    data(formData);
+    dispatch(signInRequest(formData))
   };
   return (
     <StyledModal open={open} onClose={onClose}>
@@ -57,7 +61,7 @@ const SignIn = ({ data, open, onClose, openSignUp }) => {
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
-            )
+            ),
           }}
           error={!!errors.password}
           helperText={errors.password ? errors.password.message : ""}
@@ -70,7 +74,9 @@ const SignIn = ({ data, open, onClose, openSignUp }) => {
         </Button>
         <StyledP>
           Нет аккаунта?
-          <span onClick={openSignUp}>Зарегистрироваться</span>
+          <span style={{ cursor: "pointer" }} onClick={openSignUp}>
+            Зарегистрироваться
+          </span>
         </StyledP>
       </StyledForm>
     </StyledModal>

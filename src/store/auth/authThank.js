@@ -3,7 +3,7 @@ import { axiosInstance } from "../../config/axiosInstance";
 
 export const signInRequest = createAsyncThunk(
   "auth/signIn",
-  async ({ userData, onClose}, { rejectWithValue }) => {
+  async ({ userData, onClose }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post("/auth", userData);
       const response = { ...data.data, token: data.token, isAuth: true };
@@ -41,3 +41,5 @@ export const signUpRequest = createAsyncThunk(
     }
   }
 );
+
+export const logOut = createAsyncThunk("auth/logOut", () => {});
