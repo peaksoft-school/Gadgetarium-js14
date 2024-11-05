@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
-import { DeleteAicanRed, garbage, StateDown } from "../../../assets/icon";
+import { DeleteAicanRed, garbage, StateDown, StateUp } from "../../../assets/icon";
 import Input from "../Input";
 import Button from "../Button";
 
@@ -36,8 +36,8 @@ const AdminReview = ({ reviews }) => {
 
 const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
   const [icon, setIcon] = useState(garbage);
-
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isIconUp, setIsIconUp] = useState(false);
 
   const handleMouseEnter = () => setIcon(DeleteAicanRed);
   const handleMouseLeave = () => setIcon(garbage);
@@ -50,15 +50,13 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
     handleCloseModal();
   };
 
+  const toggleIconDirection = () => {
+    setIsIconUp(!isIconUp);
+    toggleExpandAll();
+  };
+
   return (
-    <StyledRow
-      style={{
-        display: "grid",
-        alignItems: "start",
-        gap: "10px",
-        gridTemplateColumns: "0.1fr 0.20fr 0.46fr 1.5fr 0.2fr ",
-      }}
-    >
+    <StyledRow>
       <Typography>{index + 1}</Typography>
       <Avatar src={review.productImage} alt="Product" />
 
@@ -78,7 +76,6 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
             sx={{
               display: "flex",
               width: "500px",
-
               flexWrap: "wrap",
             }}
           >
@@ -113,8 +110,8 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
               onMouseLeave={handleMouseLeave}
               onClick={handleOpenModal}
             />
-            <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
-              <img src={StateDown} alt="Expand" />
+            <Box onClick={toggleIconDirection} style={{ cursor: "pointer" }}>
+              <img src={isIconUp ? StateUp : StateDown} alt="Expand" />
             </Box>
           </StyledUserInfo>
         </Box>
@@ -148,6 +145,7 @@ const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
 
 export default AdminReview;
 
+// Стили
 const StyledBox = styled("div")(() => ({
   gap: "50px",
   width: "100%",
@@ -170,12 +168,12 @@ const StyledHeader = styled("div")({
 });
 
 const StyledRow = styled("div")({
-  display: "flex",
-  alignItems: "center",
+  display: "grid",
+  alignItems: "start",
   padding: "15px 20px",
   borderBottom: "1px solid black",
-  width: "100%",
-  boxSizing: "border-box",
+  gap: "10px",
+  gridTemplateColumns: "0.1fr 0.20fr 0.46fr 1.5fr 0.2fr",
 });
 
 const StyledProductInfo = styled("div")({
@@ -184,7 +182,6 @@ const StyledProductInfo = styled("div")({
 });
 
 const StyledCommentBox = styled("div")({
-
   display: "flex",
   flexDirection: "column",
 });
@@ -196,12 +193,10 @@ const StyledUserInfo = styled("div")({
 });
 
 const StyledTextModel = styled(Typography)(() => ({
-
   color: "#909cb5",
 }));
 
 const StyledDeleteIcon = styled("img")({
-
   cursor: "pointer",
   width: "24px",
   height: "24px",
