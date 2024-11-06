@@ -3,13 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
 import { userRoutes } from "./user-router/userRoutes";
-import UserLayout from "../layout/user/UserLayout";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
-import Registration from "../components/Registration";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
-  console.log("data", userData);
 
   const router = createBrowserRouter([
     {
@@ -46,10 +43,7 @@ const AppRouter = () => {
       ],
     },
 
-    {
-      path: "/signin",
-      element: <Registration signInModal={true} />,
-    },
+  
   ]);
 
   return <RouterProvider router={router} />;
