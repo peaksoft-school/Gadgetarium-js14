@@ -1,5 +1,7 @@
 import { forwardRef } from "react";
 import { styled, TextField, InputAdornment } from "@mui/material";
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 
 const Input = forwardRef(
   (
@@ -11,6 +13,7 @@ const Input = forwardRef(
       error = false,
       disabled = false,
       Icon,
+      sx,
       ...props
     },
     ref
@@ -27,6 +30,7 @@ const Input = forwardRef(
           fullWidth
           inputRef={ref}
           error={error}
+          sx={sx}
           disabled={disabled}
           InputProps={{
             startAdornment: Icon && (
