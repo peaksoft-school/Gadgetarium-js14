@@ -8,15 +8,20 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ru";
 import theme from "./assets/theme/theme.js";
 import dayjs from "dayjs";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
+import { injectStore } from "./config/axiosInstance.js";
 
+injectStore(store);
 dayjs.locale("ru");
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </LocalizationProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
-

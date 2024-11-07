@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "@emotion/styled";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpRequest } from "../store/auth/authThank";
 
 const schema = yup.object().shape({
   name: yup.string().required("Имя обязательно"),
@@ -34,9 +37,14 @@ const schema = yup.object().shape({
     .required("Подтверждение пароля обязательно"),
 });
 
-const SignUp = ({ open, onClose, data, openSignIn }) => {
+const SignUp = ({  onClose,  openSignIn }) => {
+  const dispatch= useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const {isLoadig} = useSelector((state)=>state.auth)
+
+  
   const {
     register,
     handleSubmit,
@@ -45,11 +53,14 @@ const SignUp = ({ open, onClose, data, openSignIn }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (formData) => {
-    const phoneNumber = Number(formData.phone.replace(/\D/g, ""));
-    const { name, surename, email, password } = formData;
+  const onSubmit = (value) => {
+    const phoneNumber = Number(value.phone.replace(/\D/g, ""));
+    const { name, surename, email, password } = value;
     const userData = { name, surename, phone: phoneNumber, email, password };
-   data(userData);
+
+    // data(userData);
+
+    dispatch (signUpRequest(userData));
   };
 
   return (
@@ -125,7 +136,11 @@ const SignUp = ({ open, onClose, data, openSignIn }) => {
           Создать аккаунт
         </Button>
         <StyledP>
-          У вас уже есть аккаунт? <span onClick={openSignIn}> Войти</span>
+          У вас уже есть аккаунт?{" "}
+          <span style={{ cursor: "pointer" }} onClick={openSignIn}>
+            {" "}
+            Войти
+          </span>
         </StyledP>
       </StyledForm>
     </StyledModal>
