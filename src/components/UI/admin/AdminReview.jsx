@@ -7,8 +7,23 @@ import Button from "../Button";
 
 const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
+  const [expandedComments, setExpandedComments] = useState({});
 
-  const toggleExpandAll = () => setIsExpandedAll(!isExpandedAll);
+  const toggleExpandAll = () => {
+    setIsExpandedAll(!isExpandedAll);
+    const newExpandedComments = reviews.reduce((acc, review) => {
+      acc[review.id] = !isExpandedAll;
+      return acc;
+    }, {});
+    setExpandedComments(newExpandedComments);
+  };
+
+  const toggleExpandComment = (id) => {
+    setExpandedComments((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <StyledContainer component={Paper}>
@@ -23,17 +38,7 @@ const AdminReview = ({ reviews }) => {
 
       {reviews.length > 0 ? (
         reviews.map((review, index) => {
-          const [icon, setIcon] = useState(garbage);
-          const [isExpanded, setIsExpanded] = useState(false);
-          const [isIconUp, setIsIconUp] = useState(false);
-
-          const handleMouseEnter = () => setIcon(DeleteAicanRed);
-          const handleMouseLeave = () => setIcon(garbage);
-
-          const toggleIconDirection = () => {
-            setIsIconUp(!isIconUp);
-            setIsExpanded(!isExpanded);
-          };
+          const isExpanded = expandedComments[review.id] || isExpandedAll;
 
           return (
             <StyledRow key={review.id}>
@@ -50,21 +55,18 @@ const AdminReview = ({ reviews }) => {
               </StyledProductInfo>
 
               <StyledCommentBox>
-                <Typography>{review.comment}</Typography>
-                
-                <Box sx={{ display: "flex", width: "500px", flexWrap: "wrap" }}>
+                <Box sx={{ display: "flex", width: "400px", flexWrap: "wrap", margin:'0', padding:'0' }}>
                   <Typography>
-                    {isExpanded || isExpandedAll
-                      ? review.cometntsSry 
-                      : review.cometntsSry.split(" ").slice(0, 5).join(" ")} 
+                    {isExpanded
+                      ? review.comment
+                      : review.comment.split(" ").slice(0, 11).join(" ")}{" "}
                   </Typography>
-                  
-                  {review.cometntsSry.split(" ").length > 5 && (
+
+                  {review.comment.split(" ").length > 11 && (
                     <Typography
                       variant="body2"
                       color="primary"
-                      onClick={() => setIsExpanded(!isExpanded)}
-                      sx={{ cursor: "pointer", marginLeft: "5px" }}
+                      onClick={() => toggleExpandComment(review.id)}
                     >
                       {isExpanded }
                     </Typography>
@@ -75,7 +77,7 @@ const AdminReview = ({ reviews }) => {
               </StyledCommentBox>
 
               <StyledBox>
-                <Box sx={{ display: "flex", width: "500px", justifyContent: "space-between" }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%",  gap:'125px'}}>
                   <Rating value={review.rating} readOnly />
 
                   <StyledUserInfo>
@@ -87,19 +89,19 @@ const AdminReview = ({ reviews }) => {
                       </Typography>
                     </Box>
                     <StyledDeleteIcon
-                      src={icon}
+                      src={garbage}
                       alt="Delete"
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
+                      onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
+                      onMouseLeave={(e) => (e.currentTarget.src = garbage)}
                       onClick={() => console.log("Delete review:", review.id)}
                     />
-                    <Box onClick={toggleIconDirection} style={{ cursor: "pointer" }}>
-                      <img src={isIconUp ? StateUp : StateDown} alt="Expand" />
+                    <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
+                      <img src={isExpandedAll ? StateUp : StateDown} alt="Expand All" />
                     </Box>
                   </StyledUserInfo>
                 </Box>
 
-                {(isExpanded || isExpandedAll) && (
+                {isExpanded && (
                   <CommentBox>
                     <Typography variant="h6">Ответить на комментарий</Typography>
                     <Input
@@ -109,7 +111,7 @@ const AdminReview = ({ reviews }) => {
                       rows={4}
                     />
                     <Box sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}>
-                      <Button variant="contained" color="secondary" onClick={() => console.log("Response sent")}>
+                      <Button variant="contained" color="secondary">
                         Отправить
                       </Button>
                     </Box>
@@ -131,7 +133,7 @@ const AdminReview = ({ reviews }) => {
 // Стили
 const StyledBox = styled("div")(() => ({
   gap: "50px",
-  width: "100%",
+  
 }));
 
 const StyledContainer = styled(Box)({
@@ -156,7 +158,7 @@ const StyledRow = styled("div")({
   padding: "15px 20px",
   borderBottom: "1px solid black",
   gap: "10px",
-  gridTemplateColumns: "0.1fr 0.20fr 0.46fr 1.5fr 0.2fr",
+  gridTemplateColumns: "28px  0.22fr 0.44fr 1.5fr 0.2fr",
 });
 
 const StyledProductInfo = styled("div")({
