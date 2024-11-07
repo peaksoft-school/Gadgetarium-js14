@@ -21,129 +21,112 @@ const AdminReview = ({ reviews }) => {
         <Typography>Пользователь</Typography>
       </StyledHeader>
 
-      {reviews.map((review, index) => (
-        <ReviewComponent
-          key={review.id}
-          review={review}
-          index={index}
-          isExpandedAll={isExpandedAll}
-          toggleExpandAll={toggleExpandAll}
-        />
-      ))}
+      {reviews.length > 0 ? (
+        reviews.map((review, index) => {
+          const [icon, setIcon] = useState(garbage);
+          const [isExpanded, setIsExpanded] = useState(false);
+          const [isIconUp, setIsIconUp] = useState(false);
+
+          const handleMouseEnter = () => setIcon(DeleteAicanRed);
+          const handleMouseLeave = () => setIcon(garbage);
+
+          const toggleIconDirection = () => {
+            setIsIconUp(!isIconUp);
+            setIsExpanded(!isExpanded);
+          };
+
+          return (
+            <StyledRow key={review.id}>
+              <Typography>{index + 1}</Typography>
+              <Avatar src={review.productImage} alt="Product" />
+
+              <StyledProductInfo>
+                <Typography>{review.productName}</Typography>
+                <StyledTextModel variant="caption">
+                  Модель
+                  <br />
+                  {review.model}
+                </StyledTextModel>
+              </StyledProductInfo>
+
+              <StyledCommentBox>
+                <Typography>{review.comment}</Typography>
+                
+                <Box sx={{ display: "flex", width: "500px", flexWrap: "wrap" }}>
+                  <Typography>
+                    {isExpanded || isExpandedAll
+                      ? review.cometntsSry 
+                      : review.cometntsSry.split(" ").slice(0, 5).join(" ")} 
+                  </Typography>
+                  
+                  {review.cometntsSry.split(" ").length > 5 && (
+                    <Typography
+                      variant="body2"
+                      color="primary"
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      sx={{ cursor: "pointer", marginLeft: "5px" }}
+                    >
+                      {isExpanded }
+                    </Typography>
+                  )}
+                </Box>
+
+                <Typography variant="caption">{review.date}</Typography>
+              </StyledCommentBox>
+
+              <StyledBox>
+                <Box sx={{ display: "flex", width: "500px", justifyContent: "space-between" }}>
+                  <Rating value={review.rating} readOnly />
+
+                  <StyledUserInfo>
+                    <Avatar src={review.userAvatar} alt={review.user} />
+                    <Box>
+                      <Typography>{review.user}</Typography>
+                      <Typography style={{ color: "#dbdddf" }} variant="caption">
+                        {review.userEmail}
+                      </Typography>
+                    </Box>
+                    <StyledDeleteIcon
+                      src={icon}
+                      alt="Delete"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => console.log("Delete review:", review.id)}
+                    />
+                    <Box onClick={toggleIconDirection} style={{ cursor: "pointer" }}>
+                      <img src={isIconUp ? StateUp : StateDown} alt="Expand" />
+                    </Box>
+                  </StyledUserInfo>
+                </Box>
+
+                {(isExpanded || isExpandedAll) && (
+                  <CommentBox>
+                    <Typography variant="h6">Ответить на комментарий</Typography>
+                    <Input
+                      style={{ cursor: "pointer" }}
+                      placeholder="Введите ваш ответ..."
+                      multiline={true}
+                      rows={4}
+                    />
+                    <Box sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}>
+                      <Button variant="contained" color="secondary" onClick={() => console.log("Response sent")}>
+                        Отправить
+                      </Button>
+                    </Box>
+                  </CommentBox>
+                )}
+              </StyledBox>
+            </StyledRow>
+          );
+        })
+      ) : (
+        <Typography sx={{ padding: "20px", textAlign: "center" }}>
+          Нет отзывов для отображения.
+        </Typography>
+      )}
     </StyledContainer>
   );
 };
-
-const ReviewComponent = ({ review, index, isExpandedAll, toggleExpandAll }) => {
-  const [icon, setIcon] = useState(garbage);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isIconUp, setIsIconUp] = useState(false);
-
-  const handleMouseEnter = () => setIcon(DeleteAicanRed);
-  const handleMouseLeave = () => setIcon(garbage);
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  const handleSaveResponse = () => {
-    console.log("Response saved:", responseText);
-    handleCloseModal();
-  };
-
-  const toggleIconDirection = () => {
-    setIsIconUp(!isIconUp);
-    toggleExpandAll();
-  };
-
-  return (
-    <StyledRow>
-      <Typography>{index + 1}</Typography>
-      <Avatar src={review.productImage} alt="Product" />
-
-      <StyledProductInfo>
-        <Typography>{review.productName}</Typography>
-        <StyledTextModel variant="caption">
-          Модель
-          <br />
-          {review.model}
-        </StyledTextModel>
-      </StyledProductInfo>
-
-      <StyledCommentBox>
-        <Typography>{review.comment}</Typography>
-        {(isExpanded || isExpandedAll) && (
-          <Box
-            sx={{
-              display: "flex",
-              width: "500px",
-              flexWrap: "wrap",
-            }}
-          >
-            <Typography>{review.cometntsSry}</Typography>
-          </Box>
-        )}
-        <Typography variant="caption">{review.date}</Typography>
-      </StyledCommentBox>
-
-      <StyledBox>
-        <Box
-          sx={{
-            display: "flex",
-            width: "500px",
-            justifyContent: "space-between",
-          }}
-        >
-          <Rating value={review.rating} readOnly />
-
-          <StyledUserInfo>
-            <Avatar src={review.userAvatar} alt={review.user} />
-            <Box>
-              <Typography>{review.user}</Typography>
-              <Typography style={{ color: "#dbdddf" }} variant="caption">
-                {review.userEmail}
-              </Typography>
-            </Box>
-            <StyledDeleteIcon
-              src={icon}
-              alt="Delete"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onClick={handleOpenModal}
-            />
-            <Box onClick={toggleIconDirection} style={{ cursor: "pointer" }}>
-              <img src={isIconUp ? StateUp : StateDown} alt="Expand" />
-            </Box>
-          </StyledUserInfo>
-        </Box>
-
-        {(isExpanded || isExpandedAll) && (
-          <CommentBox>
-            <Typography variant="h6">Ответить на комментарий</Typography>
-            <Input
-              style={{ cursor: "pointer" }}
-              placeholder="Введите ваш ответ..."
-              multiline={true}
-              rows={4}
-            />
-            <Box
-              sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}
-            >
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleSaveResponse}
-              >
-                Отправить
-              </Button>
-            </Box>
-          </CommentBox>
-        )}
-      </StyledBox>
-    </StyledRow>
-  );
-};
-
-export default AdminReview;
 
 // Стили
 const StyledBox = styled("div")(() => ({
@@ -211,3 +194,5 @@ const CommentBox = styled(Box)(() => ({
     width: "100%",
   },
 }));
+
+export default AdminReview;
