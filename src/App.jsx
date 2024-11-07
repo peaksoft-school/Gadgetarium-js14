@@ -1,12 +1,8 @@
-import React from 'react';
-import AdminHeader from './components/UI/AdminHeader';
 
 const App = () => {
   return (
-    <div>
-      <AdminHeader />
-    </div>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App

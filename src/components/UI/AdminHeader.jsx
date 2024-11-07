@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Gadget, StateDown } from '../../assets/icon';
 import { styled } from '@mui/material/styles';
+import { NavLink } from 'react-router-dom';
+import { Popover, Button as MuiButton, Typography } from '@mui/material';
 import Button from '../UI/Button';
 
 const AdminHeader = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    console.log('Вышли из аккаунта');
+    handleClose();
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'admin-popover' : undefined;
+
   return (
     <div>
       <StyledHeader>
@@ -11,9 +31,9 @@ const AdminHeader = () => {
           <img src={Gadget} alt="" />
         </div>
         <StyledDiv>
-          <p>Товары</p>
-          <p>Заказы</p>
-          <p>Отзывы и рейтинги</p>
+          <StyledNavLink to="/products">Товары</StyledNavLink>
+          <StyledNavLink to="/orders">Заказы</StyledNavLink>
+          <StyledNavLink to="/reviews">Отзывы и рейтинги</StyledNavLink>
         </StyledDiv>
         <StyledFlex>
           <Button variant="rounded" sx={{ borderRadius: '50%' }}>
@@ -23,10 +43,44 @@ const AdminHeader = () => {
           <StyledBlock>
             <div className="G">G</div>
           </StyledBlock>
-          <StyledAdmin>Администратор</StyledAdmin>
-          <img src={StateDown} alt="" style={{ filter: 'invert(1)' }} />
+          <StyledAdmin onClick={handleClick} style={{ cursor: 'pointer' }}>
+            Администратор
+          </StyledAdmin>
+          <img
+            src={StateDown}
+            alt=""
+            style={{ filter: 'invert(1)', cursor: 'pointer' }}
+            onClick={handleClick}
+          />
         </StyledFlex>
       </StyledHeader>
+
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <div style={{ padding: '16px' }}>
+          <Typography>Вы уверены, что хотите выйти?</Typography>
+          <MuiButton
+            variant="contained"
+            color="primary"
+            onClick={handleLogout}
+            style={{ marginTop: '8px' }}
+          >
+            Выйти
+          </MuiButton>
+        </div>
+      </Popover>
     </div>
   );
 };
@@ -42,12 +96,19 @@ const StyledHeader = styled('div')(({ theme }) => ({
   justifyContent: 'space-around',
 }));
 
-const StyledDiv = styled('div')(({ theme }) => ({
+const StyledNavLink = styled(NavLink)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.common.white,
+  fontSize: '14px',
+  fontFamily: 'sans-serif',
+  '&:hover:not(.active)': {
+    color: theme.palette.primary.main,
+  },
+}));
+
+const StyledDiv = styled('div')(() => ({
   display: 'flex',
   gap: '20px',
-  fontSize: '14px',
-  color: theme.palette.common.white,
-  fontFamily: 'sans-serif',
 }));
 
 const StyledFlex = styled('div')(() => ({
