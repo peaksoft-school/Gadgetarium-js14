@@ -104,6 +104,7 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
   '&:hover:not(.active)': {
     color: theme.palette.primary.main,
   },
+ 
 }));
 
 const StyledDiv = styled('div')(() => ({
