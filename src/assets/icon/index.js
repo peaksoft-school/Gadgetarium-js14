@@ -11,18 +11,18 @@ export { default as IconBasket } from "../icon/Basket.svg";
 export { default as IconFacebook } from "../icon/Facebook.svg";
 export { default as CatalogText } from "../icon/CatalogText.svg";
 // export { default as IconG } from "../icon/G.svg";
-export { default as IconLike } from "../icon/Like.svg";
-export { default as IconPersonal } from "../icon/Personal.svg";
-export { default as IconSearch } from "../icon/Search.svg";
-export { default as IconShoppingCard } from "../icon/ShoppingCart.svg";
-export { default as IconWhatsApp } from "../icon/WhatsApp.svg";
-export { default as IconiPhone } from "../icon/Apple.svg";
-export { default as IconHonor } from "../icon/Honor.svg";
-export { default as IconHuawei } from "../icon/Huawei.svg";
-export { default as IconSamsung } from "../icon/Samsung.svg";
-export { default as IconXiaomi } from "../icon/Xiaomi.svg";
-export { default as IconAddPhoto } from "../icon/AddPhotoIcon.svg";
-export { default as IconDelete } from "../icon/DeleteIcon.svg";
+export { default as IconLike } from '../icon/Like.svg';
+export { default as IconPersonal } from '../icon/Personal.svg';
+export { default as IconSearch } from '../icon/Search.svg';
+export { default as IconShoppingCard } from '../icon/ShoppingCart.svg';
+export { default as IconWhatsApp } from '../icon/WhatsApp.svg';
+export { default as IconiPhone } from '../icon/Apple.svg';
+export { default as IconHonor } from '../icon/Honor.svg';
+export { default as IconHuawei } from '../icon/Huawei.svg';
+export { default as IconSamsung } from '../icon/Samsung.svg';
+export { default as IconXiaomi } from '../icon/Xiaomi.svg';
+export { default as IconAddPhoto } from '../icon/AddPhotoIcon.svg';
+export { default as IconDelete } from '../icon/DeleteIcon.svg';
 
 // export { default as Group } from "../icon/Group.svg";
 // export { default as Man } from "../icon/Man.svg";
@@ -80,7 +80,6 @@ export { default as IconDelete } from "../icon/DeleteIcon.svg";
 // export { default as greyHeart } from "../icon/greyHeart.svg";
 // export { default as DefaultP } from "../icon/DefaultP.svg";
 // export { default as eyes } from "../icon/eyes.svg";
-// export { default as letterB } from "../icon/letterB.svg";
 // export {default as Headphones } from'./Headphones.svg'
 // export {default as Monitor} from './Monitor.svg'
 // export {default as Telefon} from './Telefon.svg'
