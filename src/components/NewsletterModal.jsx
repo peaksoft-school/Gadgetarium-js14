@@ -30,7 +30,7 @@ const schema = yup.object().shape({
     .required("Дата окончания акции обязательна"),
 });
 
-const NewsletterModal = ({ open, onClose,data }) => {
+const NewsletterModal = ({ open, onClose, data }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const {
@@ -76,8 +76,7 @@ const NewsletterModal = ({ open, onClose,data }) => {
         <Typography variant="h5" component="h1">
           Создать рассылку
         </Typography>
-
-        <StyledBox>
+        <StyledBox hasImage={!!selectedImage}>
           {!selectedImage ? (
             <AddDropzoneBox {...getRootProps()}>
               <input
@@ -89,7 +88,7 @@ const NewsletterModal = ({ open, onClose,data }) => {
               <p>Нажмите для добавления фотографии</p>
             </AddDropzoneBox>
           ) : (
-            <Box sx={{ position: "relative" }}>
+            <Box sx={{ position: "relative", height: "217px" }}>
               <StyledNewsLetterImg
                 src={selectedImage.preview}
                 alt={selectedImage.name}
@@ -133,7 +132,7 @@ const NewsletterModal = ({ open, onClose,data }) => {
                   Описание рассылки
                   {errors.description && (
                     <span style={{ color: "red" }}>*</span>
-                  )}{" "}
+                  )}
                 </>
               }
               {...register("description")}
@@ -247,20 +246,20 @@ const AddDropzoneBox = styled(Box)(() => ({
 const StyledNewsLetterImg = styled("img")(() => ({
   objectFit: "cover",
   width: "230px",
-  maxHeight: "217px",
+  height: "217px",
 }));
 
-const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(({ hasImage }) => ({
   width: "230px",
-  backgroundColor: " #eaebf0",
-  maxHeight: "217px",
+  backgroundColor: "#eaebf0",
+  maxHeight: hasImage ? "217px" : "auto",
   minHeight: "217px",
   borderRadius: "2px",
   margin: "auto",
+  display: "flex",
   alignItems: "center",
   textAlign: "center",
   justifyContent: "center",
-  marginTop: "20x",
   marginTop: "20px",
   marginBottom: "20px",
 }));
