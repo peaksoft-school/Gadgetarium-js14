@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
-import  { useState } from "react";
+import { useState } from "react";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import React from "react";
 
-const Registration = ({signInModal,signUpModal}) => {
+const Registration = ({ signInModal, signUpModal }) => {
   const [isSignInOpen, setIsSignInOpen] = useState(signInModal);
   const [isSignUpOpen, setIsSignUpOpen] = useState(signUpModal);
 
