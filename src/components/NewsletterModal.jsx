@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Modal, Box, Typography, IconButton } from "@mui/material";
 import Button from "./UI/Button";
 import Input from "./UI/Input";

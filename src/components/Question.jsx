@@ -36,7 +36,6 @@ const faqs = [
 
 const Question = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const handleAccordionChange = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -65,8 +64,6 @@ const Question = () => {
             expandIcon={<img src={CtrelcaAican2} alt="icon" />}
             aria-controls={`panel${index + 1}-content`}
             id={`panel${index + 1}-header`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
           >
             <QuestionNumber expanded={expandedIndex === index}>
               {index + 1}

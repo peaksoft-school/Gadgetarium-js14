@@ -2,8 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { IconC } from "../../assets/icon";
 import { TabContext, TabPanel } from "@mui/lab";
-import React,{ useState } from "react";
-
+import { useState } from "react";
 
 const data = [
   {

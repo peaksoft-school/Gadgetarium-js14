@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
@@ -42,8 +41,6 @@ const AppRouter = () => {
         },
       ],
     },
-
-  
   ]);
 
   return <RouterProvider router={router} />;
