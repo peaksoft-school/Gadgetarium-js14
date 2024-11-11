@@ -6,11 +6,10 @@ import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
 
 const ProductsSheetTable = () => {
-  // Определение данных и колонок для таблицы
   const columns = [
     {
       Header: "ID",
-      accessor: "id", // ключ для доступа к значению в `data`
+      accessor: "id",
     },
     {
       Header: "Название",
@@ -30,7 +29,6 @@ const ProductsSheetTable = () => {
     { id: 1, name: "Товар 1", price: "1000 руб.", category: "Категория A" },
     { id: 2, name: "Товар 2", price: "1500 руб.", category: "Категория B" },
     { id: 3, name: "Товар 3", price: "2000 руб.", category: "Категория C" },
-    // добавьте больше товаров по необходимости
   ];
 
   return (
