@@ -9,8 +9,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "@emotion/styled";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUpRequest } from "../store/auth/authThank";
 
 const schema = yup.object().shape({
@@ -37,14 +36,13 @@ const schema = yup.object().shape({
     .required("Подтверждение пароля обязательно"),
 });
 
-const SignUp = ({  onClose,  openSignIn }) => {
-  const dispatch= useDispatch()
+const SignUp = ({ onClose, openSignIn }) => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const {isLoadig} = useSelector((state)=>state.auth)
+  // const {isLoadig} = useSelector((state)=>state.auth)
 
-  
   const {
     register,
     handleSubmit,
@@ -60,7 +58,7 @@ const SignUp = ({  onClose,  openSignIn }) => {
 
     // data(userData);
 
-    dispatch (signUpRequest(userData));
+    dispatch(signUpRequest(userData));
   };
 
   return (

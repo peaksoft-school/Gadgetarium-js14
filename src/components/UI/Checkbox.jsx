@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
-import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material';
+import { forwardRef } from "react";
+import { Checkbox as MuiCheckbox, FormControlLabel } from "@mui/material";
 
+// eslint-disable-next-line react/display-name
 const Checkbox = forwardRef(({ label, checked, onChange, ...rest }, ref) => {
   return (
     <FormControlLabel

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
 import { DeleteAicanRed, garbage, StateDown, StateUp } from "../../../assets/icon";
