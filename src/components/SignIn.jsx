@@ -8,8 +8,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { signInRequest } from "../store/auth/authThank";
 
 const schema = yup.object().shape({
   email: yup
@@ -24,9 +24,9 @@ const schema = yup.object().shape({
     .required("Пароль обязателен"),
 });
 
-const SignIn = ({ data, onClose, openSignUp }) => {
-  const dispatch= useDispatch()
-  const {isLoading}=useSelector((state)=>state.auth)
+const SignIn = ({ onClose, openSignUp }) => {
+  const dispatch = useDispatch();
+  // const { isLoading } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -37,7 +37,7 @@ const SignIn = ({ data, onClose, openSignUp }) => {
   });
 
   const onSubmit = (formData) => {
-    dispatch(signInRequest(formData))
+    dispatch(signInRequest(formData));
   };
   return (
     <StyledModal open={open} onClose={onClose}>

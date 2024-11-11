@@ -1,5 +1,3 @@
-import React from 'react';
-
 import AdminLayout from "../../layout/admin/AdminLayout";
 import { ROUTES } from "../../utils/routes";
 
