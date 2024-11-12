@@ -4,7 +4,7 @@ import { Customer, HeadPhone, Kyrgyzstan } from "../assets/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -45,7 +45,6 @@ const images = [
 ];
 
 const AboutStore = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef(null);
 
   const handlePrevious = () => {
@@ -83,11 +82,11 @@ const AboutStore = () => {
       <SliderWrapperBox>
         <StyledSlider ref={sliderRef} {...settings}>
           {images.map((img, index) => (
-            <ImageContainer key={index} isActive={index === activeSlide}>
+            <ImageContainer key={index} isActive={index === 0}>
               <SlideImage
                 src={img.image}
                 alt={`Slide ${index}`}
-                isActive={index === activeSlide}
+                isActive={index === 0}
               />
             </ImageContainer>
           ))}

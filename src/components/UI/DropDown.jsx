@@ -120,7 +120,7 @@ const DropDown = ({ label }) => {
 
 export default DropDown;
 
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(() => ({
   display: "flex",
   gap: "16px",
 }));

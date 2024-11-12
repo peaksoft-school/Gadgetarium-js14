@@ -1,37 +1,32 @@
 import styled from "@emotion/styled";
 
-import Question from '../Question'
-
+import Question from "../Question";
 
 const FAQ = () => {
   return (
     <StyledDiv>
       <div>
-
-      <h1>FAG</h1>
-      <hr />
+        <h1>FAG</h1>
+        <hr />
       </div>
       <StyledDivTex>
         <Question />
       </StyledDivTex>
     </StyledDiv>
-    
-
   );
 };
 
 export default FAQ;
 
 const StyledDiv = styled("div")(() => ({
-  display:'flex',
-  flexDirection:'column',
-  margin:'0 auto',
-  padding:'50px',
+  display: "flex",
+  flexDirection: "column",
+  margin: "0 auto",
+  padding: "50px",
   h1: {
-
     fontSize: "30px",
     fontWeight: "500",
-    positions:'relative',
+    positions: "relative",
     padding: "0px 20px",
   },
   hr: {
@@ -42,6 +37,6 @@ const StyledDiv = styled("div")(() => ({
   },
 }));
 
-const StyledDivTex= styled("div")(() => ({
-padding:'70px'
-}))
+const StyledDivTex = styled("div")(() => ({
+  padding: "70px",
+}));
