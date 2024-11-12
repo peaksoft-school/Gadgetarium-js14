@@ -1,27 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../components/UI/Input";
 import { Box, styled } from "@mui/material";
 import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
+import { boxSizing, margin, width } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { getProdates } from "../../store/productAdmin/productAdminAuthThank";
+import AdminReview from "../../components/UI/admin/AdminReview";
 
 const ProductsSheetTable = () => {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.productAdmin);
+
+  useEffect(() => {
+    dispatch(getProdates());
+  }, []);
+
+  console.log(products);
   const columns = [
     {
       Header: "ID",
       accessor: "id",
     },
     {
-      Header: "Название",
-      accessor: "name",
+      Header: "Фото",
+      accessor: "",
     },
     {
-      Header: "Цена",
-      accessor: "price",
+      Header: "Артикул",
+      accessor: "",
     },
     {
-      Header: "Категория",
-      accessor: "category",
+      Header: "Наименования товара",
+      accessor: "",
+    },
+    {
+      Header: "Дата создания ",
+      accessor: "createdAt",
+    },
+    {
+      Header: "Кол-во",
+      accessor: "",
+    },
+    {
+      Header: "Цена товара",
+      accessor: "",
+    },
+    {
+      Header: "Текущая цена",
+      accessor: "",
+    },
+    {
+      Header: "Действия",
+      accessor: "",
     },
   ];
 
@@ -32,115 +64,143 @@ const ProductsSheetTable = () => {
   ];
 
   return (
-    <StyledContainer>
-      <Box className="search-section">
-        <Box className="input-and-buttons">
-          <Input placeholder="Поиск по артикулу или ..." className="search-input" />
-          <StyledButtonGroup>
-            <StyledButton selected>Все товары</StyledButton>
-            <StyledButton>В продаже</StyledButton>
-            <StyledButton>В избранном</StyledButton>
-            <StyledButton>В корзине</StyledButton>
-          </StyledButtonGroup>
+    <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
+      <StyledContainer>
+        <Box className="search-section">
+          <Box className="input-and-buttons">
+            <Input
+              placeholder="Поиск по артикулу или ..."
+              className="    -input"
+            />
+            <StyledButtonGroup>
+              <StyledButton selected>Все товары</StyledButton>
+              <StyledButton>В продаже</StyledButton>
+              <StyledButton>В избранном</StyledButton>
+              <StyledButton>В корзине</StyledButton>
+            </StyledButtonGroup>
+          </Box>
+
+          <Box className="action-buttons">
+            <Button variant="contained" className="add-product">
+              ДОБАВИТЬ ТОВАР
+            </Button>
+            <Button variant="outlined" className="create-discount">
+              СОЗДАТЬ СКИДКУ
+            </Button>
+          </Box>
+          <Infografics />
         </Box>
-
-        <Box className="action-buttons">
-          <Button variant="contained" className="add-product">
-            Добавить товар
-          </Button>
-          <Button variant="outlined" className="create-discount">
-            Создать скидку
-          </Button>
+        <Box>
+          <StyledDivider />
         </Box>
-      </Box>
-      <StyledDivider />
+        <Box>
+          <BoxInputProject>
+            <StyledInputTable type="date" />
+            <StyledInputTable type="date" />
+          </BoxInputProject>
 
-      <Box>
-        {/* Передача данных в компонент ProductTable */}
-        <ProductTable data={data} columns={columns} />
-      </Box>
-
-      {/* <Box className="infographic-section">
-        <Infografics />
-      </Box> */}
-    </StyledContainer>
+          <StyledBoxTable>
+            {/* <ProductTable data={data} columns={columns} /> */}
+            <AdminReview/>
+          </StyledBoxTable>
+        </Box>
+      </StyledContainer>
+    </Box>
   );
 };
 
 export default ProductsSheetTable;
 
-const StyledContainer = styled("div")({
-  width: "100%",
-  padding: "20px",
+const BoxInputProject = styled(Box)(() => ({
   display: "flex",
-  flexDirection: "column",
   gap: "20px",
+}));
+
+const StyledInputTable = styled(Input)(() => ({
+  width: "200px",
+}));
+
+const StyledBoxTable = styled(Box)(() => ({
+  width: "1130px",
+  marginTop: "90px",
+}));
+
+const StyledContainer = styled("div")({
+  boxSizing: "border-box",
+  margin: "0 auto",
+  width: "100%",
+  padding: "15px 30px",
+  gap: "20px",
+  fontFamily: "'Roboto', sans-serif",
   ".search-section": {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
-    gap: "15px",
+    // alignItems: "center",
+    gap: "20px",
   },
   ".input-and-buttons": {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
+    gap: "10px",
   },
   ".search-input": {
-    width: "550px",
-    padding: "8px 16px",
+    width: "400px",
+    padding: "10px 18px",
     borderRadius: "8px",
-    border: "1px solid #ddd",
+    border: "1px solid #e0e0e0",
+    fontSize: "14px",
+    fontWeight: 400,
   },
   ".action-buttons": {
     display: "flex",
-    alignItems: "center",
-    gap: "10px",
+    // alignItems: "center",
+    gap: "15px",
     "& .add-product": {
-      width: "200px",
-      height: "50px",
-      backgroundColor: "#ff55aa",
+      width: "180px",
+      height: "40px",
+      backgroundColor: "#FF55AA",
       color: "#fff",
       fontWeight: "bold",
       borderRadius: "8px",
+      fontSize: "14px",
     },
     "& .create-discount": {
-      width: "200px",
-      height: "50px",
-      color: "#ff55aa",
-      borderColor: "#ff55aa",
+      width: "180px",
+      height: "40px",
+      color: "#FF55AA",
+      borderColor: "#FF55AA",
       borderRadius: "8px",
       fontWeight: "bold",
+      fontSize: "14px",
     },
   },
   ".infographic-section": {
     display: "flex",
     justifyContent: "center",
-    marginTop: "20px",
+    marginTop: "10px",
   },
 });
 
 const StyledDivider = styled("div")({
-  borderTop: "1px solid #ddd",
-  width: "100%",
-  margin: "20px 0",
+  borderTop: "2px solid #f0f0f0",
+  width: "1090px",
+  marginTop: "-140px",
 });
 
 const StyledButtonGroup = styled(Box)({
   display: "flex",
-  gap: "10px",
+  padding: "10px",
+  gap: "8px",
 });
 
 const StyledButton = styled("button")(({ selected }) => ({
-  width: "100px",
-  padding: "8px",
+  minWidth: "120px",
+  padding: "10px 20px",
   backgroundColor: selected ? "#384255" : "#f0f0f0",
   color: selected ? "#fff" : "#333",
   borderRadius: "8px",
   border: "none",
   cursor: "pointer",
-  fontWeight: "bold",
+  fontWeight: selected ? "bold" : "normal",
   "&:hover": {
-    backgroundColor: selected ? "#2c3445" : "#e0e0e0",
+    backgroundColor: selected ? "#2c3445" : "#e6e6e6",
   },
 }));

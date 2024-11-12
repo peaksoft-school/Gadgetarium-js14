@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
-import { DeleteAicanRed, garbage, StateDown, StateUp } from "../../../assets/icon";
+import {  garbage, StateDown, StateUp } from "../../../assets/icon";
 import Input from "../Input";
 import Button from "../Button";
 
@@ -11,10 +11,12 @@ const AdminReview = ({ reviews }) => {
 
   const toggleExpandAll = () => {
     setIsExpandedAll(!isExpandedAll);
+
     const newExpandedComments = reviews.reduce((acc, review) => {
       acc[review.id] = !isExpandedAll;
       return acc;
     }, {});
+
     setExpandedComments(newExpandedComments);
   };
 
@@ -91,7 +93,7 @@ const AdminReview = ({ reviews }) => {
                     <StyledDeleteIcon
                       src={garbage}
                       alt="Delete"
-                      onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
+                      // onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
                       onMouseLeave={(e) => (e.currentTarget.src = garbage)}
                       onClick={() => console.log("Delete review:", review.id)}
                     />
