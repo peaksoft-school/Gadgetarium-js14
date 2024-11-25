@@ -49,3 +49,6 @@ export { default as colorWhatsApp } from "../icon/colorWhatsApp.svg";
 export { default as colorFaceBook } from "../icon/colorFaceBook.svg";
 export { default as WhatsApp } from "../icon/WhatsApp.svg";
 export { default as Instagram } from "../icon/Instagram.svg";
+export { default as Garbage } from "../icon/garbage.svg";
+export { default as EditLine } from "../icon/editLine.svg";
+export {default as ChangeAican} from '../icon/AicanChanig.svg'

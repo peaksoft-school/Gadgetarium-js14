@@ -5,7 +5,7 @@ import Button from "./Button";
 import { useDropzone } from "react-dropzone";
 import { IconAddPhoto, IconDelete } from "../../assets/icon";
 
-const AddBannerModal = ({ open, onClose }) => {
+const AddBannerModal = ({ open, onClose,onFileChange}) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -81,6 +81,7 @@ const AddBannerModal = ({ open, onClose }) => {
                   {...getInputProps()}
                   type="file"
                   accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
+                  onChange={onFileChange}
                 />
 
                 <img src={IconAddPhoto} alt="addPhoto" />

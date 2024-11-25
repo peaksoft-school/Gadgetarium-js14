@@ -1,124 +1,243 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { Box, styled, Pagination } from "@mui/material";
 import Input from "../../components/UI/Input";
-import { Box, styled } from "@mui/material";
 import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
-import { boxSizing, margin, width } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import { getProdates } from "../../store/productAdmin/productAdminAuthThank";
-import AdminReview from "../../components/UI/admin/AdminReview";
+import {
+  deleteProdates,
+  getProdates,
+  uploadFile,
+} from "../../store/productAdmin/productAdminAuthThank";
+import { ChangeAican, EditLine, Garbage } from "../../assets/icon";
+import Loading from "../../components/UI/Loading";
+import ModalDelete from "../../components/UI/ModalDelete";
+import ModalScitca from "./ModalScitca";
+import AddBannerModal from "../../components/UI/AddBannerModal";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.productAdmin);
+  const { products, loading, uploadLoading, error } = useSelector(
+    (state) => state.productAdmin
+  );
+
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [openModalScitca, setOpenModalScitca] = useState(false);
+  const [downLoadBanner, setDownloadBanenr] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [file, setFile] = useState(null);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
 
   useEffect(() => {
     dispatch(getProdates());
-  }, []);
+  }, [dispatch]);
 
-  console.log(products);
+  useEffect(() => {
+    if (file) {
+      dispatch(uploadFile(file)); // Отправка файла на сервер
+    }
+  }, [file, dispatch]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleOpenModal = () => setDownloadBanenr(true);
+  const handleOnClose = () => setDownloadBanenr(false);
+
+  const handleSearchTermChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const itemNumber = product.itemNumber
+        ? product.itemNumber.toString().toLowerCase()
+        : "";
+      const name = product.name ? product.name.toLowerCase() : "";
+      return (
+        itemNumber.includes(searchTerm.toLowerCase()) ||
+        name.includes(searchTerm.toLowerCase())
+      );
+    });
+  }, [products, searchTerm]);
+
+  const handlerDeleteProduct = (productId) => {
+    setSelectedProductId(productId);
+    setOpenModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedProductId) {
+      dispatch(deleteProdates(selectedProductId));
+      setOpenModal(false);
+    }
+  };
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };
+
   const columns = [
-    {
-      Header: "ID",
-      accessor: "id",
-    },
+    { Header: "ID", accessorFn: (_, index) => index + 1 },
     {
       Header: "Фото",
-      accessor: "",
+      Cell: ({ row }) => (
+        <div style={{ width: "50px", height: "50px" }}>
+          <img
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            src={row.original.image}
+            alt="product"
+          />
+        </div>
+      ),
     },
-    {
-      Header: "Артикул",
-      accessor: "",
-    },
-    {
-      Header: "Наименования товара",
-      accessor: "",
-    },
-    {
-      Header: "Дата создания ",
-      accessor: "createdAt",
-    },
-    {
-      Header: "Кол-во",
-      accessor: "",
-    },
+    { Header: "Артикул", accessor: "itemNumber" },
+    { Header: "Наименование товара", accessor: "name" },
+    { Header: "Дата создания", accessor: "createdAt" },
+    { Header: "Кол-во", accessor: "quantity" },
     {
       Header: "Цена товара",
-      accessor: "",
+      accessor: "totalPrice",
+      Cell: ({ row }) => (
+        <div>
+          <p>{row.original.totalPrice}</p>
+          <p>{row.original.percentOfDiscount || "0%"}</p>
+        </div>
+      ),
     },
-    {
-      Header: "Текущая цена",
-      accessor: "",
-    },
+    { Header: "Текущая цена", accessor: "price" },
     {
       Header: "Действия",
-      accessor: "",
+      accessor: "actions",
+      Cell: ({ row }) => (
+        <StyledBoxDeleite>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => handlerDeleteProduct(row.original.subProductId)}
+          >
+            <img src={Garbage} alt="Удалить" />
+          </div>
+          <img src={EditLine} alt="Редактировать" />
+        </StyledBoxDeleite>
+      ),
     },
   ];
 
-  const data = [
-    { id: 1, name: "Товар 1", price: "1000 руб.", category: "Категория A" },
-    { id: 2, name: "Товар 2", price: "1500 руб.", category: "Категория B" },
-    { id: 3, name: "Товар 3", price: "2000 руб.", category: "Категория C" },
-  ];
+  const paginatedProducts = filteredProducts.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
-    <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
-      <StyledContainer>
-        <Box className="search-section">
-          <Box className="input-and-buttons">
-            <Input
-              placeholder="Поиск по артикулу или ..."
-              className="    -input"
-            />
-            <StyledButtonGroup>
-              <StyledButton selected>Все товары</StyledButton>
-              <StyledButton>В продаже</StyledButton>
-              <StyledButton>В избранном</StyledButton>
-              <StyledButton>В корзине</StyledButton>
-            </StyledButtonGroup>
+    <>
+      {loading && <Loading />}
+      <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
+        <StyledContainer>
+          <Box className="search-section">
+            <Box className="input-and-buttons">
+              <Input
+                placeholder="Поиск по артикулу или названию"
+                className="search-input"
+                value={searchTerm}
+                onChange={handleSearchTermChange}
+              />
+              <StyledButtonGroup>
+                <StyledButton selected>Все товары</StyledButton>
+                <StyledButton>В продаже</StyledButton>
+                <StyledButton>В избранном</StyledButton>
+                <StyledButton>В корзине</StyledButton>
+              </StyledButtonGroup>
+            </Box>
+            <Box className="action-buttons">
+              <Button variant="contained" className="add-product">
+                ДОБАВИТЬ ТОВАР
+              </Button>
+              <Box>
+                <Button
+                  variant="outlined"
+                  className="create-discount"
+                  onClick={() => setOpenModalScitca(true)}
+                >
+                  СОЗДАТЬ СКИДКУ
+                </Button>
+                {openModalScitca && (
+                  <ModalScitca
+                    open={openModalScitca}
+                    onClose={() => setOpenModalScitca(false)}
+                  />
+                )}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleOpenModal}
+                >
+                  <img src={ChangeAican} alt="Icon" />
+                  <p>Загрузить баннер</p>
+                </Box>
+              </Box>
+            </Box>
+            {uploadLoading && <Loading />}
+            {error && <p style={{ color: "red" }}>Ошибка: {error}</p>}{" "}
+            {/* Показ ошибки */}
+            <Infografics />
           </Box>
-
-          <Box className="action-buttons">
-            <Button variant="contained" className="add-product">
-              ДОБАВИТЬ ТОВАР
-            </Button>
-            <Button variant="outlined" className="create-discount">
-              СОЗДАТЬ СКИДКУ
-            </Button>
-          </Box>
-          <Infografics />
-        </Box>
-        <Box>
           <StyledDivider />
-        </Box>
-        <Box>
-          <BoxInputProject>
-            <StyledInputTable type="date" />
-            <StyledInputTable type="date" />
-          </BoxInputProject>
-
           <StyledBoxTable>
-            {/* <ProductTable data={data} columns={columns} /> */}
-            <AdminReview/>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "1100px",
+              }}
+            >
+              <Box>
+                <p>Найдено {filteredProducts.length} товаров</p>
+              </Box>
+            </Box>
+            <ProductTable data={paginatedProducts} columns={columns} />
           </StyledBoxTable>
-        </Box>
-      </StyledContainer>
-    </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+              width: "1100px",
+            }}
+          >
+            <Pagination
+              count={Math.ceil(filteredProducts.length / rowsPerPage)}
+              page={page}
+              onChange={handleChangePage}
+              color="primary"
+            />
+          </Box>
+        </StyledContainer>
+      </Box>
+      <ModalDelete
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onConfirm={confirmDelete}
+      />
+      <Box>
+        <AddBannerModal
+          open={downLoadBanner}
+          onClose={handleOnClose}
+          onFileChange={handleFileChange}
+        />
+      </Box>
+    </>
   );
 };
 
 export default ProductsSheetTable;
-
-const BoxInputProject = styled(Box)(() => ({
-  display: "flex",
-  gap: "20px",
-}));
-
-const StyledInputTable = styled(Input)(() => ({
-  width: "200px",
-}));
 
 const StyledBoxTable = styled(Box)(() => ({
   width: "1130px",
@@ -135,7 +254,6 @@ const StyledContainer = styled("div")({
   ".search-section": {
     display: "flex",
     justifyContent: "space-between",
-    // alignItems: "center",
     gap: "20px",
   },
   ".input-and-buttons": {
@@ -151,7 +269,6 @@ const StyledContainer = styled("div")({
   },
   ".action-buttons": {
     display: "flex",
-    // alignItems: "center",
     gap: "15px",
     "& .add-product": {
       width: "180px",
@@ -171,11 +288,6 @@ const StyledContainer = styled("div")({
       fontWeight: "bold",
       fontSize: "14px",
     },
-  },
-  ".infographic-section": {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "10px",
   },
 });
 
@@ -203,4 +315,9 @@ const StyledButton = styled("button")(({ selected }) => ({
   "&:hover": {
     backgroundColor: selected ? "#2c3445" : "#e6e6e6",
   },
+}));
+
+const StyledBoxDeleite = styled("div")(() => ({
+  display: "flex",
+  gap: "20px",
 }));
