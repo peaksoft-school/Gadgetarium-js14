@@ -1,9 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const axiosInstance = axios.create({
-  baseURL: "https://c7512915e314a74e.mokky.dev.user",
+  baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 let store;
