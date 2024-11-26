@@ -8,7 +8,7 @@ error:null ,
 }
 
 export const bannersSlice=createSlice({
-    name:'banner',
+    name:'infografixs',
     initialState,
     reducers:{},
     extraReducers:(builder)=>{

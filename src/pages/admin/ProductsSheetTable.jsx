@@ -9,6 +9,7 @@ import {
   deleteProdates,
   getProdates,
   uploadFile,
+  saveBanner, // Подключение saveBanner
 } from "../../store/productAdmin/productAdminAuthThank";
 import { ChangeAican, EditLine, Garbage } from "../../assets/icon";
 import Loading from "../../components/UI/Loading";
@@ -25,7 +26,7 @@ const ProductsSheetTable = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [openModalScitca, setOpenModalScitca] = useState(false);
-  const [downLoadBanner, setDownloadBanenr] = useState(false);
+  const [downLoadBanner, setDownloadBanner] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [file, setFile] = useState(null);
   const [page, setPage] = useState(1);
@@ -36,9 +37,7 @@ const ProductsSheetTable = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (file) {
-      dispatch(uploadFile(file)); // Отправка файла на сервер
-    }
+    dispatch(uploadFile(file));
   }, [file, dispatch]);
 
   const handleFileChange = (e) => {
@@ -46,8 +45,17 @@ const ProductsSheetTable = () => {
     setFile(selectedFile);
   };
 
-  const handleOpenModal = () => setDownloadBanenr(true);
-  const handleOnClose = () => setDownloadBanenr(false);
+  const handleSaveBanner = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("bannerList", file);
+      dispatch(saveBanner(formData));
+      setFile(null);
+    }
+  };
+
+  const handleOpenModal = () => setDownloadBanner(true);
+  const handleOnClose = () => setDownloadBanner(false);
 
   const handleSearchTermChange = (e) => {
     setSearchTerm(e.target.value);
@@ -185,8 +193,7 @@ const ProductsSheetTable = () => {
               </Box>
             </Box>
             {uploadLoading && <Loading />}
-            {error && <p style={{ color: "red" }}>Ошибка: {error}</p>}{" "}
-            {/* Показ ошибки */}
+            {error && <p style={{ color: "red" }}>Ошибка: {error}</p>}
             <Infografics />
           </Box>
           <StyledDivider />
@@ -231,6 +238,8 @@ const ProductsSheetTable = () => {
           open={downLoadBanner}
           onClose={handleOnClose}
           onFileChange={handleFileChange}
+          onSave={handleSaveBanner}
+          disabled={!file}
         />
       </Box>
     </>

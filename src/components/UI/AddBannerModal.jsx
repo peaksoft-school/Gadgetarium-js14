@@ -5,7 +5,7 @@ import Button from "./Button";
 import { useDropzone } from "react-dropzone";
 import { IconAddPhoto, IconDelete } from "../../assets/icon";
 
-const AddBannerModal = ({ open, onClose,onFileChange}) => {
+const AddBannerModal = ({ open, onClose, onFileChange, onSave }) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -54,7 +54,7 @@ const AddBannerModal = ({ open, onClose,onFileChange}) => {
   ));
 
   const handleShowSelectedImages = () => {
-    console.log(selectedImages);
+
     setSelectedImages([]);
   };
 
@@ -99,7 +99,7 @@ const AddBannerModal = ({ open, onClose,onFileChange}) => {
             <Button variant="text" onClick={onClose}>
               Отменить
             </Button>
-            <Button variant="contained" onClick={handleShowSelectedImages}>
+            <Button variant="contained" onClick={onSave} disdisabled={handleShowSelectedImages.length===0}>
               Загрузить
             </Button>
           </StyledButtonBox>
