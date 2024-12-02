@@ -4,6 +4,9 @@ import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
 import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
+import { adminRoutes } from "./admin-router/adminRoutes";
+import AddProducts from "../components/add-products/AddProducts";
+import { ROUTES } from "../utils/routes";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -35,15 +38,9 @@ const AppRouter = () => {
         />
       ),
 
-      children: [
-        {
-          index: true,
-          element: <AdminLayout />,
-        },
-      ],
+      children: [],
     },
-
-  
+    { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
   ]);
 
   return <RouterProvider router={router} />;

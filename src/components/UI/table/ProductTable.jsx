@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-
   Paper,
   Table,
   TableCell,
@@ -47,10 +46,13 @@ const ProductTable = ({ data, columns }) => {
         <TableContainer>
           <Table {...getTableProps()} style={{ minWidth: 650 }}>
             <StyledHeader>
-              {headerGroups.map((headerGroup) => (
-                <TableRow {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <StyledTableCell {...column.getHeaderProps()}>
+              {headerGroups.map((headerGroup, i) => (
+                <TableRow key={i} {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column, colIndex) => (
+                    <StyledTableCell
+                      key={colIndex}
+                      {...column.getHeaderProps()}
+                    >
                       {column.render("Header")}
                     </StyledTableCell>
                   ))}
@@ -58,25 +60,28 @@ const ProductTable = ({ data, columns }) => {
               ))}
             </StyledHeader>
             <TableBody {...getTableBodyProps()}>
-              {page.map((row) => {
+              {page.map((row, rowIndex) => {
                 prepareRow(row);
-                const rowId = row.original.id; 
+                const rowId = row.original.id;
                 return (
                   <TableRow
+                    key={rowIndex}
                     {...row.getRowProps()}
                     onMouseEnter={() => setHoveredRowId(rowId)}
                     onMouseLeave={() => setHoveredRowId(null)}
                   >
-                    <StyledBodyCell>
-                      {hoveredRowId === rowId ? ( 
-                        <Checkbox
-                          checked={selectedIds.includes(rowId)}
-                          onChange={() => handleCheckboxClick(rowId)} 
-                        />
-                      ) : (
-                        rowId 
-                      )}
-                    </StyledBodyCell>
+                    {rowId && (
+                      <StyledBodyCell>
+                        {hoveredRowId === rowId ? (
+                          <Checkbox
+                            checked={selectedIds.includes(rowId)}
+                            onChange={() => handleCheckboxClick(rowId)}
+                          />
+                        ) : (
+                          rowId
+                        )}
+                      </StyledBodyCell>
+                    )}
                     {row.cells.map((cell, index) => {
                       if (cell.column.id !== "id") {
                         return (
@@ -85,7 +90,7 @@ const ProductTable = ({ data, columns }) => {
                           </StyledBodyCell>
                         );
                       }
-                      return null; 
+                      return null;
                     })}
                   </TableRow>
                 );

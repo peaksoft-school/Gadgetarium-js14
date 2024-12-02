@@ -1,19 +1,14 @@
-import React from 'react'
+import React from "react";
+import AdminHeader from "../../components/UI/AdminHeader";
+import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
     <div>
-      <header style={{display:'flex'}}>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-      </header>
+      <AdminHeader />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;
