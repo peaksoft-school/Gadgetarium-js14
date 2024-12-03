@@ -3,6 +3,7 @@ import {
   createDiscount,
   deleteProdates,
   getProdates,
+  mailingModal,
   saveBanner,
   uploadFile,
 } from "./productAdminAuthThank";
@@ -27,7 +28,7 @@ export const productAdminSlice = createSlice({
       state.ids = payload;
     },
     setKeyWord(state, { payload }) {
-      state.keyWord = payload; // Для обновления keyWord
+      state.keyWord = payload;
     },
   },
   extraReducers: (builder) => {
@@ -37,7 +38,7 @@ export const productAdminSlice = createSlice({
         state.error = null;
       })
       .addCase(getProdates.fulfilled, (state, { payload }) => {
-        console.log("Data received from getProdates:", payload); // Логируем данные
+        console.log("Data received from getProdates:", payload);
         state.loading = false;
         state.products = payload.elements;
         state.foundProducts = payload.foundProducts;
@@ -45,7 +46,7 @@ export const productAdminSlice = createSlice({
         state.totalPages = payload.totalPages;
       })
       .addCase(getProdates.rejected, (state, action) => {
-        console.error("Error in getProdates:", action.error.payload); // Логируем ошибку
+        console.error("Error in getProdates:", action.error.payload);
         state.loading = false;
         state.error = action.error.payload;
       })
@@ -104,6 +105,18 @@ export const productAdminSlice = createSlice({
       .addCase(saveBanner.rejected, (state, { error }) => {
         state.loading = false;
         state.error = error.message;
+      })
+      .addCase(mailingModal.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(mailingModal.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        console.log("Mailing modal response:", payload);
+      })
+      .addCase(mailingModal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.payload;
       });
   },
 });

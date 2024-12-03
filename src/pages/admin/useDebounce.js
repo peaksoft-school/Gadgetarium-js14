@@ -14,3 +14,8 @@ export const useDebounce = (value, delay) => {
   }, [value, delay]);
   return debouncedValue;
 };
+
+// export { default as Garbage } from "../icon/garbage.svg";
+// export { default as EditLine } from "../icon/editLine.svg";
+// export {default as ChangeAican} from '../icon/AicanChanig.svg'
+// export {default as Streca} from '../icon/Strelca.svg'

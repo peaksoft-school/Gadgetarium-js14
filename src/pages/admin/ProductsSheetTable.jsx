@@ -10,7 +10,7 @@ import {
   deleteProdates,
   getProdates,
   uploadFile,
-  saveBanner, // Подключение saveBanner
+  saveBanner, 
 } from "../../store/productAdmin/productAdminAuthThank";
 import { ChangeAican, EditLine, Garbage, Streca } from "../../assets/icon";
 import Loading from "../../components/UI/Loading";

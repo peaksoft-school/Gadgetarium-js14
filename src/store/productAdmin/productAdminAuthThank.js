@@ -96,3 +96,17 @@ export const saveBanner = createAsyncThunk(
     }
   }
 );
+
+export const mailingModal = createAsyncThunk(
+  "mailing_modal",
+  async (mailingData, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post("/api/mailing_lists", mailingData);
+      return data; 
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
