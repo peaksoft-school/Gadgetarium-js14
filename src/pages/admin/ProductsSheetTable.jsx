@@ -1,21 +1,25 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, styled, Pagination } from "@mui/material";
+import { Box, styled, Pagination, ButtonBase } from "@mui/material";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
 import { useDispatch, useSelector } from "react-redux";
+import AdminHeader from '../../components/UI/AdminHeader'
 import {
   deleteProdates,
   getProdates,
   uploadFile,
   saveBanner, // Подключение saveBanner
 } from "../../store/productAdmin/productAdminAuthThank";
-import { ChangeAican, EditLine, Garbage } from "../../assets/icon";
+import { ChangeAican, EditLine, Garbage, Streca } from "../../assets/icon";
 import Loading from "../../components/UI/Loading";
 import ModalDelete from "../../components/UI/ModalDelete";
 import ModalScitca from "./ModalScitca";
 import AddBannerModal from "../../components/UI/AddBannerModal";
+import { useDebounce } from "./useDebounce";
+import SortPopup from "./SortPopup";
+import { display } from "@mui/system";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
@@ -30,15 +34,25 @@ const ProductsSheetTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [file, setFile] = useState(null);
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState("");
   const rowsPerPage = 10;
 
-  useEffect(() => {
-    dispatch(getProdates());
-  }, [dispatch]);
+  const debautsTaimer = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    dispatch(uploadFile(file));
-  }, [file, dispatch]);
+    if (debautsTaimer) {
+      console.log(debautsTaimer, "day");
+    }
+    dispatch(getProdates({ filter, keyWord: debautsTaimer }));
+  }, [dispatch, filter, debautsTaimer]);
+
+  const handlerSelectorInput = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -49,7 +63,8 @@ const ProductsSheetTable = () => {
     if (file) {
       const formData = new FormData();
       formData.append("bannerList", file);
-      dispatch(saveBanner(formData));
+      dispatch(saveBanner(file));
+
       setFile(null);
     }
   };
@@ -57,22 +72,7 @@ const ProductsSheetTable = () => {
   const handleOpenModal = () => setDownloadBanner(true);
   const handleOnClose = () => setDownloadBanner(false);
 
-  const handleSearchTermChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const itemNumber = product.itemNumber
-        ? product.itemNumber.toString().toLowerCase()
-        : "";
-      const name = product.name ? product.name.toLowerCase() : "";
-      return (
-        itemNumber.includes(searchTerm.toLowerCase()) ||
-        name.includes(searchTerm.toLowerCase())
-      );
-    });
-  }, [products, searchTerm]);
+  const filteredProducts = products;
 
   const handlerDeleteProduct = (productId) => {
     setSelectedProductId(productId);
@@ -129,6 +129,10 @@ const ProductsSheetTable = () => {
             onClick={() => handlerDeleteProduct(row.original.subProductId)}
           >
             <img src={Garbage} alt="Удалить" />
+            <img
+              src="https://login.kg/image/cache/catalog/new/Phones/Apple/iPhone%2014/Pro-Pro%20Max/1-500x500.jpg"
+              alt=""
+            />
           </div>
           <img src={EditLine} alt="Редактировать" />
         </StyledBoxDeleite>
@@ -143,6 +147,7 @@ const ProductsSheetTable = () => {
 
   return (
     <>
+    <AdminHeader/>
       {loading && <Loading />}
       <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
         <StyledContainer>
@@ -152,13 +157,33 @@ const ProductsSheetTable = () => {
                 placeholder="Поиск по артикулу или названию"
                 className="search-input"
                 value={searchTerm}
-                onChange={handleSearchTermChange}
+                onChange={handlerSelectorInput}
               />
               <StyledButtonGroup>
-                <StyledButton selected>Все товары</StyledButton>
-                <StyledButton>В продаже</StyledButton>
-                <StyledButton>В избранном</StyledButton>
-                <StyledButton>В корзине</StyledButton>
+                <StyledButton
+                  selected={filter === "все товары "}
+                  onClick={() => handleFilterChange("все товары ")}
+                >
+                  Все товары
+                </StyledButton>
+                <StyledButton
+                  selected={filter === "в продаже"}
+                  onClick={() => handleFilterChange("в продаже")}
+                >
+                  В продаже
+                </StyledButton>
+                <StyledButton
+                  selected={filter === "В избранном"}
+                  onClick={() => handleFilterChange("В избранном")}
+                >
+                  В избранном
+                </StyledButton>
+                <StyledButton
+                  selected={filter === " В корзине"}
+                  onClick={() => handleFilterChange(" В корзине")}
+                >
+                  В корзине
+                </StyledButton>
               </StyledButtonGroup>
             </Box>
             <Box className="action-buttons">
@@ -166,11 +191,7 @@ const ProductsSheetTable = () => {
                 ДОБАВИТЬ ТОВАР
               </Button>
               <Box>
-                <Button
-                  variant="outlined"
-                  className="create-discount"
-                  onClick={() => setOpenModalScitca(true)}
-                >
+                <Button onClick={() => setOpenModalScitca(true)}>
                   СОЗДАТЬ СКИДКУ
                 </Button>
                 {openModalScitca && (
@@ -184,6 +205,8 @@ const ProductsSheetTable = () => {
                     display: "flex",
                     alignItems: "center",
                     cursor: "pointer",
+                    marginTop: "40px",
+                    marginLeft: "40px",
                   }}
                   onClick={handleOpenModal}
                 >
@@ -192,12 +215,17 @@ const ProductsSheetTable = () => {
                 </Box>
               </Box>
             </Box>
-            {uploadLoading && <Loading />}
-            {error && <p style={{ color: "red" }}>Ошибка: {error}</p>}
+            {/* {uploadLoading && <Loading />}
+            {error && <p style={{ color: "red" }}>Ошибка: {error}</p>} */}
             <Infografics />
           </Box>
           <StyledDivider />
+          <StyledInputDate >
+            <Input type='date' placeholder='до ' />
+            <Input type='date' />
+          </StyledInputDate>
           <StyledBoxTable>
+          
             <Box
               sx={{
                 display: "flex",
@@ -207,6 +235,9 @@ const ProductsSheetTable = () => {
             >
               <Box>
                 <p>Найдено {filteredProducts.length} товаров</p>
+              </Box>
+              <Box>
+                <SortPopup />
               </Box>
             </Box>
             <ProductTable data={paginatedProducts} columns={columns} />
@@ -253,6 +284,12 @@ const StyledBoxTable = styled(Box)(() => ({
   marginTop: "90px",
 }));
 
+const StyledInputDate = styled(Box)(()=>({
+  display:'flex',
+  gap:'10px'
+
+}))
+
 const StyledContainer = styled("div")({
   boxSizing: "border-box",
   margin: "0 auto",
@@ -272,7 +309,6 @@ const StyledContainer = styled("div")({
     width: "400px",
     padding: "10px 18px",
     borderRadius: "8px",
-    border: "1px solid #e0e0e0",
     fontSize: "14px",
     fontWeight: 400,
   },
