@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Menu, MenuItem } from "@mui/material";
 import { Streca } from "../../assets/icon";
+import { padding } from "@mui/system";
 
 const SortPopup = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,14 +28,13 @@ const SortPopup = () => {
         sx={{
           cursor: "pointer",
           background: "#fff",
-          padding: "10px 15px",
+          marginTop: "-49px",
           borderRadius: "8px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         }}
         onClick={handleOpen}
       >
         <Typography sx={{ fontWeight: 500 }}>Сортировать</Typography>
-        <img src={Streca} alt="arrow" style={{ marginLeft: "8px" }} />
+        <img src={Streca} alt="arrow" style={{ }} />
       </Box>
 
       <Menu

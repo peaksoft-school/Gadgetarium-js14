@@ -19,7 +19,6 @@ const ModalScitca = ({ open, onClose }) => {
         percentOfDiscount,
         dateOfStart,
         dateOfFinish,
-        // productsId: ids,
       })
     );
 
@@ -55,7 +54,7 @@ const ModalScitca = ({ open, onClose }) => {
         </FieldWrapper>
         <div style={{ display: "flex", gap: "16px" }}>
           <FieldWrapper style={{ flex: 1 }}>
-            <p>Дата начала скидки *</p>
+            <p>Дата начала скидки </p>
             <TextField
               fullWidth
               type="date"
@@ -65,7 +64,7 @@ const ModalScitca = ({ open, onClose }) => {
             />
           </FieldWrapper>
           <FieldWrapper style={{ flex: 1 }}>
-            <p>Дата окончания скидки *</p>
+            <p>Дата окончания скидки </p>
             <TextField
               fullWidth
               type="date"
@@ -105,6 +104,9 @@ const ModalScitca = ({ open, onClose }) => {
 };
 
 export default ModalScitca;
+
+
+
 
 const StyledModal = styled(Box)(({ theme }) => ({
   position: "absolute",

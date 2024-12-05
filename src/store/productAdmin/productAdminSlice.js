@@ -108,15 +108,16 @@ export const productAdminSlice = createSlice({
       })
       .addCase(mailingModal.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = null;  // Reset error state when the request starts
       })
       .addCase(mailingModal.fulfilled, (state, { payload }) => {
         state.loading = false;
+        // You can handle the success response here, for example, update some state
         console.log("Mailing modal response:", payload);
       })
       .addCase(mailingModal.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.payload;
+        state.error = action.error.payload;  // Capture the error message
       });
   },
 });

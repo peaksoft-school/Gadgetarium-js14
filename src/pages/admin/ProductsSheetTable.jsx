@@ -19,7 +19,7 @@ import ModalScitca from "./ModalScitca";
 import AddBannerModal from "../../components/UI/AddBannerModal";
 import { useDebounce } from "./useDebounce";
 import SortPopup from "./SortPopup";
-import { display } from "@mui/system";
+import { display, height } from "@mui/system";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
@@ -187,12 +187,12 @@ const ProductsSheetTable = () => {
               </StyledButtonGroup>
             </Box>
             <Box className="action-buttons">
-              <Button variant="contained" className="add-product">
-                ДОБАВИТЬ ТОВАР
+              <Button  className="add-product">
+                Добавить товар
               </Button>
               <Box>
-                <Button onClick={() => setOpenModalScitca(true)}>
-                  СОЗДАТЬ СКИДКУ
+                <Button className="add-product" onClick={() => setOpenModalScitca(true)}>
+                  Создать скитку
                 </Button>
                 {openModalScitca && (
                   <ModalScitca
@@ -233,7 +233,9 @@ const ProductsSheetTable = () => {
                 width: "1100px",
               }}
             >
-              <Box>
+              <Box sx={{
+                marginTop:'-45px'
+              }}>
                 <p>Найдено {filteredProducts.length} товаров</p>
               </Box>
               <Box>
@@ -315,15 +317,32 @@ const StyledContainer = styled("div")({
   ".action-buttons": {
     display: "flex",
     gap: "15px",
-    "& .add-product": {
-      width: "180px",
-      height: "40px",
-      backgroundColor: "#FF55AA",
-      color: "#fff",
-      fontWeight: "bold",
-      borderRadius: "8px",
-      fontSize: "14px",
+"& .add-product": {
+  '&.MuiButtonBase-root': {
+    width: '200px',
+    height: '43px',
+    color: '#88226a',
+    fontSize: '18px',
+    borderRadius: '4px',
+    border: '1px solid #e313bf',
+    backgroundColor: 'transparent',
+    textTransform: 'lowercase', // Все буквы станут маленькими
+    '&:hover': {
+      color: 'white',
+      backgroundColor: '#cb11ab',
     },
+    '&:active': {
+      backgroundColor: '#e313bf',
+      color: 'white',
+    },
+    '&:before': {
+      // content: '"A"', // Добавляем первую букву
+      // textTransform: 'uppercase', // Первая буква заглавная
+      // marginRight: '4px', // Зазор после первой буквы, если нужно
+    },
+  },
+},
+
     "& .create-discount": {
       width: "180px",
       height: "40px",

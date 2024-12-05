@@ -30,7 +30,7 @@ export const deleteProdates = createAsyncThunk(
       );
     }
   }
-);
+); 
 
 export const createDiscount = createAsyncThunk(
   "discountns/createDiscount",
@@ -97,12 +97,16 @@ export const saveBanner = createAsyncThunk(
   }
 );
 
+
 export const mailingModal = createAsyncThunk(
   "mailing_modal",
-  async (mailingData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/api/mailing_lists", mailingData);
-      return data; 
+
+      const { data } = await axiosInstance.post("/api/mailing_lists", formData,{
+      });
+      
+      return data;  
     } catch (error) {
       return rejectWithValue(
         error.response ? error.response.data : error.message

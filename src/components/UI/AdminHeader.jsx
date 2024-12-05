@@ -11,11 +11,11 @@ import { mailingModal } from "../../store/productAdmin/productAdminAuthThank";
 const AdminHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.productAdmin);
+  // const dispatch = useDispatch();
+  // const { loading, error } = useSelector((state) => state.productAdmin);
 
   const handlerOpen = () => {
-    dispatch(mailingModal());
+    // dispatch(mailingModal());
     setIsModalOpen(true);
   };
 
@@ -56,8 +56,13 @@ const AdminHeader = () => {
           <NewsletterModal
             open={isModalOpen}
             onClose={handlerClose}
-            // data={() => dispatch(mailingModal())}
+            
+            
+            data={() => console.log(dispatch(mailingModal())
+            )}
           />
+          
+          
 
           <StyledBlock>
             <div className="G">G</div>
