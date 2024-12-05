@@ -59,7 +59,7 @@ const BannerSlider = () => {
   };
 
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
       <StyledBox
         fade={fade}
         style={{ backgroundImage: `url(${currentSet.background})` }}

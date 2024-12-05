@@ -5,15 +5,15 @@ export const signInRequest = createAsyncThunk(
   "auth/signIn",
   async ({ userData, onClose }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/auth", userData);
-      const response = { ...data.data, token: data.token, isAuth: true };
+      const { data } = await axiosInstance.post("/api/auth/sign-in", userData);
+      const response = { ...data, isAuth: true };
       if (onClose) {
         onClose();
       }
       localStorage.setItem("Gadgetarium", JSON.stringify(response));
       return response;
     } catch (error) {
-      rejectWithValue(
+      return rejectWithValue(
         error.response?.data?.message || "Something went wrong during sign in"
       );
     }
@@ -24,18 +24,15 @@ export const signUpRequest = createAsyncThunk(
   "auth/signUp",
   async ({ userData, onClose }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/register", {
-        ...userData,
-        role: "USER",
-      });
-      const response = { ...data.data, token: data.token, isAuth: true };
+      const { data } = await axiosInstance.post("/api/auth/sign-up", userData);
+      const response = { ...data, isAuth: true };
       if (onClose) {
         onClose();
       }
       localStorage.setItem("Gadgetarium", JSON.stringify(response));
       return response;
     } catch (error) {
-      rejectWithValue(
+      return rejectWithValue(
         error.response?.data?.message || "Something went wrong during sign up"
       );
     }
