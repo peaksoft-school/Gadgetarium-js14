@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const token =
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzM0MDEyOTIsImV4cCI6MTczNDg0MTI5Mn0.uzhCcXuZjFDPmG_PvFZAapymDNdbLt6KQLCttsoQKZ0"
+ "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzM2NDg2OTEsImV4cCI6MTczNTA4ODY5MX0.4dk9l9dKqQjPlvdrgbc_0QpDEg4pxXr-0OhWtW2Xqjo"
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,

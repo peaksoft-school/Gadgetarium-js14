@@ -5,21 +5,20 @@ import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
 import { useDispatch, useSelector } from "react-redux";
-import AdminHeader from '../../components/UI/AdminHeader'
+import AdminHeader from "../../components/UI/AdminHeader";
 import {
   deleteProdates,
   getProdates,
   uploadFile,
-  saveBanner, 
+  saveBanner,
 } from "../../store/productAdmin/productAdminAuthThank";
-import { ChangeAican, EditLine, Garbage, Streca } from "../../assets/icon";
+import { ChangeAican, EditLine, Garbage,  } from "../../assets/icon";
 import Loading from "../../components/UI/Loading";
 import ModalDelete from "../../components/UI/ModalDelete";
 import ModalScitca from "./ModalScitca";
 import AddBannerModal from "../../components/UI/AddBannerModal";
 import { useDebounce } from "./useDebounce";
 import SortPopup from "./SortPopup";
-import { display, height } from "@mui/system";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
@@ -35,6 +34,10 @@ const ProductsSheetTable = () => {
   const [file, setFile] = useState(null);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("");
+  const [before, setBefore] = useState("");
+  const [from, setFrom] = useState("");
+  const [sortBy, setSortBy] = useState("");
+
   const rowsPerPage = 10;
 
   const debautsTaimer = useDebounce(searchTerm, 500);
@@ -43,8 +46,30 @@ const ProductsSheetTable = () => {
     if (debautsTaimer) {
       console.log(debautsTaimer, "day");
     }
-    dispatch(getProdates({ filter, keyWord: debautsTaimer }));
-  }, [dispatch, filter, debautsTaimer]);
+    if(from && before){
+      console.log(`Поиск от ${from} до ${before}`);
+      
+    }
+    dispatch(getProdates({ filter, before, from,sortBy, keyWord: debautsTaimer }));
+  }, [dispatch, filter, debautsTaimer, before, from,sortBy]);
+
+  const handleFormChange = (e) => {
+    const selectedDate = e.target.value;
+    setFrom(selectedDate);
+
+    if (before && new Date(selectedDate) > new Date(before)) {
+      setBefore("");
+    }
+  };
+
+
+  const handleSortChange = (newSort) => {
+    setSortBy(newSort);
+  };
+
+  const handleBeforeChange = (e) => {
+    setBefore(e.target.value);
+  };
 
   const handlerSelectorInput = (e) => {
     setSearchTerm(e.target.value);
@@ -57,6 +82,7 @@ const ProductsSheetTable = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
+    dispatch(uploadFile)
   };
 
   const handleSaveBanner = () => {
@@ -147,7 +173,7 @@ const ProductsSheetTable = () => {
 
   return (
     <>
-    <AdminHeader/>
+      <AdminHeader />
       {loading && <Loading />}
       <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
         <StyledContainer>
@@ -187,11 +213,12 @@ const ProductsSheetTable = () => {
               </StyledButtonGroup>
             </Box>
             <Box className="action-buttons">
-              <Button  className="add-product">
-                Добавить товар
-              </Button>
+              <Button className="add-product">Добавить товар</Button>
               <Box>
-                <Button className="add-product" onClick={() => setOpenModalScitca(true)}>
+                <Button
+                  className="add-product"
+                  onClick={() => setOpenModalScitca(true)}
+                >
                   Создать скитку
                 </Button>
                 {openModalScitca && (
@@ -220,12 +247,28 @@ const ProductsSheetTable = () => {
             <Infografics />
           </Box>
           <StyledDivider />
-          <StyledInputDate >
-            <Input type='date' placeholder='до ' />
-            <Input type='date' />
+          <StyledInputDate>
+          <label>
+        После:
+        <Input
+          type="date"
+          value={from}
+          onChange={handleFormChange}
+          // max={before || undefined} // Ограничение: "после" не может быть позже "до"
+        />
+      </label>
+      <label>
+        До:
+        <Input
+          type="date"
+          value={before}
+          onChange={handleBeforeChange}
+          // min={from || undefined} // Ограничение: "до" не может быть раньше "после"
+        />
+      </label>
+
           </StyledInputDate>
           <StyledBoxTable>
-          
             <Box
               sx={{
                 display: "flex",
@@ -233,13 +276,15 @@ const ProductsSheetTable = () => {
                 width: "1100px",
               }}
             >
-              <Box sx={{
-                marginTop:'-45px'
-              }}>
+              <Box
+                sx={{
+                  marginTop: "-45px",
+                }}
+              >
                 <p>Найдено {filteredProducts.length} товаров</p>
               </Box>
               <Box>
-                <SortPopup />
+                <SortPopup onChange={handleSortChange} />
               </Box>
             </Box>
             <ProductTable data={paginatedProducts} columns={columns} />
@@ -286,11 +331,10 @@ const StyledBoxTable = styled(Box)(() => ({
   marginTop: "90px",
 }));
 
-const StyledInputDate = styled(Box)(()=>({
-  display:'flex',
-  gap:'10px'
-
-}))
+const StyledInputDate = styled(Box)(() => ({
+  display: "flex",
+  gap: "10px",
+}));
 
 const StyledContainer = styled("div")({
   boxSizing: "border-box",
@@ -317,31 +361,31 @@ const StyledContainer = styled("div")({
   ".action-buttons": {
     display: "flex",
     gap: "15px",
-"& .add-product": {
-  '&.MuiButtonBase-root': {
-    width: '200px',
-    height: '43px',
-    color: '#88226a',
-    fontSize: '18px',
-    borderRadius: '4px',
-    border: '1px solid #e313bf',
-    backgroundColor: 'transparent',
-    textTransform: 'lowercase', // Все буквы станут маленькими
-    '&:hover': {
-      color: 'white',
-      backgroundColor: '#cb11ab',
+    "& .add-product": {
+      "&.MuiButtonBase-root": {
+        width: "200px",
+        height: "43px",
+        color: "#88226a",
+        fontSize: "18px",
+        borderRadius: "4px",
+        border: "1px solid #e313bf",
+        backgroundColor: "transparent",
+        textTransform: "lowercase", // Все буквы станут маленькими
+        "&:hover": {
+          color: "white",
+          backgroundColor: "#cb11ab",
+        },
+        "&:active": {
+          backgroundColor: "#e313bf",
+          color: "white",
+        },
+        "&:before": {
+          // content: '"A"', // Добавляем первую букву
+          // textTransform: 'uppercase', // Первая буква заглавная
+          // marginRight: '4px', // Зазор после первой буквы, если нужно
+        },
+      },
     },
-    '&:active': {
-      backgroundColor: '#e313bf',
-      color: 'white',
-    },
-    '&:before': {
-      // content: '"A"', // Добавляем первую букву
-      // textTransform: 'uppercase', // Первая буква заглавная
-      // marginRight: '4px', // Зазор после первой буквы, если нужно
-    },
-  },
-},
 
     "& .create-discount": {
       width: "180px",

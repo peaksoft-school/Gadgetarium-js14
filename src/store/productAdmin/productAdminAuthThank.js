@@ -3,10 +3,10 @@ import { axiosInstance } from "../../config/axiosInstance";
 
 export const getProdates = createAsyncThunk(
   "getProdates",
-  async ({ filter, keyWord }, { rejectWithValue }) => {
+  async ({ filter,before, keyWord,from,sortBy }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get("/api/admin/products", {
-        params: { status: filter, keyWord },
+        params: { status: filter, keyWord,before ,from,sortBy},
       });
       return data;
     } catch (error) {
@@ -16,7 +16,6 @@ export const getProdates = createAsyncThunk(
     }
   }
 );
-
 
 export const deleteProdates = createAsyncThunk(
   "deleteProdates",
@@ -30,7 +29,7 @@ export const deleteProdates = createAsyncThunk(
       );
     }
   }
-); 
+);
 
 export const createDiscount = createAsyncThunk(
   "discountns/createDiscount",
@@ -97,16 +96,17 @@ export const saveBanner = createAsyncThunk(
   }
 );
 
-
 export const mailingModal = createAsyncThunk(
   "mailing_modal",
   async (formData, { rejectWithValue }) => {
     try {
+      const { data } = await axiosInstance.post(
+        "/api/mailing_lists",
+        formData,
+        {}
+      );
 
-      const { data } = await axiosInstance.post("/api/mailing_lists", formData,{
-      });
-      
-      return data;  
+      return data;
     } catch (error) {
       return rejectWithValue(
         error.response ? error.response.data : error.message

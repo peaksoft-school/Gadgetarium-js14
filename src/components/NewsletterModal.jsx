@@ -79,10 +79,11 @@ const NewsletterModal = ({ open, onClose, data }) => {
     formData.append("dateOfStart", data.startDate);
     formData.append("dateOfFinish", data.endDate);
     const serverData = {
+ 
       name: data.title,
       description: data.description,
       dateOfStart: data.startDate,
-      dateOfFinish: data.endDate,
+      dateOfFinish: data.endDate
     };
 
     if (selectedImage) {
@@ -91,8 +92,9 @@ const NewsletterModal = ({ open, onClose, data }) => {
         .then((response) => {
           const imageLink = response.link;
 
-          serverData.image = response.link;
-          dispatch(mailingModal(serverData));
+          formData.append("image", imageLink);
+          serverData.image = response.link
+          dispatch(mailingModal(formData));
 
           reset();
         })
