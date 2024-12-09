@@ -3,10 +3,10 @@ import { axiosInstance } from "../../config/axiosInstance";
 
 export const getProdates = createAsyncThunk(
   "getProdates",
-  async ({ filter,before, keyWord,from,sortBy }, { rejectWithValue }) => {
+  async ({ filter,from,before, keyWord,sortBy }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get("/api/admin/products", {
-        params: { status: filter, keyWord,before ,from,sortBy},
+        params: { status: filter, keyWord,from ,before,sortBy},
       });
       return data;
     } catch (error) {

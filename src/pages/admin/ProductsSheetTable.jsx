@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Box, styled, Pagination, ButtonBase } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, styled, Pagination } from "@mui/material";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
@@ -12,19 +12,18 @@ import {
   uploadFile,
   saveBanner,
 } from "../../store/productAdmin/productAdminAuthThank";
-import { ChangeAican, EditLine, Garbage,  } from "../../assets/icon";
+import { ChangeAican, EditLine, Garbage } from "../../assets/icon";
 import Loading from "../../components/UI/Loading";
 import ModalDelete from "../../components/UI/ModalDelete";
 import ModalScitca from "./ModalScitca";
 import AddBannerModal from "../../components/UI/AddBannerModal";
 import { useDebounce } from "./useDebounce";
 import SortPopup from "./SortPopup";
+import DateRangePicker from "./DateRangePicker";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
-  const { products, loading, uploadLoading, error } = useSelector(
-    (state) => state.productAdmin
-  );
+  const { products, loading } = useSelector((state) => state.productAdmin);
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -46,29 +45,16 @@ const ProductsSheetTable = () => {
     if (debautsTaimer) {
       console.log(debautsTaimer, "day");
     }
-    if(from && before){
-      console.log(`Поиск от ${from} до ${before}`);
-      
+    if (before && from) {
+      console.log(`Поиск от ${before} до ${from}`);
     }
-    dispatch(getProdates({ filter, before, from,sortBy, keyWord: debautsTaimer }));
-  }, [dispatch, filter, debautsTaimer, before, from,sortBy]);
-
-  const handleFormChange = (e) => {
-    const selectedDate = e.target.value;
-    setFrom(selectedDate);
-
-    if (before && new Date(selectedDate) > new Date(before)) {
-      setBefore("");
-    }
-  };
-
+    dispatch(
+      getProdates({ filter, from, before, sortBy, keyWord: debautsTaimer })
+    );
+  }, [dispatch, filter, debautsTaimer, before, from, sortBy]);
 
   const handleSortChange = (newSort) => {
     setSortBy(newSort);
-  };
-
-  const handleBeforeChange = (e) => {
-    setBefore(e.target.value);
   };
 
   const handlerSelectorInput = (e) => {
@@ -79,21 +65,38 @@ const ProductsSheetTable = () => {
     setFilter(newFilter);
   };
 
+  useEffect(() => {
+    dispatch(uploadFile(file));
+  }, [file, dispatch]);
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    console.log("Selected file:", selectedFile);
     setFile(selectedFile);
-    dispatch(uploadFile)
   };
 
   const handleSaveBanner = () => {
     if (file) {
+      console.log("Selected file:", file); 
       const formData = new FormData();
       formData.append("bannerList", file);
-      dispatch(saveBanner(file));
+
+      dispatch(saveBanner(formData));
 
       setFile(null);
+    } else {
+      console.error("No file selected.");
     }
   };
+  useEffect(() => {
+    if (file) {
+      dispatch(uploadFile(file))
+        .unwrap()
+        .then((value) => {
+          console.log(value, "FFF");
+        });
+    }
+  }, [dispatch, file]);
 
   const handleOpenModal = () => setDownloadBanner(true);
   const handleOnClose = () => setDownloadBanner(false);
@@ -248,25 +251,12 @@ const ProductsSheetTable = () => {
           </Box>
           <StyledDivider />
           <StyledInputDate>
-          <label>
-        После:
-        <Input
-          type="date"
-          value={from}
-          onChange={handleFormChange}
-          // max={before || undefined} // Ограничение: "после" не может быть позже "до"
-        />
-      </label>
-      <label>
-        До:
-        <Input
-          type="date"
-          value={before}
-          onChange={handleBeforeChange}
-          // min={from || undefined} // Ограничение: "до" не может быть раньше "после"
-        />
-      </label>
-
+            <DateRangePicker
+              from={from}
+              before={before}
+              onFromChange={setFrom}
+              onBeforeChange={setBefore}
+            />
           </StyledInputDate>
           <StyledBoxTable>
             <Box
@@ -284,7 +274,7 @@ const ProductsSheetTable = () => {
                 <p>Найдено {filteredProducts.length} товаров</p>
               </Box>
               <Box>
-                <SortPopup onChange={handleSortChange} />
+                <SortPopup onClick={handleSortChange} />
               </Box>
             </Box>
             <ProductTable data={paginatedProducts} columns={columns} />

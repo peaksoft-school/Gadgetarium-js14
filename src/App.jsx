@@ -1,13 +1,9 @@
 import React from 'react'
-import ProductsSheetTable from './pages/admin/ProductsSheetTable';
-import ModalScitca from './pages/admin/ModalScitca';
-import { BrowserRouter } from 'react-router-dom';
 
 const App = () => {
-  return <BrowserRouter>
-    <ProductsSheetTable />
-  </BrowserRouter>;
-};
+  return (
+    <div>App</div>
+  )
+}
 
-export default App;
- 
+export default App

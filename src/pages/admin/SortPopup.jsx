@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Box, Typography, Menu, MenuItem } from "@mui/material";
 import { Streca } from "../../assets/icon";
-import { padding } from "@mui/system";
 
-const SortPopup = () => {
+const SortPopup = ({ onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [subMenu, setSubMenu] = useState(false);
+  const [isSubMenuOpen, setSubMenu] = useState(false);
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -16,8 +15,13 @@ const SortPopup = () => {
     setSubMenu(false);
   };
 
-  const handleSubMenuToggle = () => {
-    setSubMenu(!subMenu);
+  const toggleSubMenu = () => {
+    setSubMenu((prev) => !prev);
+  };
+
+  const handleSortOptionClick = (sortOption) => {
+    onClick(sortOption);
+    handleClose();
   };
 
   return (
@@ -34,7 +38,7 @@ const SortPopup = () => {
         onClick={handleOpen}
       >
         <Typography sx={{ fontWeight: 500 }}>Сортировать</Typography>
-        <img src={Streca} alt="arrow" style={{ }} />
+        <img src={Streca} alt="arrow" />
       </Box>
 
       <Menu
@@ -51,61 +55,17 @@ const SortPopup = () => {
           },
         }}
       >
-        <MenuItem
-          sx={{
-            fontWeight: 500,
-            padding: "10px 20px",
-            "&:hover": { color: "magenta" },
-          }}
-        >
-          Новинки
-        </MenuItem>
-        <MenuItem
-          onClick={handleSubMenuToggle}
-          sx={{
-            fontWeight: 500,
-            padding: "10px 20px",
-            "&:hover": { color: "magenta" },
-          }}
-        >
-          По акции
-        </MenuItem>
-        <MenuItem
-          onClick={handleSubMenuToggle}
-          sx={{
-            fontWeight: 500,
-            padding: "10px 20px",
-            "&:hover": { color: "magenta" },
-          }}
-        >
-          Рекомендуемые
-        </MenuItem>
-        <MenuItem
-          onClick={handleSubMenuToggle}
-          sx={{
-            fontWeight: 500,
-            padding: "10px 20px",
-            "&:hover": { color: "magenta" },
-          }}
-        >
-          По увеличению цены
-        </MenuItem>
-        <MenuItem
-          onClick={handleSubMenuToggle}
-          sx={{
-            fontWeight: 500,
-            padding: "10px 20px",
-            "&:hover": { color: "magenta" },
-          }}
-        >
-          По уменьшению цены
-        </MenuItem>
+        <MenuItem onClick={() => handleSortOptionClick("Новинки")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Новинки</MenuItem>
+        <MenuItem onClick={() => handleSortOptionClick('По акции')} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По акции</MenuItem>
+        <MenuItem onClick={() => handleSortOptionClick('Рекомендуемые')} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Рекомендуемые</MenuItem>
+        {/* <MenuItem onClick={() => handleSortOptionClick("По увеличению цены")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По увеличению цены</MenuItem> */}
+        <MenuItem onClick={() => handleSortOptionClick("По уменьшению цены")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По уменьшению цены</MenuItem>
       </Menu>
 
-      {subMenu && (
+      {isSubMenuOpen && (
         <Menu
           anchorEl={anchorEl}
-          open={subMenu}
+          open={isSubMenuOpen}
           onClose={handleClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           transformOrigin={{ vertical: "top", horizontal: "right" }}
@@ -119,34 +79,9 @@ const SortPopup = () => {
             },
           }}
         >
-          <MenuItem
-            sx={{
-              fontWeight: 500,
-
-              padding: "10px 20px",
-              "&:hover": { color: "magenta" },
-            }}
-          >
-            Все акции
-          </MenuItem>
-          <MenuItem
-            sx={{
-              fontWeight: 500,
-              padding: "10px 20px",
-              "&:hover": { color: "magenta" },
-            }}
-          >
-            До 50%
-          </MenuItem>
-          <MenuItem
-            sx={{
-              fontWeight: 500,
-              padding: "10px 20px",
-              "&:hover": { color: "magenta" },
-            }}
-          >
-            Свыше 50%
-          </MenuItem>
+          <MenuItem  sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Все акции</MenuItem>
+          <MenuItem sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>До 50%</MenuItem>
+          <MenuItem sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Свыше 50%</MenuItem>
         </Menu>
       )}
     </Box>
