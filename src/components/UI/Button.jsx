@@ -2,7 +2,7 @@ import { Button as MuiButton, styled } from "@mui/material";
 import React from "react";
 
 const Button = ({
-  children,
+  // children,
   onClick,
   variant = 'outlined',
   size,
@@ -19,7 +19,7 @@ const Button = ({
       size={size}
       {...props}
     >
-      {children}
+      {/* {children} */}
     </StyledBtn>
   );
 };
