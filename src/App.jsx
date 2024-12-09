@@ -1,9 +1,11 @@
-import AppRouter from "./routes/Approuter";
+import AdminComments from "./pages/admin/AdminComments";
+// import AppRouter from "./routes/Approuter";
 
 const App = () => {
   return (
     <div>
-      <AppRouter />
+      {/* <AppRouter /> */}
+    <AdminComments />
     </div>
   );
 };
