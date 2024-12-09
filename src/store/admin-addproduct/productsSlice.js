@@ -5,6 +5,7 @@ const initialState = {
   mainData: {
     subProducts: [],
   },
+  images: [],
   isLoading: false,
   error: null,
 };
@@ -20,8 +21,6 @@ export const productSlice = createSlice({
         date: state.mainData.dateOfIssue,
       };
       state.mainData.subProducts.push(newProduct);
-
-      console.log(newProduct);
     },
     setMainData: (state, action) => {
       state.mainData = { ...state.mainData, ...action.payload };
@@ -35,16 +34,18 @@ export const productSlice = createSlice({
     setProductPrice: (state, action) => {
       const { productId, updatedPrice } = action.payload;
 
+      const price = Number(updatedPrice);
+
       if (productId) {
         const product = state.mainData.subProducts.find(
           (item) => item.characteristics.productId === productId
         );
         if (product) {
-          product.price = updatedPrice;
+          product.price = price;
         }
       } else {
         state.mainData.subProducts.forEach((item) => {
-          item.price = updatedPrice;
+          item.price = price;
         });
       }
     },
@@ -52,12 +53,14 @@ export const productSlice = createSlice({
     setProductQuantity: (state, action) => {
       const { productId, updatedQuantity } = action.payload;
 
+      const quantity = Number(updatedQuantity);
+
       if (productId) {
         const product = state.mainData.subProducts.find(
           (item) => item.characteristics.productId === productId
         );
         if (product) {
-          product.quantity = updatedQuantity;
+          product.quantity = quantity;
         }
       }
     },
@@ -69,6 +72,7 @@ export const productSlice = createSlice({
       })
       .addCase(postFile.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.images.push(action.payload);
       })
       .addCase(postFile.rejected, (state, action) => {
         state.isLoading = false;

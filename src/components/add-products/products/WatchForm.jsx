@@ -83,7 +83,7 @@ const displayDiagonals = [
 
 const WatchForm = ({ setNewValue }) => {
   const [file, setFile] = useState(null);
-  const { isLoading } = useSelector((state) => state.product);
+  const { isLoading, images } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const {
     register,
@@ -103,8 +103,9 @@ const WatchForm = ({ setNewValue }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const onSubmit = (data) => {
+    const imageLinks = images.map((image) => image.link);
     const newProductData = {
-      color: data.color,
+      colour: data.color,
       characteristics: {
         memorySizes: data.memorySize,
         strapMaterial: data.strapMaterial,
@@ -117,7 +118,7 @@ const WatchForm = ({ setNewValue }) => {
         bodyForm: data.bodyForm,
         productId: Date.now(),
       },
-      images: [],
+      images: imageLinks,
       category: "smartWatch",
     };
 

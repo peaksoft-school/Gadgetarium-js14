@@ -14,8 +14,12 @@ export const injectStore = (_store) => {
 axiosInstance.interceptors.request.use(function (config) {
   const updateConfig = { ...config };
   const { userData } = store.getState().auth;
-  if (userData.token) {
-    return (updateConfig.headers.Authorization = `Bearer ${userData.token}`);
+
+  const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzM3MTgxMjQsImV4cCI6MTczNTE1ODEyNH0.VjiE0drcu0wc9YDuTdNinX3jS22YoVHsKeZgaDnQzaY";
+
+  if (token) {
+    updateConfig.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });

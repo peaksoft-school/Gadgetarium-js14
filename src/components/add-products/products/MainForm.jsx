@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import Input from "../../UI/Input";
-import { Box, styled } from "@mui/system";
+import { Box, padding, styled } from "@mui/system";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import DropDown from "../../UI/DropDown";
@@ -15,12 +15,12 @@ import Button from "../../UI/Button";
 import WatchForm from "./WatchForm";
 import PhoneForm from "./PhoneForm";
 import {
-  setMainData,
-  setProductData,
+  setMainData
 } from "../../../store/admin-addproduct/productsSlice";
 import Loading from "../../UI/Loading";
 import LaptopForm from "./LaptopForm";
 import TabletForm from "./TabletForm";
+import { format } from "date-fns";
 
 const schema = yup.object().shape({
   category: yup.string().required("Категория обязательно"),
@@ -44,7 +44,7 @@ const MainForm = ({ setNewValue }) => {
     setCount((prev) => prev + 1);
   };
   const dispatch = useDispatch();
-  const { categories, isLoading, error, subCategories } = useSelector(
+  const { categories, isLoading, subCategories } = useSelector(
     (state) => state.categories
   );
 
@@ -84,16 +84,21 @@ const MainForm = ({ setNewValue }) => {
 
     dispatch(setMainData(newProduct));
 
-    if (selectedCategory) {
-      if (selectedCategory === 1) {
+    switch (selectedCategory) {
+      case 1:
         setSelectedForm("smartphone");
-      } else if (selectedCategory === 4) {
+        break;
+      case 4:
         setSelectedForm("watch");
-      } else if (selectedCategory === 3) {
+        break;
+      case 3:
         setSelectedForm("laptop");
-      } else if (selectedCategory === 2) {
+        break;
+      case 2:
         setSelectedForm("tablet");
-      }
+        break;
+      default:
+        setSelectedForm("");
     }
   };
 
@@ -102,9 +107,8 @@ const MainForm = ({ setNewValue }) => {
     if (isNaN(parsedDate)) {
       return "Не указано";
     }
-    return parsedDate.toLocaleDateString("ru-RU");
+    return format(parsedDate, "yyyy-MM-dd");
   };
-
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
@@ -132,7 +136,7 @@ const MainForm = ({ setNewValue }) => {
                 fullWidth
                 sx={{
                   ".MuiSelect-select": {
-                    padding: "8px !important",
+                    padding: "15px !important",
                   },
                 }}
               >
@@ -159,7 +163,7 @@ const MainForm = ({ setNewValue }) => {
                 value={watch("brand") || ""}
                 sx={{
                   ".MuiOutlinedInput-input": {
-                    padding: "9px !important",
+                    padding: "16px !important",
                   },
                 }}
                 disabled={!watch("category")}
@@ -182,6 +186,11 @@ const MainForm = ({ setNewValue }) => {
                   {errors.title && <span style={{ color: "red" }}>*</span>}
                 </StyledLabel>
               }
+              sx={{
+                ".MuiOutlinedInput-input": {
+                  padding: "15px",
+                },
+              }}
             />
             {errors.title && (
               <p style={{ color: "red" }}>{errors.title.message}</p>
@@ -199,7 +208,10 @@ const MainForm = ({ setNewValue }) => {
                 value={watch("subCategory") || ""}
                 fullWidth
                 sx={{
-                  ".MuiSelect-select": { paddingTop: "0px !important" },
+                  ".MuiSelect-select": {
+                    paddingTop: "0px !important",
+                    padding: "15px !important",
+                  },
                 }}
               >
                 {subCategories.length === 0 ? (
@@ -230,13 +242,18 @@ const MainForm = ({ setNewValue }) => {
                     {errors.warranty && <span style={{ color: "red" }}>*</span>}
                   </StyledLabel>
                 }
+                sx={{
+                  ".MuiOutlinedInput-input": {
+                    padding: "15px",
+                  },
+                }}
               />
               {errors.warranty && (
                 <p style={{ color: "red" }}>{errors.warranty.message}</p>
               )}
             </div>
 
-            <FormControl fullWidth sx={{ mb: 2 }}>
+            <FormControl fullWidth sx={{ mb: 2, marginTop: "6.5px" }}>
               <StyledLabel>
                 Выберите дату выпуска
                 {errors.date && <span style={{ color: "red" }}>*</span>}
@@ -285,7 +302,7 @@ const MainForm = ({ setNewValue }) => {
             >
               + Добавить продукт
             </Button>
-          )}  
+          )}
         </StyledBox>
       </form>
 

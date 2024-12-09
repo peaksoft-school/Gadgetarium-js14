@@ -14,11 +14,7 @@ const Tables = ({ setNewValue }) => {
   const [laptop, setLaptop] = useState([]);
   const [tablet, setTablet] = useState([]);
   const dispatch = useDispatch();
-  const { subProducts, category } = useSelector(
-    (state) => state.product.mainData
-  );
-
-  console.log("products", subProducts);
+  const { subProducts } = useSelector((state) => state.product.mainData);
 
   const [price, setPrice] = useState("");
 
@@ -45,7 +41,7 @@ const Tables = ({ setNewValue }) => {
     { Header: "Бренд", accessor: "brand" },
     { Header: "Объём памяти", accessor: "characteristics.memorySize" },
     { Header: "Оперативная память", accessor: "characteristics.ram" },
-    { Header: "Цвет", accessor: "color" },
+    { Header: "Цвет", accessor: "colour" },
     { Header: "Кол-во SIM-карт", accessor: "characteristics.simCart" },
     { Header: "Дата выпуска", accessor: "date" },
     {
@@ -103,10 +99,10 @@ const Tables = ({ setNewValue }) => {
   ];
   const smartPhoneColumns = [
     { Header: "Бренд", accessor: "brand" },
-    { Header: "Объём памяти", accessor: "characteristics.memorySizes" }, // доступ к данным из characteristics
-    { Header: "Оперативная память", accessor: "characteristics.ram" }, // доступ к данным из characteristics
-    { Header: "Цвет", accessor: "color" },
-    { Header: "Кол-во SIM-карт", accessor: "characteristics.simCart" }, // доступ к данным из characteristics
+    { Header: "Объём памяти", accessor: "characteristics.memorySizes" },
+    { Header: "Оперативная память", accessor: "characteristics.ram" },
+    { Header: "Цвет", accessor: "colour" },
+    { Header: "Кол-во SIM-карт", accessor: "characteristics.simCart" },
     { Header: "Дата выпуска", accessor: "date" },
     {
       Header: "Кол-во товара",
@@ -158,7 +154,7 @@ const Tables = ({ setNewValue }) => {
   const watchColumns = [
     { Header: "Бренд", accessor: "brand" },
     { Header: "Объём памяти", accessor: "characteristics.memorySizes" },
-    { Header: "Цвет", accessor: "color" },
+    { Header: "Цвет", accessor: "colour" },
     { Header: "Материал ремешка", accessor: "characteristics.strapMaterial" },
     { Header: "Материал корпуса", accessor: "characteristics.caseMaterial" },
     { Header: "Размер часов", accessor: "characteristics.watchSize" },
@@ -225,7 +221,7 @@ const Tables = ({ setNewValue }) => {
     { Header: "Бренд", accessor: "brand" },
     { Header: "Объём памяти", accessor: "characteristics.memorySize" },
     { Header: "Оперативная память", accessor: "characteristics.ram" },
-    { Header: "Цвет", accessor: "color" },
+    { Header: "Цвет", accessor: "colour" },
     { Header: "Тип хранения", accessor: "characteristics.storageType" },
     { Header: "Дата выпуска", accessor: "date" },
     {
@@ -289,11 +285,6 @@ const Tables = ({ setNewValue }) => {
     const phones = subProducts.filter((item) => item.category === "smartPhone");
     const laptops = subProducts.filter((item) => item.category === "laptop");
     const tablets = subProducts.filter((item) => item.category === "tablet");
-
-    console.log("Smart Watches:", watches);
-    console.log("Smart Phones:", phones);
-    console.log("laptop", laptops);
-    console.log("laptop", tablets);
 
     setSmartWatch(watches);
     setSmartPhone(phones);

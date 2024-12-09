@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/system";
+import { Box, color } from "@mui/system";
 import { useDropzone } from "react-dropzone";
 import ReactQuill from "react-quill";
 import { useForm, Controller } from "react-hook-form";
@@ -11,7 +11,6 @@ import { IconPDF } from "../../../assets/icon";
 import "./DescriptionQuill.css";
 import Button from "../../UI/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllProductData } from "../../../store/admin-addproduct/productsSlice";
 import {
   postAllProducts,
   postFile,
@@ -34,8 +33,9 @@ const schema = yup.object().shape({
 const DescriptionQuill = () => {
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
-  const { mainData } = useSelector((state) => state.product);
-  const subProducts = mainData?.subProducts || [];
+  const { mainData, images } = useSelector((state) => state.product);
+
+  const { subProducts } = mainData;
 
   const {
     handleSubmit,
@@ -51,7 +51,9 @@ const DescriptionQuill = () => {
 
   const onDrop = (acceptedFiles) => {
     if (acceptedFiles.length > 0) {
-      setValue("pdfFile", acceptedFiles[0], { shouldValidate: true });
+      const pdfFile = acceptedFiles[0];
+      setFile(pdfFile);
+      setValue("pdfFile", pdfFile, { shouldValidate: true });
     }
   };
 
@@ -62,16 +64,25 @@ const DescriptionQuill = () => {
     },
   });
   const onSubmit = (data) => {
-    const produts = {
-      ...mainData,
+    const firstImageLink = images[1]?.link;
+    const filteredSubProducts = Array.isArray(subProducts)
+      ? subProducts.map(({ brand, category, date, ...rest }) => rest)
+      : [];
+
+    const products = {
+      subCategoryId: Number(mainData.subCategoryId),
+      brandId: Number(mainData.brandId),
+      guarantee: mainData.guarantee,
+      name: mainData.name,
+      dateOfIssue: mainData.dateOfIssue,
       video: data.urlFile,
-      PDF: data.pdfFile,
+      PDF: firstImageLink,
       description: data.quill,
-      subProducts: Array.isArray(subProducts) ? subProducts : [subProducts],
+      subProducts: filteredSubProducts,
     };
 
-    console.log("Products:", produts);
-    dispatch(postAllProducts(produts));
+    console.log("Products:", products);
+    dispatch(postAllProducts(products));
     setValue("pdfFile", null);
   };
 
@@ -117,7 +128,7 @@ const DescriptionQuill = () => {
           />
           {errors.urlFile && (
             <p style={{ color: "red" }}>{errors.urlFile.message}</p>
-          )}{" "}
+          )}
         </div>
 
         <Box
@@ -164,7 +175,6 @@ const DescriptionQuill = () => {
           )}
         </Box>
       </Box>
-
       <Controller
         name="quill"
         control={control}

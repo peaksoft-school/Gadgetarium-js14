@@ -21,6 +21,7 @@
     "@react-google-maps/api": "^2.20.3",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "icons": "^1.0.0",
     "quill": "^2.0.2",

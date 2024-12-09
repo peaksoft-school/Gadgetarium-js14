@@ -52,7 +52,7 @@ const simCards = [
 
 const PhoneForm = ({ setNewValue }) => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.product);
+  const { isLoading, images } = useSelector((state) => state.product);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [file, setFile] = useState(null);
@@ -73,16 +73,16 @@ const PhoneForm = ({ setNewValue }) => {
   console.log(getValues());
 
   const onSubmit = async (data) => {
+    const imageLinks = images.map((image) => image.link);
     const newData = {
-      color: data.color,
+      colour: data.color,
       characteristics: {
         memorySizes: data.memorySize,
         ram: data.ram,
         simCart: data.simCart,
-        dataDropzone: data.dataDropzone,
         productId: Date.now(),
       },
-      images: [],
+      images: imageLinks,
       category: "smartPhone",
     };
     dispatch(setProductData(newData));

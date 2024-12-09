@@ -51,7 +51,7 @@ const storageTypes = [
 
 const LaptopForm = ({ setNewValue }) => {
   const [file, setFile] = useState(null);
-  const { isLoading } = useSelector((state) => state.product);
+  const { isLoading, images } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const {
     register,
@@ -65,20 +65,20 @@ const LaptopForm = ({ setNewValue }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  console.log(getValues());
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   const onSubmit = (data) => {
+    const imageLinks = images.map((image) => image.link);
     const newData = {
-      color: data.color,
+      colour: data.color,
       characteristics: {
         memorySize: data.memorySize,
         ram: data.ram,
         storageType: data.storageType,
-        dataDropzone: data.dataDropzone,
         productId: Date.now(),
       },
+      images: imageLinks,
       category: "laptop",
     };
     dispatch(setProductData(newData));
