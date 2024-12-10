@@ -89,3 +89,5 @@ export { default as letterU } from "../icon/letterU.svg";
 export { default as volume } from "../icon/volume-1.svg";
 export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
+export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
+export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
