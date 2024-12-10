@@ -25,17 +25,17 @@ const BannerSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    startAutoSlide();
-
-    return () => clearInterval(intervalRef.current);
-  }, []);
-
   const startAutoSlide = () => {
     intervalRef.current = setInterval(() => {
       handleNextSlide();
     }, 5000);
   };
+
+  useEffect(() => {
+    startAutoSlide();
+
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   const handleNextSlide = () => {
     setFade(true);

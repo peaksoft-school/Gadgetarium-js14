@@ -28,7 +28,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/auth/authSlice";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ROUTES } from "../utils/routes";
 
 const links = [
@@ -49,9 +49,9 @@ const suggestions = [
 ];
 
 const Header = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
-  const [showMainElements, setShowMainElements] = useState(true);
+  const [, setShowMainElements] = useState(true);
   const [showAdgetariumImg, setShowAdgetariumImg] = useState(false);
 
   const [openSignIn, setOpenSignIn] = useState(false);
@@ -302,6 +302,8 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
   cursor: "pointer",
   textDecoration: "none",
   color: "#fff",
+  padding: "0 10px",
+
   "& span:hover": {
     backgroundColor: theme.palette.darkGrey.dark,
   },

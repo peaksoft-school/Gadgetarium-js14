@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import BannerSlider from "../../components/banner/BannerSlider";
 import Card from "../../components/UI/Card";
 import { Box, styled } from "@mui/system";
@@ -20,16 +20,19 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(getrecommendedCards());
   }, [dispatch]);
+
   const { elements } = recommendCards;
 
   useEffect(() => {
     dispatch(getNewCards());
   }, [dispatch]);
+
   const { elements: news } = newCards;
 
   useEffect(() => {
     dispatch(getDiscountCards());
   }, [dispatch]);
+
   const { elements: discountElements } = disCountCards;
 
   return (
