@@ -1,27 +1,82 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getProduct } from './innerPageCardThunk';
+import { createSlice } from "@reduxjs/toolkit";
+import { deleteProduct, getAllReviews, getProdates, getRating } from "./innerPageCardThunk";
+
+const initialState = {
+  products: null,
+  loading: false,
+  error: null,
+  ratingData: null,
+  ratingLoading: false,
+  ratingError: null,
+  reviewsData: [],
+  reviewsLoading: false,
+  reviewsError: null,
+  deleteLoading: false, 
+  deleteError: null, 
+  deleteSuccess: false, 
+};
 
 export const innerPageCardSlice = createSlice({
-  name: 'innerPageCard',
-  initialState: {
-    product: null,
-    isLoading: false,
-    error: null,
-  },
+  name: "innerPageCard",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProduct.pending, (state) => {
-        state.isLoading = true;
+      .addCase(getProdates.pending, (state) => {
+        state.loading = true;
         state.error = null;
       })
-      .addCase(getProduct.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.product = action.payload;
+      .addCase(getProdates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
       })
-      .addCase(getProduct.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
+      .addCase(getProdates.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+    builder
+      .addCase(getRating.pending, (state) => {
+        state.ratingLoading = true;
+        state.ratingError = null;
+      })
+      .addCase(getRating.fulfilled, (state, action) => {
+        state.ratingLoading = false;
+        state.ratingData = action.payload;
+      })
+      .addCase(getRating.rejected, (state, action) => {
+        state.ratingLoading = false;
+        state.ratingError = action.payload;
+      });
+    builder
+      .addCase(getAllReviews.pending, (state) => {
+        state.reviewsLoading = true;
+        state.reviewsError = null;
+      })
+      .addCase(getAllReviews.fulfilled, (state, action) => {
+        state.reviewsData = action.payload;
+        state.reviewsLoading = false;
+      })
+      .addCase(getAllReviews.rejected, (state, action) => {
+        state.reviewsLoading = false;
+        state.reviewsError = action.payload;
+      });
+    builder
+      .addCase(deleteProduct.pending, (state) => {
+        state.deleteLoading = true;
+        state.deleteError = null;
+        state.deleteSuccess = false;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.deleteLoading = false;
+        state.deleteSuccess = true;
+        state.products = state.products.filter(
+          (product) => product.id !== action.payload.id
+        );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.deleteLoading = false;
+        state.deleteError = action.payload;
       });
   },
 });

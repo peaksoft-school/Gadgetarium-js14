@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gadget, StateDown } from '../../assets/icon';
+import {  Gadgettarium, StateDown } from '../../assets/icon/index';
 import { styled } from '@mui/material/styles';
 import { NavLink } from 'react-router-dom';
 import { Popover, Button as MuiButton, Typography } from '@mui/material';
@@ -28,7 +28,7 @@ const AdminHeader = () => {
     <div>
       <StyledHeader>
         <div>
-          <img src={Gadget} alt="" />
+          <img src={Gadgettarium} alt="" />
         </div>
         <StyledDiv>
           <StyledNavLink to="/products">Товары</StyledNavLink>

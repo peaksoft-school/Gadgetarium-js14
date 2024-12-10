@@ -9,8 +9,8 @@ import "dayjs/locale/ru";
 import theme from "./assets/theme/theme.js";
 import dayjs from "dayjs";
 import { Provider } from "react-redux";
-import { store } from "./store/store.js";
 import { injectStore } from "./config/axiosInstance.js";
+import store from "./store/store.js";
 
 injectStore(store);
 dayjs.locale("ru");
