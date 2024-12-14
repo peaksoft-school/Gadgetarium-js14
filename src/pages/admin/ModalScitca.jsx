@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Button, TextField, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,13 @@ const ModalScitca = ({ open, onClose }) => {
   const [dateOfStart, setDateOfStart] = useState("");
   const [dateOfFinish, setDateOfFinish] = useState("");
 
-  console.log(ids);
-
   const handleCreateDiscount = () => {
     dispatch(
       createDiscount({
         percentOfDiscount,
         dateOfStart,
         dateOfFinish,
+        ids,
       })
     );
 
@@ -28,7 +27,6 @@ const ModalScitca = ({ open, onClose }) => {
   const handleStartDateChange = (e) => {
     const newStartDate = e.target.value;
     setDateOfStart(newStartDate);
-
 
     if (dateOfFinish && new Date(dateOfFinish) < new Date(newStartDate)) {
       setDateOfFinish("");
@@ -71,7 +69,7 @@ const ModalScitca = ({ open, onClose }) => {
               size="small"
               value={dateOfFinish}
               onChange={(e) => setDateOfFinish(e.target.value)}
-              disabled={!dateOfStart} 
+              disabled={!dateOfStart}
               inputProps={{
                 min: dateOfStart || null,
                 max: dateOfStart
@@ -79,7 +77,7 @@ const ModalScitca = ({ open, onClose }) => {
                       new Date(dateOfStart).getTime() + 20 * 24 * 60 * 60 * 1000
                     )
                       .toISOString()
-                      .split("T")[0] 
+                      .split("T")[0]
                   : null,
               }}
             />
@@ -93,7 +91,7 @@ const ModalScitca = ({ open, onClose }) => {
             className="add-btn"
             variant="contained"
             onClick={handleCreateDiscount}
-            disabled={!percentOfDiscount || !dateOfStart || !dateOfFinish} 
+            disabled={!percentOfDiscount || !dateOfStart || !dateOfFinish}
           >
             Добавить
           </Button>
@@ -105,10 +103,7 @@ const ModalScitca = ({ open, onClose }) => {
 
 export default ModalScitca;
 
-
-
-
-const StyledModal = styled(Box)(({ theme }) => ({
+const StyledModal = styled(Box)(() => ({
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -120,7 +115,7 @@ const StyledModal = styled(Box)(({ theme }) => ({
   padding: 24,
 }));
 
-const FieldWrapper = styled("div")(({ theme }) => ({
+const FieldWrapper = styled("div")(() => ({
   marginBottom: 16,
 
   "& > p": {
@@ -130,7 +125,7 @@ const FieldWrapper = styled("div")(({ theme }) => ({
   },
 }));
 
-const Actions = styled("div")(({ theme }) => ({
+const Actions = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
   marginTop: 20,

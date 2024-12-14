@@ -3,10 +3,10 @@ import { axiosInstance } from "../../config/axiosInstance";
 
 export const getProdates = createAsyncThunk(
   "getProdates",
-  async ({ filter,from,before, keyWord,sortBy }, { rejectWithValue }) => {
+  async ({ filter, from, before, keyWord, sortBy }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get("/api/admin/products", {
-        params: { status: filter, keyWord,from ,before,sortBy},
+        params: { status: filter, keyWord, from, before, sortBy },
       });
       return data;
     } catch (error) {
@@ -34,13 +34,12 @@ export const deleteProdates = createAsyncThunk(
 export const createDiscount = createAsyncThunk(
   "discountns/createDiscount",
   async (
-    { percentOfDiscount, dateOfStart, dateOfFinish, keyWord },
+    { percentOfDiscount, dateOfStart, dateOfFinish, keyWord, ids },
     { rejectWithValue, dispatch }
   ) => {
-    let productsId = 1;
     try {
       const { data } = await axiosInstance.post("/api/admin/discounts", {
-        productsId: [productsId],
+        productsId: ids,
         percentOfDiscount,
         dateOfStart,
         dateOfFinish,

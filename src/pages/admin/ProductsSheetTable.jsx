@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, styled, Pagination } from "@mui/material";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button";
@@ -65,19 +65,16 @@ const ProductsSheetTable = () => {
     setFilter(newFilter);
   };
 
-  useEffect(() => {
-    dispatch(uploadFile(file));
-  }, [file, dispatch]);
-
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     console.log("Selected file:", selectedFile);
     setFile(selectedFile);
+    // dispatch(uploadFile(file));
   };
 
   const handleSaveBanner = () => {
     if (file) {
-      console.log("Selected file:", file); 
+      console.log("Selected file:", file);
       const formData = new FormData();
       formData.append("bannerList", file);
 
@@ -118,6 +115,8 @@ const ProductsSheetTable = () => {
   const handleChangePage = (event, value) => {
     setPage(value);
   };
+
+  const toggleDiscountModal = () => setOpenModalScitca((prev) => !prev);
 
   const columns = [
     { Header: "ID", accessorFn: (_, index) => index + 1 },
@@ -218,16 +217,13 @@ const ProductsSheetTable = () => {
             <Box className="action-buttons">
               <Button className="add-product">Добавить товар</Button>
               <Box>
-                <Button
-                  className="add-product"
-                  onClick={() => setOpenModalScitca(true)}
-                >
-                  Создать скитку
+                <Button className="add-product" onClick={toggleDiscountModal}>
+                  Создать скидку
                 </Button>
                 {openModalScitca && (
                   <ModalScitca
                     open={openModalScitca}
-                    onClose={() => setOpenModalScitca(false)}
+                    onClose={toggleDiscountModal}
                   />
                 )}
                 <Box
@@ -308,6 +304,7 @@ const ProductsSheetTable = () => {
           onFileChange={handleFileChange}
           onSave={handleSaveBanner}
           disabled={!file}
+          file={file}
         />
       </Box>
     </>

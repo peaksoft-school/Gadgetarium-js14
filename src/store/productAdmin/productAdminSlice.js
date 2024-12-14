@@ -17,6 +17,7 @@ const initialState = {
   ids: [],
   error: null,
   keyWord: "",
+  imageLink: "",
 };
 
 export const productAdminSlice = createSlice({
@@ -86,7 +87,7 @@ export const productAdminSlice = createSlice({
       })
       .addCase(uploadFile.fulfilled, (state, { payload }) => {
         state.uploadLoading = false;
-        console.log("File upload success", payload);
+        state.imageLink = payload;
       })
       .addCase(uploadFile.rejected, (state, { error }) => {
         state.uploadLoading = false;

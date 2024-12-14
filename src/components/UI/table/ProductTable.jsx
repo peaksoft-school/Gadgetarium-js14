@@ -33,7 +33,7 @@ const ProductTable = ({ data, columns }) => {
       dispatch(getIds(selectedIds));
     }
   };
-  
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -61,12 +61,12 @@ const ProductTable = ({ data, columns }) => {
               <StyledHeader>
                 {headerGroups.map((headerGroup) => (
                   <TableRow
-                    key={headerGroup.id}
+                    key={crypto.randomUUID()}
                     {...headerGroup.getHeaderGroupProps()}
                   >
                     {headerGroup.headers.map((column) => (
                       <StyledTableCell
-                        key={column.id}
+                        key={crypto.randomUUID()}
                         {...column.getHeaderProps()}
                       >
                         {column.render("Header")}
@@ -82,14 +82,14 @@ const ProductTable = ({ data, columns }) => {
 
                   return (
                     <TableRow
-                      key={row.id}
+                      key={crypto.randomUUID()}
                       {...row.getRowProps()}
                       onMouseEnter={() => setHoveredRowId(rowId)}
                       onMouseLeave={() => setHoveredRowId(null)}
                     >
                       {row.cells.map((cell, index) => (
                         <StyledBodyCell
-                          key={cell.column.id}
+                          key={crypto.randomUUID()}
                           {...cell.getCellProps()}
                         >
                           {index === 0 ? (
