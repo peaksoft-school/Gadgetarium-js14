@@ -93,7 +93,6 @@ const AdminReview = ({ reviews }) => {
                       alt="Delete"
                       onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
                       onMouseLeave={(e) => (e.currentTarget.src = garbage)}
-                      onClick={() => console.log("Delete review:", review.id)}
                     />
                     <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
                       <img src={isExpandedAll ? StateUp : StateDown} alt="Expand All" />

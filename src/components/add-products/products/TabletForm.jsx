@@ -83,7 +83,6 @@ const TabletForm = ({ setNewValue }) => {
       category: "tablet",
     };
 
-    console.log(data);
     dispatch(setProductData(newData));
     setNewValue("2");
     reset();

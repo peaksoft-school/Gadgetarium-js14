@@ -108,8 +108,8 @@ const Tables = ({ setNewValue }) => {
       Header: "Кол-во товара",
       accessor: "quantity",
       Cell: ({ value, row }) => {
-        const productId = row.original.productId;
-        const handleQuantityChange = (e, productId) => {
+        const productId = row.original.characteristics.productId;
+        const handleQuantityChange = (e) => {
           const updatedQuantity = e.target.value;
           dispatch(setProductQuantity({ productId, updatedQuantity }));
         };
@@ -123,7 +123,7 @@ const Tables = ({ setNewValue }) => {
                 padding: "10px",
               }}
               value={value}
-              onChange={(e) => handleQuantityChange(e, productId)}
+              onChange={handleQuantityChange}
             />
           </Box>
         );

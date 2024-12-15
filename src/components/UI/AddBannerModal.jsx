@@ -54,7 +54,6 @@ const AddBannerModal = ({ open, onClose }) => {
   ));
 
   const handleShowSelectedImages = () => {
-    console.log(selectedImages);
     setSelectedImages([]);
   };
 

@@ -70,7 +70,6 @@ const PhoneForm = ({ setNewValue }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  console.log(getValues());
 
   const onSubmit = async (data) => {
     const imageLinks = images.map((image) => image.link);

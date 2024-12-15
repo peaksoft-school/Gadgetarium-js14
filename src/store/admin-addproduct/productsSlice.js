@@ -51,6 +51,8 @@ export const productSlice = createSlice({
     },
 
     setProductQuantity: (state, action) => {
+      console.log(action);
+
       const { productId, updatedQuantity } = action.payload;
 
       const quantity = Number(updatedQuantity);

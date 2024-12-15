@@ -14,13 +14,12 @@ import getSubCategories, {
 import Button from "../../UI/Button";
 import WatchForm from "./WatchForm";
 import PhoneForm from "./PhoneForm";
-import {
-  setMainData
-} from "../../../store/admin-addproduct/productsSlice";
+import { setMainData } from "../../../store/admin-addproduct/productsSlice";
 import Loading from "../../UI/Loading";
 import LaptopForm from "./LaptopForm";
 import TabletForm from "./TabletForm";
 import { format } from "date-fns";
+import dayjs from "dayjs";
 
 const schema = yup.object().shape({
   category: yup.string().required("Категория обязательно"),
@@ -80,6 +79,7 @@ const MainForm = ({ setNewValue }) => {
       guarantee: data.warranty,
       dateOfIssue: formatDate(data.date),
       productId: Date.now(),
+      size: 4,
     };
 
     dispatch(setMainData(newProduct));
@@ -268,6 +268,7 @@ const MainForm = ({ setNewValue }) => {
                     onChange={(newValue) => field.onChange(newValue)}
                     inputRef={field.ref}
                     disabled={!watch("category")}
+                    maxDate={dayjs()}
                     {...field}
                     sx={{
                       ".MuiInputBase-root": {

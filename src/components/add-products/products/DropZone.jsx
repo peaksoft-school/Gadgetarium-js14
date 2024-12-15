@@ -30,7 +30,6 @@ const DropZone = ({ control, errors, setFile }) => {
       filesArray.slice(0, 10 - selectedImages.length).forEach((file) => {
         validateImage(file)
           .then((validFile) => {
-            console.log(validFile);
 
             setSelectedImages((prevImages) => {
               const newImages = [

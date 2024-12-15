@@ -81,7 +81,6 @@ const DescriptionQuill = () => {
       subProducts: filteredSubProducts,
     };
 
-    console.log("Products:", products);
     dispatch(postAllProducts(products));
     setValue("pdfFile", null);
   };

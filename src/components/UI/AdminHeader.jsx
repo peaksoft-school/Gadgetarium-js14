@@ -17,7 +17,6 @@ const AdminHeader = () => {
   };
 
   const handleLogout = () => {
-    console.log("Вышли из аккаунта");
     handleClose();
   };
 

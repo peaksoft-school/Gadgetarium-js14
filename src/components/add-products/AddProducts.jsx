@@ -80,7 +80,7 @@ const AddProducts = () => {
             <MainForm setNewValue={setValue} />
           </TabPanel>
           <TabPanel value="2">
-            <Tables  setNewValue={setValue} />
+            <Tables setNewValue={setValue} />
           </TabPanel>
           <TabPanel value="3">
             <DescriptionQuill />
