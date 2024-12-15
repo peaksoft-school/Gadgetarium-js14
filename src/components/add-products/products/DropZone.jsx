@@ -135,7 +135,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
   minHeight: "217px",
   height: "100%",
   borderRadius: "2px",
-  gap: "18px",
   alignItems: "center",
   textAlign: "center",
   flexWrap: "wrap",
