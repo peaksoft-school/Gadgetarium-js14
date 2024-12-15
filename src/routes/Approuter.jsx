@@ -4,16 +4,19 @@ import { useSelector } from "react-redux";
 import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
 import AdminProductComents from "../pages/admin/AdminProductComents";
+import UserLayout from "../layout/user/UserLayout";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
+
+  console.log(userData);
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<AdminProductComents />}
+          component={<UserLayout />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}
@@ -39,6 +42,10 @@ const AppRouter = () => {
         {
           index: true,
           element: <AdminLayout />,
+        },
+        {
+          path: "comments",
+          element: <AdminProductComents />,
         },
       ],
     },

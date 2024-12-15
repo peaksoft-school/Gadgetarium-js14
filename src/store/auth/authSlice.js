@@ -43,7 +43,7 @@ const addAsyncCases = (builder, asyncThunk, dataField) => {
       state.isLoading = true;
     })
     .addCase(asyncThunk.rejected, (state, action) => {
-      state[dataField] = action.payload;
+      state.error = action.payload;
       state.isLoading = false;
     });
 };
@@ -53,14 +53,14 @@ export const authSlice = createSlice({
   initialState: getInitialState(),
   reducers: {
     logout: (state) => {
-      (state.isLoading = false),
-        (state.userData.role = "GUEST"),
-        (state.userData.email = ""),
-        (state.userData.name = ""),
-        (state.userData.token = ""),
-        (state.userData.role = ""),
-        (state.userData.isAuth = false),
-        localStorage.removeItem("Gadgetarium");
+      state.userData = {
+        role: "GUEST",
+        email: "",
+        token: "",
+        name: "",
+        isAuth: false,
+      };
+      localStorage.removeItem("Gadgetarium");
     },
     autoLogin: (state, { payload }) => {
       (state.userData = payload), (state.userData.isAuth = true);
@@ -72,4 +72,5 @@ export const authSlice = createSlice({
   },
 });
 
+export const { logout, autoLogin } = authSlice.actions;
 export const authAxtions = authSlice.actions;
