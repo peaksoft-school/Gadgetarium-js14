@@ -3,6 +3,7 @@ import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
 import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
+import ProductCatalog from "../pages/user/product-catalog/ProductCatalog";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -12,7 +13,7 @@ const AppRouter = () => {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<h1> word</h1>}
+          component={<ProductCatalog />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}

@@ -7,7 +7,14 @@ import {
   greyHeart,
   GroceryCart,
   DiscountClasIcon,
+  redHeart,
 } from "../../assets/icon";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postFavourites,
+  postToBasket,
+} from "../../store/product-catalog/productCatalogThunk";
 
 const Card = ({
   img,
@@ -20,54 +27,81 @@ const Card = ({
   oldPrice,
   discountNew,
   discountClas,
+  subProductId,
+  type = "default",
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
+  const dispatch = useDispatch();
+  const { favourit } = useSelector((state) => state.productCatalog);
+  const [isFavourit, setisFavourit] = useState(!!discountClas);
+
+  const handleAddToFavourites = () => {
+    const addOrDelete = !isFavourit;
+    console.log("данные:", { subProductId, addOrDelete });
+    dispatch(postFavourites({ subProductId, addOrDelete }));
+    setisFavourit(addOrDelete);
+  };
+  console.log("ID:", subProductId);
+
+  const handlePostpostToBasket = () => {
+    dispatch(postToBasket({ subProductId }));
+  };
 
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledIcanConteiner>
-          <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
-        </StyledIcanConteiner>
+        {type !== "viewed" && (
+          <StyledIcanConteiner>
+            <img src={Component} alt="compare" />
+            <img
+              src={isFavourit ? redHeart : greyHeart}
+              alt="like"
+              onClick={handleAddToFavourites}
+            />
+          </StyledIcanConteiner>
+        )}
+        {type !== "viewed" && (
+          <BoxAicanContainer>
+            {discount ? (
+              <DiscountContainer>
+                <ProtsetBox>-{discount}%</ProtsetBox>
+              </DiscountContainer>
+            ) : null}
 
-        <BoxAicanContainer>
-          {discount ? (
-            <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
-            </DiscountContainer>
-          ) : null}
+            {discountNew ? (
+              <DiscountContainer>
+                <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
+              </DiscountContainer>
+            ) : null}
 
-          {discountNew ? (
-            <DiscountContainer>
-              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-            </DiscountContainer>
-          ) : null}
-
-          {discountClas ? (
-            <DiscountContainer>
-              <img
-                className="scitca"
-                src={DiscountClasIcon}
-                alt="Icon Two"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  position: "relative",
-                  top: "-35px",
-                }}
-              />
-            </DiscountContainer>
-          ) : null}
-        </BoxAicanContainer>
+            {discountClas ? (
+              <DiscountContainer>
+                <img
+                  className="scitca"
+                  src={DiscountClasIcon}
+                  alt="Icon Two"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
+                    top: "-35px",
+                  }}
+                />
+              </DiscountContainer>
+            ) : null}
+          </BoxAicanContainer>
+        )}
 
         <ImageContainer>
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
-        <Box padding={2}>
-          <Availability>{`В наличии (${title})`}</Availability>
+        <Box padding={2} sx={{ cursor: "pointer" }}>
+          {type !== "viewed" && (
+            <Availability>{`В наличии (${title})`}</Availability>
+          )}
+
           <ProductName>{text}</ProductName>
 
           <RatingContainer>
@@ -106,9 +140,16 @@ const Card = ({
               <NewPrice>{newPrice}</NewPrice>
               <OldPrice>{oldPrice}</OldPrice>
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+
+            {type !== "viewed" && (
+              <Button
+                className="buttonrever"
+                variant="contained"
+                onClick={handlePostpostToBasket}
+              >
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>
@@ -145,14 +186,14 @@ const StyledBoxProject = styled(Box)(() => ({
   gap: "8px",
 }));
 
-const StyledCard = styled(Box)({
-  width: "300px",
+const StyledCard = styled(Box)(({ type }) => ({
+  // width: type === "viewed" ? "150px" : "300px",
   border: "1px solid #e0e0e0",
-  borderRadius: "12px",
+  borderRadius: "4px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#fff",
   position: "relative",
-});
+}));
 
 const ImageContainer = styled(Box)({
   display: "flex",

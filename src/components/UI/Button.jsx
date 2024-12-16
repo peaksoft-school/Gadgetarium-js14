@@ -31,7 +31,7 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
       return {
         '&.MuiButtonBase-root': {
           width: '100%',
-          color: '#88226a',
+          color: '#cb11ab',
           fontSize: '18px',
           borderRadius: '4px',
           border: '1px solid #e313bf',

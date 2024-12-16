@@ -3,7 +3,7 @@ import { Box, TextField, InputAdornment, Autocomplete } from "@mui/material";
 import { useState, useEffect } from "react";
 import {
   IconBasket,
-  FaceBook,
+  IconFacebook,
   IconInstagram,
   IconLike,
   IconPersonal,
@@ -121,7 +121,7 @@ const Header = () => {
         />
         {!showAdgetariumImg && (
           <StyledImg>
-            <img src={FaceBook} alt="face" />
+            <img src={IconFacebook} alt="face" />
             <img src={IconInstagram} alt="insta" />
             <img src={IconWhatsApp} alt="whatsapp" />
           </StyledImg>
