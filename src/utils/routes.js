@@ -12,12 +12,13 @@ export const ROUTES = {
   },
   USER: {
     index: "/",
-    profile: "user",
+    profile: "user/profile",
     aboutStore: "user/about-store",
     delivery: "user/delivery",
     faq: "user/faq",
     contacts: "user/contacts",
     productCatalog: "user/product-catalog",
+    smartPhone: "user/smartPhone",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };

@@ -186,8 +186,7 @@ const StyledBoxProject = styled(Box)(() => ({
   gap: "8px",
 }));
 
-const StyledCard = styled(Box)(({ type }) => ({
-  // width: type === "viewed" ? "150px" : "300px",
+const StyledCard = styled(Box)(() => ({
   border: "1px solid #e0e0e0",
   borderRadius: "4px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",

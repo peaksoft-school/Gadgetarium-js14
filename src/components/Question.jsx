@@ -49,6 +49,7 @@ const Question = () => {
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
+        paddingBottom: "80px",
       }}
     >
       <Typography variant="h4" align="center" gutterBottom>

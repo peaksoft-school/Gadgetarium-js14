@@ -147,7 +147,6 @@ const StyledBox = styled(Box)(() => ({
   width: "100%",
   margin: "0 auto",
   color: "#80899e",
-
 }));
 
 const ConteinerFuter = styled(Box)(() => ({
