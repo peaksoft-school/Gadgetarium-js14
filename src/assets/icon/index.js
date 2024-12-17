@@ -91,3 +91,4 @@ export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
 export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
 export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
+export { default as PlayCircleIcon } from "../icon/PlayCircleIcon.svg";
