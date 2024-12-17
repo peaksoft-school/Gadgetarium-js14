@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { display, fontWeight, padding, styled, width } from "@mui/system";
+import { styled } from "@mui/system";
 import { useState } from "react";
 import Description from "./Description";
 import { systemUiconsDocumentList } from "../../assets/icon";

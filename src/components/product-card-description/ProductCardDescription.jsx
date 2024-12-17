@@ -1,9 +1,23 @@
 import { Box, styled } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import { SamsungText } from "../../assets/image";
 import ProductCardTabPanel from "./ProductCardTabPanel";
+import { useDispatch, useSelector } from "react-redux";
+import Card from "../../components/UI/Card";
+import { getLastViews } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
 
 const ProductCardDescription = () => {
+  const dispatch = useDispatch();
+  const { lastViews } = useSelector((state) => state.cardofProduct);
+
+  console.log("ghgfhd", lastViews);
+  useEffect(() => {
+    dispatch(getLastViews());
+  }, []);
+
+  const { elements } = lastViews;
+  console.log("999", elements);
+
   return (
     <WrapperMainBox>
       <FirstBox>
@@ -15,8 +29,26 @@ const ProductCardDescription = () => {
         <StyledHr />
       </FirstBox>
       <ProductCardTabPanel />
-      <Box>
-        <h2>Просмотренные товары</h2>
+      <Box sx={{ padding: "60px 80px" }}>
+        {elements.length > 0 && (
+          <>
+            <h2>Просмотренные товары</h2>
+            <Box sx={{ paddingLeft: "30px", display: "flex", gap: "80px" }}>
+              {elements.map((item, index) => (
+                <Box key={index} sx={{ width: "180px" }}>
+                  <Card
+                    img={item.img}
+                    text={item.brand}
+                    reviews={item.numberOfReviews}
+                    newPrice={item.price}
+                    reiting={3}
+                    type="viewed"
+                  />
+                </Box>
+              ))}
+            </Box>
+          </>
+        )}
       </Box>
     </WrapperMainBox>
   );

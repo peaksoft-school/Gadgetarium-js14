@@ -20,6 +20,7 @@ const Card = ({
   oldPrice,
   discountNew,
   discountClas,
+  type = "default",
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
@@ -27,47 +28,53 @@ const Card = ({
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledIcanConteiner>
-          <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
-        </StyledIcanConteiner>
+        {type !== "viewed" && (
+          <StyledIcanConteiner>
+            <img src={Component} alt="" />
+            <img src={greyHeart} alt="" />
+          </StyledIcanConteiner>
+        )}
+        {type !== "viewed" && (
+          <BoxAicanContainer>
+            {discount ? (
+              <DiscountContainer>
+                <ProtsetBox>-{discount}%</ProtsetBox>
+              </DiscountContainer>
+            ) : null}
 
-        <BoxAicanContainer>
-          {discount ? (
-            <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
-            </DiscountContainer>
-          ) : null}
+            {discountNew ? (
+              <DiscountContainer>
+                <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
+              </DiscountContainer>
+            ) : null}
 
-          {discountNew ? (
-            <DiscountContainer>
-              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-            </DiscountContainer>
-          ) : null}
-
-          {discountClas ? (
-            <DiscountContainer>
-              <img
-                className="scitca"
-                src={DiscountClasIcon}
-                alt="Icon Two"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  position: "relative",
-                  top: "-35px",
-                }}
-              />
-            </DiscountContainer>
-          ) : null}
-        </BoxAicanContainer>
+            {discountClas ? (
+              <DiscountContainer>
+                <img
+                  className="scitca"
+                  src={DiscountClasIcon}
+                  alt="Icon Two"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
+                    top: "-35px",
+                  }}
+                />
+              </DiscountContainer>
+            ) : null}
+          </BoxAicanContainer>
+        )}
 
         <ImageContainer>
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
         <Box padding={2}>
-          <Availability>{`В наличии (${title})`}</Availability>
+          {type !== "viewed" && (
+            <Availability>{`В наличии (${title})`}</Availability>
+          )}
+
           <ProductName>{text}</ProductName>
 
           <RatingContainer>
@@ -106,9 +113,11 @@ const Card = ({
               <NewPrice>{newPrice}</NewPrice>
               <OldPrice>{oldPrice}</OldPrice>
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+            {type !== "viewed" && (
+              <Button className="buttonrever" variant="contained">
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>
@@ -146,7 +155,6 @@ const StyledBoxProject = styled(Box)(() => ({
 }));
 
 const StyledCard = styled(Box)({
-  width: "280px",
   border: "1px solid #e0e0e0",
   borderRadius: "12px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
