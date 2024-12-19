@@ -92,3 +92,8 @@ export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
 export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
 export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
 export { default as PlayCircleIcon } from "../icon/PlayCircleIcon.svg";
+export { default as Right } from "../icon/Right.svg";
+export { default as Minus } from "../icon/Minus.svg";
+export { default as PlusCircleIcon } from "../icon/PlusCircleIcon.svg";
+export { default as XMLID } from "../icon/XMLID.svg";
+export { default as PaymentByCard } from "../icon/PaymentByCard.svg";

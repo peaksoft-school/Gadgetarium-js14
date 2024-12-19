@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, color, styled, width } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { Group22 } from "../../assets/image";
-import { PlayCircleIcon, YouTub } from "../../assets/icon";
+import { PlayCircleIcon } from "../../assets/icon";
 
 const Description = () => {
   return (

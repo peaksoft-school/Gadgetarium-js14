@@ -7,24 +7,43 @@ export const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
 let store;
+
 export const injectStore = (_store) => {
   store = _store;
 };
-axiosInstance.interceptors.request.use(function (config) {
-  const updateConfig = { ...config };
-  const { userData } = store.getState().auth;
-  if (userData.token) {
-    return (updateConfig.headers.Authorization = `Bearer ${userData.token}`);
+
+axiosInstance.interceptors.request.use(
+  function (config) {
+    const updateConfig = { ...config };
+
+    const token =
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGlubmphazA1N0BnbWFpbC5jb20iLCJpYXQiOjE3MzQ0OTY0ODgsImV4cCI6MTczNTkzNjQ4OH0.TavNJ-t-KGFUPx8xJC19tpdXxD8OK_DldQCxHbicC4E";
+    if (token) {
+      updateConfig.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return updateConfig;
+  },
+  function (error) {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 axiosInstance.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
+    if (error.response) {
+      const status = error.response.status;
+      console.error(
+        `Ошибка ${status}: ${error.response.data.message || error.message}`
+      );
+    } else {
+      console.error("Ошибка сети или сервера");
+    }
     return Promise.reject(error);
   }
 );

@@ -7,3 +7,4 @@ export { default as Map } from "../image/Map.png";
 export { default as PhoneImage } from "../image/Phone.png";
 export { default as SamsungText } from "../image/SamsungText.png";
 export { default as Group22 } from "../image/Group22.png";
+export { default as Smsung } from "../image/Smsung.png";

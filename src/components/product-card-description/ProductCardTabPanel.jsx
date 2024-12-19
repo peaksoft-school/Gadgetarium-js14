@@ -8,6 +8,9 @@ import { styled } from "@mui/system";
 import { useState } from "react";
 import Description from "./Description";
 import { systemUiconsDocumentList } from "../../assets/icon";
+import Characteristics from "./Characteristics";
+import DeliveryAndPayment from "./DeliveryAndPayment";
+import Reviews from "./Reviews";
 
 const ProductCardTabPanel = () => {
   const [value, setValue] = useState("1");
@@ -76,9 +79,15 @@ const ProductCardTabPanel = () => {
         <StyledTabPanel value="1">
           <Description />
         </StyledTabPanel>
-        <StyledTabPanel value="2">Содержимое характеристик</StyledTabPanel>
-        <StyledTabPanel value="3">Содержимое отзывов</StyledTabPanel>
-        <StyledTabPanel value="4">Содержимое доставки и оплаты</StyledTabPanel>
+        <StyledTabPanel value="2">
+          <Characteristics />
+        </StyledTabPanel>
+        <StyledTabPanel value="3">
+          <Reviews />
+        </StyledTabPanel>
+        <StyledTabPanel value="4">
+          <DeliveryAndPayment />
+        </StyledTabPanel>
       </TabContext>
     </StyledWrapperBox>
   );
