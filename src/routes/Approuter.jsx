@@ -6,16 +6,19 @@ import { ProtectedRouter } from "../routes/ProtectedRouter";
 import { adminRoutes } from "./admin-router/adminRoutes";
 import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
+import UserLayout from "../layout/user/UserLayout";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
+
+  console.log(userData);
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<h1> word</h1>}
+          component={<UserLayout />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}

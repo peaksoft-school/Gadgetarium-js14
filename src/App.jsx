@@ -1,9 +1,12 @@
-import AppRouter from "./routes/Approuter";
+import { BrowserRouter } from "react-router-dom";
+import ProductsSheetTable from "./pages/admin/ProductsSheetTable";
 
 const App = () => {
   return (
     <div>
-      <AppRouter />
+      <BrowserRouter>
+        <ProductsSheetTable />
+      </BrowserRouter>
     </div>
   );
 };

@@ -72,6 +72,7 @@ export { default as Group2 } from "../icon/Group2.svg";
 export { default as ico } from "../icon/ico.svg";
 export { default as img } from "../icon/img.svg";
 export { default as Left } from "../icon/Left.svg";
+export { default as Right } from "../icon/Right.svg";
 export { default as Photo } from "../icon/Photo.svg";
 export { default as Order } from "../icon/Order.svg";
 export { default as WorkKey } from "../icon/WorkKey.svg";
@@ -92,3 +93,10 @@ export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
 export { default as IconColor } from "../icon/IconColor.svg";
 export { default as IconPDF } from "../icon/IconPDF.svg";
+
+export { default as Garbage } from "../icon/garbage.svg";
+export { default as EditLine } from "../icon/editLine.svg";
+export { default as ChangeAican } from "../icon/AicanChanig.svg";
+export { default as Streca } from "../icon/Strelca.svg";
+export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
+export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";

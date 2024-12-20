@@ -8,8 +8,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInRequest } from "../store/auth/authThank";
+import Loading from "./UI/Loading";
 
 const schema = yup.object().shape({
   email: yup
@@ -24,10 +25,11 @@ const schema = yup.object().shape({
     .required("Пароль обязателен"),
 });
 
-const SignIn = ({ onClose, openSignUp }) => {
+const SignIn = ({ onClose, openSignUp, open }) => {
   const dispatch = useDispatch();
-  // const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -36,20 +38,27 @@ const SignIn = ({ onClose, openSignUp }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (formData) => {
-    dispatch(signInRequest(formData));
+  const onSubmit = (data) => {
+    const newUserData = {
+      email: data.email,
+      password: data.password,
+    };
+
+    dispatch(signInRequest({ userData: newUserData, onClose }));
   };
   return (
     <StyledModal open={open} onClose={onClose}>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <img src={SystemX} alt="" onClick={onClose} />
         <h1>Войти</h1>
+
         <Input
           {...register("email")}
           placeholder="Напишите email"
           error={!!errors.email}
           helperText={errors.email ? errors.email.message : ""}
         />
+
         <Input
           {...register("password")}
           placeholder="Напишите пароль"
@@ -66,15 +75,31 @@ const SignIn = ({ onClose, openSignUp }) => {
           error={!!errors.password}
           helperText={errors.password ? errors.password.message : ""}
         />
+
         {(errors.email || errors.password) && (
           <ErrorMessage>Неправильно указан Email и/или пароль</ErrorMessage>
         )}
+
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
         <Button variant="contained" type="submit">
-          Войти
+          {isLoading ? (
+            <>
+              <Loading /> <p>... </p>
+            </>
+          ) : (
+            "Войти"
+          )}
         </Button>
         <StyledP>
           Нет аккаунта?
-          <span style={{ cursor: "pointer" }} onClick={openSignUp}>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              openSignUp();
+              onClose();
+            }}
+          >
             Зарегистрироваться
           </span>
         </StyledP>

@@ -1,13 +1,26 @@
-import React, { useState } from "react";
 import { Gadgettarium, StateDown } from "../../assets/icon";
+import React, { useEffect, useState } from "react";
+import { StateDown } from "../../assets/icon/index";
 import { styled } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
 import { Popover, Button as MuiButton, Typography } from "@mui/material";
 import Button from "../UI/Button";
+import NewsletterModal from "../NewsletterModal";
+import { useDispatch, useSelector } from "react-redux";
+import { mailingModal } from "../../store/productAdmin/productAdminAuthThank";
 
 const AdminHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const dispatch = useDispatch();
+  // const { loading, error } = useSelector((state) => state.productAdmin);
 
+  const handlerOpen = () => {
+    // dispatch(mailingModal());
+    setIsModalOpen(true);
+  };
+
+  const handlerClose = () => setIsModalOpen(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,8 +33,8 @@ const AdminHeader = () => {
     handleClose();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "admin-popover" : undefined;
+  const isPopoverOpen = Boolean(anchorEl);
+  const popoverId = isPopoverOpen ? "admin-popover" : undefined;
 
   return (
     <div>
@@ -35,10 +48,24 @@ const AdminHeader = () => {
           <StyledNavLink to="/reviews">Отзывы и рейтинги</StyledNavLink>
         </StyledDiv>
         <StyledFlex>
-          <Button variant="rounded" sx={{ borderRadius: "50%" }}>
-            Создать рыссылку
+          <Button
+            onClick={handlerOpen}
+            variant="rounded"
+            sx={{ borderRadius: "50%" }}
+          >
+            Создать рассылку
           </Button>
-          <StyledI></StyledI>
+          <NewsletterModal
+            open={isModalOpen}
+            onClose={handlerClose}
+            
+            
+            data={() => console.log(dispatch(mailingModal())
+            )}
+          />
+          
+          
+
           <StyledBlock>
             <div className="G">G</div>
           </StyledBlock>
@@ -55,8 +82,8 @@ const AdminHeader = () => {
       </StyledHeader>
 
       <Popover
-        id={id}
-        open={open}
+        id={popoverId}
+        open={isPopoverOpen}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
