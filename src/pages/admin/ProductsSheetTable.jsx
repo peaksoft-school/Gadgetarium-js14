@@ -32,7 +32,7 @@ const ProductsSheetTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [file, setFile] = useState(null);
   const [page, setPage] = useState(1);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("все товары");
   const [before, setBefore] = useState("");
   const [from, setFrom] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -62,6 +62,8 @@ const ProductsSheetTable = () => {
   };
 
   const handleFilterChange = (newFilter) => {
+    console.log(filter);
+
     setFilter(newFilter);
   };
 
@@ -189,8 +191,8 @@ const ProductsSheetTable = () => {
               />
               <StyledButtonGroup>
                 <StyledButton
-                  selected={filter === "все товары "}
-                  onClick={() => handleFilterChange("все товары ")}
+                  selected={filter === "все товары"}
+                  onClck={() => handleFilterChange("все товары")}
                 >
                   Все товары
                 </StyledButton>
@@ -207,8 +209,8 @@ const ProductsSheetTable = () => {
                   В избранном
                 </StyledButton>
                 <StyledButton
-                  selected={filter === " В корзине"}
-                  onClick={() => handleFilterChange(" В корзине")}
+                  selected={filter === "В корзине"}
+                  onClick={() => handleFilterChange("В корзине")}
                 >
                   В корзине
                 </StyledButton>
