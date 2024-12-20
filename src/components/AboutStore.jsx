@@ -245,7 +245,7 @@ const SlideImage = styled("img")(({ isActive }) => ({
 
 const ButtonContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
+  top: "65%",
   left: 0,
   right: 0,
   display: "flex",

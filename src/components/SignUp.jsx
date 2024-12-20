@@ -9,15 +9,16 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "@emotion/styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpRequest } from "../store/auth/authThank";
+import Loading from "./UI/Loading";
 
 const schema = yup.object().shape({
   name: yup.string().required("Имя обязательно"),
   surename: yup.string().required("Фамилия обязательна"),
   phone: yup
     .string()
-    .matches(/^996 \d{3} \d{2} \d{2} \d{2}$/, "Неверный формат телефона")
+    // .matches(/^996 \d{3} \d{2} \d{2} \d{2}$/, "Неверный формат телефона")
     .required("Телефон обязателен"),
 
   email: yup
@@ -36,12 +37,12 @@ const schema = yup.object().shape({
     .required("Подтверждение пароля обязательно"),
 });
 
-const SignUp = ({ onClose, openSignIn }) => {
+const SignUp = ({ onClose, openSignIn, open }) => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // const {isLoadig} = useSelector((state)=>state.auth)
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -51,14 +52,16 @@ const SignUp = ({ onClose, openSignIn }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (value) => {
-    const phoneNumber = Number(value.phone.replace(/\D/g, ""));
-    const { name, surename, email, password } = value;
-    const userData = { name, surename, phone: phoneNumber, email, password };
+  const onSubmit = (data) => {
+    const newUserData = {
+      firstName: data.name,
+      lastName: data.surename,
+      phoneNumber: data.phone,
+      email: data.email,
+      password: data.password,
+    };
 
-    // data(userData);
-
-    dispatch(signUpRequest(userData));
+    dispatch(signUpRequest({ userData: newUserData, onClose }));
   };
 
   return (
@@ -84,7 +87,6 @@ const SignUp = ({ onClose, openSignIn }) => {
           error={!!errors.phone}
           helperText={errors.phone ? errors.phone.message : ""}
         />
-
         <Input
           {...register("email")}
           placeholder="Напишите email"
@@ -127,16 +129,25 @@ const SignUp = ({ onClose, openSignIn }) => {
             errors.confirmPassword ? errors.confirmPassword.message : ""
           }
         />
-        {(errors.email || errors.password) && (
-          <ErrorMessage>Введите корректный Email </ErrorMessage>
-        )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <Button variant="contained" type="submit">
-          Создать аккаунт
+          {isLoading ? (
+            <>
+              <Loading /> <p>... </p>
+            </>
+          ) : (
+            "Создать аккаунт"
+          )}
         </Button>
         <StyledP>
-          У вас уже есть аккаунт?{" "}
-          <span style={{ cursor: "pointer" }} onClick={openSignIn}>
-            {" "}
+          У вас уже есть аккаунт?
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              openSignIn();
+              onClose();
+            }}
+          >
             Войти
           </span>
         </StyledP>

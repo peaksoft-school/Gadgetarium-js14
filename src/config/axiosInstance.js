@@ -1,9 +1,5 @@
 import axios from "axios";
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-const token =
- "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzM2NDg2OTEsImV4cCI6MTczNTA4ODY5MX0.4dk9l9dKqQjPlvdrgbc_0QpDEg4pxXr-0OhWtW2Xqjo"
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -21,8 +17,8 @@ export const injectStore = (_store) => {
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    // const token =
-    //   store?.getState()?.auth?.token || localStorage.getItem("authToken");
+    const token =
+      store?.getState()?.auth?.token || localStorage.getItem("authToken");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token.trim()}`;

@@ -95,3 +95,5 @@ export { default as Garbage } from "../icon/garbage.svg";
 export { default as EditLine } from "../icon/editLine.svg";
 export { default as ChangeAican } from "../icon/AicanChanig.svg";
 export { default as Streca } from "../icon/Strelca.svg";
+export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
+export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
