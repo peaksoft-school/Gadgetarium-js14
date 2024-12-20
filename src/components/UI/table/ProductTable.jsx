@@ -14,6 +14,7 @@ import {
 import styled from "@emotion/styled";
 import { usePagination, useTable } from "react-table";
 
+
 const ProductTable = ({ data, columns }) => {
   const [hoveredRowId, setHoveredRowId] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -39,6 +40,8 @@ const ProductTable = ({ data, columns }) => {
     { columns, data, initialState: { pageIndex: 0, pageSize: 5 } },
     usePagination
   );
+
+  console.log("test");
 
   return (
     <Paper>

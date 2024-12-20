@@ -1,4 +1,4 @@
-import { styled, Box, display } from "@mui/system";
+import { styled, Box } from "@mui/system";
 import {
   garbage,
   Left,
@@ -6,39 +6,80 @@ import {
   samsungphone,
   systemUiconsDocumentList,
 } from "../../assets/icon";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Comments from "../../components/UI/Comments";
 import { Button, Rating, Typography } from "@mui/material";
-import AdminHeader from "../../components/UI/AdminHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteProduct,
   getProdates,
   getRating,
 } from "../../store/innerPageCardAmin/innerPageCardThunk";
+import { ROUTES } from "../../utils/routes";
+
+const products2 = {
+  name: "Samsung Galaxy S23",
+  quantity: 25,
+  itemNumber: "SGS23-001",
+  colours: ["#000000", "#FF0000", "#00FF00", "#0000FF"],
+  images: [samsungphone, samsungphone, "https://example.com/image3.jpg"],
+  characteristics: {
+    "разрешение экрана": "1080 x 2400",
+    память: "128GB",
+    "Гарантия (месяцев)": "3",
+    процессор: '6.1"',
+    Вес: "1.5 g",
+  },
+  color: "Чёрный",
+  dateOfIssue: "2024-01-15",
+  percentOfDiscount: 10,
+  price: 60000,
+};
 
 const InnerPageCard = () => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
   const dispatch = useDispatch();
   const { products, ratingData } = useSelector((state) => state.innerPageCard);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     dispatch(
       getProdates({
-        productId: 1,
+        productId: 2,
         color: "red",
       })
     );
     dispatch(getRating({ productId: 2 }));
   }, [dispatch]);
 
-  const handleDelete = (productId) => {
-    dispatch(deleteProduct(productId));
+  const prodactID = 1;
+  const handleDelete = () => {
+    dispatch(deleteProduct(prodactID));
+  };
+
+  const handleLeftClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? products.images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleRightClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === products.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   return (
     <Box>
-      <AdminHeader />
       <StyledPapaDiv>
         <h1>{products?.name || "Название товара не доступно"}</h1>
         <p>{products?.description || "Описание товара не доступно"}</p>
@@ -54,27 +95,78 @@ const InnerPageCard = () => {
 
         <StyledButtonDiv>
           <StyledButton variant="contained">Товар</StyledButton>
-          <StyledButton>Детали Товара</StyledButton>
+          <StyledButton variant="contained" to={ROUTES.ADMIN.productTable}>
+            Детали Товара
+          </StyledButton>
         </StyledButtonDiv>
 
         <StyledFlex>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <StyledLargeImg
-              src={samsungphone}
-              // src={products?.images?.[0] || ""}
-              // alt="Product Image"
+              src={products2.images[currentImageIndex]}
+              alt={`Product Image ${currentImageIndex + 1}`}
             />
 
             <StyledImgDiv>
-              <StyledArrowImg src={Left} alt="Left Arrow" />
-              {products?.images && products.images.length > 0 ? (
-                products.images.map((image, index) => (
-                  <img key={index} src={image} alt={`Product ${index + 1}`} />
+              <StyledArrowImg
+                src={Left}
+                alt="Left Arrow"
+                onClick={handleLeftClick}
+              />
+              {products2?.images && products2.images.length > 0 ? (
+                products2.images.map((image, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: "0 10px",
+                      padding: "5px",
+                      width: "55px",
+                      height: "70px",
+                      border:
+                        index === currentImageIndex
+                          ? "2px solid #c812aa"
+                          : "1px solid transparent",
+                      borderRadius: "2px",
+                      cursor: "pointer",
+                      transition: "transform 0.2s, border 0.2s",
+                      "&:hover": {
+                        border: "2px solid #c812aa",
+                        transform: "scale(1.05)",
+                      },
+                      "&:active": {
+                        border: "2px solid #c812aa",
+                      },
+                    }}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <img
+                      src={image}
+                      alt={`Product ${index + 1}`}
+                      style={{
+                        width: "40px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Box>
                 ))
               ) : (
                 <div>No images available</div>
               )}
-              <StyledArrowImg src={Right} alt="Right Arrow" />
+
+              <StyledArrowImg
+                src={Right}
+                alt="Right Arrow"
+                onClick={handleRightClick}
+              />
             </StyledImgDiv>
           </div>
 
@@ -88,12 +180,20 @@ const InnerPageCard = () => {
                 В наличии ({products?.quantity || "неизвестно"})
               </div>
               <div>Артикул: {products?.itemNumber || "неизвестно"}</div>
+              <div>
+                <Rating
+                  precision={0.5}
+                  value={products?.rating || "неизвестно"}
+                >
+                  {products?.rating || "неизвестно"}
+                </Rating>
+              </div>
             </StyledText>
 
             <StyledBr />
             <div style={{ display: "flex" }}>
               <div>
-                <h4>Цвет товара:</h4>
+                <h4 style={{ marginTop: "10px" }}>Цвет товара:</h4>
                 <StyledFlexColor>
                   {products?.colours && products.colours.length > 0 ? (
                     products.colours.map((color, index) => (
@@ -107,7 +207,9 @@ const InnerPageCard = () => {
                   )}
                 </StyledFlexColor>
                 <div>
-                  <h4>Коротко о товаре:</h4>
+                  <h4 style={{ marginTop: "10px", marginBottom: "10px" }}>
+                    Коротко о товаре:
+                  </h4>
                   <StyledIngredients>
                     <StyledIngredientItem>
                       Экран{" "}
@@ -189,10 +291,7 @@ const InnerPageCard = () => {
             </div>
 
             <StyledButtonsDiv>
-              <Button
-                variant="outlined"
-                onClick={() => handleDelete(products.productId)}
-              >
+              <Button variant="outlined" onClick={() => handleDelete()}>
                 <img src={garbage} alt="Delete" />
               </Button>
               <Button
@@ -208,17 +307,28 @@ const InnerPageCard = () => {
 
         <StyledMiniFlex>
           <StyledNav>
-            <StyledNavLink2 to={'/description'}>Описание</StyledNavLink2>
-            <StyledNavLink2 to={'/Characteristics'}>Характеристики</StyledNavLink2>
-            <StyledNavLink2 to ={'/reviwsUsers'}>Отзывы</StyledNavLink2>
+            <StyledNavLink2 to="/description" activeClassName="active">
+              <span>Описание</span>
+            </StyledNavLink2>
+            <StyledNavLink2 to="/Characteristics" activeClassName="active">
+              <span>Характеристики</span>
+            </StyledNavLink2>
+            <StyledNavLink2 to="/reviwsUsers" activeClassName="active">
+              <span>Отзывы</span>
+            </StyledNavLink2>
           </StyledNav>
+
           <div style={{ display: "flex", gap: "10px" }}>
             <img
-              style={{ width: "25px", height: "25px" }}
+              style={{
+                width: "25px",
+                height: "25px",
+                marginLeft: "10px",
+              }}
               src={systemUiconsDocumentList}
               alt="Documents"
             />
-            <StyledNavLink2>Скачать документы.pdf</StyledNavLink2>
+            <StyledNavLink>Скачать документы.pdf</StyledNavLink>
           </div>
         </StyledMiniFlex>
 
@@ -326,9 +436,11 @@ const StyledMiniFlex = styled(Box)({
   marginTop: "80px",
   justifyContent: "space-between",
 });
-const StyledNav = styled(Box)({
+const StyledNav = styled("nav")({
   display: "flex",
-  gap: "30px",
+  gap: "30px", // Расстояние между ссылками
+  fontFamily: "Arial, sans-serif",
+  marginBottom: "20px",
 });
 
 const StyledDiv = styled(Box)({
@@ -346,9 +458,27 @@ const StyledNavLink = styled(NavLink)({
 });
 const StyledNavLink2 = styled(NavLink)({
   textDecoration: "none",
-  color: "inherit",
+  display: "flex",
+  alignItems: "center",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "500",
+  color: "#333",
+  transition: "color 0.3s ease, border-bottom 0.3s ease", 
+
+  "&.active": {
+    color: "#c812aa", 
+    fontWeight: "bold", 
+    borderBottom: "2px solid #c812aa", 
+  },
+
   "&:hover": {
-    color: "#cb11ab",
+    color: "#c812aa", 
+    borderBottom: "2px solid #c812aa", 
+  },
+
+  "& span": {
+    margin: "0", 
   },
 });
 
@@ -366,25 +496,64 @@ const StyledDivFlex = styled(Box)({
 
 const StyledImg = styled("img")({
   marginTop: "35px",
+  width: "150px",
+  objectFit: "cover",
 });
 
 const StyledBr = styled(Box)({
   border: "1px solid #cdcdcd",
-  marginTop: "20px",
+  marginTop: "-10px",
 });
 
 const StyledButtonDiv = styled(Box)({
   display: "flex",
   gap: "20px",
+  marginTop: "30px",
+  marginBottom: "10px",
 });
 
-const StyledButton = styled(Button)({
-  maxWidth: "100%",
+const StyledButton = styled(NavLink)(({ theme }) => ({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "6px 16px",
+  height: "36px",
   borderRadius: "4px",
-  backgroundColor: "#384255",
-  color: "white",
-  marginTop: "40px",
-});
+  color: "#fff",
+  textDecoration: "none",
+  fontWeight: "500",
+  textTransform: "uppercase",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  transition: "background-color 0.3s ease, box-shadow 0.3s ease",
+
+  "&.active": {
+    backgroundColor: "#384255",
+  },
+
+  "&:hover": {
+    backgroundColor: "#1565c0",
+    boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+  },
+
+  "&:active": {
+    backgroundColor: "#0d47a1",
+  },
+
+  "&:focus": {
+    outline: "none",
+  },
+
+  "&:not(.active)": {
+    backgroundColor: "#E0E2E7",
+    color: "#384255",
+  },
+
+  "&:disabled": {
+    backgroundColor: "#e0e0e0",
+    color: "#b0b0b0",
+    cursor: "not-allowed",
+  },
+}));
 
 const StyledLargeImg = styled("img")({
   width: "200px",
@@ -396,11 +565,18 @@ const StyledLargeImg = styled("img")({
 const StyledArrowImg = styled("img")({
   width: "30px",
   height: "auto",
+  marginLeft: "40px",
+  width: "50px",
+  height: "30px",
+  marginTop: "20px",
 });
 
 const StyledImgDiv = styled("div")({
   display: "flex",
   marginTop: "60px",
+  width: "100px",
+  height: "100px",
+  objectFit: "cover",
 });
 
 const StyledBorder = styled(Box)({
@@ -411,20 +587,6 @@ const StyledBorder = styled(Box)({
 
 const StyledBlack = styled(Box)({
   backgroundColor: "black",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
-const StyledGrey = styled(Box)({
-  backgroundColor: "grey",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
-const StyledSvet = styled(Box)({
-  backgroundColor: "#795974",
   borderRadius: "50%",
   width: "23px",
   height: "23px",
@@ -452,6 +614,7 @@ const StyledFlex = styled(Box)({
 const StyledFlexColor = styled(Box)({
   display: "flex",
   gap: "10px",
+  marginTop: "10px",
 });
 
 const StyledIngredients = styled("ul")({
@@ -499,7 +662,7 @@ const StyledButtonsDiv = styled(Box)({
   justifyContent: "flex-start",
   marginTop: "20px",
   marginLeft: "380px",
-  marginTop: "-250px",
+  marginTop: "-300px",
 });
 
 const StyledSkidka = styled(Box)({

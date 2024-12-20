@@ -1,15 +1,11 @@
+import { Outlet } from "react-router-dom";
+import AdminHeader from "../../components/UI/AdminHeader";
+
 const AdminLayout = () => {
   return (
     <div>
-      <header style={{ display: "flex" }}>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-        <h4>kutman </h4>
-      </header>
+      <AdminHeader />
+      <Outlet />
     </div>
   );
 };

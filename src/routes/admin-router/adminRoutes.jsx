@@ -1,9 +1,16 @@
-import AdminLayout from "../../layout/admin/AdminLayout";
+import { patch } from "@mui/system";
+import InnerPageCard from "../../pages/admin/InnerPageCard";
 import { ROUTES } from "../../utils/routes";
+import Product from "../../pages/admin/Product";
 
 export const adminRoutes = [
-  { path: ROUTES.ADMIN.users, element: <AdminLayout /> },
-  { path: ROUTES.ADMIN.products, element: <AdminLayout /> },
+  {
+    path: ROUTES.ADMIN.productInner,
 
-  { path: "/admin" },
+    element: <InnerPageCard />,
+  },
+  {
+    path: ROUTES.ADMIN.productTable,
+    element: <Product />,
+  },
 ];

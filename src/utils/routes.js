@@ -9,6 +9,8 @@ export const ROUTES = {
     addProduct: "admin/add-product",
     addPrice: "admin/add-price",
     aboutProducts: "admin/about-products",
+    productTable: "/admin/product-table",
+    productInner: "/admin/product-inner",
   },
   USER: {
     index: "/",
