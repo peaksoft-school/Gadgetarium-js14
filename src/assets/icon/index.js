@@ -63,6 +63,7 @@ export { default as Component44 } from "../icon/Component44.svg";
 export { default as deleteX } from "../icon/deleteX.svg";
 export { default as garbage } from "../icon/garbage.svg";
 export { default as editLine } from "../icon/editLine.svg";
+
 export { default as FrameCard } from "../icon/FrameCard.svg";
 export { default as Money } from "../icon/Money.svg";
 export { default as Wallet } from "../icon/Wallet.svg";
@@ -90,6 +91,8 @@ export { default as letterU } from "../icon/letterU.svg";
 export { default as volume } from "../icon/volume-1.svg";
 export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
+export { default as IconColor } from "../icon/IconColor.svg";
+export { default as IconPDF } from "../icon/IconPDF.svg";
 
 export { default as Garbage } from "../icon/garbage.svg";
 export { default as EditLine } from "../icon/editLine.svg";

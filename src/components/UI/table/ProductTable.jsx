@@ -64,14 +64,28 @@ const ProductTable = ({ data, columns }) => {
                     key={crypto.randomUUID()}
                     {...headerGroup.getHeaderGroupProps()}
                   >
-                    {headerGroup.headers.map((column) => (
-                      <StyledTableCell
-                        key={crypto.randomUUID()}
-                        {...column.getHeaderProps()}
-                      >
-                        {column.render("Header")}
-                      </StyledTableCell>
-                    ))}
+                    {rowId && (
+                      <StyledBodyCell>
+                        {hoveredRowId === rowId ? (
+                          <Checkbox
+                            checked={selectedIds.includes(rowId)}
+                            onChange={() => handleCheckboxClick(rowId)}
+                          />
+                        ) : (
+                          rowId
+                        )}
+                      </StyledBodyCell>
+                    )}
+                    {row.cells.map((cell, index) => {
+                      if (cell.column.id !== "id") {
+                        return (
+                          <StyledBodyCell {...cell.getCellProps()} key={index}>
+                            {cell.render("Cell")}
+                          </StyledBodyCell>
+                        );
+                      }
+                      return null;
+                    })}
                   </TableRow>
                 ))}
               </StyledHeader>

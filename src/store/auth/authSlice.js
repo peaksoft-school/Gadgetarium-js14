@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signInRequest, signUpRequest } from "./authThank";
+import { signInRequest, signUpRequest } from "./authThunk";
 
 const getInitialState = () => {
   const json = localStorage.getItem("Gadgetarium");
@@ -27,8 +27,8 @@ const getInitialState = () => {
       name: "",
       email: "",
       token: "",
-      role: "GUEST",
-      isAuth: false,
+      role: "ADMIN",
+      isAuth: true,
     },
   };
 };

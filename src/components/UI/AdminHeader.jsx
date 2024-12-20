@@ -1,3 +1,4 @@
+import { Gadgettarium, StateDown } from "../../assets/icon";
 import React, { useEffect, useState } from "react";
 import { StateDown } from "../../assets/icon/index";
 import { styled } from "@mui/material/styles";
@@ -29,7 +30,6 @@ const AdminHeader = () => {
   };
 
   const handleLogout = () => {
-    console.log("Вышли из аккаунта");
     handleClose();
   };
 
@@ -39,7 +39,9 @@ const AdminHeader = () => {
   return (
     <div>
       <StyledHeader>
-        <div>{/* <img src={Gadget} alt="" /> */}</div>
+        <div>
+          <img src={Gadgettarium} alt="" />
+        </div>
         <StyledDiv>
           <StyledNavLink to="/products">Товары</StyledNavLink>
           <StyledNavLink to="/orders">Заказы</StyledNavLink>
