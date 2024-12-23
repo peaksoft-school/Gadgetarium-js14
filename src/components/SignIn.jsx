@@ -9,8 +9,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { signInRequest } from "../store/auth/authThank";
 import Loading from "./UI/Loading";
+import { signInRequest } from "../store/auth/authThunk";
 
 const schema = yup.object().shape({
   email: yup

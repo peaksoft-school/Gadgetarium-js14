@@ -7,6 +7,7 @@ import { adminRoutes } from "./admin-router/adminRoutes";
 import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
+import CheckoutMainPage from "../components/checkout-payment/CheckoutMainPage";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -18,7 +19,7 @@ const AppRouter = () => {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<UserLayout />}
+          component={<CheckoutMainPage />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}

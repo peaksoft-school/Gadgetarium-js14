@@ -10,8 +10,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpRequest } from "../store/auth/authThank";
 import Loading from "./UI/Loading";
+import { signUpRequest } from "../store/auth/authThunk";
 
 const schema = yup.object().shape({
   name: yup.string().required("Имя обязательно"),

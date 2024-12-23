@@ -17,6 +17,7 @@ export const ROUTES = {
     delivery: "user/delivery",
     faq: "user/faq",
     contacts: "user/contacts",
+    checkout: "user/checkout-payment",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };
