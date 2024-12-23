@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getCharacteristics,
   getLastViews,
+  postToFavorites,
 } from "./cardofProductDescriptionThunk";
 
 const initialState = {
@@ -40,6 +41,18 @@ export const cardofProductDescriptionSlice = createSlice({
         state.characteristics = action.payload;
       })
       .addCase(getCharacteristics.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(postToFavorites.pending, (state) => {
+        (state.isLoading = true), (state.error = null);
+      })
+
+      .addCase(postToFavorites.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(postToFavorites.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

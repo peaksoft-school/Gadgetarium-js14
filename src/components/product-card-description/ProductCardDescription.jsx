@@ -7,6 +7,7 @@ import Card from "../../components/UI/Card";
 import {
   getCharacteristics,
   getLastViews,
+  postToFavorites,
 } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
 import { Button } from "@mui/material";
 import {
@@ -16,9 +17,11 @@ import {
   Left,
   Minus,
   PlusCircleIcon,
+  redHeart,
   Right,
 } from "../../assets/icon";
 
+// /api/user/reviews/{productId} raiting
 const viewedItems = [
   {
     img: "https://via.placeholder.com/180",
@@ -66,6 +69,11 @@ const products = {
 
 const ProductCardDescription = () => {
   const [count, setCount] = useState(1);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const handleClick = () => {
+    dispatch(postToFavorites);
+    setIsFavourite(!isFavourite);
+  };
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
   const { lastViews } = useSelector((state) => state.cardofProduct);
@@ -249,8 +257,11 @@ const ProductCardDescription = () => {
                 </Box>
                 <StyledHr />
                 <StyledButtonsDiv>
-                  <StyledFavouritBox>
-                    <img src={greyHeart} alt="Favourit" />
+                  <StyledFavouritBox onClick={handleClick}>
+                    <img
+                      src={isFavourite ? redHeart : greyHeart}
+                      alt="Favourit"
+                    />
                   </StyledFavouritBox>
                   <Button variant="contained" color="primary">
                     <img src={IconBasket} alt="" />В корзину

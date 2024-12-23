@@ -30,3 +30,22 @@ export const getCharacteristics = createAsyncThunk(
     }
   }
 );
+
+export const postToFavorites = createAsyncThunk(
+  "postToFavorites",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(
+        "/api/basket/move_to_favorites",
+        { productId }
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+// /api/basket/move_to_favorites
