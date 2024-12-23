@@ -19,7 +19,6 @@ export const postFile = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      console.error("Ошибка загрузки файла:", error);
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -29,12 +28,15 @@ export const postFile = createAsyncThunk(
 
 export const postAllProducts = createAsyncThunk(
   "postProducts",
-  async (products, { rejectWithValue }) => {
+  async ({ products, navigate }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(
         "/api/admin/products",
         products
       );
+
+      navigate("/admin");
+
       return data;
     } catch (error) {
       return rejectWithValue(

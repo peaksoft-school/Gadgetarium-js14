@@ -15,6 +15,7 @@ import {
   postAllProducts,
   postFile,
 } from "../../../store/admin-addproduct/productsThunk";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   urlFile: yup
@@ -31,9 +32,11 @@ const schema = yup.object().shape({
 });
 
 const DescriptionQuill = () => {
-  const [file, setFile] = useState(null);
   const dispatch = useDispatch();
   const { mainData, images } = useSelector((state) => state.product);
+  const navigate = useNavigate();
+
+  const [file, setFile] = useState(null);
 
   const { subProducts } = mainData;
 
@@ -81,7 +84,7 @@ const DescriptionQuill = () => {
       subProducts: filteredSubProducts,
     };
 
-    dispatch(postAllProducts(products));
+    dispatch(postAllProducts({ products, navigate }));
     setValue("pdfFile", null);
   };
 

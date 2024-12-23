@@ -36,7 +36,6 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.error("Ошибка ответа Axios:", error.response || error.message);
     return Promise.reject(error);
   }
 );

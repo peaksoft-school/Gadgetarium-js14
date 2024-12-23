@@ -1,6 +1,6 @@
 import { Gadgettarium, StateDown } from "../../assets/icon";
 import React, { useEffect, useState } from "react";
-import { StateDown } from "../../assets/icon/index";
+
 import { styled } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
 import { Popover, Button as MuiButton, Typography } from "@mui/material";
@@ -8,11 +8,12 @@ import Button from "../UI/Button";
 import NewsletterModal from "../NewsletterModal";
 import { useDispatch, useSelector } from "react-redux";
 import { mailingModal } from "../../store/productAdmin/productAdminAuthThank";
+import { logout } from "../../store/auth/authSlice";
 
 const AdminHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { loading, error } = useSelector((state) => state.productAdmin);
 
   const handlerOpen = () => {
@@ -31,6 +32,7 @@ const AdminHeader = () => {
 
   const handleLogout = () => {
     handleClose();
+    dispatch(logout());
   };
 
   const isPopoverOpen = Boolean(anchorEl);
@@ -43,9 +45,9 @@ const AdminHeader = () => {
           <img src={Gadgettarium} alt="" />
         </div>
         <StyledDiv>
-          <StyledNavLink to="/products">Товары</StyledNavLink>
-          <StyledNavLink to="/orders">Заказы</StyledNavLink>
-          <StyledNavLink to="/reviews">Отзывы и рейтинги</StyledNavLink>
+          <StyledNavLink to="/admin">Товары</StyledNavLink>
+          <StyledNavLink to="/admin/orders">Заказы</StyledNavLink>
+          <StyledNavLink to="/admin/reviews">Отзывы и рейтинги</StyledNavLink>
         </StyledDiv>
         <StyledFlex>
           <Button
@@ -55,16 +57,7 @@ const AdminHeader = () => {
           >
             Создать рассылку
           </Button>
-          <NewsletterModal
-            open={isModalOpen}
-            onClose={handlerClose}
-            
-            
-            data={() => console.log(dispatch(mailingModal())
-            )}
-          />
-          
-          
+          <NewsletterModal open={isModalOpen} onClose={handlerClose} />
 
           <StyledBlock>
             <div className="G">G</div>

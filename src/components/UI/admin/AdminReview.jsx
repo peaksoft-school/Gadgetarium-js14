@@ -11,7 +11,7 @@ const AdminReview = ({ reviews }) => {
 
   const toggleExpandAll = () => {
     setIsExpandedAll(!isExpandedAll);
-    
+
     const newExpandedComments = reviews.reduce((acc, review) => {
       acc[review.id] = !isExpandedAll;
       return acc;
@@ -57,7 +57,15 @@ const AdminReview = ({ reviews }) => {
               </StyledProductInfo>
 
               <StyledCommentBox>
-                <Box sx={{ display: "flex", width: "400px", flexWrap: "wrap", margin:'0', padding:'0' }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "400px",
+                    flexWrap: "wrap",
+                    margin: "0",
+                    padding: "0",
+                  }}
+                >
                   <Typography>
                     {isExpanded
                       ? review.comment
@@ -70,7 +78,7 @@ const AdminReview = ({ reviews }) => {
                       color="primary"
                       onClick={() => toggleExpandComment(review.id)}
                     >
-                      {isExpanded }
+                      {isExpanded}
                     </Typography>
                   )}
                 </Box>
@@ -79,14 +87,24 @@ const AdminReview = ({ reviews }) => {
               </StyledCommentBox>
 
               <StyledBox>
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%",  gap:'125px'}}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    gap: "125px",
+                  }}
+                >
                   <Rating value={review.rating} readOnly />
 
                   <StyledUserInfo>
                     <Avatar src={review.userAvatar} alt={review.user} />
                     <Box>
                       <Typography>{review.user}</Typography>
-                      <Typography style={{ color: "#dbdddf" }} variant="caption">
+                      <Typography
+                        style={{ color: "#dbdddf" }}
+                        variant="caption"
+                      >
                         {review.userEmail}
                       </Typography>
                     </Box>
@@ -95,9 +113,11 @@ const AdminReview = ({ reviews }) => {
                       alt="Delete"
                       // onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
                       // onMouseLeave={(e) => (e.currentTarget.src = garbage)}
-                      onClick={() => console.log("Delete review:", review.id)}
                     />
-                    <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
+                    <Box
+                      onClick={toggleExpandAll}
+                      style={{ cursor: "pointer" }}
+                    >
                       {/* <img src={isExpandedAll ? StateUp : StateDown} alt="Expand All" /> */}
                     </Box>
                   </StyledUserInfo>
@@ -105,14 +125,22 @@ const AdminReview = ({ reviews }) => {
 
                 {isExpanded && (
                   <CommentBox>
-                    <Typography variant="h6">Ответить на комментарий</Typography>
+                    <Typography variant="h6">
+                      Ответить на комментарий
+                    </Typography>
                     <Input
                       style={{ cursor: "pointer" }}
                       placeholder="Введите ваш ответ..."
                       multiline={true}
                       rows={4}
                     />
-                    <Box sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}>
+                    <Box
+                      sx={{
+                        marginLeft: "260px",
+                        width: "220px",
+                        marginTop: "10px",
+                      }}
+                    >
                       <Button variant="contained" color="secondary">
                         Отправить
                       </Button>
@@ -135,7 +163,6 @@ const AdminReview = ({ reviews }) => {
 // Стили
 const StyledBox = styled("div")(() => ({
   gap: "50px",
-  
 }));
 
 const StyledContainer = styled(Box)({

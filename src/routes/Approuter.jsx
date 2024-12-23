@@ -7,11 +7,10 @@ import { adminRoutes } from "./admin-router/adminRoutes";
 import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
+import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
-
-  console.log(userData);
 
   const router = createBrowserRouter([
     {
@@ -40,9 +39,15 @@ const AppRouter = () => {
         />
       ),
 
-      children: [],
+      children: [
+        {
+          index: true,
+          element: <ProductsSheetTable />,
+        },
+        { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
+      ],
     },
-    { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
+    ,
   ]);
 
   return <RouterProvider router={router} />;
