@@ -8,15 +8,17 @@ import {
 } from "../../assets/icon";
 import { NavLink, useNavigate } from "react-router-dom";
 import Comments from "../../components/UI/Comments";
-import { Button, Rating, Typography } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
   deleteProduct,
   getProdates,
-  getRating,
 } from "../../store/innerPageCardAmin/innerPageCardThunk";
 import { ROUTES } from "../../utils/routes";
+import { TabList, TabPanel } from "@mui/lab";
+
+import TabsContent from "./TabsContent";
 
 const products2 = {
   name: "Samsung Galaxy S23",
@@ -43,19 +45,23 @@ const InnerPageCard = () => {
   const handleNavigation = (path) => {
     navigate(path);
   };
+  const [value1, setValue1] = useState("1");
+  const handleChange2 = (event, newValue) => {
+    setValue1(newValue);
+  };
+
   const dispatch = useDispatch();
-  const { products, ratingData } = useSelector((state) => state.innerPageCard);
+  const { products} = useSelector((state) => state.innerPageCard);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     dispatch(
       getProdates({
-        productId: 2,
+        productId: 1,
         color: "red",
       })
     );
-    dispatch(getRating({ productId: 2 }));
   }, [dispatch]);
 
   const prodactID = 1;
@@ -90,7 +96,7 @@ const InnerPageCard = () => {
 
         <div>
           <StyledImg src={products?.logo || ""} alt="Product Logo" />
-          <StyledBr />
+          <hr />
         </div>
 
         <StyledButtonDiv>
@@ -305,34 +311,7 @@ const InnerPageCard = () => {
           </StyledBorder>
         </StyledFlex>
 
-        <StyledMiniFlex>
-          <StyledNav>
-            <StyledNavLink2 to="/description" activeClassName="active">
-              <span>Описание</span>
-            </StyledNavLink2>
-            <StyledNavLink2 to="/Characteristics" activeClassName="active">
-              <span>Характеристики</span>
-            </StyledNavLink2>
-            <StyledNavLink2 to="/reviwsUsers" activeClassName="active">
-              <span>Отзывы</span>
-            </StyledNavLink2>
-          </StyledNav>
-
-          <div style={{ display: "flex", gap: "10px" }}>
-            <img
-              style={{
-                width: "25px",
-                height: "25px",
-                marginLeft: "10px",
-              }}
-              src={systemUiconsDocumentList}
-              alt="Documents"
-            />
-            <StyledNavLink>Скачать документы.pdf</StyledNavLink>
-          </div>
-        </StyledMiniFlex>
-
-        <StyledBr />
+        <TabsContent />
 
         <div
           style={{
@@ -341,87 +320,8 @@ const InnerPageCard = () => {
             marginTop: "30px",
             gap: "20px",
           }}
-        >
-          <h2>Отзывы</h2>
-          <RatingReviewsBorder>
-            <LeftColumn>
-              <DivCar>
-                <h3 variant="body2">{ratingData?.rating}</h3>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.rating || 0}
-                  precision={0.5}
-                />
-              </DivCar>
-              <Typography name="body2" value={ratingData?.rating || 2}>
-                отзывов
-              </Typography>
-            </LeftColumn>
-            <RightColumn>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="Rating"
-                  value={ratingData?.five || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.five || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="Rationg"
-                  value={ratingData?.four || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.four || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.three || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.three || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.two || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.two || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.one || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.one || 0} отзывов
-                </Typography>
-              </RatingWithText>
-            </RightColumn>
-          </RatingReviewsBorder>
-        </div>
+        ></div>
       </StyledPapaDiv>
-
-      <div>
-        <Comments />
-      </div>
     </Box>
   );
 };
@@ -436,12 +336,6 @@ const StyledMiniFlex = styled(Box)({
   marginTop: "80px",
   justifyContent: "space-between",
 });
-const StyledNav = styled("nav")({
-  display: "flex",
-  gap: "30px", // Расстояние между ссылками
-  fontFamily: "Arial, sans-serif",
-  marginBottom: "20px",
-});
 
 const StyledDiv = styled(Box)({
   display: "flex",
@@ -454,31 +348,6 @@ const StyledNavLink = styled(NavLink)({
   fontSize: "15px",
   "&:active": {
     color: "grey",
-  },
-});
-const StyledNavLink2 = styled(NavLink)({
-  textDecoration: "none",
-  display: "flex",
-  alignItems: "center",
-  padding: "10px 20px",
-  fontSize: "16px",
-  fontWeight: "500",
-  color: "#333",
-  transition: "color 0.3s ease, border-bottom 0.3s ease", 
-
-  "&.active": {
-    color: "#c812aa", 
-    fontWeight: "bold", 
-    borderBottom: "2px solid #c812aa", 
-  },
-
-  "&:hover": {
-    color: "#c812aa", 
-    borderBottom: "2px solid #c812aa", 
-  },
-
-  "& span": {
-    margin: "0", 
   },
 });
 
@@ -592,19 +461,6 @@ const StyledBlack = styled(Box)({
   height: "23px",
 });
 
-const StyledRed = styled(Box)({
-  backgroundColor: "red",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-const StyledBlue = styled(Box)({
-  backgroundColor: "blue",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
 const StyledFlex = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
@@ -676,18 +532,6 @@ const StyledSkidka = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
 });
-const RatingReviewsBorder = styled("div")({
-  backgroundColor: "#f4f4f4",
-  width: "500px",
-  height: "auto",
-  borderRadius: "5px",
-  display: "flex",
-  padding: "16px",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "50px",
-});
 
 const RatingColumn = styled("div")({
   display: "flex",
@@ -716,3 +560,34 @@ const DivCar = styled("div")({
   display: "flex",
   flexDirection: "row",
 });
+// const StyledWrapperBox = styled(Box)(() => ({
+// }));
+
+const StyledLabelBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  textTransform: "capitalize",
+  padding: "0px",
+  "& span": {
+    fontSize: "16px",
+    fontWeight: 400,
+    color: theme.palette.text.primary,
+    padding: "0px",
+  },
+}));
+
+const StyledTabList = styled(TabList)(({ theme }) => ({
+  width: "100%",
+  "& .MuiTabs-indicator": {
+    background: theme.palette.primary.main,
+    height: "0px",
+    borderRadius: "70px",
+    padding: "1px",
+  },
+  "& .Mui-selected span": {
+    color: theme.palette.primary.main,
+  },
+}));
+
+const StyledTabPanel = styled(TabPanel)(() => ({
+  padding: "40px 0px",
+}));

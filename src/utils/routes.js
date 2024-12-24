@@ -11,6 +11,9 @@ export const ROUTES = {
     aboutProducts: "admin/about-products",
     productTable: "/admin/product-table",
     productInner: "/admin/product-inner",
+    adminRewiv: "admin/review-raiting",
+    adminDelivery: "admin/delivery",
+    
   },
   USER: {
     index: "/",
