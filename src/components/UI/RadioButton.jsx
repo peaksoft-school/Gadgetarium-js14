@@ -1,6 +1,6 @@
-import React from 'react';
-import { Radio, RadioGroup, FormControlLabel } from '@mui/material';
-import { styled } from '@mui/system';
+import React from "react";
+import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
+import { styled } from "@mui/system";
 
 const RadioButton = ({ options, selectedOption, onChange }) => {
   const handleChange = (event) => {
@@ -16,11 +16,11 @@ const RadioButton = ({ options, selectedOption, onChange }) => {
           control={<StyledRadio value={option.value} />}
           label={option.label}
           sx={{
-            '& .MuiFormControlLabel-label': {
-              color: 'gray',
+            "& .MuiFormControlLabel-label": {
+              color: "gray",
             },
-            '&:hover .MuiFormControlLabel-label': {
-              color: '#cb11ab',
+            "&:hover .MuiFormControlLabel-label": {
+              color: "#cb11ab",
             },
           }}
         />
@@ -30,11 +30,11 @@ const RadioButton = ({ options, selectedOption, onChange }) => {
 };
 
 const StyledRadio = styled(Radio)(({ theme }) => ({
-  '&.Mui-checked': {
-    color: '#cb11ab',
+  "&.Mui-checked": {
+    color: "#cb11ab",
   },
-  '&:hover': {
-    backgroundColor: 'transparent',
+  "&:hover": {
+    backgroundColor: "transparent",
   },
 }));
 

@@ -17,7 +17,7 @@ export const ROUTES = {
   },
   USER: {
     index: "/",
-    profile: "user",
+    profile: "user/profile",
     aboutStore: "user/about-store",
     delivery: "user/delivery",
     faq: "user/faq",

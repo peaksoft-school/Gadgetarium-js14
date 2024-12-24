@@ -1,8 +1,12 @@
 import { patch } from "@mui/system";
 import InnerPageCard from "../../pages/admin/InnerPageCard";
+import React from "react";
+
+import AdminLayout from "../../layout/admin/AdminLayout";
 import { ROUTES } from "../../utils/routes";
 import Product from "../../pages/admin/Product";
 import ProductTable from "../../components/UI/table/ProductTable";
+import AddProducts from "../../components/add-products/AddProducts";
 
 export const adminRoutes = [
   {
@@ -18,4 +22,7 @@ export const adminRoutes = [
     path: ROUTES.ADMIN.product,
     element: <ProductTable />,
   },
+  { path: ROUTES.ADMIN.users, element: <AdminLayout /> },
+  // { path: ROUTES.ADMIN.products, element: <AdminLayout /> },
+  { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
 ];

@@ -1,5 +1,14 @@
 import styled from "@emotion/styled";
-import { Box, TextField, InputAdornment, Autocomplete } from "@mui/material";
+import {
+  Box,
+  TextField,
+  InputAdornment,
+  Autocomplete,
+  Tooltip,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import {
   IconBasket,
@@ -15,13 +24,19 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import theme from "../assets/theme/theme";
 import SidebarMenu from "./UI/SaidebarMenu";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/auth/authSlice";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "../utils/routes";
 
 const links = [
-  { id: 2, text: "Главная" },
-  { id: 3, text: "О магазине" },
-  { id: 5, text: "Доставка" },
-  { id: 7, text: "FAQ" },
-  { id: 8, text: "Контакты" },
+  { id: 2, text: "Главная", path: ROUTES.USER.index },
+  { id: 3, text: "О магазине", path: ROUTES.USER.aboutStore },
+  { id: 5, text: "Доставка", path: ROUTES.USER.delivery },
+  { id: 7, text: "FAQ", path: ROUTES.USER.faq },
+  { id: 8, text: "Контакты", path: ROUTES.USER.contacts },
 ];
 
 const suggestions = [
@@ -34,10 +49,33 @@ const suggestions = [
 ];
 
 const Header = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
-  const [showMainElements, setShowMainElements] = useState(true);
+  const [, setShowMainElements] = useState(true);
   const [showAdgetariumImg, setShowAdgetariumImg] = useState(false);
+
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+
+  const { userData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const toggleSignInModal = () => {
+    setOpenSignIn((prev) => !prev);
+  };
+
+  const toggleSignUpModal = () => {
+    setOpenSignUp((prev) => !prev);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(false);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(false);
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -63,13 +101,80 @@ const Header = () => {
           <img src={Gadgettarium} alt="iconG" />
         </StyledAdgetariumImg>
         <LinkBox>
-          {links.map(({ id, text }) => (
-            <span key={id}>{text}</span>
+          {links.map(({ id, text, path }) => (
+            <StyledNavLink
+              key={id}
+              data-active={location.pathname.startsWith(path)}
+              to={path}
+            >
+              {text}
+            </StyledNavLink>
           ))}
         </LinkBox>
         <StyledPersonBox>
-          <span> +996 220-38-90-01</span>
-          <img src={IconPersonal} alt="pr" />
+          <span> +996 220-30-20-01</span>
+          <Tooltip
+            title="Профиль"
+            PopperProps={{
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [15, -10],
+                  },
+                },
+              ],
+            }}
+          >
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <img src={IconPersonal} alt="pr" />
+            </IconButton>
+          </Tooltip>
+          <StyledMenu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            {!userData.isAuth
+              ? [
+                  <StyledMenuItem key="signin" onClick={toggleSignInModal}>
+                    <p>Войти</p>
+                  </StyledMenuItem>,
+                  <StyledMenuItem key="signup" onClick={toggleSignUpModal}>
+                    <p>Регистрация</p>
+                  </StyledMenuItem>,
+                ]
+              : [
+                  <StyledMenuItem key="history">
+                    <p>История заказов</p>
+                  </StyledMenuItem>,
+                  <StyledMenuItem key="favorites">
+                    <p>Избранное</p>
+                  </StyledMenuItem>,
+                  <StyledMenuItem key="profile">
+                    <p>Профиль</p>
+                  </StyledMenuItem>,
+                  <StyledMenuItem key="logout">
+                    <p
+                      onClick={() => {
+                        dispatch(logout());
+                        handleClose();
+                      }}
+                    >
+                      Выйти
+                    </p>
+                  </StyledMenuItem>,
+                ]}
+          </StyledMenu>
         </StyledPersonBox>
       </FirstBox>
 
@@ -132,6 +237,17 @@ const Header = () => {
           <img src={IconLike} alt="like" />
         </StyledImgBox>
       </SecondBox>
+
+      <SignIn
+        open={openSignIn}
+        onClose={toggleSignInModal}
+        openSignUp={toggleSignUpModal}
+      />
+      <SignUp
+        open={openSignUp}
+        onClose={toggleSignUpModal}
+        openSignIn={toggleSignInModal}
+      />
     </>
   );
 };
@@ -160,6 +276,7 @@ const SecondBox = styled(Box)(() => ({
   alignItems: "center ",
   position: "sticky",
   top: "0",
+  zIndex: 1000,
 
   "& hr": {
     width: "2px",
@@ -174,16 +291,24 @@ const LinkBox = styled(Box)(() => ({
   display: "flex",
   gap: "24px",
   fontSize: "17px",
+}));
 
-  "& span": {
-    alignContent: "center",
-    height: "40px",
-    borderRadius: "4px",
-    textAlign: "center",
-    transition: "color 0.3s ease",
-    cursor: "pointer",
-  },
+const StyledNavLink = styled(NavLink)(({ theme }) => ({
+  alignContent: "center",
+  height: "40px",
+  borderRadius: "4px",
+  textAlign: "center",
+  transition: "color 0.3s ease",
+  cursor: "pointer",
+  textDecoration: "none",
+  color: "#fff",
+  padding: "0 10px",
+
   "& span:hover": {
+    backgroundColor: theme.palette.darkGrey.dark,
+  },
+
+  "&.active": {
     backgroundColor: theme.palette.darkGrey.dark,
   },
 }));
@@ -270,4 +395,34 @@ const BoxCatalog = styled(Box)(() => ({
   display: "flex",
   gap: "30px",
   alignItems: "center",
+}));
+
+const StyledMenu = styled(Menu)(() => ({
+  "& .MuiPaper-root": {
+    elevation: 0,
+    marginTop: "1.5rem",
+    "& .MuiAvatar-root": {
+      width: 32,
+      height: 32,
+      marginLeft: "-0.5rem",
+      marginRight: "1rem",
+    },
+    "&::before": {
+      content: '""',
+      display: "block",
+      position: "absolute",
+      top: 0,
+      right: 14,
+      width: 10,
+      height: 10,
+      transform: "translateY(-50%) rotate(45deg)",
+      zIndex: 0,
+    },
+  },
+}));
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&:hover": {
+    color: theme.palette.primary.main,
+  },
 }));

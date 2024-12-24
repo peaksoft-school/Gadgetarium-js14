@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signInRequest, signUpRequest } from "./authThank";
+import { logOut, signInRequest, signUpRequest } from "./authThunk";
 
 const getInitialState = () => {
   const json = localStorage.getItem("Gadgetarium");
@@ -38,12 +38,14 @@ const addAsyncCases = (builder, asyncThunk, dataField) => {
     .addCase(asyncThunk.fulfilled, (state, action) => {
       state[dataField] = action.payload;
       state.isLoading = false;
+      state.error = "";
     })
     .addCase(asyncThunk.pending, (state) => {
       state.isLoading = true;
+      state.error = "";
     })
     .addCase(asyncThunk.rejected, (state, action) => {
-      state[dataField] = action.payload;
+      state.error = action.payload;
       state.isLoading = false;
     });
 };
@@ -53,14 +55,14 @@ export const authSlice = createSlice({
   initialState: getInitialState(),
   reducers: {
     logout: (state) => {
-      (state.isLoading = false),
-        (state.userData.role = "GUEST"),
-        (state.userData.email = ""),
-        (state.userData.name = ""),
-        (state.userData.token = ""),
-        (state.userData.role = ""),
-        (state.userData.isAuth = false),
-        localStorage.removeItem("Gadgetarium");
+      state.userData = {
+        role: "GUEST",
+        email: "",
+        token: "",
+        name: "",
+        isAuth: false,
+      };
+      localStorage.removeItem("Gadgetarium");
     },
     autoLogin: (state, { payload }) => {
       (state.userData = payload), (state.userData.isAuth = true);
@@ -69,7 +71,9 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     addAsyncCases(builder, signInRequest, "userData");
     addAsyncCases(builder, signUpRequest, "userData");
+    addAsyncCases(builder, logOut, "userData");
   },
 });
 
+export const { logout, autoLogin } = authSlice.actions;
 export const authAxtions = authSlice.actions;

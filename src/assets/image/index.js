@@ -4,3 +4,4 @@ export { default as Customer } from "../image/Customer.png";
 export { default as HeadPhone } from "../image/HeadPhone.png";
 
 export { default as Map } from "../image/Map.png";
+export { default as PhoneImage } from "../image/Phone.png";

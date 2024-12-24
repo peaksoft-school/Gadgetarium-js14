@@ -146,7 +146,7 @@ const StyledBoxProject = styled(Box)(() => ({
 }));
 
 const StyledCard = styled(Box)({
-  width: "300px",
+  width: "280px",
   border: "1px solid #e0e0e0",
   borderRadius: "12px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
