@@ -5,6 +5,7 @@ import { productSlice } from "./admin-addproduct/productsSlice";
 import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
+import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
+    [innerPageCardSlice.name]: innerPageCardSlice.reducer,
   },
 });
 

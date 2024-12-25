@@ -1,13 +1,6 @@
 import { styled, Box } from "@mui/system";
-import {
-  garbage,
-  Left,
-  Right,
-  samsungphone,
-  systemUiconsDocumentList,
-} from "../../assets/icon";
+import { garbage, Left, Right, samsungphone } from "../../assets/icon";
 import { NavLink, useNavigate } from "react-router-dom";
-import Comments from "../../components/UI/Comments";
 import { Button, Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -51,7 +44,7 @@ const InnerPageCard = () => {
   };
 
   const dispatch = useDispatch();
-  const { products} = useSelector((state) => state.innerPageCard);
+  const { products } = useSelector((state) => state.innerPageCard);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [value, setValue] = useState(0);
 
@@ -331,11 +324,7 @@ export default InnerPageCard;
 const StyledPapaDiv = styled(Box)({
   padding: "60px",
 });
-const StyledMiniFlex = styled(Box)({
-  display: "flex",
-  marginTop: "80px",
-  justifyContent: "space-between",
-});
+
 
 const StyledDiv = styled(Box)({
   display: "flex",
@@ -533,61 +522,7 @@ const StyledSkidka = styled(Box)({
   alignItems: "center",
 });
 
-const RatingColumn = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-  alignItems: "center",
-});
 
-const RatingWithText = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  gap: "8px",
-});
 
-const LeftColumn = styled(RatingColumn)({
-  display: "flex",
-});
 
-const RightColumn = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-});
 
-const DivCar = styled("div")({
-  display: "flex",
-  flexDirection: "row",
-});
-// const StyledWrapperBox = styled(Box)(() => ({
-// }));
-
-const StyledLabelBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  textTransform: "capitalize",
-  padding: "0px",
-  "& span": {
-    fontSize: "16px",
-    fontWeight: 400,
-    color: theme.palette.text.primary,
-    padding: "0px",
-  },
-}));
-
-const StyledTabList = styled(TabList)(({ theme }) => ({
-  width: "100%",
-  "& .MuiTabs-indicator": {
-    background: theme.palette.primary.main,
-    height: "0px",
-    borderRadius: "70px",
-    padding: "1px",
-  },
-  "& .Mui-selected span": {
-    color: theme.palette.primary.main,
-  },
-}));
-
-const StyledTabPanel = styled(TabPanel)(() => ({
-  padding: "40px 0px",
-}));

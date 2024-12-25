@@ -19,10 +19,9 @@ export const adminRoutes = [
     element: <Product />,
   },
   {
-    path: ROUTES.ADMIN.product,
+    path: ROUTES.ADMIN.productTable,
     element: <ProductTable />,
   },
   { path: ROUTES.ADMIN.users, element: <AdminLayout /> },
-  // { path: ROUTES.ADMIN.products, element: <AdminLayout /> },
   { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
 ];

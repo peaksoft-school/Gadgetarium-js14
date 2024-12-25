@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, getAllReviews, getProdates, getRating } from "./innerPageCardThunk";
 
 const initialState = {
-  products: null,
+  products: [],
   loading: false,
   error: null,
   ratingData: null,

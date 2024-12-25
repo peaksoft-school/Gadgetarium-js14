@@ -8,6 +8,7 @@ import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
 import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
+import InnerPageCard from "../pages/admin/InnerPageCard";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -40,11 +41,7 @@ const AppRouter = () => {
       ),
 
       children: [
-        {
-          index: true,
-          element: <ProductsSheetTable />,
-        },
-        { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
+        ...adminRoutes, 
       ],
     },
     ,
