@@ -2,50 +2,23 @@ import styled from "@emotion/styled";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { IconC } from "../../assets/icon";
 import { TabContext, TabPanel } from "@mui/lab";
-import { useState } from "react";
-
-const data = [
-  {
-    id: "1",
-    sum: `5 647`,
-    img: IconC,
-    description: `Выкупили на сумму`,
-    count: `12 шт`,
-    color: "#0066FF",
-  },
-  {
-    id: "2",
-    sum: `56 265`,
-    img: IconC,
-    description: `Заказали на сумму`,
-    count: `56 шт`,
-    color: `#FF9900`,
-  },
-];
-
-const currentData = {
-  description: "Доставлено товаров на сумму ",
-  currentPeriod: "Текущий период",
-  previousPeriod: "Предыдущий период",
-  image: IconC,
-  day: {
-    current: "120 000",
-    previous: "100 500",
-  },
-  month: {
-    current: "300 000",
-    previous: "250 000",
-  },
-  year: {
-    current: "3 000 00",
-    previous: "2 500 000",
-  },
-};
+import { useEffect, useState } from "react";
+import { getInfographic } from "../../store/productAdmin/infografictAthThunk";
+import { useDispatch, useSelector } from "react-redux";
 
 const Infografics = () => {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("day");
 
-  const handleChange = (event, newValue) => {
+  const { loading, infografics, error } = useSelector(
+    (state) => state.infographics
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getInfographic(value));
+  }, [dispatch, value]);
+
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
@@ -54,53 +27,40 @@ const Infografics = () => {
       <p style={{ fontFamily: "revert", fontSize: "14px" }}>ИФОГРАФИКА</p>
 
       <StyledFirstBox>
-        {data.length ? (
-          <>
-            {data
-              .filter((item) => item.id === "1")
-              .map(({ id, sum, img, description, count }) => (
-                <StyledDetailBox key={id}>
-                  <Typography>
-                    {sum} <img src={img} alt="cIcon" />
-                  </Typography>
-                  <span>{description}</span>
-                  <Typography>{count}</Typography>
-                </StyledDetailBox>
-              ))}
-            <hr />
-            {data
-              .filter((item) => item.id === "2")
-              .map(({ id, sum, img, description, count }) => (
-                <StyledDetailBoxSecond key={id}>
-                  <Typography>
-                    {sum} <img src={img} alt="cIcon" />
-                  </Typography>
-                  <span>{description}</span>
-                  <Typography>{count}</Typography>
-                </StyledDetailBoxSecond>
-              ))}
-          </>
-        ) : (
-          <Typography> Нет данных</Typography>
-        )}
+        <StyledDetailBox>
+          <Typography>
+            {infografics.redeemedForTheAmount} <img src={IconC} alt="cIcon" />
+          </Typography>
+          <span>Выкупили на сумму</span>
+          <Typography>{infografics.countRedeemed}</Typography>
+        </StyledDetailBox>
+        <hr />
+
+        <StyledDetailBoxSecond>
+          <Typography>
+            {infografics.orderedForTheAmount} <img src={IconC} alt="cIcon" />
+          </Typography>
+          <span>Заказали на сумму</span>
+          <Typography>{infografics.countOrdered}</Typography>
+        </StyledDetailBoxSecond>
       </StyledFirstBox>
 
       <TabContext value={value}>
         <Box>
           <StyledTabs value={value} onChange={handleChange}>
-            <Tab label="ЗА ДЕНЬ" value="1" />
-            <Tab label="ЗА МЕСЯЦ" value="2" />
-            <Tab label="ЗА ГОД" value="3" />
+            <Tab label="ЗА ДЕНЬ" value="day" />
+            <Tab label="ЗА МЕСЯЦ" value="month" />
+            <Tab label="ЗА ГОД" value="year" />
           </StyledTabs>
           <StyledTabPanelsBox>
-            <TabPanel value="1" index="1">
-              {currentData.description}
+            <TabPanel value="day" index="day">
+              Доставлено товаров на сумму
               <Box style={{ display: "flex", justifyContent: "space-between" }}>
                 <StyledItemBox>
                   <h3>
-                    {currentData.day.current}
+                    {infografics.currentPeriod}
                     <StyledImage
-                      src={currentData.image}
+                      src={IconC}
                       alt=""
                       style={{
                         marginLeft: "2px",
@@ -110,28 +70,29 @@ const Infografics = () => {
                     />
                   </h3>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.currentPeriod}
+                    Текущий период
                   </p>
                 </StyledItemBox>
                 <StyledItemBoxPrevious>
                   <h4>
-                    {currentData.day.previous}
-                    <StyledImage src={currentData.image} alt="" />
+                    {infografics.previousPeriod}
+                    <StyledImage src={IconC} alt="" />
                   </h4>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.previousPeriod}
+                    Предыдущий период
                   </p>
                 </StyledItemBoxPrevious>
               </Box>
             </TabPanel>
-            <TabPanel value="2" index="2">
-              {currentData.description}
+
+            <TabPanel value="month" index="month">
+              Доставлено товаров на сумму
               <Box style={{ display: "flex", justifyContent: "space-between" }}>
                 <StyledItemBox>
                   <h3>
-                    {currentData.month.current}
+                    {infografics.currentPeriod}
                     <StyledImage
-                      src={currentData.image}
+                      src={IconC}
                       alt=""
                       style={{
                         marginLeft: "2px",
@@ -141,43 +102,44 @@ const Infografics = () => {
                     />
                   </h3>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.currentPeriod}
+                    Текущий период
                   </p>
                 </StyledItemBox>
                 <StyledItemBoxPrevious>
                   <h4>
-                    {currentData.month.previous}
-                    <StyledImage src={currentData.image} alt="c" />
+                    {infografics.previousPeriod}
+                    <StyledImage src={IconC} alt="c" />
                   </h4>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.previousPeriod}
+                    Предыдущий период
                   </p>
                 </StyledItemBoxPrevious>
               </Box>
             </TabPanel>
-            <TabPanel value="3" index="3">
-              {currentData.description}
+
+            <TabPanel value="year" index="year">
+              Доставлено товаров на сумму
               <Box style={{ display: "flex", justifyContent: "space-between" }}>
                 <StyledItemBox>
                   <h3>
-                    {currentData.year.current}
+                    {infografics.currentPeriod}
                     <StyledImage
-                      src={currentData.image}
+                      src={IconC}
                       alt="c"
                       style={{ width: "13px", height: "13px" }}
                     />
                   </h3>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.currentPeriod}
+                    Текущий период
                   </p>
                 </StyledItemBox>
                 <StyledItemBoxPrevious>
                   <h4>
-                    {currentData.year.previous}
-                    <StyledImage src={currentData.image} alt="c" />
+                    {infografics.previousPeriod}
+                    <StyledImage src={IconC} alt="c" />
                   </h4>
                   <p style={{ color: "#7f8795", marginTop: "3px" }}>
-                    {currentData.previousPeriod}
+                    Предыдущий период
                   </p>
                 </StyledItemBoxPrevious>
               </Box>

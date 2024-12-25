@@ -1,14 +1,14 @@
 export const ROUTES = {
   ADMIN: {
     index: "/admin",
-    users: "admin/users",
-    products: "admin/products",
-    productsInner: "admin/products/:productId",
-    detailProducts: "admin/detail-prodacts",
-    addProductsDefault: "admin/add-products-default",
-    addProduct: "admin/add-product",
-    addPrice: "admin/add-price",
-    aboutProducts: "admin/about-products",
+    users: "/admin/users",
+    products: "/admin/products",
+    productsInner: "/admin/products/:productId",
+    detailProducts: "/admin/detail-prodacts",
+    addProductsDefault: "/admin/add-products-default",
+    addProduct: "/admin/add-product",
+    addPrice: "/admin/add-price",
+    aboutProducts: "/admin/about-products",
   },
   USER: {
     index: "/",
