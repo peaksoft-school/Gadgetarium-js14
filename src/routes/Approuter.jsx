@@ -5,6 +5,7 @@ import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
 import UserLayout from "../layout/user/UserLayout";
 import ItemsInCard from "../pages/user/ItemsInCard";
+import CartProjectItem from "../pages/user/CartProjectItem";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);

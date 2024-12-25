@@ -1,7 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeItem,
+} from "../../store/intemsInCard/itemsInCardSlaice";
+import { deleteX, greyHeart } from "../../assets/icon";
+import { styled } from "@mui/system";
+import { deleteBasket, moveToFavoriteById } from "../../store/intemsInCard/itemsInCardAuth";
 
-const UserItemsInCard = ({ product }) => {
+const UserItemsInCard = ({product, onCheckboxChange, checked  }) => {
+  const dispatch = useDispatch();
+
+  const handleIncrement = () => dispatch(incrementQuantity(product.itemNumber));
+  const handleDecrement = () => dispatch(decrementQuantity(product.itemNumber));
+  const handleRemove = () => dispatch(removeItem(product.itemNumber));
+
+  const handleDeleteBasket = (ids) => {
+    dispatch(deleteBasket(ids));
+  };
+
+  const handleMoveToFavorites = (id) => {
+    dispatch(moveToFavoriteById(id));
+  };
+
   const renderStars = (rating) => {
     const totalStars = 5;
     const fullStars = Math.floor(rating);
@@ -9,25 +32,25 @@ const UserItemsInCard = ({ product }) => {
 
     return (
       <>
-        {'⭐️'.repeat(fullStars)}
-        {'☆'.repeat(emptyStars)}
+        {"⭐️".repeat(fullStars)}
+        {"☆".repeat(emptyStars)}
       </>
     );
   };
 
   return (
     <div style={styles.cardContainer}>
-      {/* Чекбокс */}
-      <div>
-        <input type="checkbox" style={styles.checkbox} />
+       <div>
+        <StyledInput
+          type="checkbox"
+          style={styles.checkbox}
+          onChange={onCheckboxChange}
+          checked={checked}
+        />
       </div>
-
-      {/* Изображение */}
       <div style={styles.imageContainer}>
         <img src={product.image} alt={product.name} style={styles.image} />
       </div>
-
-      {/* Описание товара */}
       <div style={styles.productDetails}>
         <h3 style={styles.productName}>{product.name}</h3>
         <p style={styles.rating}>
@@ -36,31 +59,50 @@ const UserItemsInCard = ({ product }) => {
         <p style={styles.inStock}>В наличии ({product.stock}шт)</p>
         <p style={styles.code}>Код товара: {product.code}</p>
       </div>
-
-      {/* Количество и цена */}
       <div style={styles.priceContainer}>
         <div style={styles.quantitySelector}>
-          <button style={styles.button}>-</button>
-          <span style={styles.quantity}>{product.quantity}</span>
-          <button style={styles.button}>+</button>
+          <div>
+            <StyledButton onClick={handleDecrement} style={styles.button}>
+              -
+            </StyledButton>
+            <span style={styles.quantity}>{product.quantity}</span>
+            <StyledButton onClick={handleIncrement} style={styles.button}>
+              +
+            </StyledButton>
+          </div>
+          <div style={styles.price}>
+            <strong>{product.price} с</strong>
+          </div>
         </div>
-        <div style={styles.price}>
-          <strong>{product.price} с</strong>
-        </div>
-      </div>
-
-      {/* Действия */}
-      <div style={styles.actions}>
-        <a href="#" style={styles.actionLink}>🤍 В избранное</a>
-        <span style={styles.actionSeparator}>|</span>
-        <a href="#" style={styles.actionLink}>✖️ Удалить</a>
+        <StyledProdarct style={styles.actions}>
+          <div
+            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            onClick={() => handleDeleteBasket([product.id])}
+          >
+            <img src={deleteX} alt="" style={{ height: "28px" }} />
+            <span>Удалить</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => handleMoveToFavorites(product.id)} 
+          >
+            <img src={greyHeart} alt="heart" />
+            <span>В избранное</span>
+          </div>
+        </StyledProdarct>
       </div>
     </div>
   );
 };
 
+
 UserItemsInCard.propTypes = {
   product: PropTypes.shape({
+    itemNumber: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
@@ -73,90 +115,112 @@ UserItemsInCard.propTypes = {
 
 export default UserItemsInCard;
 
+const StyledProdarct = styled("div")(() => ({
+  gap: "20px",
+}));
+
+const StyledButton = styled("button")(() => ({
+  borderRadius: "100px",
+}));
+
 // Стили
 const styles = {
   cardContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '16px',
-    border: '1px solid #e6e6e6',
-    borderRadius: '8px',
-    marginBottom: '16px',
-    backgroundColor: '#fff',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-    fontFamily: 'Arial, sans-serif',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "16px",
+    border: "1px solid #e6e6e6",
+    borderRadius: "8px",
+    marginBottom: "16px",
+    backgroundColor: "#fff",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+    fontFamily: "Arial, sans-serif",
   },
   checkbox: {
-    marginRight: '16px',
+    marginRight: "16px",
   },
   imageContainer: {
-    flex: '0 0 80px',
-    marginRight: '16px',
+    flex: "0 0 80px",
+    marginRight: "16px",
   },
   image: {
-    width: '80px',
-    height: '80px',
-    objectFit: 'contain',
-    borderRadius: '8px',
+    width: "80px",
+    height: "80px",
+    objectFit: "contain",
+    borderRadius: "8px",
   },
   productDetails: {
-    flex: '1',
-    marginRight: '16px',
+    flex: "1",
+    marginRight: "16px",
   },
   productName: {
-    fontSize: '16px',
-    fontWeight: 'bold',
-    marginBottom: '8px',
+    fontSize: "16px",
+    fontWeight: "bold",
+    marginBottom: "8px",
   },
   rating: {
-    fontSize: '14px',
-    marginBottom: '8px',
-    color: '#ffa500',
+    fontSize: "14px",
+    marginBottom: "8px",
+    color: "#ffa500",
   },
   inStock: {
-    color: 'green',
-    marginBottom: '8px',
+    color: "green",
+    marginBottom: "8px",
   },
   code: {
-    color: '#888',
+    color: "#888",
   },
   priceContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginRight: '16px',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginRight: "16px",
   },
   quantitySelector: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '8px',
+    color: "#909cb5",
+    display: "flex",
+    gap: "20px",
+    alignItems: "center",
+    marginBottom: "8px",
   },
   button: {
-    border: '1px solid #ccc',
-    background: 'transparent',
-    padding: '4px 8px',
-    borderRadius: '4px',
-    cursor: 'pointer',
+    width: "25px",
+    border: "1px solid #909cb5",
+    background: "transparent",
+    padding: "4px 8px",
+    borderRadius: "20%px",
+    cursor: "pointer",
   },
   quantity: {
-    margin: '0 8px',
+    margin: "0 8px",
   },
   price: {
-    fontSize: '18px',
-    fontWeight: 'bold',
+    color: "#292929",
+    fontSize: "18px",
+    fontWeight: "bold",
   },
   actions: {
-    display: 'flex',
-    alignItems: 'center',
-    color: '#888',
+    display: "flex",
+    alignItems: "center",
+    color: "#888",
   },
   actionLink: {
-    textDecoration: 'none',
-    color: '#888',
-    fontSize: '14px',
+    textDecoration: "none",
+    color: "#888",
+    fontSize: "14px",
   },
   actionSeparator: {
-    margin: '0 8px',
+    margin: "0 8px",
   },
 };
+const StyledInput = styled('input')({
+  backgroundColor: '#cb11ab',
+  color: 'white',
+  width: '20px',
+  height: '20px',
+  accentColor: '#cb11ab', 
+  '&:checked': {
+    backgroundColor: '#a50a89', 
+  },
+});
