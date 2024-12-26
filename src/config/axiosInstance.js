@@ -5,7 +5,6 @@ export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
   },
 });
 
@@ -25,15 +24,6 @@ axiosInstance.interceptors.request.use(
     }
 
     return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
-axiosInstance.interceptors.response.use(
-  function (response) {
-    return response;
   },
   function (error) {
     return Promise.reject(error);
