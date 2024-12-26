@@ -1,16 +1,7 @@
-// import AppRouter from "./routes/Approuter";
-
-import { BrowserRouter } from "react-router-dom";
-import AdminProductComents from "./pages/admin/AdminProductComents";
+import AppRouter from "./routes/Approuter";
 
 const App = () => {
-  return (
-    <div>
-      <BrowserRouter>
-        <AdminProductComents />
-      </BrowserRouter>
-    </div>
-  );
+  return <AppRouter />;
 };
 
 export default App;

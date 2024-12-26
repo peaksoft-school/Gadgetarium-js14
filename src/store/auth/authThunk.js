@@ -39,4 +39,13 @@ export const signUpRequest = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk("auth/logOut", () => {});
+export const logOut = createAsyncThunk("auth/logOut", () => {
+  localStorage.removeItem("Gadgetarium");
+  return {
+    name: "",
+    email: "",
+    token: "",
+    role: "GUEST",
+    isAuth: false,
+  };
+});

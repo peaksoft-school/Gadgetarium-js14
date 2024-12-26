@@ -10,6 +10,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useDispatch } from "react-redux";
+import {
+  mailingModal,
+  uploadFile,
+} from "../store/productAdmin/productAdminAuthThank";
 
 const schema = yup.object().shape({
   title: yup.string().required("Название рассылки обязательно"),
@@ -33,6 +38,8 @@ const schema = yup.object().shape({
 const NewsletterModal = ({ open, onClose, data }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -50,19 +57,47 @@ const NewsletterModal = ({ open, onClose, data }) => {
   }, []);
 
   useEffect(() => {
-    return () => {
-      if (selectedImage) {
-        URL.revokeObjectURL(selectedImage.preview);
-      }
-    };
-  }, [selectedImage]);
+    if (selectedImage) {
+      dispatch(uploadFile(selectedImage));
+    }
+  }, [selectedImage, dispatch]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });
 
   const onSubmit = (data) => {
     data.startDate = dayjs(data.startDate).format("YYYY-MM-DD");
     data.endDate = dayjs(data.endDate).format("YYYY-MM-DD");
-    reset();
+
+    const formData = new FormData();
+
+    formData.append("name", data.title);
+    formData.append("description", data.description);
+    formData.append("dateOfStart", data.startDate);
+    formData.append("dateOfFinish", data.endDate);
+    const serverData = {
+      name: data.title,
+      description: data.description,
+      dateOfStart: data.startDate,
+      dateOfFinish: data.endDate,
+    };
+
+    if (selectedImage) {
+      dispatch(uploadFile(selectedImage))
+        .unwrap()
+        .then((response) => {
+          const imageLink = response.link;
+
+          formData.append("image", imageLink);
+          serverData.image = response.link;
+          dispatch(mailingModal(formData));
+
+          reset();
+        });
+    } else {
+      dispatch(mailingModal(formData));
+
+      reset();
+    }
   };
 
   const handleDeleteImage = () => {

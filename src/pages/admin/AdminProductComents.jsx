@@ -38,7 +38,6 @@ const AdminProductComents = () => {
 
   return (
     <div>
-      <AdminHeader />
       <ButtonContainer>
         <StyledButton
           onClick={() => handleType("AllReviews")}

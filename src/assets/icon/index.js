@@ -63,6 +63,7 @@ export { default as Component44 } from "../icon/Component44.svg";
 export { default as deleteX } from "../icon/deleteX.svg";
 export { default as garbage } from "../icon/garbage.svg";
 export { default as editLine } from "../icon/editLine.svg";
+
 export { default as FrameCard } from "../icon/FrameCard.svg";
 export { default as Money } from "../icon/Money.svg";
 export { default as Wallet } from "../icon/Wallet.svg";
@@ -71,6 +72,7 @@ export { default as Group2 } from "../icon/Group2.svg";
 export { default as ico } from "../icon/ico.svg";
 export { default as img } from "../icon/img.svg";
 export { default as Left } from "../icon/Left.svg";
+export { default as Right } from "../icon/Right.svg";
 export { default as Photo } from "../icon/Photo.svg";
 export { default as Order } from "../icon/Order.svg";
 export { default as WorkKey } from "../icon/WorkKey.svg";
@@ -89,5 +91,12 @@ export { default as letterU } from "../icon/letterU.svg";
 export { default as volume } from "../icon/volume-1.svg";
 export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
+export { default as IconColor } from "../icon/IconColor.svg";
+export { default as IconPDF } from "../icon/IconPDF.svg";
+
+export { default as Garbage } from "../icon/garbage.svg";
+export { default as EditLine } from "../icon/editLine.svg";
+export { default as ChangeAican } from "../icon/AicanChanig.svg";
+export { default as Streca } from "../icon/Strelca.svg";
 export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
 export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";

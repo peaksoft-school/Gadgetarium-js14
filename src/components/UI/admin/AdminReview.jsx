@@ -5,6 +5,9 @@ import { DeleteAicanRed, StateDown, StateUp } from "../../../assets/icon";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "../../../store/slice/adminComents/adminCommentsAuth";
 import CommentsAdminInput from "./CommentsAdminInput";
+// import { DeleteAicanRed, garbage, StateDown, StateUp } from "../../../assets/icon";
+import Input from "../Input";
+import Button from "../Button";
 
 const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);

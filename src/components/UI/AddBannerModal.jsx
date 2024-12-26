@@ -4,9 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
 import { useDropzone } from "react-dropzone";
 import { IconAddPhoto, IconDelete } from "../../assets/icon";
+import { useSelector } from "react-redux";
 
-const AddBannerModal = ({ open, onClose }) => {
+const AddBannerModal = ({ open, onClose, onFileChange, onSave }) => {
   const [selectedImages, setSelectedImages] = useState([]);
+  const { imageLink } = useSelector((state) => state.productAdmin);
 
   const onDrop = useCallback((acceptedFiles) => {
     setSelectedImages((prevImages) => {
@@ -41,7 +43,7 @@ const AddBannerModal = ({ open, onClose }) => {
       }}
     >
       <StyledBannerImg
-        src={file.preview}
+        src={imageLink.link}
         style={{ height: "140px" }}
         alt={file.name}
         imageCount={selectedImages.length}
@@ -80,6 +82,7 @@ const AddBannerModal = ({ open, onClose }) => {
                   {...getInputProps()}
                   type="file"
                   accept=".png, .jpg, .jpeg, .gif, .bmp, .webp"
+                  onChange={onFileChange}
                 />
 
                 <img src={IconAddPhoto} alt="addPhoto" />
@@ -97,7 +100,11 @@ const AddBannerModal = ({ open, onClose }) => {
             <Button variant="text" onClick={onClose}>
               Отменить
             </Button>
-            <Button variant="contained" onClick={handleShowSelectedImages}>
+            <Button
+              variant="contained"
+              onClick={onSave}
+              disdisabled={handleShowSelectedImages.length === 0}
+            >
               Загрузить
             </Button>
           </StyledButtonBox>
