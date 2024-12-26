@@ -24,8 +24,6 @@ export const cardSlice = createSlice({
         state.error = null;
       })
       .addCase(getrecommendedCards.fulfilled, (state, action) => {
-        console.log("test", state);
-
         state.isLoading = false;
         state.recommendCards = action.payload;
       })

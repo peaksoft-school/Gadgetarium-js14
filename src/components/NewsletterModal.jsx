@@ -62,7 +62,6 @@ const NewsletterModal = ({ open, onClose, data }) => {
   const onSubmit = (data) => {
     data.startDate = dayjs(data.startDate).format("YYYY-MM-DD");
     data.endDate = dayjs(data.endDate).format("YYYY-MM-DD");
-    console.log(" data:", data);
     reset();
   };
 

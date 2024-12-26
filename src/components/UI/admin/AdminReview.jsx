@@ -1,15 +1,9 @@
-import React, {  useState } from "react";
+import { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
-import {
-  DeleteAicanRed,
-  StateDown,
-  StateUp,
-} from "../../../assets/icon";
+import { DeleteAicanRed, StateDown, StateUp } from "../../../assets/icon";
 import { useDispatch } from "react-redux";
-import {
-  deleteComment,
-} from "../../../store/slice/adminComents/adminCommentsAuth";
+import { deleteComment } from "../../../store/slice/adminComents/adminCommentsAuth";
 import CommentsAdminInput from "./CommentsAdminInput";
 
 const AdminReview = ({ reviews }) => {
@@ -18,18 +12,18 @@ const AdminReview = ({ reviews }) => {
 
   const dispatch = useDispatch();
 
-
-
   const handlerDelete = (id) => {
     dispatch(deleteComment(id));
   };
 
-  const toggleExpandAll = () => {
-    setIsExpandedAll(!isExpandedAll);
+  const toggleExpandAll = (id) => {
     const newExpandedComments = reviews.reduce((acc, review) => {
-      acc[review.id] = !isExpandedAll;
+      if (review.id === id) {
+        acc[review.id] = !isExpandedAll;
+      }
       return acc;
     }, {});
+
     setExpandedComments(newExpandedComments);
   };
 
@@ -39,8 +33,6 @@ const AdminReview = ({ reviews }) => {
       [id]: !prev[id],
     }));
   };
-
- 
 
   return (
     <StyledContainer component={Paper}>
@@ -58,7 +50,7 @@ const AdminReview = ({ reviews }) => {
           const isExpanded = expandedComments[review.id] || isExpandedAll;
 
           return (
-            <StyledRow key={review.reviewId}>
+            <StyledRow key={review.id}>
               <Typography>{reviewId + 1}</Typography>
               <Avatar
                 src={review.productImg || review.images[0]}
@@ -96,33 +88,31 @@ const AdminReview = ({ reviews }) => {
               </Box>
 
               <StyledBox>
-                  <Box sx={{ display: "flex", gap:'60px' }}>
-                    <Rating value={review.grade} readOnly />
-                    <StyledUserInfo>
-                      <Avatar src={review.userImg} alt={review.userName} />
-                      <Box>
-                        <Typography>{review.userName}</Typography>
-                        <Typography variant="caption" style={{ color: "#999" }}>
-                          {review.userEmail}
-                        </Typography>
-                      </Box>
-                      <StyledDeleteIcon
-                        src={DeleteAicanRed}
-                        alt=""
-                        onClick={() => handlerDelete(review.id)}
-                      />
-                      <img
-                        src={isExpandedAll ? StateUp : StateDown}
-                        alt="Expand All"
-                        onClick={toggleExpandAll}
-                        style={{ cursor: "pointer", marginLeft: "10px" }}
-                      />
-                    </StyledUserInfo>
-                  </Box>
+                <Box sx={{ display: "flex", gap: "60px" }}>
+                  <Rating value={review.grade} readOnly />
+                  <StyledUserInfo>
+                    <Avatar src={review.userImg} alt={review.userName} />
+                    <Box>
+                      <Typography>{review.userName}</Typography>
+                      <Typography variant="caption" style={{ color: "#999" }}>
+                        {review.userEmail}
+                      </Typography>
+                    </Box>
+                    <StyledDeleteIcon
+                      src={DeleteAicanRed}
+                      alt=""
+                      onClick={() => handlerDelete(review.id)}
+                    />
+                    <img
+                      src={isExpandedAll ? StateUp : StateDown}
+                      alt="Expand All"
+                      onClick={() => toggleExpandAll(review.id)}
+                      style={{ cursor: "pointer", marginLeft: "10px" }}
+                    />
+                  </StyledUserInfo>
+                </Box>
 
-                {isExpanded && 
-                <CommentsAdminInput review={review} />
-                } 
+                {isExpanded && <CommentsAdminInput review={review} />}
               </StyledBox>
             </StyledRow>
           );
@@ -138,8 +128,7 @@ const AdminReview = ({ reviews }) => {
 
 export default AdminReview;
 
-const StyledBox = styled("div")(() => ({
-}));
+const StyledBox = styled("div")(() => ({}));
 
 const StyledContainer = styled(Box)({
   width: "100%",
@@ -177,10 +166,8 @@ const StyledCommentBox = styled("div")({
 const StyledUserInfo = styled("div")({
   display: "flex",
   alignItems: "center",
-  gap: "10px",  
+  gap: "10px",
 });
-
-
 
 const StyledDeleteIcon = styled("img")({
   cursor: "pointer",
@@ -196,5 +183,3 @@ const StyledDeleteIcon = styled("img")({
       "brightness(0) saturate(100%) invert(24%) sepia(84%) saturate(7496%) hue-rotate(358deg) brightness(102%) contrast(114%)", // red
   },
 });
-
-

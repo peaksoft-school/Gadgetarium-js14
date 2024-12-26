@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-      <AdminProductComents />
+        <AdminProductComents />
       </BrowserRouter>
     </div>
   );

@@ -9,8 +9,6 @@ import UserLayout from "../layout/user/UserLayout";
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
 
-  console.log(userData);
-
   const router = createBrowserRouter([
     {
       path: "/",
