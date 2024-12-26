@@ -43,6 +43,7 @@ const initialState = [
   },
 ];
 
+
 const CommentList = () => {
   const [comments, setComments] = useState(initialState);
   const [openModal, setOpenModal] = useState(false);

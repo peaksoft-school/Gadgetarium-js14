@@ -100,3 +100,6 @@ export { default as ChangeAican } from "../icon/AicanChanig.svg";
 export { default as Streca } from "../icon/Strelca.svg";
 export { default as CtrelcaAican2 } from "../icon/CtrelcaAican2.svg";
 export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
+export { default as MasterCard } from "../icon/MasterCard.svg";
+export { default as VisaCard } from "../icon/VisaCard.svg";
+export { default as ElCard } from "../icon/ElCard.svg";
