@@ -5,7 +5,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TableBody,
   Box,
@@ -17,11 +16,12 @@ import { usePagination, useTable } from "react-table";
 import { getIds } from "../../../store/productAdmin/productAdminSlice";
 import { useDispatch } from "react-redux";
 
-
 const ProductTable = ({ data, columns }) => {
+  const dispatch = useDispatch();
+
   const [hoveredRowId, setHoveredRowId] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
-  const dispatch = useDispatch();
+
   const handleCheckboxClick = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id)
@@ -34,21 +34,11 @@ const ProductTable = ({ data, columns }) => {
     }
   };
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    state: { pageIndex, pageSize },
-    gotoPage,
-    setPageSize,
-  } = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: 5 } },
-    usePagination
-  );
-
-  console.log("test");
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
+    useTable(
+      { columns, data, initialState: { pageIndex: 0, pageSize: 5 } },
+      usePagination
+    );
 
   return (
     <Paper>
@@ -75,25 +65,21 @@ const ProductTable = ({ data, columns }) => {
                 ))}
               </StyledHeader>
               <TableBody {...getTableBodyProps()}>
-                {page.map((row, rowIndex) => {
+                {page.map((row) => {
                   prepareRow(row);
                   const rowId = row.original.subProductId;
 
                   return (
                     <TableRow
-                      key={crypto.randomUUID()}
                       {...row.getRowProps()}
                       onMouseEnter={() => setHoveredRowId(rowId)}
                       onMouseLeave={() => setHoveredRowId(null)}
                     >
                       {row.cells.map((cell, index) => (
-                        <StyledBodyCell
-                          key={crypto.randomUUID()}
-                          {...cell.getCellProps()}
-                        >
+                        <StyledBodyCell {...cell.getCellProps()}>
                           {index === 0 ? (
                             hoveredRowId === rowId ? (
-                              <Checkbox
+                              <StyledCheckbox
                                 checked={selectedIds.includes(rowId)}
                                 onChange={() => handleCheckboxClick(rowId)}
                               />
@@ -116,6 +102,10 @@ const ProductTable = ({ data, columns }) => {
     </Paper>
   );
 };
+
+const StyledCheckbox = styled(Checkbox)`
+  padding: 0;
+`;
 
 const StyledHeader = styled(TableHead)`
   background-color: #4c5566;
