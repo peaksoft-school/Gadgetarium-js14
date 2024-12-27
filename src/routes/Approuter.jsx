@@ -2,13 +2,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
+import AdminProductComents from "../pages/admin/AdminProductComents";
+import { adminRoutes } from "./admin-router/adminRoutes";
+import AddProducts from "../components/add-products/AddProducts";
+import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
 import { userRoutes } from "./userRoutes";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
-
-  console.log(userData);
 
   const router = createBrowserRouter([
     {
@@ -40,10 +42,16 @@ const AppRouter = () => {
       children: [
         {
           index: true,
-          element: <AdminLayout />,
+          element: <ProductsSheetTable />,
         },
+        {
+          path: "reviews",
+          element: <AdminProductComents />,
+        },
+        { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
       ],
     },
+    ,
   ]);
 
   return <RouterProvider router={router} />;
