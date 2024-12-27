@@ -53,15 +53,21 @@ export const getFilter = createAsyncThunk(
     try {
       const queryString = new URLSearchParams();
 
-      if (params.memory) queryString.append("memory", params.memory);
-      if (params.colour) queryString.append("colour", params.colour);
-      if (params.RAM) queryString.append("RAM", params.RAM);
+      if (params.memory && params.memory.length > 0)
+        queryString.append("memory", params.memory);
+      if (params.colour && params.colour.length > 0)
+        queryString.append("colour", params.colour);
+      if (params.RAM && params.RAM.length > 0)
+        queryString.append("RAM", params.RAM);
+      if (params.price) queryString.append("price", params.price);
+      if (params.menuValue) queryString.append("sortBy", params.menuValue);
 
       if (params.createDate && Array.isArray(params.createDate)) {
         params.createDate.forEach((date) => {
           queryString.append("createDate", date);
         });
       }
+
       console.log("queryString:", queryString.toString());
 
       const { data } = await axiosInstance.get(

@@ -42,7 +42,6 @@ const Card = ({
     dispatch(postFavourites({ subProductId, addOrDelete }));
     setisFavourit(addOrDelete);
   };
-  console.log("ID:", subProductId);
 
   const handlePostpostToBasket = () => {
     dispatch(postToBasket({ subProductId }));

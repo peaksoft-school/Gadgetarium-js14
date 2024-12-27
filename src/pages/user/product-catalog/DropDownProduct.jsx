@@ -52,7 +52,7 @@ const memoryOptions = [
 const ramOptions = ["3", "4", "6", "8", "12"];
 
 const initialState = {
-  selectedBrand: null,
+  selectedBrand: { id: 1 },
   price: [500, 250000],
   selectedColor: [],
   selectedMemory: [],
@@ -86,6 +86,9 @@ const reducer = (state, action) => {
           ? state.selectedRAM.filter((ram) => ram !== action.payload)
           : [...state.selectedRAM, action.payload],
       };
+
+    case "RESET":
+      return (state = initialState);
     default:
       return state;
   }
@@ -94,6 +97,7 @@ const reducer = (state, action) => {
 const DropDownProduct = () => {
   const dispatch = useDispatch();
   const [state, dispatchReducer] = useReducer(reducer, initialState);
+  const [selectedMenuValue, setSelectedMenuValue] = useState(null);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [subMenuEl, setSubMenuEl] = useState(null);
@@ -114,19 +118,6 @@ const DropDownProduct = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSubMenuEl(null);
-  };
-
-  const handleSubMenuOpen = (event) => {
-    setSubMenuEl(event.currentTarget);
-  };
-
-  const handleSubMenuClose = () => {
-    setSubMenuEl(null);
-  };
-
   const id = 1;
   useEffect(() => {
     if (id) {
@@ -134,7 +125,7 @@ const DropDownProduct = () => {
     }
   }, [dispatch, id]);
 
-  // const selectedCategoryId = selectedBrand ? selectedBrand.id : null;
+  console.log(state.price);
 
   useEffect(() => {
     const params = {
@@ -142,20 +133,18 @@ const DropDownProduct = () => {
       colour: state.selectedColor,
       RAM: state.selectedRAM,
       price: state.price,
+      menuValue: selectedMenuValue,
     };
     console.log("параметры:", params);
 
-    if (state.selectedBrand) {
-      console.log("ID", state.selectedBrand.id);
-
-      dispatch(getFilter({ subCategoryId: state.selectedBrand.id, params }));
-    }
+    dispatch(getFilter({ subCategoryId: state.selectedBrand?.id, params }));
   }, [
     state.selectedBrand,
     state.selectedColor,
     state.selectedMemory,
     state.selectedRAM,
     state.price,
+    selectedMenuValue,
     dispatch,
   ]);
 
@@ -195,9 +184,64 @@ const DropDownProduct = () => {
   }, []);
 
   const { elements } = lastViews;
-  console.log("999", elements);
 
-  console.log("999", elements);
+  const resetAllFilters = () => {
+    dispatchReducer({ type: "RESET" });
+  };
+  const handleMenuClose = (value) => {
+    console.log("Вы выбрали:", value);
+    setSelectedMenuValue(value);
+    setAnchorEl(null);
+    setSubMenuEl(null);
+  };
+
+  const handleSubMenuOpen = (event) => {
+    setSubMenuEl(event.currentTarget);
+  };
+  const handleSubMenuClose = (value) => {
+    console.log("Вы выбрали подменю:", value);
+    setSelectedMenuValue(value);
+    setSubMenuEl(null);
+  };
+
+  const menuItems = [
+    { id: 1, value: "Новинки", onClick: () => handleMenuClose("Новинки") },
+    { id: 2, value: "По акции", onClick: handleSubMenuOpen },
+    {
+      id: 3,
+      value: "Рекомендуемые",
+      onClick: () => handleMenuClose("Рекомендуемые"),
+    },
+    {
+      id: 4,
+      value: "По увеличению цены",
+      onClick: () => handleMenuClose("По увеличению цены"),
+    },
+    {
+      id: 5,
+      value: "По уменьшению цены",
+      onClick: () => handleMenuClose("По уменьшению цены"),
+    },
+  ];
+
+  const subMenuItems = [
+    {
+      id: 1,
+      value: "Все акции",
+      onClick: () => handleSubMenuClose("Все акции"),
+    },
+    {
+      id: 2,
+      value: "До 50%",
+      onClick: () => handleSubMenuClose("До 50%"),
+      sx: { fontWeight: 500 },
+    },
+    {
+      id: 3,
+      value: "Свыше 50%",
+      onClick: () => handleSubMenuClose("Свыше 50%"),
+    },
+  ];
 
   return (
     <>
@@ -219,7 +263,7 @@ const DropDownProduct = () => {
           <Grid
             container
             spacing={1}
-            sx={{ marginRight: "auto", gap: "10px", paddingLeft: "182px" }}
+            sx={{ marginRight: "auto", gap: "10px", paddingLeft: "197px" }}
           >
             <Grid item>
               {state.selectedBrand ? (
@@ -234,9 +278,55 @@ const DropDownProduct = () => {
               ) : null}
             </Grid>
             <Grid item>
-              <StyledSelectedBox>
-                Белый <img src={SystemX} alt="✖" />
-              </StyledSelectedBox>
+              {state.selectedColor.length > 0 &&
+                state.selectedColor.map((color) => (
+                  <StyledSelectedBox key={color}>
+                    {color}{" "}
+                    <img
+                      src={SystemX}
+                      alt="✖"
+                      onClick={() =>
+                        dispatchReducer({
+                          type: "TOGGLE_COLOR",
+                          payload: color,
+                        })
+                      }
+                    />
+                  </StyledSelectedBox>
+                ))}
+            </Grid>
+            <Grid item>
+              {state.selectedMemory.length > 0 &&
+                state.selectedMemory.map((memory) => (
+                  <StyledSelectedBox key={memory}>
+                    {memory} ГБ{" "}
+                    <img
+                      src={SystemX}
+                      alt="✖"
+                      onClick={() =>
+                        dispatchReducer({
+                          type: "TOGGLE_MEMORY",
+                          payload: memory,
+                        })
+                      }
+                    />
+                  </StyledSelectedBox>
+                ))}
+            </Grid>
+            <Grid item>
+              {state.selectedRAM.length > 0 &&
+                state.selectedRAM.map((ram) => (
+                  <StyledSelectedBox key={ram}>
+                    {ram} ГБ{" "}
+                    <img
+                      src={SystemX}
+                      alt="✖"
+                      onClick={() =>
+                        dispatchReducer({ type: "TOGGLE_RAM", payload: ram })
+                      }
+                    />
+                  </StyledSelectedBox>
+                ))}
             </Grid>
           </Grid>
           <Box>
@@ -261,19 +351,11 @@ const DropDownProduct = () => {
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               transformOrigin={{ vertical: "top", horizontal: "left" }}
             >
-              <StyledMenuItem onClick={handleMenuClose}>Новинки</StyledMenuItem>
-              <StyledMenuItem onClick={handleSubMenuOpen}>
-                По акции
-              </StyledMenuItem>
-              <StyledMenuItem onClick={handleMenuClose}>
-                Рекомендуемые
-              </StyledMenuItem>
-              <StyledMenuItem onClick={handleMenuClose}>
-                По увеличению цены
-              </StyledMenuItem>
-              <StyledMenuItem onClick={handleMenuClose}>
-                По уменьшению цены
-              </StyledMenuItem>
+              {menuItems.map((item) => (
+                <StyledMenuItem key={item.id} onClick={item.onClick}>
+                  {item.value}
+                </StyledMenuItem>
+              ))}
             </StyledMenu>
 
             <StyledMenu
@@ -291,18 +373,15 @@ const DropDownProduct = () => {
                 },
               }}
             >
-              <StyledMenuItem onClick={handleSubMenuClose}>
-                Все акции
-              </StyledMenuItem>
-              <StyledMenuItem
-                onClick={handleSubMenuClose}
-                sx={{ fontWeight: 500 }}
-              >
-                До 50%
-              </StyledMenuItem>
-              <StyledMenuItem onClick={handleSubMenuClose}>
-                Свыше 50%
-              </StyledMenuItem>
+              {subMenuItems.map((item) => (
+                <StyledMenuItem
+                  key={item.id}
+                  onClick={item.onClick}
+                  sx={item.sx}
+                >
+                  {item.value}
+                </StyledMenuItem>
+              ))}
             </StyledMenu>
           </Box>
         </Box>
@@ -318,6 +397,7 @@ const DropDownProduct = () => {
               }}
             >
               <h3
+                onClick={resetAllFilters}
                 style={{
                   color: "#3e98e6",
                   cursor: "pointer",
