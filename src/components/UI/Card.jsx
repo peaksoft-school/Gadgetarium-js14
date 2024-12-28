@@ -8,6 +8,9 @@ import {
   GroceryCart,
   DiscountClasIcon,
 } from "../../assets/icon";
+import { useDispatch } from "react-redux";
+import { addToFavoutires } from "../../store/theChosenOne/theChosenOneAuthThunk";
+import { useState } from "react";
 
 const Card = ({
   img,
@@ -21,6 +24,23 @@ const Card = ({
   discountNew,
   discountClas,
 }) => {
+
+  const dispatch = useDispatch();
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const handleFavouriteClick = () => {
+    const addOrDelete = isFavourite ? false : true;
+
+    dispatch(addToFavoutires({ subProductId: "1", addOrDelete })).then(
+      (action) => {
+        if (action.meta.requestStatus === "fulfilled") {
+          setIsFavourite((prev) => !prev);
+        } else {
+          console.error("Ошибка при обновлении избранного:", action.payload);
+        }
+      }
+    );
+  };
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
 
@@ -29,7 +49,12 @@ const Card = ({
       <StyledCard>
         <StyledIcanConteiner>
           <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
+          <img
+            src={isFavourite ? "redHeart.png" : greyHeart}
+            alt="Избранное"
+            onClick={handleFavouriteClick}
+            style={{ cursor: "pointer" }}
+          />
         </StyledIcanConteiner>
 
         <BoxAicanContainer>

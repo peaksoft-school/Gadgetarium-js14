@@ -3,7 +3,6 @@ import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
 import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
-import { adminRoutes } from "./admin-router/adminRoutes";
 import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
@@ -24,7 +23,7 @@ const AppRouter = () => {
           isAuth={userData.role === "USER" ? userData.isAuth : !userData.isAuth}
         />
       ),
-      children: userRoutes,
+      children: [...userRoutes],
     },
 
     {
