@@ -43,6 +43,10 @@ const AppRouter = () => {
           index: true,
           element: <ProductsSheetTable />,
         },
+        {
+          path: "reviews",
+          element: <AdminProductComents />,
+        },
         { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
       ],
     },
