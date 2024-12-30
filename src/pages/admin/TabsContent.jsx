@@ -11,7 +11,7 @@ import Characteristics from "./Characteristics";
 import { systemUiconsDocumentList } from "../../assets/icon";
 import Reviews from "./Reviews";
 
-const TabsContent = () => {
+const TabsContent = ({ detailProduct }) => {
   const [value, setValue] = useState("1");
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,10 +69,10 @@ const TabsContent = () => {
           </StyledTabList>
         </Box>
         <StyledTabPanel value="1">
-          <Description />
+          <Description detailProduct={detailProduct} />
         </StyledTabPanel>
         <StyledTabPanel value="2">
-          <Characteristics />
+          <Characteristics detailProduct={detailProduct} />
         </StyledTabPanel>
         <StyledTabPanel value="3">
           <Reviews />

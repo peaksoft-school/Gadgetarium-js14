@@ -1,7 +1,7 @@
 import React from "react";
 import ProductTable from "../../components/UI/table/ProductTable";
 import { Box, styled } from "@mui/system";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
 const data = [
   {
@@ -83,6 +83,8 @@ const columns = [
 ];
 
 const Product = () => {
+  const { productId } = useParams();
+
   return (
     <WrapperMainBox>
       <FirstBox>
@@ -91,7 +93,7 @@ const Product = () => {
         <StyledH2>Детали товары</StyledH2>
         <StyledHr />
         <StyledButtonDiv>
-          <StyledNavLink to={ROUTES.ADMIN.productInner} variant="contained">
+          <StyledNavLink to={`/admin/${productId}`} variant="contained">
             Товар
           </StyledNavLink>
           <StyledNavLink variant="contained">Детали Товара</StyledNavLink>

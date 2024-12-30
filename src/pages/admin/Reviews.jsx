@@ -16,6 +16,7 @@ const Reviews = () => {
       })
     );
   }, [dispatch]);
+
   return (
     <>
       <h2>Отзывы</h2>

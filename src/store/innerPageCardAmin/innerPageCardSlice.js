@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteProduct, getAllReviews, getProdates, getRating } from "./innerPageCardThunk";
+import {
+  deleteProduct,
+  getAllReviews,
+  getProdates,
+  getRating,
+} from "./innerPageCardThunk";
 
 const initialState = {
   products: [],
-  loading: false,
+  loading: true,
   error: null,
   ratingData: null,
   ratingLoading: false,
@@ -11,9 +16,9 @@ const initialState = {
   reviewsData: [],
   reviewsLoading: false,
   reviewsError: null,
-  deleteLoading: false, 
-  deleteError: null, 
-  deleteSuccess: false, 
+  deleteLoading: false,
+  deleteError: null,
+  deleteSuccess: false,
 };
 
 export const innerPageCardSlice = createSlice({

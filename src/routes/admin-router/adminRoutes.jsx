@@ -28,11 +28,6 @@ export const adminRoutes = [
   },
 
   {
-    path: ROUTES.ADMIN.productTable,
-    element: <ProductTable />,
-  },
-
-  {
     path: ROUTES.ADMIN.users,
     element: <AdminLayout />,
   },

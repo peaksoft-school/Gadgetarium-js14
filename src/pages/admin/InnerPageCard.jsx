@@ -1,6 +1,6 @@
 import { styled, Box } from "@mui/system";
 import { garbage, Left, Right, samsungphone } from "../../assets/icon";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Button, Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -8,58 +8,29 @@ import {
   deleteProduct,
   getProdates,
 } from "../../store/innerPageCardAmin/innerPageCardThunk";
-import { ROUTES } from "../../utils/routes";
-import { TabList, TabPanel } from "@mui/lab";
 
 import TabsContent from "./TabsContent";
-
-const products2 = {
-  name: "Samsung Galaxy S23",
-  quantity: 25,
-  itemNumber: "SGS23-001",
-  colours: ["#000000", "#FF0000", "#00FF00", "#0000FF"],
-  images: [samsungphone, samsungphone, "https://example.com/image3.jpg"],
-  characteristics: {
-    "разрешение экрана": "1080 x 2400",
-    память: "128GB",
-    "Гарантия (месяцев)": "3",
-    процессор: '6.1"',
-    Вес: "1.5 g",
-  },
-  color: "Чёрный",
-  dateOfIssue: "2024-01-15",
-  percentOfDiscount: 10,
-  price: 60000,
-};
+import Loading from "../../components/UI/Loading";
 
 const InnerPageCard = () => {
-  const navigate = useNavigate();
-
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-  const [value1, setValue1] = useState("1");
-  const handleChange2 = (event, newValue) => {
-    setValue1(newValue);
-  };
-
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.innerPageCard);
+  const { products, loading } = useSelector((state) => state.innerPageCard);
+  const navigate = useNavigate();
+  const { productId } = useParams();
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [value, setValue] = useState(0);
 
   useEffect(() => {
     dispatch(
       getProdates({
-        productId: 1,
+        productId,
         color: "red",
       })
     );
   }, [dispatch]);
 
-  const prodactID = 1;
-  const handleDelete = () => {
-    dispatch(deleteProduct(prodactID));
+  const handleDelete = (id) => {
+    dispatch(deleteProduct(id));
   };
 
   const handleLeftClick = () => {
@@ -73,9 +44,7 @@ const InnerPageCard = () => {
       prevIndex === products.images.length - 1 ? 0 : prevIndex + 1
     );
   };
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  if (loading) return <Loading />;
 
   return (
     <Box>
@@ -94,7 +63,10 @@ const InnerPageCard = () => {
 
         <StyledButtonDiv>
           <StyledButton variant="contained">Товар</StyledButton>
-          <StyledButton variant="contained" to={ROUTES.ADMIN.productTable}>
+          <StyledButton
+            variant="contained"
+            to={`/admin/${productId}/product-table`}
+          >
             Детали Товара
           </StyledButton>
         </StyledButtonDiv>
@@ -107,7 +79,7 @@ const InnerPageCard = () => {
             }}
           >
             <StyledLargeImg
-              src={products2.images[currentImageIndex]}
+              src={products.images[currentImageIndex]}
               alt={`Product Image ${currentImageIndex + 1}`}
             />
 
@@ -117,8 +89,8 @@ const InnerPageCard = () => {
                 alt="Left Arrow"
                 onClick={handleLeftClick}
               />
-              {products2?.images && products2.images.length > 0 ? (
-                products2.images.map((image, index) => (
+              {products?.images && products.images.length > 0 ? (
+                products.images.map((image, index) => (
                   <Box
                     key={index}
                     sx={{
@@ -189,7 +161,6 @@ const InnerPageCard = () => {
               </div>
             </StyledText>
 
-            <StyledBr />
             <div style={{ display: "flex" }}>
               <div>
                 <h4 style={{ marginTop: "10px" }}>Цвет товара:</h4>
@@ -290,7 +261,10 @@ const InnerPageCard = () => {
             </div>
 
             <StyledButtonsDiv>
-              <Button variant="outlined" onClick={() => handleDelete()}>
+              <Button
+                variant="outlined"
+                onClick={() => handleDelete(products.subProductId)}
+              >
                 <img src={garbage} alt="Delete" />
               </Button>
               <Button
@@ -303,17 +277,7 @@ const InnerPageCard = () => {
             </StyledButtonsDiv>
           </StyledBorder>
         </StyledFlex>
-
-        <TabsContent />
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "30px",
-            gap: "20px",
-          }}
-        ></div>
+        <TabsContent detailProduct={products} />
       </StyledPapaDiv>
     </Box>
   );
@@ -324,7 +288,6 @@ export default InnerPageCard;
 const StyledPapaDiv = styled(Box)({
   padding: "60px",
 });
-
 
 const StyledDiv = styled(Box)({
   display: "flex",
@@ -356,11 +319,6 @@ const StyledImg = styled("img")({
   marginTop: "35px",
   width: "150px",
   objectFit: "cover",
-});
-
-const StyledBr = styled(Box)({
-  border: "1px solid #cdcdcd",
-  marginTop: "-10px",
 });
 
 const StyledButtonDiv = styled(Box)({
@@ -427,6 +385,7 @@ const StyledArrowImg = styled("img")({
   width: "50px",
   height: "30px",
   marginTop: "20px",
+  cursor: "pointer",
 });
 
 const StyledImgDiv = styled("div")({
@@ -466,6 +425,7 @@ const StyledIngredients = styled("ul")({
   padding: 0,
   listStyle: "none",
   width: "100%",
+  margin: "0 0 250px 0",
 });
 
 const StyledIngredientItem = styled("li")({
@@ -521,8 +481,3 @@ const StyledSkidka = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
 });
-
-
-
-
-

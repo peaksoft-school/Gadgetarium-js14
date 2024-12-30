@@ -9,11 +9,10 @@ export const ROUTES = {
     addProduct: "admin/add-product",
     addPrice: "admin/add-price",
     aboutProducts: "admin/about-products",
-    productTable: "/admin/product-table",
-    productInner: "/admin/product-inner",
+    productTable: "/admin/:productId/product-table",
+    productInner: "/admin/:productId",
     adminRewiv: "admin/review-raiting",
     adminDelivery: "admin/delivery",
-    
   },
   USER: {
     index: "/",
