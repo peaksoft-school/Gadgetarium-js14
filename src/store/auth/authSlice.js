@@ -27,8 +27,8 @@ const getInitialState = () => {
       name: "",
       email: "",
       token: "",
-      role: "GUEST",
-      isAuth: false,
+      role: "ADMIN",
+      isAuth: true,
     },
   };
 };

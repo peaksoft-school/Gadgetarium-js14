@@ -6,8 +6,9 @@ import { productSlice } from "./admin-addproduct/productsSlice";
 import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
+import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
     [adminCommentsSlice.name]: adminCommentsSlice.reducer,
@@ -16,5 +17,8 @@ export const store = configureStore({
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
+    [innerPageCardSlice.name]: innerPageCardSlice.reducer,
   },
 });
+
+export default store;

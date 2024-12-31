@@ -57,7 +57,6 @@ const ProductsSheetTable = () => {
   };
 
   const handleFilterChange = (newFilter) => {
-
     setFilter(newFilter);
   };
 
@@ -79,9 +78,7 @@ const ProductsSheetTable = () => {
   };
   useEffect(() => {
     if (file) {
-      dispatch(uploadFile(file))
-        .unwrap()
-        
+      dispatch(uploadFile(file)).unwrap();
     }
   }, [dispatch, file]);
 
@@ -108,6 +105,10 @@ const ProductsSheetTable = () => {
 
   const toggleDiscountModal = () => setOpenModalScitca((prev) => !prev);
 
+  const navigateToDetail = (id) => {
+    navigate(`/admin/${id}`);
+  };
+
   const columns = [
     { Header: "ID", accessorFn: (_, index) => index + 1 },
     {
@@ -123,7 +124,15 @@ const ProductsSheetTable = () => {
       ),
     },
     { Header: "Артикул", accessor: "itemNumber" },
-    { Header: "Наименование товара", accessor: "name" },
+    {
+      Header: "Наименование товара",
+      accessor: "name",
+      Cell: ({ row }) => (
+        <StyledText onClick={() => navigateToDetail(row.original.subProductId)}>
+          {row.original.name}
+        </StyledText>
+      ),
+    },
     { Header: "Дата создания", accessor: "createdAt" },
     { Header: "Кол-во", accessor: "quantity" },
     {
@@ -307,6 +316,14 @@ const ProductsSheetTable = () => {
 };
 
 export default ProductsSheetTable;
+
+const StyledText = styled("p")(() => ({
+  cursor: "pointer",
+
+  ":hover": {
+    textDecoration: "underline",
+  },
+}));
 
 const StyledBoxTable = styled(Box)(() => ({
   width: "1130px",
