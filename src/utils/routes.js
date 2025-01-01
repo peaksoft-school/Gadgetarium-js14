@@ -21,6 +21,7 @@ export const ROUTES = {
     delivery: "user/delivery",
     faq: "user/faq",
     contacts: "user/contacts",
+    basket: 'user/basket',
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };

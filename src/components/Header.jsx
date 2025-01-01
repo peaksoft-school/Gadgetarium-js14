@@ -28,7 +28,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/auth/authSlice";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/routes";
 
 const links = [
@@ -49,6 +49,10 @@ const suggestions = [
 ];
 
 const Header = () => {
+  const { userData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
   const [, setShowMainElements] = useState(true);
@@ -56,9 +60,7 @@ const Header = () => {
 
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
-
-  const { userData } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(false);
 
   const toggleSignInModal = () => {
     setOpenSignIn((prev) => !prev);
@@ -68,7 +70,6 @@ const Header = () => {
     setOpenSignUp((prev) => !prev);
   };
 
-  const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -233,7 +234,9 @@ const Header = () => {
         )}
         <StyledImgBox>
           <img src={IconShoppingCard} alt="" />
-          <img src={IconBasket} alt="basket" />
+          <IconButton onClick={() => navigate("/user/basket")}>
+            <img src={IconBasket} alt="like" />
+          </IconButton>
           <img src={IconLike} alt="like" />
         </StyledImgBox>
       </SecondBox>

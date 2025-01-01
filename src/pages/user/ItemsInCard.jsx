@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, styled } from "@mui/system";
-import { CircularProgress } from "@mui/material"; 
+import { CircularProgress } from "@mui/material";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { garbage, greyHeart } from "../../assets/icon";
@@ -29,8 +29,6 @@ const ItemsInCard = () => {
     );
   };
 
-
-
   const handleSelectAll = (e) => {
     setSelectedItems(e.target.checked ? items.map((item) => item.id) : []);
   };
@@ -50,8 +48,7 @@ const ItemsInCard = () => {
   };
 
   return (
-    <div>
-      <Header />
+    <>
       {loading && (
         <LoadingOverlay>
           <CircularProgress color="inherit" />
@@ -90,7 +87,6 @@ const ItemsInCard = () => {
                   checked={
                     selectedItems.length === items.length && items.length > 0
                   }
-                  
                 />
                 <span>Отметить все</span>
               </Box>
@@ -103,7 +99,7 @@ const ItemsInCard = () => {
                 }}
                 onClick={handleDelete}
               >
-           <StyledMig src={garbage} alt="delete" className="delete-icon" />
+                <StyledMig src={garbage} alt="delete" className="delete-icon" />
 
                 <span>Удалить</span>
               </Box>
@@ -141,9 +137,7 @@ const ItemsInCard = () => {
           </>
         )}
       </Box>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 
@@ -184,25 +178,22 @@ const StyledTovary = styled("p")(() => ({
   fontFamily: "Ubuntu",
 }));
 
-const StyledMig = styled('img')`
-  transition: filter 0.3s ease; 
-  
+const StyledMig = styled("img")`
+  transition: filter 0.3s ease;
+
   &:hover {
-    filter: brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(4000%) hue-rotate(0deg) brightness(90%) contrast(90%);
+    filter: brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(4000%)
+      hue-rotate(0deg) brightness(90%) contrast(90%);
   }
 `;
 
-const StyledInput = styled('input')({
-  backgroundColor: '#cb11ab',
-  color: 'white',
-  width: '20px',
-  height: '20px',
-  accentColor: '#cb11ab', // Modern approach for checkbox color in most browsers
-  '&:checked': {
-    backgroundColor: '#a50a89', // Color when checked
+const StyledInput = styled("input")({
+  backgroundColor: "#cb11ab",
+  color: "white",
+  width: "20px",
+  height: "20px",
+  accentColor: "#cb11ab", // Modern approach for checkbox color in most browsers
+  "&:checked": {
+    backgroundColor: "#a50a89", // Color when checked
   },
 });
-
-
-
-

@@ -30,7 +30,6 @@ const CommentList = () => {
   const [replyText, setReplyText] = useState("");
 
   const handleReply = (comment) => {
-    console.log("Открытие модалки для комментария: ", comment);
     setCurrentComment(comment);
     setReplyText(comment.answer || "");
     setOpenModal(true);
@@ -43,7 +42,6 @@ const CommentList = () => {
         : comment
     );
 
-    console.log("Updated Comments: ", updatedComments);
 
     setOpenModal(false);
     setReplyText("");

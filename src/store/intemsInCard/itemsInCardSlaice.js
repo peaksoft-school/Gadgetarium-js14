@@ -68,7 +68,6 @@ export const itemsInCardSlaice = createSlice({
       })
       .addCase(postBasketIzbran.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Товары перемещены в избранное:", action.payload);
       })
       .addCase(postBasketIzbran.rejected, (state, action) => {
         state.loading = false;
@@ -80,7 +79,6 @@ export const itemsInCardSlaice = createSlice({
       })
       .addCase(moveToFavoriteById.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Успешно перемещено в избранное:", action.payload);
         const movedItem = action.payload;
         state.items = state.items.filter((item) => item.id !== movedItem.id);
       })

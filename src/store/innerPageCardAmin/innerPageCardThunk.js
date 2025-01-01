@@ -30,7 +30,7 @@ const getRating = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.log("ошибка запроса рейтинга", error);
+      x("ошибка запроса рейтинга", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -47,7 +47,6 @@ const getAllReviews = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      console.log("Ошибка при получении данных", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
