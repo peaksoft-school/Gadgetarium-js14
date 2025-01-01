@@ -5,40 +5,61 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { CtrelcaAican2 } from "../../assets/icon";
-
-const data = [
-  {
-    characteristics: "Основные характеристики",
-    description: [
-      { label: "Тип дорожки", value: "Домашняя" },
-      { label: "Мощность двигателя", value: "3,5 л.с. постоянная" },
-      { label: "Тип двигателя", value: "DC" },
-      { label: "Регулировка скорости", value: "1-19.3 км/ч" },
-      { label: "Беговое полотно", value: "3-х слойное, усиленное 2,5 мм" },
-    ],
-  },
-  {
-    characteristics: "Память и процессор",
-    description: [
-      { label: "Оперативная память", value: "16 ГБ DDR4" },
-      { label: "Процессор", value: "Intel Core i7" },
-      { label: "Кэш-память", value: "12 МБ" },
-    ],
-  },
-  {
-    characteristics: "Дополнительные характеристики",
-    description: [
-      {
-        label: "Способ оплаты",
-        value: "Кредитная карта, электронные кошельки",
-      },
-      { label: "Гарантия", value: "2 года" },
-    ],
-  },
-];
+import { useSelector } from "react-redux";
 
 const Characteristics = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const { products } = useSelector((state) => state.cardofProduct);
+
+  const data = [
+    {
+      characteristics: "Память и процессор",
+      description: [
+        {
+          label: "Память",
+          value: products?.characteristics?.память || "неизвестно",
+        },
+        { label: "RAM", value: products?.characteristics?.RAM || "неизвестно" },
+        {
+          label: "Емкость аккумулятора",
+          value:
+            products?.characteristics?.["емкость аккумулятора(mA/h)"] ||
+            "неизвестно",
+        },
+        {
+          label: "Диагональ экрана",
+          value:
+            products?.characteristics?.["диогональ экрана"] || "неизвестно",
+        },
+        {
+          label: "Разрешение экрана",
+          value:
+            products?.characteristics?.["разрешение экрана"] || "неизвестно",
+        },
+      ],
+    },
+    {
+      characteristics: "Основные характеристики",
+      description: [
+        { label: "Тип дорожки", value: "Домашняя" },
+        { label: "Мощность двигателя", value: "3,5 л.с. постоянная" },
+        { label: "Тип двигателя", value: "DC" },
+        { label: "Регулировка скорости", value: "1-19.3 км/ч" },
+        { label: "Беговое полотно", value: "3-х слойное, усиленное 2,5 мм" },
+      ],
+    },
+
+    {
+      characteristics: "Дополнительные характеристики",
+      description: [
+        {
+          label: "Способ оплаты",
+          value: "Кредитная карта, электронные кошельки",
+        },
+        { label: "Гарантия", value: "2 года" },
+      ],
+    },
+  ];
 
   const handleAccordionChange = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);

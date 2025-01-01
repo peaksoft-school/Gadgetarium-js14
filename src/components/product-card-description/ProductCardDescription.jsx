@@ -1,15 +1,14 @@
 import { Box, styled } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { SamsungText, Smsung } from "../../assets/image";
 import ProductCardTabPanel from "./ProductCardTabPanel";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/UI/Card";
 import {
-  getCharacteristics,
   getLastViews,
+  getProducts,
   postToFavorites,
 } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
-import { Button } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 import {
   greyHeart,
   IconBasket,
@@ -20,63 +19,36 @@ import {
   redHeart,
   Right,
 } from "../../assets/icon";
+import Loading from "../UI/Loading";
 
-// /api/user/reviews/{productId} raiting
-const viewedItems = [
-  {
-    img: "https://via.placeholder.com/180",
-    brand: "Adidas",
-    numberOfReviews: 120,
-    price: "1500 руб",
-  },
-  {
-    img: "https://via.placeholder.com/180",
-    brand: "Nike",
-    numberOfReviews: 85,
-    price: "3200 руб",
-  },
-  {
-    img: "https://via.placeholder.com/180",
-    brand: "Puma",
-    numberOfReviews: 50,
-    price: "2800 руб",
-  },
-  {
-    img: "https://via.placeholder.com/180",
-    brand: "Reebok",
-    numberOfReviews: 70,
-    price: "3400 руб",
-  },
-];
-const products = {
-  name: "Samsung Galaxy S23",
-  quantity: 25,
-  itemNumber: "SGS23-001",
-  colours: ["#000000", "#FF0000", "#00FF00", "#0000FF"],
-  images: [Smsung, Smsung, "https://example.com/image3.jpg"],
-  characteristics: {
-    "разрешение экрана": "1080 x 2400",
-    память: "128GB",
-    "Гарантия (месяцев)": "3",
-    процессор: '6.1"',
-    Вес: "1.5 g",
-  },
-  color: "Чёрный",
-  dateOfIssue: "2024-01-15",
-  percentOfDiscount: 10,
-  price: 60000,
-};
+// const products = {
+//   name: "Samsung Galaxy S23",
+//   quantity: 25,
+//   itemNumber: "SGS23-001",
+//   colours: ["#000000", "#FF0000", "#00FF00", "#0000FF"],
+//   images: [Smsung, Smsung, "https://example.com/image3.jpg"],
+//   characteristics: {
+//     "разрешение экрана": "1080 x 2400",
+//     память: "128GB",
+//     "Гарантия (месяцев)": "3",
+//     процессор: '6.1"',
+//     Вес: "1.5 g",
+//   },
+//   color: "Чёрный",
+//   dateOfIssue: "2024-01-15",
+//   percentOfDiscount: 10,
+//   price: 60000,
+// };
 
 const ProductCardDescription = () => {
   const [count, setCount] = useState(1);
   const [isFavourite, setIsFavourite] = useState(false);
-  const handleClick = () => {
-    dispatch(postToFavorites);
-    setIsFavourite(!isFavourite);
-  };
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
-  const { lastViews } = useSelector((state) => state.cardofProduct);
+  const { lastViews, products, isLoading } = useSelector(
+    (state) => state.cardofProduct
+  );
 
   const handleLeftClick = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -95,20 +67,35 @@ const ProductCardDescription = () => {
   }, []);
 
   const { elements } = lastViews;
-  console.log("ff", elements);
+  console.log("LAST", elements);
 
   const CardId = 1;
+  const colour = "blue";
   useEffect(() => {
-    dispatch(getCharacteristics(CardId));
+    dispatch(getProducts({ productId: CardId, colour }));
   }, []);
 
+  const handleClick = () => {
+    dispatch(postToFavorites(CardId));
+    setIsFavourite(!isFavourite);
+  };
+
+  const validIndex =
+    currentImageIndex >= 0 &&
+    currentImageIndex < (products?.images?.length || 0)
+      ? currentImageIndex
+      : 0;
+
   return (
-    <WrapperMainBox>
-      <FirstBox>
-        <span>Главная » Смартфоны »</span>
-        <span>Galaxy S21 5G</span>
+    <>
+      <WrapperMainBox>
+        {isLoading && <Loading />}
+        <FirstBox>
+          <span>Главная » Смартфоны »</span>
+          <span>{products.name}</span>
+        </FirstBox>
         <StyledH2>
-          <img src={SamsungText} alt="samsung" />
+          <img src={products.logo} alt={products.name} />
         </StyledH2>
         <StyledHr />
         <StyledFlex>
@@ -119,8 +106,8 @@ const ProductCardDescription = () => {
             }}
           >
             <StyledLargeImg
-              src={products.images[currentImageIndex]}
-              alt={`Product Image ${currentImageIndex + 1}`}
+              src={products?.images?.[validIndex] || "default-image.jpg"}
+              alt={`Product Image ${validIndex + 1}`}
             />
 
             <StyledImgDiv>
@@ -186,7 +173,18 @@ const ProductCardDescription = () => {
               <div className="in-stock">
                 В наличии ({products?.quantity || "неизвестно"})
               </div>
+
               <div>Артикул: {products?.itemNumber || "неизвестно"}</div>
+              <div
+                style={{
+                  "& span": {
+                    display: "inline",
+                    paddingBottom: 0,
+                  },
+                }}
+              >
+                <Rating readOnly defaultValue={products.rating} size="small" />
+              </div>
             </StyledText>
             <StyledBr />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -313,23 +311,24 @@ const ProductCardDescription = () => {
                       </span>
                     </StyledIngredientItem>
                     <StyledIngredientItem>
-                      Гарантия (месяцев)
+                      RAM
                       <span className="value">
-                        {products?.characteristics?.["Гарантия (месяцев)"] ||
+                        {products?.characteristics?.["RAM"] || "неизвестно"}
+                      </span>
+                    </StyledIngredientItem>
+                    <StyledIngredientItem>
+                      Диагональ экрана
+                      <span className="value">
+                        {products?.characteristics?.["диогональ экрана"] ||
                           "неизвестно"}
                       </span>
                     </StyledIngredientItem>
                     <StyledIngredientItem>
-                      Процессор
+                      Емкость аккумулятора
                       <span className="value">
-                        {products?.characteristics?.["процессор"] ||
-                          "неизвестно"}
-                      </span>
-                    </StyledIngredientItem>
-                    <StyledIngredientItem>
-                      Вес
-                      <span className="value">
-                        {products?.characteristics?.["Вес"] || "неизвестно"}
+                        {products?.characteristics?.[
+                          "емкость аккумулятора(mA/h)"
+                        ] || "неизвестно"}
                       </span>
                     </StyledIngredientItem>
                   </StyledIngredients>
@@ -338,10 +337,12 @@ const ProductCardDescription = () => {
             </div>
           </StyledBorder>
         </StyledFlex>
-      </FirstBox>
+      </WrapperMainBox>
+
       <ProductCardTabPanel />
-      <Box sx={{ padding: "60px 80px" }}>
-        {viewedItems.length > 0 && (
+
+      <WrapperMainBox>
+        {elements?.length > 0 ? (
           <>
             <h2>Просмотренные товары</h2>
             <Box
@@ -352,7 +353,7 @@ const ProductCardDescription = () => {
                 paddingTop: "20px",
               }}
             >
-              {viewedItems.map((item, index) => (
+              {elements?.map((item, index) => (
                 <Box key={index} sx={{ width: "160px" }}>
                   <Card
                     img={item.img}
@@ -366,9 +367,9 @@ const ProductCardDescription = () => {
               ))}
             </Box>
           </>
-        )}
-      </Box>
-    </WrapperMainBox>
+        ) : null}
+      </WrapperMainBox>
+    </>
   );
 };
 
@@ -377,18 +378,14 @@ export default ProductCardDescription;
 const WrapperMainBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.lightGrey.light,
   width: "100%",
+  padding: "60px 80px;",
 }));
 
 const FirstBox = styled(Box)`
   font-size: 15px;
-  padding: 60px 80px;
   span {
     display: inline-block;
     padding-bottom: 30px;
-  }
-
-  span:first-of-type {
-    color: grey;
   }
 
   span:nth-of-type(2) {

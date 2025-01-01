@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getCharacteristics,
+  getAllReviews,
   getLastViews,
+  getPDF,
+  getProducts,
+  getRating,
   postToFavorites,
 } from "./cardofProductDescriptionThunk";
 
@@ -10,6 +13,10 @@ const initialState = {
   error: null,
   lastViews: [],
   characteristics: [],
+  products: [],
+  ratingData: null,
+  reviewsData: [],
+  pdfFile: null,
 };
 
 export const cardofProductDescriptionSlice = createSlice({
@@ -32,19 +39,6 @@ export const cardofProductDescriptionSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(getCharacteristics.pending, (state) => {
-        (state.isLoading = true), (state.error = null);
-      })
-
-      .addCase(getCharacteristics.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.characteristics = action.payload;
-      })
-      .addCase(getCharacteristics.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
       .addCase(postToFavorites.pending, (state) => {
         (state.isLoading = true), (state.error = null);
       })
@@ -53,6 +47,58 @@ export const cardofProductDescriptionSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(postToFavorites.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getProducts.pending, (state) => {
+        (state.isLoading = true), (state.error = null);
+      })
+
+      .addCase(getProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.products = action.payload;
+      })
+      .addCase(getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getRating.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getRating.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.ratingData = action.payload;
+      })
+      .addCase(getRating.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllReviews.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllReviews.fulfilled, (state, action) => {
+        state.reviewsData = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getAllReviews.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getPDF.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getPDF.fulfilled, (state, action) => {
+        state.pdfFile = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getPDF.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

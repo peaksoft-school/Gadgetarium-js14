@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -23,7 +23,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Loading from "../UI/Loading";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
-import { height } from "@mui/system";
+import { getRating } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const schema = yup.object().shape({
   email: yup
@@ -38,21 +39,27 @@ const schema = yup.object().shape({
     .required("Пароль обязателен"),
 });
 
-const ratings = [
-  { stars: 5, count: 23 },
-  { stars: 4, count: 5 },
-  { stars: 3, count: 17 },
-  { stars: 2, count: 4 },
-  { stars: 1, count: 2 },
-];
-
 const Ratings = ({ onClose, openSignUp }) => {
+  const { ratingData } = useSelector((state) => state.cardofProduct);
+  console.log("RAITINGS", ratingData);
+
+  const ratings = ratingData
+    ? [
+        { stars: 5, count: ratingData.five || 0 },
+        { stars: 4, count: ratingData.four || 0 },
+        { stars: 3, count: ratingData.three || 0 },
+        { stars: 2, count: ratingData.two || 0 },
+        { stars: 1, count: ratingData.one || 0 },
+      ]
+    : [];
+
   const [openModal, setOpenModal] = useState(false);
-  const [value, setValue] = React.useState(2);
-  const [hover, setHover] = React.useState(-1);
+  const [value, setValue] = useState(2);
+  const [hover, setHover] = useState(-1);
   const { isLoading, error } = useSelector((state) => state.auth);
   const { isAuth } = useSelector((state) => state.auth.userData);
   const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -74,6 +81,10 @@ const Ratings = ({ onClose, openSignUp }) => {
 
     dispatch(signInRequest({ userData: newUserData, onClose }));
   };
+  const productId = 1;
+  useEffect(() => {
+    dispatch(getRating({ productId }));
+  }, []);
 
   return (
     <Box>
@@ -82,27 +93,49 @@ const Ratings = ({ onClose, openSignUp }) => {
           <Box className="leftSection">
             <Box sx={{ display: "flex" }}>
               <Typography variant="h4" className="rating">
-                4,5
+                {ratingData?.rating}
               </Typography>
               <Box className="stars">
-                <StarIcon color="warning" />
-                <StarIcon color="warning" />
-                <StarIcon color="warning" />
-                <StarIcon color="warning" />
-                <StarHalfIcon color="warning" />
+                {Array.from({ length: Math.floor(ratingData?.rating) }).map(
+                  (_, index) => (
+                    <StarIcon key={index} color="warning" />
+                  )
+                )}
+                {ratingData?.rating % 1 !== 0 && (
+                  <StarHalfIcon color="warning" />
+                )}
               </Box>
             </Box>
 
-            <Typography className="totalReviews">789 отзывов</Typography>
+            <Typography className="totalReviews">
+              {ratingData?.totalReviews} отзывов
+            </Typography>
           </Box>
 
           <Box className="rightSection">
-            {ratings.map((item) => (
+            {ratings?.map((item) => (
               <Box key={item.stars} className="ratingRow">
                 <Box className="starsRow">
-                  {Array.from({ length: item.stars }).map((_, index) => (
-                    <StarIcon key={index} color="warning" fontSize="small" />
-                  ))}
+                  {Array.from({ length: 5 }).map((_, index) => {
+                    if (index < item.stars) {
+                      return (
+                        <StarIcon
+                          key={index}
+                          color="warning"
+                          fontSize="small"
+                        />
+                      );
+                    }
+                    return (
+                      <StarBorderIcon
+                        sx={{
+                          color: "#f69a19",
+                        }}
+                        key={index}
+                        fontSize="small"
+                      />
+                    );
+                  })}
                 </Box>
                 <Typography className="reviewCount">
                   {item.count} отзывов
@@ -123,7 +156,7 @@ const Ratings = ({ onClose, openSignUp }) => {
 
       <StyledModal open={openModal} onClose={handleCloseModal}>
         <StyledModalContent>
-          {!isAuth ? (
+          {isAuth ? (
             <>
               <Typography variant="h5" component="h1">
                 Оставьте свой отзыв
@@ -227,7 +260,7 @@ const Ratings = ({ onClose, openSignUp }) => {
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    navigate(ROUTES.GUEST.signUp);
+                    navigate("/");
                     onClose();
                   }}
                 >

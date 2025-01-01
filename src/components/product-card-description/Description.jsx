@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, styled } from "@mui/system";
 import { Group22 } from "../../assets/image";
-import { PlayCircleIcon } from "../../assets/icon";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Description = () => {
+  const { products } = useSelector((state) => state.cardofProduct);
+  const [error, setError] = useState(null);
+
+  const handleClick = () => {
+    if (products?.video) {
+      window.open(products.video, "_blank");
+      setError(null);
+    } else {
+      setError("Видео отсутствует!");
+    }
+  };
   return (
     <StyledWrapperBox>
       <Styledimg>
@@ -17,24 +30,19 @@ const Description = () => {
         </p>
         <img src={Group22} alt="photo" />
         <IconWrapper>
-          <img src={PlayCircleIcon} alt="YouTube" />
-          <span style={{ color: "#f03c4d", marginLeft: "8px" }}>
-            Видео о товаре
-          </span>
+          <VideoButton onClick={handleClick}>
+            <PlayArrowIcon sx={{ fontSize: 30, marginRight: "10px" }} />
+            {error ? (
+              <span>{error}</span>
+            ) : (
+              "Видео о товаре"
+            )}
+          </VideoButton>
         </IconWrapper>
       </Styledimg>
       <Box>
         <h3>Lorem ipsum dolor sit amet consectetur adipisicing?</h3>
-        <StyledP>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam,
-          quisquam quasi accusantium quae aut iusto totam vero laborum fuga
-          aspernatur reprehenderit tempora repudiandae nam nostrum eius. Odit
-          Aliquam, in atque. Molestias distinctio fugit et ratione eius laborum
-          qui cupiditate. Libero enim quam quod consequuntur hic officiis
-          corrupti aperiam assumenda? In, earum ipsam? Beatae dignissimos cum
-          vel, architecto quos excepturi temporibus, similique est, officiis
-          molestias esse vero ipsam dolores non libero veniam modi.
-        </StyledP>
+        <StyledP>{products.description}</StyledP>
         <StyledP>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur,
           animi. Illum dicta veniam sed ut distinctio sint sit, id voluptatem
@@ -109,4 +117,19 @@ const StyledP = styled("p")(() => ({
   width: "85%",
   lineHeight: "25px",
   color: "#384255",
+}));
+
+const VideoButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "#ff4c61",
+  color: "#fff",
+  borderRadius: "50px",
+  padding: "10px 20px",
+  display: "flex",
+  alignItems: "center",
+  textTransform: "none",
+  fontSize: "16px",
+  fontWeight: "bold",
+  "&:hover": {
+    backgroundColor: "#e14355",
+  },
 }));

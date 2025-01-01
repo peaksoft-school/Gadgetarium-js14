@@ -15,18 +15,66 @@ export const getLastViews = createAsyncThunk(
   }
 );
 
-export const getCharacteristics = createAsyncThunk(
-  "getCharacteristics",
-  async (CardId, { rejectWithValue }) => {
+export const getProducts = createAsyncThunk(
+  "innerGetProducts",
+  async ({ productId, colour }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get("/api/user/products/get-by-id", {
+        params: {
+          productId,
+          colour,
+        },
+      });
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const getRating = createAsyncThunk(
+  "getRaiting",
+  async ({ productId }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/api/user/products/get-by-id/${CardId}`
+        `/api/user/reviews/${productId}`
+      );
+
+      return data;
+    } catch (error) {
+      console.log("ошибка запроса рейтинга", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+export const getAllReviews = createAsyncThunk(
+  "getAllReviews",
+  async (params, { rejectWithValue }) => {
+    try {
+      const { id } = params;
+      const { data } = await axiosInstance.get(
+        `/api/user/products/get_all_reviews_by_product_id/${id}?page=3`
       );
       return data;
     } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
+      console.log("Ошибка при получении данных", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const getPDF = createAsyncThunk(
+  "getPDF",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/user/products/pdf/generate/${id}`
       );
+      return data;
+    } catch (error) {
+      console.error("Ошибка при получении PDF файла:", error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -37,7 +85,7 @@ export const postToFavorites = createAsyncThunk(
     try {
       const { data } = await axiosInstance.post(
         "/api/basket/move_to_favorites",
-        { productId }
+        [productId]
       );
       return data;
     } catch (error) {
@@ -47,5 +95,3 @@ export const postToFavorites = createAsyncThunk(
     }
   }
 );
-
-// /api/basket/move_to_favorites

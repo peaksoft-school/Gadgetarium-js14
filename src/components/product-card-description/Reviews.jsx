@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,6 +13,8 @@ import Rating from "@mui/material/Rating";
 
 import { editLine, garbage, Man } from "../../assets/icon";
 import Ratings from "./Raiting";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllReviews } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
 
 const initialState = [
   {
@@ -49,6 +51,10 @@ const Reviews = () => {
   const [openModal, setOpenModal] = useState(false);
   const [currentComment, setCurrentComment] = useState(null);
   const [replyText, setReplyText] = useState("");
+  const { reviewsData } = useSelector((state) => state.cardofProduct);
+  console.log("reviews", reviewsData);
+
+  const dispatch = useDispatch();
 
   const handleReply = (comment) => {
     setCurrentComment(comment);
@@ -78,35 +84,38 @@ const Reviews = () => {
     setReplyText("");
   };
 
+  useEffect(() => {
+    const productId = 1;
+    dispatch(getAllReviews({ id: productId }));
+  }, []);
+
   return (
     <MainBox>
       <StyledReviewsBox>
         <h2>Отзывы</h2>
 
-        {comments.length > 0 ? (
-          comments.map(
-            ({ id, author, text, img, date, adminReplied, rating }) => (
+        {reviewsData && reviewsData.length > 0 ? (
+          reviewsData.map(
+            ({ reviewsId, fullName, commentary, image, createdAt, grade }) => (
               <Card
-                key={id}
-                sx={{
-                  marginBottom: "20px",
-                  display: "flex",
-                }}
+                key={reviewsId}
+                sx={{ marginBottom: "20px", display: "flex" }}
               >
                 <StyledTypography component="div">
-                  <img src={img} alt="person" />
+                  <img src={image || Man} alt="person" />
                 </StyledTypography>
                 <StyledCardContent>
-                  <span> {author}</span>
-
+                  <span>{fullName}</span>
                   <Typography color="textSecondary" sx={{ mb: 1.5 }}>
-                    {date}
+                    {createdAt
+                      ? new Date(createdAt).toLocaleString()
+                      : "Дата не указана"}
 
                     <RatingBox>
                       <span>Оценка</span>
                       <Rating
-                        name={`rating-${id}`}
-                        value={rating || 0}
+                        name={`rating-${reviewsId}`}
+                        value={grade || 0}
                         size="small"
                         readOnly
                         sx={{
@@ -117,27 +126,16 @@ const Reviews = () => {
                             color: "gold",
                           },
                         }}
-                        onChange={(event, newValue) =>
-                          handleRatingChange(id, newValue)
-                        }
                       />
                     </RatingBox>
                   </Typography>
                   <Typography variant="body1" sx={{ marginBottom: "15px" }}>
-                    {text}
+                    {commentary}
                   </Typography>
 
-                  {adminReplied && (
-                    <AdminBox>
-                      <span style={{ fontWeight: "bold" }}>
-                        Ответ от представителя:
-                      </span>
-                      <Typography variant="body2">{adminReplied}</Typography>
-                    </AdminBox>
-                  )}
                   <StyledButtonBox>
-                    <img src={editLine} alt="" />
-                    <img src={garbage} alt="" />
+                    <img src={editLine} alt="edit" />
+                    <img src={garbage} alt="delete" />
                   </StyledButtonBox>
                 </StyledCardContent>
               </Card>
@@ -145,9 +143,10 @@ const Reviews = () => {
           )
         ) : (
           <Typography variant="h6" align="center">
-            Здесь нет комментариев
+            Здесь нет отзывов
           </Typography>
         )}
+
         <Modal open={openModal} onClose={handleClose}>
           <StyledModalBox>
             <Typography variant="h6" component="h2" sx={{ marginBottom: 4 }}>
@@ -176,9 +175,11 @@ const Reviews = () => {
             </UpdateBottunBox>
           </StyledModalBox>
         </Modal>
-        <StyledButton>
-          <Button>Показать ещё</Button>
-        </StyledButton>
+        {reviewsData & (reviewsData.length > 0) ? (
+          <StyledButton>
+            <Button>Показать ещё</Button>
+          </StyledButton>
+        ) : null}
       </StyledReviewsBox>
       <Box>
         <Ratings />

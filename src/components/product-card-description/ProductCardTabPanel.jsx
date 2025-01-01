@@ -5,18 +5,42 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { styled } from "@mui/system";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Description from "./Description";
 import { systemUiconsDocumentList } from "../../assets/icon";
 import Characteristics from "./Characteristics";
 import DeliveryAndPayment from "./DeliveryAndPayment";
 import Reviews from "./Reviews";
+import { useDispatch, useSelector } from "react-redux";
+import { getPDF } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
 
 const ProductCardTabPanel = () => {
+  const { pdfFile } = useSelector((state) => state.cardofProduct);
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState("1");
+  const [error, setError] = useState(null);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const id = 1;
+    dispatch(getPDF({ id }))
+      .unwrap()
+      .then(() => setError(null))
+      .catch(() => setError("PDF файл не найден!"));
+  }, [dispatch]);
+
+  const handleDownload = () => {
+    if (pdfFile) {
+      window.open(pdfFile, "_blank");
+    } else {
+      setError("PDF файл не найден!");
+    }
+  };
+
   return (
     <StyledWrapperBox>
       <TabContext value={value}>
@@ -71,8 +95,15 @@ const ProductCardTabPanel = () => {
                 marginLeft: "602px",
               }}
             >
-              <img src={systemUiconsDocumentList} alt="Download" />
-              <span style={{ marginLeft: "5px" }}> Скачать документ.pdf</span>
+              <img
+                onClick={handleDownload}
+                src={systemUiconsDocumentList}
+                alt="Download"
+              />
+              <span style={{ marginLeft: "5px" }}>
+                {error && <p style={{ color: "red" }}>{error}</p>} Скачать
+                документ.pdf
+              </span>
             </div>
           </StyledTabList>
         </Box>
