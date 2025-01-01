@@ -379,8 +379,6 @@ const StyledLargeImg = styled("img")({
 });
 
 const StyledArrowImg = styled("img")({
-  width: "30px",
-  height: "auto",
   marginLeft: "40px",
   width: "50px",
   height: "30px",
@@ -465,7 +463,6 @@ const StyledButtonsDiv = styled(Box)({
   display: "flex",
   gap: "20px",
   justifyContent: "flex-start",
-  marginTop: "20px",
   marginLeft: "380px",
   marginTop: "-300px",
 });
