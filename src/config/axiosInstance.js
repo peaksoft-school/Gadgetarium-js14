@@ -6,7 +6,6 @@ export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
   },
 });
 
@@ -20,8 +19,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrdXRtYWFhbkBnbWFpbC5jb20iLCJpYXQiOjE3MzUwMzgzMTMsImV4cCI6MTczNjQ3ODMxM30.dc7SFWamUCWPnQl-jgdV8oy2DF0MOtVktnGdn36jLBA";
+    const { token } = store.getState().auth.userData;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
@@ -49,5 +48,3 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-

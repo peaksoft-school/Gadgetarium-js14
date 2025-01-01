@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/system";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminReview from "../../components/UI/admin/AdminReview";
 import { getAllComments } from "../../store/slice/adminComents/adminCommentsAuth";
@@ -13,10 +13,16 @@ const AdminProductComents = () => {
     (state) => state.adminComments
   );
 
+  const [type, setType] = useState("AllReviews");
 
   useEffect(() => {
     dispatch(getAllComments("AllReviews"));
   }, [dispatch]);
+
+  const handleType = (type) => {
+    setType(type);
+    dispatch(getAllComments(type));
+  };
 
   if (loading) {
     return (
@@ -30,27 +36,29 @@ const AdminProductComents = () => {
     return <p>Ошибка: {error}</p>;
   }
 
-  if (!comments.reviewResponses || comments.reviewResponses.length === 0) {
-    return <p>Нет отзывов для отображения</p>;
-  }
-
   return (
     <div>
-      <AdminHeader />
       <ButtonContainer>
         <StyledButton
-          onClick={() => dispatch(getAllComments("AllReviews"))}
-          active
+          onClick={() => handleType("AllReviews")}
+          active={type === "AllReviews"}
         >
           Все отзывы
         </StyledButton>
-        <StyledButton onClick={() => dispatch(getAllComments("Unanswered"))}>
-          Неотвеченные <span>+6</span>
+        <StyledButton
+          onClick={() => handleType("Unanswered")}
+          active={type === "Unanswered"}
+        >
+          Неотвеченные
         </StyledButton>
-        <StyledButton onClick={() => dispatch(getAllComments("Answered"))}>
+        <StyledButton
+          onClick={() => handleType("Answered")}
+          active={type === "Answered"}
+        >
           Отвеченные
         </StyledButton>
       </ButtonContainer>
+
       <StyledDivComtainer>
         <AdminReview reviews={comments.reviewResponses || []} />
         <Infografics />
@@ -65,7 +73,7 @@ const LoaderContainer = styled(Box)(() => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "100vh", 
+  height: "100vh",
 }));
 
 const ButtonContainer = styled(Box)({
