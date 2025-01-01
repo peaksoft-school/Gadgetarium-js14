@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const axiosInstance = axios.create({
@@ -18,8 +19,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGl5YTA1N0BnbWFpbC5jb20iLCJpYXQiOjE3MzQ4Nzg1NzIsImV4cCI6MTczNjMxODU3Mn0.R_Nq6B7fWaiyTmKqBOFJUW55nCNaWb8HBkRd_OdvJPE";
+    const { token } = store.getState().auth.userData;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
