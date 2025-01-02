@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'Authorization': `Bearer YOUR_SECRET_KEY`,
+    Authorization: `Bearer YOUR_SECRET_KEY`,
     // "Content-Type": "application/json",
   },
 });
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
     const updateConfig = { ...config };
 
     const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZ2hndXl1eTc3QGdtYWlsLmNvbSIsImlhdCI6MTczNTExMDIyMywiZXhwIjoxNzM2NTUwMjIzfQ.bZq1PwcokiIZCegmdWWmGXg8v68znwDdCttynVisq54";
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGtkaW5hQGdtYWlsLmNvbSIsImlhdCI6MTczNTc5MjE1NCwiZXhwIjoxNzM3MjMyMTU0fQ.xScs3FQZniH21YagVVpXCU3wLJ6rpLlgS8AA5OHtJNY";
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
