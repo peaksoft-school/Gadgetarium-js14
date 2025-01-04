@@ -55,6 +55,7 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
           borderRadius: "4px",
           border: "1px solid #e313bf",
           backgroundColor: "#cb11ab",
+
           "&:hover": {
             color: "white",
             backgroundColor: "#cb11ab",

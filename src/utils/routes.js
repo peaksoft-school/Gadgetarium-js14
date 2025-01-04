@@ -21,7 +21,8 @@ export const ROUTES = {
     delivery: "user/delivery",
     faq: "user/faq",
     contacts: "user/contacts",
-    basket: 'user/basket',
+    basket: "user/basket",
+    compare: "user/compare",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };
