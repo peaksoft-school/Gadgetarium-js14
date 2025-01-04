@@ -23,7 +23,7 @@ export const postFavourites = createAsyncThunk(
   async ({ subProductId, addOrDelete }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post(
-        `/api/favourites/${subProductId}`
+        `/api/favourites/${subProductId}?addOrDelete=${addOrDelete}`
       );
       return data;
     } catch (error) {

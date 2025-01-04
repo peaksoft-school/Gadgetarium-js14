@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCompareCards } from "./compareThunk";
+import { getCompareCards, postFavourites } from "./compareThunk";
 
 const initialState = {
   error: false,
@@ -24,6 +24,20 @@ export const compareSlice = createSlice({
       })
 
       .addCase(getCompareCards.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(postFavourites.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+
+      .addCase(postFavourites.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+
+      .addCase(postFavourites.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

@@ -8,7 +8,11 @@ import {
   GroceryCart,
   DiscountClasIcon,
   SystemX,
+  redHeart,
 } from "../../assets/icon";
+import { useDispatch } from "react-redux";
+import { postFavourites } from "../../store/compare/compareThunk";
+import { useState } from "react";
 
 const Card = ({
   img,
@@ -23,8 +27,24 @@ const Card = ({
   discountClas,
   type = "default",
 }) => {
+  const [isFavourite, setIsFavourite] = useState(false);
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
+
+  const dispatch = useDispatch();
+
+  const subProductId = 1;
+  const handleToggleFavourite = () => {
+    const addOrDelete = !isFavourite;
+    dispatch(postFavourites({ subProductId, addOrDelete }))
+      .unwrap()
+      .then(() => {
+        setIsFavourite(addOrDelete);
+      })
+      .catch((error) => {
+        console.error("Ошибка добавления в избранное:", error);
+      });
+  };
 
   return (
     <StyledContainer>
@@ -32,7 +52,11 @@ const Card = ({
         {type === "default" ? (
           <StyledIcanConteiner>
             <img src={Component} alt="" />
-            <img src={greyHeart} alt="" />
+            <img
+              onClick={handleToggleFavourite}
+              src={isFavourite ? redHeart : greyHeart}
+              alt="Favourite Icon"
+            />
           </StyledIcanConteiner>
         ) : (
           <StyledIcanConteiner>
@@ -154,9 +178,8 @@ const StyledBoxProject = styled(Box)(({ type }) => ({
   display: "flex",
   flexDirection: type === "compare" ? "column" : "row",
   justifyContent: "space-between",
-  alignItems: type === "compare" ? "flex-start" : "center", // Настраиваем выравнивание для column
+  alignItems: type === "compare" ? "flex-start" : "center",
   gap: "8px",
- 
 }));
 
 const StyledCard = styled(Box)({
