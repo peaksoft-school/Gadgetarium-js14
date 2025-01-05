@@ -9,6 +9,7 @@ import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
 import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
+import Profail from "../pages/user/profail/Profail";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -18,7 +19,7 @@ const AppRouter = () => {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<UserLayout />}
+          component={<Profail />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}
