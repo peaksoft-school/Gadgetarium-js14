@@ -17,12 +17,14 @@ const Card = ({
   reiting,
   reviews,
   newPrice,
-  oldPrice,
   discountNew,
   discountClas,
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
+
+  const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+  console.log(discountPrice);
 
   return (
     <StyledContainer>
@@ -35,7 +37,7 @@ const Card = ({
         <BoxAicanContainer>
           {discount ? (
             <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
+              <ProtsetBox>-{discountPrice}%</ProtsetBox>
             </DiscountContainer>
           ) : null}
 
@@ -103,8 +105,8 @@ const Card = ({
 
           <StyledBoxProject>
             <Box>
-              <NewPrice>{newPrice}</NewPrice>
-              <OldPrice>{oldPrice}</OldPrice>
+              <NewPrice>{discount}</NewPrice>
+              <OldPrice>{newPrice}</OldPrice>
             </Box>
             <Button className="buttonrever" variant="contained">
               <img src={GroceryCart} alt="" />В корзину

@@ -98,7 +98,7 @@ const Header = () => {
   return (
     <>
       <FirstBox>
-        <StyledAdgetariumImg>
+        <StyledAdgetariumImg onClick={() => navigate("/")}>
           <img src={Gadgettarium} alt="iconG" />
         </StyledAdgetariumImg>
         <LinkBox>
@@ -182,7 +182,7 @@ const Header = () => {
       <SecondBox>
         <BoxCatalog>
           {showAdgetariumImg && (
-            <StyledAdgetariumImg>
+            <StyledAdgetariumImg onClick={() => navigate("/")}>
               <img src={Gadgettarium} alt="Gadgetarium" />
             </StyledAdgetariumImg>
           )}
@@ -347,6 +347,7 @@ const StyledTextField = styled(TextField)(() => ({
 const StyledAdgetariumImg = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
+  cursor: "pointer",
 
   "& img:first-of-type": {
     alignSelf: "start",
