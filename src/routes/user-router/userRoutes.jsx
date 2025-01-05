@@ -1,4 +1,5 @@
 import AboutStore from "../../components/AboutStore";
+import AccountFavouritesMain from "../../components/account-favourites/AccountFavouritesMain";
 import Contacts from "../../components/Contacts";
 import FaqPage from "../../components/FaqPage";
 import Delivery from "../../layout/delivery/Delivery";
@@ -13,4 +14,5 @@ export const userRoutes = [
   { path: ROUTES.USER.faq, element: <FaqPage /> },
   { path: ROUTES.USER.contacts, element: <Contacts /> },
   { path: ROUTES.USER.basket, element: <ItemsInCard /> },
+  { path: ROUTES.USER.accountFavourites, element: <AccountFavouritesMain /> },
 ];

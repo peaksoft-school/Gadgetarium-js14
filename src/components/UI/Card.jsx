@@ -20,6 +20,7 @@ const Card = ({
   oldPrice,
   discountNew,
   discountClas,
+  type = "default",
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
@@ -27,10 +28,12 @@ const Card = ({
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledIcanConteiner>
-          <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
-        </StyledIcanConteiner>
+        {type !== "viewed" && (
+          <StyledIcanConteiner>
+            <img src={Component} alt="" />
+            <img src={greyHeart} alt="" />
+          </StyledIcanConteiner>
+        )}
 
         <BoxAicanContainer>
           {discount ? (
@@ -67,7 +70,10 @@ const Card = ({
         </ImageContainer>
 
         <Box padding={2}>
-          <Availability>{`В наличии (${title})`}</Availability>
+          {type !== "viewed" && (
+            <Availability>{`В наличии (${title})`}</Availability>
+          )}
+
           <ProductName>{text}</ProductName>
 
           <RatingContainer>
@@ -106,9 +112,11 @@ const Card = ({
               <NewPrice>{newPrice}</NewPrice>
               <OldPrice>{oldPrice}</OldPrice>
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+            {type !== "viewed" && (
+              <Button className="buttonrever" variant="contained">
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>

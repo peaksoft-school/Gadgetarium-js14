@@ -5,5 +5,6 @@ export { default as HeadPhone } from "../image/HeadPhone.png";
 
 export { default as Map } from "../image/Map.png";
 export { default as PhoneImage } from "../image/Phone.png";
-export {default as IcanTovar} from '../image/IncanTovar.png'
-export {default as FotoCard} from '../image/FotoCard.svg'
+export { default as IcanTovar } from "../image/IncanTovar.png";
+export { default as FotoCard } from "../image/FotoCard.svg";
+export { default as AccountFavourites } from "../image/AccountFavourites.png";
