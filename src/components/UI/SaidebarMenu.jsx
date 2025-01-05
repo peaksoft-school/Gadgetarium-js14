@@ -25,67 +25,54 @@ const Arr = [
   {
     id: 1,
     name: "Смартфоны",
-    path: ROUTES.USER.smartPhone,
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    path: "user/catalog/1",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Telefon,
   },
 
   {
     id: 2,
-    name: "Ноутбуки и планшеты",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Планшет",
+    path: "user/catalog/2",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Monitor,
   },
   {
     id: 3,
-    name: "Смарт-часы и браслеты",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Ноутбук",
+    path: "user/catalog/3",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Vector,
   },
   {
     id: 4,
-    name: "Аксессуары",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Смарт Часы",
+    path: "user/catalog/4",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Headphones,
     icon: Strelca,
   },
@@ -157,7 +144,7 @@ const SidebarMenu = () => {
           </StyledLink>
         </Paper>
       )}
-
+      {/* 
       {Arr.map(({ id, name, title }) => (
         <Collapse
           key={id}
@@ -179,7 +166,7 @@ const SidebarMenu = () => {
             </List>
           </Paper>
         </Collapse>
-      ))}
+      ))} */}
     </Container>
   );
 };
@@ -188,6 +175,7 @@ export default SidebarMenu;
 
 const Container = styled(Box)(() => ({
   position: "relative",
+  zIndex: 10,
 
   "& .textButton": {
     color: "grey",

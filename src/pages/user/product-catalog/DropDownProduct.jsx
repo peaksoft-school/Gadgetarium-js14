@@ -10,6 +10,7 @@ import {
   MenuItem,
   TextField,
   Slider,
+  Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box, Grid, styled } from "@mui/system";
@@ -23,18 +24,20 @@ import {
 } from "../../../store/product-catalog/productCatalogThunk";
 import Card from "../../../components/UI/Card";
 import Button from "../../../components/UI/Button";
+import Loading from "../../../components/UI/Loading";
+import { useParams } from "react-router-dom";
 
 const colors = [
-  "Black",
-  "Blue",
-  "Gold",
-  "Graphite",
-  "Green",
-  "Rose Gold",
-  "Red",
-  "Silver",
-  "White",
-  "Purple",
+  "black",
+  "blue",
+  "gold",
+  "graphite",
+  "green",
+  "rose gold",
+  "red",
+  "silver",
+  "white",
+  "purple",
 ];
 
 const memoryOptions = [
@@ -52,7 +55,7 @@ const memoryOptions = [
 const ramOptions = ["3", "4", "6", "8", "12"];
 
 const initialState = {
-  selectedBrand: { id: 1 },
+  selectedBrand: null,
   price: [500, 250000],
   selectedColor: [],
   selectedMemory: [],
@@ -97,14 +100,17 @@ const reducer = (state, action) => {
 const DropDownProduct = () => {
   const dispatch = useDispatch();
   const [state, dispatchReducer] = useReducer(reducer, initialState);
-  const [selectedMenuValue, setSelectedMenuValue] = useState(null);
 
+  const { category } = useParams();
+
+  const [selectedMenuValue, setSelectedMenuValue] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [subMenuEl, setSubMenuEl] = useState(null);
 
-  const { categories, allCards, lastViews } = useSelector(
+  const { categories, allCards, lastViews, isLoading } = useSelector(
     (state) => state.productCatalog
   );
+
   const { brands } = categories;
 
   const handleRemoveBrand = () => {
@@ -114,39 +120,11 @@ const DropDownProduct = () => {
   const openMenu = Boolean(anchorEl);
   const openSubMenu = Boolean(subMenuEl);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const id = 1;
   useEffect(() => {
-    if (id) {
-      dispatch(getCategories(id));
+    if (category) {
+      dispatch(getCategories(category));
     }
-  }, [dispatch, id]);
-
-  console.log(state.price);
-
-  useEffect(() => {
-    const params = {
-      memory: state.selectedMemory,
-      colour: state.selectedColor,
-      RAM: state.selectedRAM,
-      price: state.price,
-      menuValue: selectedMenuValue,
-    };
-    console.log("параметры:", params);
-
-    dispatch(getFilter({ subCategoryId: state.selectedBrand?.id, params }));
-  }, [
-    state.selectedBrand,
-    state.selectedColor,
-    state.selectedMemory,
-    state.selectedRAM,
-    state.price,
-    selectedMenuValue,
-    dispatch,
-  ]);
+  }, [dispatch, category]);
 
   const handleCheckboxChange = (event, type, value) => {
     if (type === "color") {
@@ -162,9 +140,9 @@ const DropDownProduct = () => {
     dispatchReducer({ type: "SET_PRICE", payload: newValue });
   };
 
-  useEffect(() => {
-    dispatch(getAllCards(1));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAllCards(1));
+  // }, []);
 
   const [showMore, setShowMore] = useState(false);
   const [showmoreColours, setShowmoreColours] = useState(false);
@@ -189,7 +167,6 @@ const DropDownProduct = () => {
     dispatchReducer({ type: "RESET" });
   };
   const handleMenuClose = (value) => {
-    console.log("Вы выбрали:", value);
     setSelectedMenuValue(value);
     setAnchorEl(null);
     setSubMenuEl(null);
@@ -199,7 +176,6 @@ const DropDownProduct = () => {
     setSubMenuEl(event.currentTarget);
   };
   const handleSubMenuClose = (value) => {
-    console.log("Вы выбрали подменю:", value);
     setSelectedMenuValue(value);
     setSubMenuEl(null);
   };
@@ -243,6 +219,59 @@ const DropDownProduct = () => {
     },
   ];
 
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  };
+
+  const debouncedPrice = useDebounce(state.price, 500);
+
+  useEffect(() => {
+    dispatchReducer({ type: "SET_PRICE", payload: debouncedPrice });
+  }, [debouncedPrice]);
+
+  useEffect(() => {
+    const params = {
+      memory: state.selectedMemory,
+      colour: state.selectedColor,
+      RAM: state.selectedRAM,
+      price: state.price,
+      menuValue: selectedMenuValue,
+    };
+
+    if (state.selectedBrand) {
+      dispatch(
+        getFilter({
+          categoryId: category,
+          subCategoryId: state.selectedBrand?.id,
+          params,
+        })
+      );
+    } else {
+      dispatch(getAllCards({ categoryId: category, params }));
+    }
+  }, [
+    state.selectedBrand,
+    state.selectedColor,
+    state.selectedMemory,
+    state.selectedRAM,
+    debouncedPrice,
+    selectedMenuValue,
+    dispatch,
+    category,
+  ]);
+
   return (
     <>
       <Box>
@@ -265,7 +294,7 @@ const DropDownProduct = () => {
             spacing={1}
             sx={{ marginRight: "auto", gap: "10px", paddingLeft: "197px" }}
           >
-            <Grid item>
+            <Grid item sx={{ display: "flex", gap: "10px" }}>
               {state.selectedBrand ? (
                 <StyledSelectedBox>
                   {state.selectedBrand.name}{" "}
@@ -277,7 +306,7 @@ const DropDownProduct = () => {
                 </StyledSelectedBox>
               ) : null}
             </Grid>
-            <Grid item>
+            <Grid item sx={{ display: "flex", gap: "10px" }}>
               {state.selectedColor.length > 0 &&
                 state.selectedColor.map((color) => (
                   <StyledSelectedBox key={color}>
@@ -295,7 +324,7 @@ const DropDownProduct = () => {
                   </StyledSelectedBox>
                 ))}
             </Grid>
-            <Grid item>
+            <Grid item sx={{ display: "flex", gap: "10px" }}>
               {state.selectedMemory.length > 0 &&
                 state.selectedMemory.map((memory) => (
                   <StyledSelectedBox key={memory}>
@@ -313,7 +342,7 @@ const DropDownProduct = () => {
                   </StyledSelectedBox>
                 ))}
             </Grid>
-            <Grid item>
+            <Grid item sx={{ display: "flex", gap: "10px" }}>
               {state.selectedRAM.length > 0 &&
                 state.selectedRAM.map((ram) => (
                   <StyledSelectedBox key={ram}>
@@ -330,19 +359,7 @@ const DropDownProduct = () => {
             </Grid>
           </Grid>
           <Box>
-            <StyledIconButton
-              size="small"
-              onClick={handleMenuOpen}
-              sx={{
-                cursor: "pointer",
-                display: "inline-block",
-                borderRadius: "10px",
-              }}
-            >
-              <p>
-                Сортировать <img src={StateDown} alt="✖" />
-              </p>
-            </StyledIconButton>
+            {}
 
             <StyledMenu
               anchorEl={anchorEl}
@@ -387,7 +404,7 @@ const DropDownProduct = () => {
         </Box>
 
         <Box sx={{ display: "flex", gap: "35px" }}>
-          <Box sx={{ width: "300px" }}>
+          <Box>
             <Box
               sx={{
                 bgcolor: "#fff",
@@ -412,6 +429,7 @@ const DropDownProduct = () => {
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon style={{ color: "#c616a6" }} />}
+                sx={{ span: { padding: "0px" } }}
               >
                 <h4>Категория</h4>
               </AccordionSummary>
@@ -422,7 +440,7 @@ const DropDownProduct = () => {
                       key={brand.id}
                       control={
                         <Checkbox
-                          onChange={(event) =>
+                          onChange={() =>
                             dispatchReducer({
                               type: "SET_SELECTED_BRAND",
                               payload: brand,
@@ -440,6 +458,7 @@ const DropDownProduct = () => {
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon style={{ color: "#c616a6" }} />}
+                sx={{ span: { padding: "0px" } }}
               >
                 <h4>Стоимость</h4>
               </AccordionSummary>
@@ -470,7 +489,7 @@ const DropDownProduct = () => {
                   size="small"
                   value={state.price}
                   min={500}
-                  max={2500}
+                  max={250000}
                   onChange={handlePriceChange}
                   valueLabelDisplay="auto"
                   color="secondary"
@@ -481,6 +500,7 @@ const DropDownProduct = () => {
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon style={{ color: "#c616a6" }} />}
+                sx={{ span: { padding: "0px" } }}
               >
                 <h4> Цвет</h4>
               </AccordionSummary>
@@ -516,6 +536,7 @@ const DropDownProduct = () => {
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon style={{ color: "#c616a6" }} />}
+                sx={{ span: { padding: "0px" } }}
               >
                 <h4>Объем памяти (GB)</h4>
               </AccordionSummary>
@@ -550,6 +571,7 @@ const DropDownProduct = () => {
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon style={{ color: "#c616a6" }} />}
+                sx={{ span: { padding: "0px" } }}
               >
                 <h4>Объем оперативной памяти (GB)</h4>
               </AccordionSummary>
@@ -566,38 +588,52 @@ const DropDownProduct = () => {
             </Accordion>
           </Box>
 
-          <Box
-            sx={{
-              width: "80%",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-            }}
-          >
-            {allCards.productsResponses && allCards.productsResponses.length > 0
-              ? allCards.productsResponses.map((product) => (
-                  <Box key={product.sub_product_id} sx={{ width: "258px" }}>
-                    <Card
-                      img={product.image || "default_image_url"}
-                      text={product.fullname}
-                      discount={product.discount}
-                      title={product.quantity}
-                      reiting={product.rating}
-                      reviews={product.reviews_count}
-                      newPrice={product.new_price}
-                      oldPrice={product.price}
-                      discountNew={product.isNew}
-                      discountClas={product.isLiked}
-                      subProductId={product.sub_product_id}
-                      type="default"
-                    />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <Box sx={{ width: "80%" }}>
+              {allCards.productsResponses &&
+              allCards.productsResponses.length > 0 ? (
+                <>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "10px",
+                      justifyContent: "center",
+                      width: "80%",
+                    }}
+                  >
+                    {allCards.productsResponses.map((product) => (
+                      <Card
+                        key={product.sub_product_id}
+                        img={product.image || "default_image_url"}
+                        text={product.fullname}
+                        discount={product.discount}
+                        title={product.quantity}
+                        reiting={product.rating}
+                        reviews={product.reviews_count}
+                        newPrice={product.new_price}
+                        price={product.price}
+                        discountClas={product.isLiked}
+                        subProductId={product.sub_product_id}
+                        type="default"
+                      />
+                    ))}
                   </Box>
-                ))
-              : null}
-            <StyledButtonBox>
-              <Button>Показать ещё</Button>
-            </StyledButtonBox>
-          </Box>
+                </>
+              ) : (
+                <Typography variant="h6" sx={{ margin: "auto" }}>
+                  Нет товаров
+                </Typography>
+              )}
+              {allCards.productsResponses?.length > 0 && (
+                <StyledButtonBox>
+                  <Button>Показать ещё</Button>
+                </StyledButtonBox>
+              )}
+            </Box>
+          )}
         </Box>
         {elements && elements.length > 0 ? (
           <>
@@ -633,6 +669,10 @@ const StyledAccordionDetails = styled(AccordionDetails)(() => ({
     padding: 0,
   },
   "& .MuiTypography-root": {
+    padding: 0,
+  },
+
+  span: {
     padding: 0,
   },
 }));

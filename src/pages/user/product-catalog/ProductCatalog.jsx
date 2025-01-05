@@ -2,14 +2,37 @@ import React from "react";
 import { Box, styled } from "@mui/system";
 
 import DropDownProduct from "./DropDownProduct";
+import { useParams } from "react-router-dom";
 
 const ProductCatalog = () => {
+  const { category } = useParams();
+
   return (
     <WrapperMainBox>
       <FirstBox>
         <span>Главная »</span>
-        <span>Смартфоны</span>
-        <StyledH2>Смартфоны</StyledH2>
+        <span>
+          {category === "1"
+            ? "Смартфоны"
+            : category === "2"
+            ? "Планшеты"
+            : category === "3"
+            ? "Ноутбуки"
+            : category === "4"
+            ? "Смарт часы"
+            : ""}
+        </span>
+        <StyledH2>
+          {category === "1"
+            ? "Смартфоны"
+            : category === "2"
+            ? "Планшеты"
+            : category === "3"
+            ? "Ноутбуки"
+            : category === "4"
+            ? "Смарт часы"
+            : ""}
+        </StyledH2>
         <StyledHr />
         <DropDownProduct />
       </FirstBox>

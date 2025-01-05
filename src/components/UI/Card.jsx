@@ -24,28 +24,26 @@ const Card = ({
   reiting,
   reviews,
   newPrice,
-  oldPrice,
-  discountNew,
+  price,
   discountClas,
   subProductId,
   type = "default",
+  recommendet = false,
+  disPage = false,
 }) => {
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
   const dispatch = useDispatch();
-  const { favourit } = useSelector((state) => state.productCatalog);
-  const [isFavourit, setisFavourit] = useState(!!discountClas);
 
   const handleAddToFavourites = () => {
-    const addOrDelete = !isFavourit;
-    console.log("данные:", { subProductId, addOrDelete });
-    dispatch(postFavourites({ subProductId, addOrDelete }));
-    setisFavourit(addOrDelete);
+    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
   };
 
   const handlePostpostToBasket = () => {
     dispatch(postToBasket({ subProductId }));
   };
+
+  const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
 
   return (
     <StyledContainer>
@@ -54,7 +52,7 @@ const Card = ({
           <StyledIcanConteiner>
             <img src={Component} alt="compare" />
             <img
-              src={isFavourit ? redHeart : greyHeart}
+              src={discountClas ? redHeart : greyHeart}
               alt="like"
               onClick={handleAddToFavourites}
             />
@@ -64,17 +62,13 @@ const Card = ({
           <BoxAicanContainer>
             {discount ? (
               <DiscountContainer>
-                <ProtsetBox>-{discount}%</ProtsetBox>
+                <ProtsetBox>
+                  {disPage === true ? `-${discountPrice}%` : `-${discount}%`}
+                </ProtsetBox>
               </DiscountContainer>
             ) : null}
 
-            {discountNew ? (
-              <DiscountContainer>
-                <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-              </DiscountContainer>
-            ) : null}
-
-            {discountClas ? (
+            {recommendet ? (
               <DiscountContainer>
                 <img
                   className="scitca"
@@ -136,8 +130,8 @@ const Card = ({
 
           <StyledBoxProject>
             <Box>
-              <NewPrice>{newPrice}</NewPrice>
-              <OldPrice>{oldPrice}</OldPrice>
+              <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+              <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
             </Box>
 
             {type !== "viewed" && (
@@ -170,6 +164,7 @@ const StyledIcanConteiner = styled(Box)({
   padding: "5px",
   gap: "5px",
   zIndex: 1,
+  cursor: "pointer",
 });
 
 const DiscountContainer = styled(Box)({
@@ -243,9 +238,8 @@ const NewPrice = styled(Typography)({
 });
 const ProtsetBox = styled(Box)(() => ({
   borderRadius: "50%",
-  width: "40px",
-  height: "40px",
-  padding: "15px",
+  width: "50px",
+  height: "50px",
   backgroundColor: "#f43333",
   fontSize: "16px",
   fontWeight: "bold",

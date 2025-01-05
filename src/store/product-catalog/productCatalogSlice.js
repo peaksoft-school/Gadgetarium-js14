@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import getSubCategories, {
   getAllCards,
   getCategories,
+  getFilter,
   getLastViews,
   postFavourites,
   postToBasket,
@@ -9,7 +10,9 @@ import getSubCategories, {
 
 const initialState = {
   categories: [],
-  allCards: [],
+  allCards: {
+    productsResponses: [],
+  },
   subCategories: [],
   isLoading: false,
   error: null,
@@ -96,6 +99,20 @@ export const productCatalagSlice = createSlice({
       .addCase(postToBasket.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+
+      .addCase(getFilter.pending, (state) => {
+        (state.isLoading = true), (state.error = null);
+      })
+
+      .addCase(getFilter.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.allCards = action.payload;
+      })
+      .addCase(getFilter.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.allCards = [];
       });
   },
 });

@@ -55,6 +55,7 @@ const MainPage = () => {
                     title={quantity}
                     reiting={rating}
                     newPrice={price}
+                    disPage={true}
                   />
                 </Box>
               );
@@ -84,6 +85,7 @@ const MainPage = () => {
                     title={quantity}
                     reiting={rating}
                     newPrice={price}
+                    disPage={true}
                   />
                 </Box>
               );
@@ -113,6 +115,8 @@ const MainPage = () => {
                     title={quantity}
                     reiting={rating}
                     newPrice={price}
+                    recommendet={true}
+                    disPage={true}
                   />
                 </Box>
               );
