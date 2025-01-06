@@ -9,6 +9,10 @@ export const ROUTES = {
     addProduct: "/admin/add-product",
     addPrice: "/admin/add-price",
     aboutProducts: "/admin/about-products",
+    productTable: "/admin/:productId/product-table",
+    productInner: "/admin/:productId",
+    adminRewiv: "/admin/review-raiting",
+    adminDelivery: "/admin/delivery",
   },
   USER: {
     index: "/",
@@ -18,6 +22,8 @@ export const ROUTES = {
     faq: "user/faq",
     contacts: "user/contacts",
     favourit: "user/favourit",
+    productCatalog: "user/catalog/:category",
+    basket: "user/basket",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };

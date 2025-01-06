@@ -7,16 +7,24 @@ import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
 import { theChosenOneSlice } from "./theChosenOne/theChosenOneSlice";
+import productCatalagSlice from "./product-catalog/productCatalogSlice";
+import { itemsInCardSlaice } from "./intemsInCard/itemsInCardSlaice";
+import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
+    [productCatalagSlice.name]: productCatalagSlice.reducer,
     [adminCommentsSlice.name]: adminCommentsSlice.reducer,
     [categoriesSlice.name]: categoriesSlice.reducer,
     [productSlice.name]: productSlice.reducer,
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
-    [theChosenOneSlice.name]:theChosenOneSlice.reducer
+    [theChosenOneSlice.name]: theChosenOneSlice.reducer,
+    [itemsInCardSlaice.name]: itemsInCardSlaice.reducer,
+    [innerPageCardSlice.name]: innerPageCardSlice.reducer,
   },
 });
+
+export default store;

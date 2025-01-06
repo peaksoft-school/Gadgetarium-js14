@@ -6,23 +6,26 @@ import { Box } from "@mui/material";
 import { deleteX } from "../../../assets/icon";
 import Card from "../../../components/UI/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTheChosen, getTheChosen } from "../../../store/theChosenOne/theChosenOneAuthThunk";
+import {
+  deleteTheChosen,
+  getTheChosen,
+} from "../../../store/theChosenOne/theChosenOneAuthThunk";
+import noDataImg from "../../../assets/image/favorite-not-found.png";
 
 const TheChosenOne = () => {
   const { favourites, loading, error } = useSelector(
     (state) => state.theChosenOne
   );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTheChosen());
   }, [dispatch]);
 
-  const handlerDelete =()=>{
-    dispatch(deleteTheChosen())
-  }
-  
-
+  const handlerDelete = () => {
+    dispatch(deleteTheChosen());
+  };
 
   return (
     <StyledDiv>
@@ -30,54 +33,68 @@ const TheChosenOne = () => {
         <FirstBox>
           <span>Главная »</span>
           <span>Избранное</span>
-          <StyledH2>FAQ</StyledH2>
+          <StyledH2>Избранное</StyledH2>
           <StyledHr />
         </FirstBox>
 
         <StyledBoxCard>
+          {favourites.length ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                paddingRight: "55px",
+              }}
+            >
+              <img
+                src={deleteX}
+                alt="Удалить все"
+                onClick={handlerDelete}
+                style={{ cursor: "pointer" }}
+              />
+            </Box>
+          ) : null}
 
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            "& img": {
-              width: "23px",
-              filter:
-                "invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(0) contrast(100%)",
-            },
-            "& span": {
-                marginLeft: "8px",
-              fontSize: "14px",
-              color: "gray",
-            },
-        }}
-        onClick={()=>handlerDelete()} 
-        >
-          <img src={deleteX} alt="Очистить" />
-          <span>Очистить список товаров</span>
-        </Box>
-
-        {loading ? (
+          {loading ? (
             <p>Загрузка...</p>
-        ) : error ? (
+          ) : error ? (
             <p>Ошибка: {error}</p>
-        ) : (
+          ) : (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-            {favourites.map((item) => (
-                <Card
-                key={item.subProductId}
-                img={item.image}
-                text={item.productInfo}
-                newPrice={item.price}
-                reiting={item.rating}
-                title={item.quantity}
-                discount={item.discount}
-                />
-            ))}
-          </Box>
-        )}
+              {favourites.length ? (
+                favourites.map((item) => (
+                  <Card
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    price={item.price}
+                    img={item.img}
+                    discount={item.discount}
+                    newPrice={item.newPrice}
+                    disPage={true}
+                  />
+                ))
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    gap: "16px",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <img src={noDataImg} alt="Нет данных" width={400} />
+                  <p>В ИЗБРАННОМ ПОКА ПУСТО</p>
+                  <p style={{ width: "400px", paddingBottom: "40px" }}>
+                    Воспользуйтесь поиском или каталогом, выберите нужные товары
+                    и добавьте их в избранное!
+                  </p>
+                </div>
+              )}
+            </Box>
+          )}
         </StyledBoxCard>
       </WrapperMainBox>
     </StyledDiv>
@@ -86,9 +103,9 @@ const TheChosenOne = () => {
 
 export default TheChosenOne;
 
-const StyledBoxCard = styled(Box)(()=>({
-    paddingLeft:'55px'
-}))
+const StyledBoxCard = styled(Box)(() => ({
+  paddingLeft: "55px",
+}));
 
 const WrapperMainBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.lightGrey.light,
@@ -123,7 +140,4 @@ const StyledHr = styled("hr")(() => ({
 const StyledH2 = styled("h1")(() => ({
   fontFamily: "sans-serif",
 }));
-const StyledDiv = styled("div")(() => ({
-    paddingBottom: '40px',
-}));
-
+const StyledDiv = styled("div")(() => ({}));
