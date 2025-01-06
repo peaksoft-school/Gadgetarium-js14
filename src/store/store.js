@@ -8,6 +8,7 @@ import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
 import { itemsInCardSlaice } from "./intemsInCard/itemsInCardSlaice";
 import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
+import { orderHistorySlice } from "./account-order-history/orderHistorySlice";
 
 const store = configureStore({
   reducer: {
@@ -18,8 +19,9 @@ const store = configureStore({
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
-    [itemsInCardSlaice.name]:itemsInCardSlaice.reducer,
+    [itemsInCardSlaice.name]: itemsInCardSlaice.reducer,
     [innerPageCardSlice.name]: innerPageCardSlice.reducer,
+    [orderHistorySlice.name]: orderHistorySlice.reducer,
   },
 });
 
