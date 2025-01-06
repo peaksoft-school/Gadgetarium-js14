@@ -28,6 +28,11 @@ axiosInstance.interceptors.request.use(
     return updateConfig;
   },
   function (error) {
+    if (error.response) {
+      const status = error.response.status;
+    } else {
+      console.error("Ошибка сети или сервера");
+    }
     return Promise.reject(error);
   }
 );

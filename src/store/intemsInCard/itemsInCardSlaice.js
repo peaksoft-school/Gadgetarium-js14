@@ -85,12 +85,12 @@ export const itemsInCardSlaice = createSlice({
       .addCase(moveToFavoriteById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.error("Ошибка при перемещении в избранное:", action.payload);
       });
   },
 });
 
-export const { incrementQuantity, decrementQuantity, removeItem } = itemsInCardSlaice.actions;
+export const { incrementQuantity, decrementQuantity, removeItem } =
+  itemsInCardSlaice.actions;
 
 export const selectItemsCount = (state) =>
   state.basket.items.reduce((total, item) => total + item.quantity, 0);
