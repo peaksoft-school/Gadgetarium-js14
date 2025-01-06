@@ -17,12 +17,11 @@ export const getLastViews = createAsyncThunk(
 
 export const getProducts = createAsyncThunk(
   "innerGetProducts",
-  async ({ productId, colour }, { rejectWithValue }) => {
+  async ({ productId }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get("/api/user/products/get-by-id", {
         params: {
           productId,
-          colour,
         },
       });
 

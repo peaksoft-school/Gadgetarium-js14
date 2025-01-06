@@ -15,6 +15,7 @@ import {
   postFavourites,
   postToBasket,
 } from "../../store/product-catalog/productCatalogThunk";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   img,
@@ -32,6 +33,7 @@ const Card = ({
   disPage = false,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isFavourite, setIsFavourite] = useState(false);
 
   const fullStars = Math.floor(reiting);
@@ -46,6 +48,10 @@ const Card = ({
   };
 
   const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+
+  const handleNavigate = () => {
+    navigate(`/user/product/${subProductId}`);
+  };
 
   return (
     <StyledContainer>
@@ -97,7 +103,7 @@ const Card = ({
             <Availability>{`В наличии (${title})`}</Availability>
           )}
 
-          <ProductName>{text}</ProductName>
+          <ProductName onClick={handleNavigate}>{text}</ProductName>
 
           <RatingContainer>
             <Typography
@@ -226,6 +232,10 @@ const ProductName = styled(Typography)({
   fontWeight: "bold",
   fontSize: "16px",
   marginBottom: "8px",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const RatingContainer = styled(Box)({

@@ -20,6 +20,7 @@ import {
   Right,
 } from "../../assets/icon";
 import Loading from "../UI/Loading";
+import { useParams } from "react-router-dom";
 
 // const products = {
 //   name: "Samsung Galaxy S23",
@@ -41,14 +42,16 @@ import Loading from "../UI/Loading";
 // };
 
 const ProductCardDescription = () => {
-  const [count, setCount] = useState(1);
-  const [isFavourite, setIsFavourite] = useState(false);
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
   const { lastViews, products, isLoading } = useSelector(
     (state) => state.cardofProduct
   );
+
+  const { productId } = useParams();
+
+  const [count, setCount] = useState(1);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleLeftClick = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -69,14 +72,13 @@ const ProductCardDescription = () => {
   const { elements } = lastViews;
   console.log("LAST", elements);
 
-  const CardId = 1;
   const colour = "blue";
   useEffect(() => {
-    dispatch(getProducts({ productId: CardId, colour }));
+    dispatch(getProducts({ productId: productId }));
   }, []);
 
   const handleClick = () => {
-    dispatch(postToFavorites(CardId));
+    dispatch(postToFavorites(productId));
     setIsFavourite(!isFavourite);
   };
 
@@ -95,7 +97,7 @@ const ProductCardDescription = () => {
           <span>{products.name}</span>
         </FirstBox>
         <StyledH2>
-          <img src={products.logo} alt={products.name} />
+          <img src={products.logo} alt={products.name} width="80" />
         </StyledH2>
         <StyledHr />
         <StyledFlex>
