@@ -27,6 +27,8 @@ export const getAllCards = createAsyncThunk(
         });
       }
 
+      if (params.pageSize) queryString.append("pageSize", params.pageSize);
+
       const { data } = await axiosInstance.get(`/api/catalog/${categoryId}`, {
         params: queryString,
       });
@@ -96,6 +98,8 @@ export const getFilter = createAsyncThunk(
           queryString.append("createDate", date);
         });
       }
+
+      if (params.pageSize) queryString.append("pageSize", params.pageSize);
 
       const { data } = await axiosInstance.get(
         `/api/catalog/${categoryId}/${subCategoryId}`,

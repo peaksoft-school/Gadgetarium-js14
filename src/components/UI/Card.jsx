@@ -31,9 +31,11 @@ const Card = ({
   recommendet = false,
   disPage = false,
 }) => {
+  const dispatch = useDispatch();
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
-  const dispatch = useDispatch();
 
   const handleAddToFavourites = () => {
     dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
@@ -130,8 +132,16 @@ const Card = ({
 
           <StyledBoxProject>
             <Box>
-              <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
-              <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+              {discount === 0 ? (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                </>
+              ) : (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                  <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+                </>
+              )}
             </Box>
 
             {type !== "viewed" && (
@@ -156,6 +166,7 @@ const StyledContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   gap: "16px",
+  width: "280px",
 });
 
 const StyledIcanConteiner = styled(Box)({

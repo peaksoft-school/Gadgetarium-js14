@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/auth/authSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/routes";
+import LogOut from "./LogOut";
 
 const links = [
   { id: 2, text: "Главная", path: ROUTES.USER.index },
@@ -61,6 +62,7 @@ const Header = () => {
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const toggleSignInModal = () => {
     setOpenSignIn((prev) => !prev);
@@ -95,6 +97,11 @@ const Header = () => {
     };
   }, []);
 
+  const toggleLogout = () => {
+    setLogout((prev) => !prev);
+    handleClose();
+  };
+
   return (
     <>
       <FirstBox>
@@ -113,7 +120,7 @@ const Header = () => {
           ))}
         </LinkBox>
         <StyledPersonBox>
-          <span> +996 220-30-20-01</span>
+          {userData.isAuth && <span>{userData.name}</span>}
           <Tooltip
             title="Профиль"
             PopperProps={{
@@ -165,14 +172,7 @@ const Header = () => {
                     <p>Профиль</p>
                   </StyledMenuItem>,
                   <StyledMenuItem key="logout">
-                    <p
-                      onClick={() => {
-                        dispatch(logout());
-                        handleClose();
-                      }}
-                    >
-                      Выйти
-                    </p>
+                    <p onClick={toggleLogout}>Выйти</p>
                   </StyledMenuItem>,
                 ]}
           </StyledMenu>
@@ -232,13 +232,19 @@ const Header = () => {
             <img src={IconWhatsApp} alt="whatsapp" />
           </StyledImg>
         )}
-        <StyledImgBox>
-          <img src={IconShoppingCard} alt="" />
-          <IconButton onClick={() => navigate("/user/basket")}>
-            <img src={IconBasket} alt="like" />
-          </IconButton>
-          <img src={IconLike} alt="like" />
-        </StyledImgBox>
+        {userData.isAuth && (
+          <StyledImgBox>
+            <img src={IconShoppingCard} alt="" />
+            <IconButton onClick={() => navigate("/user/basket")}>
+              <img src={IconBasket} alt="like" />
+            </IconButton>
+            <img
+              src={IconLike}
+              alt="like"
+              onClick={() => navigate("/user/favourit")}
+            />
+          </StyledImgBox>
+        )}
       </SecondBox>
 
       <SignIn
@@ -251,6 +257,8 @@ const Header = () => {
         onClose={toggleSignUpModal}
         openSignIn={toggleSignInModal}
       />
+
+      <LogOut open={logout} onClose={toggleLogout} />
     </>
   );
 };

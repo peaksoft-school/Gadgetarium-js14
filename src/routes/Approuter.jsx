@@ -21,7 +21,7 @@ const AppRouter = () => {
           isAuth={userData.role === "USER" ? userData.isAuth : !userData.isAuth}
         />
       ),
-      children: [...userRoutes],
+      children: userRoutes,
     },
 
     {
