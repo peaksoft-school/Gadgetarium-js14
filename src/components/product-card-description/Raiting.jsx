@@ -15,7 +15,7 @@ import StarHalfIcon from "@mui/icons-material/StarHalf";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { signInRequest } from "../../store/auth/authThank";
+import { signInRequest } from "../../store/auth/authThunk";
 import { useForm } from "react-hook-form";
 import Input from "../UI/Input";
 import { SystemX } from "../../assets/icon";
