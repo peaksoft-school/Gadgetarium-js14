@@ -47,15 +47,17 @@ const MainPage = () => {
               const { image, productInfo, discount, price, quantity, rating } =
                 recommend;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    disPage={true}
+                  />
+                </Box>
               );
             })}
           </StyledBox>
@@ -74,15 +76,18 @@ const MainPage = () => {
               const { image, productInfo, discount, price, quantity, rating } =
                 item;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    key={index}
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    disPage={true}
+                  />
+                </Box>
               );
             })}
           </StyledBox>
@@ -101,15 +106,19 @@ const MainPage = () => {
               const { image, productInfo, discount, price, quantity, rating } =
                 recommend;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    key={index}
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    recommendet={true}
+                    disPage={true}
+                  />
+                </Box>
               );
             })}
           </StyledBox>

@@ -97,7 +97,7 @@ const WrapperBox = styled(Box)(({ theme }) => ({
   backgroundColor: "#f4f4f4",
 }));
 
-const FirstBox = styled(Box)(() => ({
+const FirstBox = styled(Box)(({  }) => ({
   fontSize: "15px",
   "& span": {
     display: "inline-block",

@@ -23,6 +23,8 @@ export const ROUTES = {
     contacts: "user/contacts",
     basket: "user/basket",
     orderHistory: "user/account-order-history",
+    productCatalog: "user/catalog/:category",
+    basket: "user/basket",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };

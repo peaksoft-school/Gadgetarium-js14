@@ -6,6 +6,7 @@ import { productSlice } from "./admin-addproduct/productsSlice";
 import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
+import productCatalagSlice from "./product-catalog/productCatalogSlice";
 import { itemsInCardSlaice } from "./intemsInCard/itemsInCardSlaice";
 import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
 import { orderHistorySlice } from "./account-order-history/orderHistorySlice";
@@ -13,6 +14,7 @@ import { orderHistorySlice } from "./account-order-history/orderHistorySlice";
 const store = configureStore({
   reducer: {
     [authSlice.name]: authSlice.reducer,
+    [productCatalagSlice.name]: productCatalagSlice.reducer,
     [adminCommentsSlice.name]: adminCommentsSlice.reducer,
     [categoriesSlice.name]: categoriesSlice.reducer,
     [productSlice.name]: productSlice.reducer,
