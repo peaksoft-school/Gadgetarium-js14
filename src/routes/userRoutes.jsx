@@ -7,6 +7,7 @@ import ProductCatalog from "../pages/user/product-catalog/ProductCatalog";
 import AboutStore from "../components/AboutStore";
 import TheChosenOne from "../layout/user/theCoseONe/TheChosenOne";
 import ItemsInCard from "../pages/user/ItemsInCard";
+import ProductCardDescription from "../components/product-card-description/ProductCardDescription";
 
 export const userRoutes = [
   { path: ROUTES.USER.index, element: <MainPage /> },
@@ -17,4 +18,5 @@ export const userRoutes = [
   { path: ROUTES.USER.productCatalog, element: <ProductCatalog /> },
   { path: ROUTES.USER.favourit, element: <TheChosenOne /> },
   { path: ROUTES.USER.basket, element: <ItemsInCard /> },
+  { path: ROUTES.USER.productCard, element: <ProductCardDescription /> },
 ];

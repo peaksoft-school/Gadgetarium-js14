@@ -6,6 +6,7 @@ import { productSlice } from "./admin-addproduct/productsSlice";
 import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
+import cardofProductDescriptionSlice from "./cardof-product-description/cardofProductDescriptionSlice";
 import { theChosenOneSlice } from "./theChosenOne/theChosenOneSlice";
 import productCatalagSlice from "./product-catalog/productCatalogSlice";
 import { itemsInCardSlaice } from "./intemsInCard/itemsInCardSlaice";
@@ -21,6 +22,8 @@ const store = configureStore({
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
+    [cardofProductDescriptionSlice.name]: cardofProductDescriptionSlice.reducer,
+    [itemsInCardSlaice.name]: itemsInCardSlaice.reducer,
     [theChosenOneSlice.name]: theChosenOneSlice.reducer,
     [itemsInCardSlaice.name]: itemsInCardSlaice.reducer,
     [innerPageCardSlice.name]: innerPageCardSlice.reducer,
