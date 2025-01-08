@@ -141,37 +141,36 @@ const CompareMainPage = () => {
               </div>
             </StyledBox>
           </Box>
-          <Box
-            sx={{
-              paddingLeft: "369px",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "15px",
-            }}
-          >
-            {cardDataArray && cardDataArray.length > 0 ? (
-              cardDataArray.map((card, index) => (
-                <Box sx={{ width: "200px" }}>
+          <Box sx={{ overflowX: "auto" }}>
+            <Box
+              sx={{
+                paddingLeft: "320px",
+                display: "flex",
+                gap: "20px",
+              }}
+            >
+              {cardDataArray && cardDataArray.length > 0 ? (
+                cardDataArray.map((card, index) => (
                   <Card key={index} {...card} type="compare" />
-                </Box>
-              ))
-            ) : (
-              <p>No data available</p>
-            )}
-          </Box>
-          <Box sx={{ padding: "40px 0px 40px 60px" }}>
-            <StyledTable>
-              <tbody>
-                {Object.keys(data).map((rowName, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>{rowName}</td>
-                    {data[rowName].map((value, colIndex) => (
-                      <td key={colIndex}>{value}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </StyledTable>
+                ))
+              ) : (
+                <p>No data available</p>
+              )}
+            </Box>
+            <Box sx={{ padding: "40px 0px 40px 60px" }}>
+              <StyledTable>
+                <tbody>
+                  {Object.keys(data).map((rowName, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>{rowName}</td>
+                      {data[rowName].map((value, colIndex) => (
+                        <td key={colIndex}>{value}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </StyledTable>
+            </Box>
           </Box>
           <WrapperBox />
         </>

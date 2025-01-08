@@ -9,8 +9,7 @@ import {
   DiscountClasIcon,
   redHeart,
 } from "../../assets/icon";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   postFavourites,
   postToBasket,
@@ -34,7 +33,6 @@ const Card = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isFavourite, setIsFavourite] = useState(false);
 
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
@@ -44,7 +42,7 @@ const Card = ({
   };
 
   const handlePostpostToBasket = () => {
-    dispatch(postToBasket({ subProductId }));
+    dispatch(postToBasket({ subProductId, quantity: 1 }));
   };
 
   const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
