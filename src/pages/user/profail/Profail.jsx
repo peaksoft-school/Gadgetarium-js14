@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { IconButton, InputAdornment, Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   updateProfile,
   resetPassword,
@@ -13,6 +15,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import Input from "../../../components/UI/Input";
+import { Label } from "@mui/icons-material";
+import { padding, width } from "@mui/system";
+import { DefaultP, eyes, greyHeart } from "../../../assets/icon";
 
 const schema = yup.object().shape({
   name: yup.string().required("Имя обязательно"),
@@ -40,6 +45,11 @@ const passwordSchema = yup.object().shape({
 const Profail = () => {
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const { loading, profileData } = useSelector((state) => state.profile);
+  const [showPassword, setShowPassword] = useState(false);
+  const [shoProtocol, setShoProtocol] = useState(false);
+  const [showerer,setShowerer]=useState(false)
+
+
   const { link } = profileData || {};
 
   const {
@@ -62,6 +72,10 @@ const Profail = () => {
 
   const handlePasswordChangeClick = () => {
     setShowPasswordChange((prev) => !prev);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const onSubmitPassword = (data) => {
@@ -100,8 +114,7 @@ const Profail = () => {
   };
 
   return (
-    <div>
-      <Header />
+    <div style={{ backgroundColor: "#f4f4f4" }}>
       <WrapperMainBox>
         <FirstBox>
           <span>Личный кабинет »</span>
@@ -123,7 +136,7 @@ const Profail = () => {
               <input
                 id="upload-image"
                 type="file"
-                accept="image/*"
+                accept=".jpg, .png, .jpeg"
                 onChange={(e) => {
                   const file = e.target.files[0];
                   if (file) {
@@ -141,13 +154,31 @@ const Profail = () => {
             <Form onSubmit={handleSubmit(onSubmitProfile)}>
               <SectionTitle>Личные данные</SectionTitle>
               <FormRow>
-                <Input
+                <StyledInputbox
+                  label={
+                    <StyledLabel>
+                      <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                        Имя
+                      </p>
+                      {errors.name && <span style={{ color: "red" }}>*</span>}
+                    </StyledLabel>
+                  }
                   {...register("name")}
                   placeholder="Напишите ваше имя"
                   error={!!errors.name}
                   helperText={errors.name ? errors.name.message : ""}
                 />
-                <Input
+                <StyledInputbox
+                  label={
+                    <StyledLabel>
+                      <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                        Фамилия
+                      </p>
+                      {errors.surename && (
+                        <span style={{ color: "red" }}>*</span>
+                      )}
+                    </StyledLabel>
+                  }
                   {...register("surename")}
                   placeholder="Напишите вашу фамилию"
                   error={!!errors.surename}
@@ -155,80 +186,199 @@ const Profail = () => {
                 />
               </FormRow>
               <FormRow>
-                <Input
+                <StyledInputbox
+                  label={
+                    <StyledLabel>
+                      <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                        E-mail
+                      </p>
+                      {errors.email && <span style={{ color: "red" }}>*</span>}
+                    </StyledLabel>
+                  }
                   {...register("email")}
                   placeholder="Напишите email"
                   error={!!errors.email}
                   helperText={errors.email ? errors.email.message : ""}
                 />
-                <Input
+                <StyledInputbox
+                  label={
+                    <StyledLabel>
+                      <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                        Телефон
+                      </p>
+                      {errors.phone && <span style={{ color: "red" }}>*</span>}
+                    </StyledLabel>
+                  }
                   {...register("phone")}
                   placeholder="+996 (___) __ __ __"
                   error={!!errors.phone}
                   helperText={errors.phone ? errors.phone.message : ""}
                 />
               </FormRow>
-              <Input
+              <StyledInputbox
+                style={{
+                  width: "700px",
+                }}
+                label={
+                  <StyledLabel>
+                    <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                      Адрес доставки
+                    </p>
+                    {errors.adress && <span style={{ color: "red" }}>*</span>}
+                  </StyledLabel>
+                }
                 {...register("adress")}
                 placeholder="Адрес"
                 error={!!errors.adress}
+                helperText={errors.adress ? errors.adress.message : ""}
               />
 
-              <ActionButtons>
+              <Box sx={{ display: "flex", justifyContent: "end" }}>
                 <p
                   onClick={handlePasswordChangeClick}
-                  style={{ cursor: "pointer", color: "blue" }}
+                  style={{
+                    cursor: "pointer",
+                    color: "#cb11ab",
+                    fontWeight: "bold",
+                  }}
                 >
-                  сменить пороль
+                  Cменить пороль
                 </p>
-                <button type="button">Назад</button>
-                <StyledButtonRed type="submit">Сохранить</StyledButtonRed>
-              </ActionButtons>
+              </Box>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "40px",
+                  justifyContent: "center",
+                }}
+              >
+                <StyledButtonStond primary>Назад</StyledButtonStond>
+                <StyledButton primary>Редактировать</StyledButton>
+              </div>
             </Form>
 
             {showPasswordChange && (
               <PasswordChangeForm>
                 <Form onSubmit={handlePasswordSubmit(onSubmitPassword)}>
-                  <Input
+                  <StyledInputProfail
+                    label={
+                      <StyledLabel>
+                        <p
+                          style={{ fontSize: "16px", fontFamily: "sans-serif" }}
+                        >
+                          Старый пароль
+                        </p>
+                        {errors.oldPassword && (
+                          <span style={{ color: "red" }}>*</span>
+                        )}
+                      </StyledLabel>
+                    }
                     {...registerPassword("oldPassword")}
                     placeholder="Старый пароль"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
+
                     error={!!passwordErrors.oldPassword}
                     helperText={passwordErrors.oldPassword?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
-                  <Input
+
+                  <StyledInputProfail
+                    label={
+                      <StyledLabel>
+                        <p
+                          style={{ fontSize: "16px", fontFamily: "sans-serif" }}
+                        >
+                          Новый пароль
+                        </p>
+                        {errors.newPassword && (
+                          <span style={{ color: "red" }}>*</span>
+                        )}
+                      </StyledLabel>
+                    }
                     {...registerPassword("newPassword")}
                     placeholder="Новый пароль"
                     type="password"
                     error={!!passwordErrors.newPassword}
                     helperText={passwordErrors.newPassword?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShoProtocol(!shoProtocol)}>
+                            {shoProtocol ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
-                  <Input
+                  <StyledInputProfail
+                    label={
+                      <StyledLabel>
+                        <p
+                          style={{ fontSize: "16px", fontFamily: "sans-serif" }}
+                        >
+                          Подтвердите новый пароль
+                        </p>
+                        {errors.confirmPassword && (
+                          <span style={{ color: "red" }}>*</span>
+                        )}
+                      </StyledLabel>
+                    }
                     {...registerPassword("confirmPassword")}
                     placeholder="Подтвердите новый пароль"
                     type="password"
                     error={!!passwordErrors.confirmPassword}
                     helperText={passwordErrors.confirmPassword?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={() => setShowerer(!showerer)}>
+                            {showerer ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
-                  <StyledButtonRed type="submit">
-                    Сменить пароль
-                  </StyledButtonRed>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <StyledButtonStonddd type="submit">
+                      Сменить пароль
+                    </StyledButtonStonddd>
+                  </Box>
                 </Form>
               </PasswordChangeForm>
             )}
           </RightSection>
         </ContentWrapper>
       </WrapperMainBox>
-      <Footer />
     </div>
   );
 };
 
 export default Profail;
+const StyledLabel = styled("div")(() => ({
+  display: "flex",
+  gap: "3px",
+}));
 
 const WrapperMainBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.lightGrey.light,
+  backgroundColor: "#f4f4f4",
   width: "100%",
+}));
+
+const StyledInputProfail = styled(Input)(() => ({
+  width: "700px",
+  borderRadius: "6px",
+  // border: "1px solid #c2c2c2",
+  "& .MuiInputBase-input": {
+    padding: "15px",
+  },
 }));
 
 const FirstBox = styled(Box)`
@@ -246,6 +396,50 @@ const FirstBox = styled(Box)`
     margin-left: 6px;
   }
 `;
+
+const StyledButton = styled("button")(({ theme, primary }) => ({
+  width: "200px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  borderRadius: "5px",
+  cursor: "pointer",
+  border: `2px solid ${primary ? theme.palette.primary.main : "#d32f2f"}`,
+  backgroundColor: primary ? theme.palette.primary.main : "transparent",
+  color: primary ? "white" : "#d32f2f",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: primary ? theme.palette.primary.dark : "#ffe5e5",
+    color: primary ? "white" : "#d32f2f",
+  },
+}));
+
+const StyledButtonStond = styled("button")(() => ({
+  border: "3px solid #cb11ab",
+  backgroundColor: "white",
+  borderRadius: "5px",
+  width: "200px",
+  color: "#cb11ab",
+  fontWeight: "bold",
+}));
+const StyledButtonStonddd = styled("button")(() => ({
+  backgroundColor: "#cb11ab",
+  borderRadius: "5px",
+  width: "200px",
+  color: "white",
+  fontWeight: "bold",
+  padding: "10px 20px",
+  border: "none",
+}));
+
+const StyledInputbox = styled(Input)(() => ({
+  width: "340px",
+  borderRadius: "6px",
+  // border: "1px solid #c2c2c2",
+  "& .MuiInputBase-input": {
+    padding: "15px",
+  },
+}));
 
 const StyledHr = styled("hr")(() => ({
   width: "100%",
@@ -309,15 +503,6 @@ const ActionButtons = styled(Box)(() => ({
   display: "flex",
   justifyContent: "center",
   gap: "20px",
-}));
-
-const StyledButtonRed = styled("button")(() => ({
-  backgroundColor: "#d32f2f",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  cursor: "pointer",
-  borderRadius: "4px",
 }));
 
 const PasswordChangeForm = styled(Box)(() => ({
