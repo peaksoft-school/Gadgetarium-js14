@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
-import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
 import { adminRoutes } from "./admin-router/adminRoutes";
 import UserLayout from "../layout/user/UserLayout";
+import { userRoutes } from "./userRoutes";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);

@@ -7,12 +7,15 @@ import {
   greyHeart,
   GroceryCart,
   DiscountClasIcon,
-  SystemX,
   redHeart,
 } from "../../assets/icon";
-import { useDispatch } from "react-redux";
-import { postFavourites } from "../../store/compare/compareThunk";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postFavourites,
+  postToBasket,
+} from "../../store/product-catalog/productCatalogThunk";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   img,
@@ -22,77 +25,74 @@ const Card = ({
   reiting,
   reviews,
   newPrice,
-  oldPrice,
-  discountNew,
+  price,
   discountClas,
+  subProductId,
   type = "default",
+  recommendet = false,
+  disPage = false,
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isFavourite, setIsFavourite] = useState(false);
+
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
 
-  const dispatch = useDispatch();
+  const handleAddToFavourites = () => {
+    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+  };
 
-  const subProductId = 1;
-  const handleToggleFavourite = () => {
-    const addOrDelete = !isFavourite;
-    dispatch(postFavourites({ subProductId, addOrDelete }))
-      .unwrap()
-      .then(() => {
-        setIsFavourite(addOrDelete);
-      })
-      .catch((error) => {
-        console.error("Ошибка добавления в избранное:", error);
-      });
+  const handlePostpostToBasket = () => {
+    dispatch(postToBasket({ subProductId }));
+  };
+
+  const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+
+  const handleNavigate = () => {
+    navigate(`/user/product/${subProductId}`);
   };
 
   return (
     <StyledContainer>
       <StyledCard>
-        {type === "default" ? (
+        {type !== "viewed" && (
           <StyledIcanConteiner>
-            <img src={Component} alt="" />
+            <img src={Component} alt="compare" />
             <img
-              onClick={handleToggleFavourite}
-              src={isFavourite ? redHeart : greyHeart}
-              alt="Favourite Icon"
+              src={discountClas ? redHeart : greyHeart}
+              alt="like"
+              onClick={handleAddToFavourites}
             />
           </StyledIcanConteiner>
-        ) : (
-          <StyledIcanConteiner>
-            <img src={SystemX} alt="x" />
-          </StyledIcanConteiner>
         )}
+        {type !== "viewed" && (
+          <BoxAicanContainer>
+            {discount ? (
+              <DiscountContainer>
+                <ProtsetBox>
+                  {disPage === true ? `-${discountPrice}%` : `-${discount}%`}
+                </ProtsetBox>
+              </DiscountContainer>
+            ) : null}
 
-        <BoxAicanContainer>
-          {discount ? (
-            <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
-            </DiscountContainer>
-          ) : null}
-
-          {discountNew ? (
-            <DiscountContainer>
-              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-            </DiscountContainer>
-          ) : null}
-
-          {discountClas ? (
-            <DiscountContainer>
-              <img
-                className="scitca"
-                src={DiscountClasIcon}
-                alt="Icon Two"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  position: "relative",
-                  top: "-35px",
-                }}
-              />
-            </DiscountContainer>
-          ) : null}
-        </BoxAicanContainer>
+            {recommendet ? (
+              <DiscountContainer>
+                <img
+                  className="scitca"
+                  src={DiscountClasIcon}
+                  alt="Icon Two"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
+                    top: "-35px",
+                  }}
+                />
+              </DiscountContainer>
+            ) : null}
+          </BoxAicanContainer>
+        )}
 
         <ImageContainer>
           <img className="img" src={img} alt={text} />
@@ -102,7 +102,7 @@ const Card = ({
           {type !== "compare" && (
             <Availability>{`В наличии (${title})`}</Availability>
           )}
-          <ProductName>{text}</ProductName>{" "}
+          <ProductName onClick={handleNavigate}>{text}</ProductName>
           {type !== "compare" && (
             <RatingContainer>
               <Typography
@@ -139,12 +139,27 @@ const Card = ({
           )}
           <StyledBoxProject>
             <Box>
-              <NewPrice>{newPrice}</NewPrice>
-              <OldPrice>{oldPrice}</OldPrice>
+              {discount === 0 ? (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                </>
+              ) : (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                  <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+                </>
+              )}
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+
+            {type !== "viewed" && (
+              <Button
+                className="buttonrever"
+                variant="contained"
+                onClick={handlePostpostToBasket}
+              >
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>
@@ -158,6 +173,7 @@ const StyledContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   gap: "16px",
+  width: "280px",
 });
 
 const StyledIcanConteiner = styled(Box)({
@@ -166,6 +182,7 @@ const StyledIcanConteiner = styled(Box)({
   padding: "5px",
   gap: "5px",
   zIndex: 1,
+  cursor: "pointer",
 });
 
 const DiscountContainer = styled(Box)({
@@ -182,14 +199,13 @@ const StyledBoxProject = styled(Box)(({ type }) => ({
   gap: "8px",
 }));
 
-const StyledCard = styled(Box)({
-  width: "280px",
+const StyledCard = styled(Box)(() => ({
   border: "1px solid #e0e0e0",
-  borderRadius: "12px",
+  borderRadius: "4px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#fff",
   position: "relative",
-});
+}));
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -218,6 +234,10 @@ const ProductName = styled(Typography)({
   fontWeight: "bold",
   fontSize: "16px",
   marginBottom: "8px",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const RatingContainer = styled(Box)({
@@ -241,9 +261,8 @@ const NewPrice = styled(Typography)({
 });
 const ProtsetBox = styled(Box)(() => ({
   borderRadius: "50%",
-  width: "40px",
-  height: "40px",
-  padding: "15px",
+  width: "50px",
+  height: "50px",
   backgroundColor: "#f43333",
   fontSize: "16px",
   fontWeight: "bold",

@@ -6,7 +6,7 @@ export const getProdates = createAsyncThunk(
   async ({ filter, from, before, keyWord, sortBy }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get("/api/admin/products", {
-        params: { status: filter, keyWord, from, before, sortBy },
+        params: { status: filter, keyWord, from, before, sortBy, pageSize: 10 },
       });
       return data;
     } catch (error) {
