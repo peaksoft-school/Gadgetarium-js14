@@ -93,7 +93,6 @@ export { default as Talog } from "../icon/Talog.svg";
 export { default as DeleteAicanRed } from "../icon/DeleteAicanRed.svg";
 export { default as IconColor } from "../icon/IconColor.svg";
 export { default as IconPDF } from "../icon/IconPDF.svg";
-
 export { default as Garbage } from "../icon/garbage.svg";
 export { default as EditLine } from "../icon/editLine.svg";
 export { default as ChangeAican } from "../icon/AicanChanig.svg";
@@ -103,3 +102,10 @@ export { default as DiscountClasIcon } from "../icon/DiscountClasIcon.svg";
 export { default as MasterCard } from "../icon/MasterCard.svg";
 export { default as VisaCard } from "../icon/VisaCard.svg";
 export { default as ElCard } from "../icon/ElCard.svg";
+export { default as PlayCircleIcon } from "../icon/PlayCircleIcon.svg";
+export { default as Minus } from "../icon/Minus.svg";
+export { default as PlusCircleIcon } from "../icon/PlusCircleIcon.svg";
+export { default as XMLID } from "../icon/XMLID.svg";
+export { default as PaymentByCard } from "../icon/PaymentByCard.svg";
+export { default as arrow2 } from "../icon/arrow2.svg";
+export { default as samsungphone } from "../icon/samsungphone.png";

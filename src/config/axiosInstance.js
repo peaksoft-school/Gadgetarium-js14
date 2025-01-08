@@ -4,8 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: `Bearer YOUR_SECRET_KEY`,
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
   },
 });
 
@@ -19,8 +18,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWRpbmFAZ21haWwuY29tIiwiaWF0IjoxNzM2MTQyMzgzLCJleHAiOjE3Mzc1ODIzODN9.eqdxKRfTuTKMvKg9C8NDoFk9ACMwDRwBWt7DbdpsAJg";
+    const token = store?.getState().auth.userData?.token;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,6 +27,11 @@ axiosInstance.interceptors.request.use(
     return updateConfig;
   },
   function (error) {
+    if (error.response) {
+      const status = error.response.status;
+    } else {
+      console.error("Ошибка сети или сервера");
+    }
     return Promise.reject(error);
   }
 );

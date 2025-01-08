@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Avatar, Box, Typography, Rating, Paper } from "@mui/material";
 import styled from "@emotion/styled";
+import { DeleteAicanRed, StateDown, StateUp } from "../../../assets/icon";
+import { useDispatch } from "react-redux";
+import { deleteComment } from "../../../store/slice/adminComents/adminCommentsAuth";
+import CommentsAdminInput from "./CommentsAdminInput";
 // import { DeleteAicanRed, garbage, StateDown, StateUp } from "../../../assets/icon";
 import Input from "../Input";
 import Button from "../Button";
@@ -9,11 +13,17 @@ const AdminReview = ({ reviews }) => {
   const [isExpandedAll, setIsExpandedAll] = useState(false);
   const [expandedComments, setExpandedComments] = useState({});
 
-  const toggleExpandAll = () => {
-    setIsExpandedAll(!isExpandedAll);
-    
+  const dispatch = useDispatch();
+
+  const handlerDelete = (id) => {
+    dispatch(deleteComment(id));
+  };
+
+  const toggleExpandAll = (id) => {
     const newExpandedComments = reviews.reduce((acc, review) => {
-      acc[review.id] = !isExpandedAll;
+      if (review.id === id) {
+        acc[review.id] = !isExpandedAll;
+      }
       return acc;
     }, {});
 
@@ -39,86 +49,73 @@ const AdminReview = ({ reviews }) => {
       </StyledHeader>
 
       {reviews.length > 0 ? (
-        reviews.map((review, index) => {
+        reviews.map((review, reviewId) => {
           const isExpanded = expandedComments[review.id] || isExpandedAll;
 
           return (
             <StyledRow key={review.id}>
-              <Typography>{index + 1}</Typography>
-              <Avatar src={review.productImage} alt="Product" />
+              <Typography>{reviewId + 1}</Typography>
+              <Avatar
+                src={review.productImg || review.images[0]}
+                alt="Product"
+              />
 
               <StyledProductInfo>
+                <Typography>{review.productItemNumber}</Typography>
                 <Typography>{review.productName}</Typography>
-                <StyledTextModel variant="caption">
-                  Модель
-                  <br />
-                  {review.model}
-                </StyledTextModel>
               </StyledProductInfo>
-
-              <StyledCommentBox>
-                <Box sx={{ display: "flex", width: "400px", flexWrap: "wrap", margin:'0', padding:'0' }}>
-                  <Typography>
-                    {isExpanded
-                      ? review.comment
-                      : review.comment.split(" ").slice(0, 11).join(" ")}{" "}
-                  </Typography>
-
-                  {review.comment.split(" ").length > 11 && (
-                    <Typography
-                      variant="body2"
-                      color="primary"
-                      onClick={() => toggleExpandComment(review.id)}
-                    >
-                      {isExpanded }
+              <Box style={{ display: "flex", gap: "70px" }}>
+                <StyledCommentBox>
+                  <Box sx={{ width: "400px" }}>
+                    <Typography>
+                      {isExpanded
+                        ? review.commentary
+                        : `${review.commentary
+                            .split(" ")
+                            .slice(0, 10)
+                            .join(" ")}...`}
                     </Typography>
-                  )}
-                </Box>
-
-                <Typography variant="caption">{review.date}</Typography>
-              </StyledCommentBox>
+                    {review.commentary.split(" ").length > 10 && (
+                      <Typography
+                        variant="body2"
+                        color="primary"
+                        onClick={() => toggleExpandComment(review.id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {isExpanded ? "Свернуть" : "Читать дальше"}
+                      </Typography>
+                    )}
+                  </Box>
+                  <Typography variant="caption">{review.answer}</Typography>
+                </StyledCommentBox>
+              </Box>
 
               <StyledBox>
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%",  gap:'125px'}}>
-                  <Rating value={review.rating} readOnly />
-
+                <Box sx={{ display: "flex", gap: "60px" }}>
+                  <Rating value={review.grade} readOnly />
                   <StyledUserInfo>
-                    <Avatar src={review.userAvatar} alt={review.user} />
+                    <Avatar src={review.userImg} alt={review.userName} />
                     <Box>
-                      <Typography>{review.user}</Typography>
-                      <Typography style={{ color: "#dbdddf" }} variant="caption">
+                      <Typography>{review.userName}</Typography>
+                      <Typography variant="caption" style={{ color: "#999" }}>
                         {review.userEmail}
                       </Typography>
                     </Box>
                     <StyledDeleteIcon
-                      // src={garbage}
-                      alt="Delete"
-                      // onMouseEnter={(e) => (e.currentTarget.src = DeleteAicanRed)}
-                      // onMouseLeave={(e) => (e.currentTarget.src = garbage)}
-                      onClick={() => console.log("Delete review:", review.id)}
+                      src={DeleteAicanRed}
+                      alt=""
+                      onClick={() => handlerDelete(review.id)}
                     />
-                    <Box onClick={toggleExpandAll} style={{ cursor: "pointer" }}>
-                      {/* <img src={isExpandedAll ? StateUp : StateDown} alt="Expand All" /> */}
-                    </Box>
+                    <img
+                      src={isExpandedAll ? StateUp : StateDown}
+                      alt="Expand All"
+                      onClick={() => toggleExpandAll(review.id)}
+                      style={{ cursor: "pointer", marginLeft: "10px" }}
+                    />
                   </StyledUserInfo>
                 </Box>
 
-                {isExpanded && (
-                  <CommentBox>
-                    <Typography variant="h6">Ответить на комментарий</Typography>
-                    <Input
-                      style={{ cursor: "pointer" }}
-                      placeholder="Введите ваш ответ..."
-                      multiline={true}
-                      rows={4}
-                    />
-                    <Box sx={{ marginLeft: "260px", width: "220px", marginTop: "10px" }}>
-                      <Button variant="contained" color="secondary">
-                        Отправить
-                      </Button>
-                    </Box>
-                  </CommentBox>
-                )}
+                {isExpanded && <CommentsAdminInput review={review} />}
               </StyledBox>
             </StyledRow>
           );
@@ -132,26 +129,22 @@ const AdminReview = ({ reviews }) => {
   );
 };
 
-// Стили
-const StyledBox = styled("div")(() => ({
-  gap: "50px",
-  
-}));
+export default AdminReview;
+
+const StyledBox = styled("div")(() => ({}));
 
 const StyledContainer = styled(Box)({
   width: "100%",
-  padding: "20px",
   borderRadius: "8px",
   boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
 });
 
 const StyledHeader = styled("div")({
   display: "grid",
-  gridTemplateColumns: "0.1fr 0.22fr 0.45fr 1.5fr 0.6fr 0.45fr",
+  gridTemplateColumns: "0.2fr 0.30fr 0.70fr 1.5fr 0.7fr 0.80fr",
   padding: "10px 20px",
   backgroundColor: "#f5f5f5",
   fontWeight: "bold",
-  borderBottom: "2px solid gray",
 });
 
 const StyledRow = styled("div")({
@@ -160,7 +153,7 @@ const StyledRow = styled("div")({
   padding: "15px 20px",
   borderBottom: "1px solid black",
   gap: "10px",
-  gridTemplateColumns: "28px  0.22fr 0.44fr 1.5fr 0.2fr",
+  gridTemplateColumns: "40px  0.50fr 0.60fr 0.80fr 0.40fr",
 });
 
 const StyledProductInfo = styled("div")({
@@ -179,24 +172,17 @@ const StyledUserInfo = styled("div")({
   gap: "10px",
 });
 
-const StyledTextModel = styled(Typography)(() => ({
-  color: "#909cb5",
-}));
-
 const StyledDeleteIcon = styled("img")({
   cursor: "pointer",
   width: "24px",
   height: "24px",
   marginLeft: "10px",
   transition: "filter 0.3s ease",
-});
+  filter:
+    "brightness(0) saturate(100%) invert(62%) sepia(7%) saturate(220%) hue-rotate(180deg) brightness(91%) contrast(88%)", // #91969e
 
-const CommentBox = styled(Box)(() => ({
-  mt: 1,
-  width: "480px",
-  "& Input": {
-    width: "100%",
+  "&:hover": {
+    filter:
+      "brightness(0) saturate(100%) invert(24%) sepia(84%) saturate(7496%) hue-rotate(358deg) brightness(102%) contrast(114%)", // red
   },
-}));
-
-export default AdminReview;
+});

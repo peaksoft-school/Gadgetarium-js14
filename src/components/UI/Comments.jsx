@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,65 +12,40 @@ import Button from "../UI/Button";
 import Rating from "@mui/material/Rating";
 
 import { Man } from "../../assets/icon";
-
-const initialState = [
-  {
-    id: 1,
-    img: Man,
-    rating: 0,
-    author: "Адиль Бакытов",
-    date: "20.06.22- 14:45",
-    text: "-Размер (разумный - достаточно большой для чтения/просмотра контента, но не чрезмерный  -Камера первое время режима мультикадр был приятно удивлён мегапикселей не пожалели на основную камеру,зум работает увереннее чем у конкурентов    -Экран приятно цветопередача, читать комфортно, повышенная герцовка в первые разы восхищала)",
-    adminReplied: "Благодарим Вас за отзыв, рады быть полезными...",
-  },
-  {
-    id: 2,
-    img: Man,
-    rating: 0,
-    author: "Jhon A",
-    date: "20.06.22- 7:32",
-    text: "-Размер (разумный - достаточно большой для чтения/просмотра контента, но не чрезмерный  -Камера первое время режима мультикадр был приятно удивлён мегапикселей не пожалели на основную камеру,зум работает увереннее чем у конкурентов    -Экран приятно цветопередача, читать комфортно, повышенная герцовка в первые разы восхищала)",
-    adminReplied: null,
-  },
-  {
-    id: 3,
-    img: Man,
-    rating: 0,
-    author: "Maria Victarevna",
-    date: "20.06.22- 20:35",
-    text: "-Размер (разумный - достаточно большой для чтения/просмотра контента, но не чрезмерный  -Камера первое время режима мультикадр был приятно удивлён мегапикселей не пожалели на основную камеру,зум работает увереннее чем у конкурентов    -Экран приятно цветопередача, читать комфортно, повышенная герцовка в первые разы восхищала)",
-    adminReplied: null,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getAllReviews } from "../../store/innerPageCardAmin/innerPageCardThunk";
 
 
 const CommentList = () => {
-  const [comments, setComments] = useState(initialState);
+  const dispatch = useDispatch();
+  const { reviewsData, reviewsLoading, reviewsError } = useSelector(
+    (state) => state.innerPageCard
+  );
+
+  useEffect(() => {
+    dispatch(getAllReviews({ id: 3 }));
+  }, [dispatch]);
+
   const [openModal, setOpenModal] = useState(false);
   const [currentComment, setCurrentComment] = useState(null);
   const [replyText, setReplyText] = useState("");
 
   const handleReply = (comment) => {
     setCurrentComment(comment);
-    setReplyText(comment.adminReplied || "");
+    setReplyText(comment.answer || "");
     setOpenModal(true);
   };
 
-  const handleRatingChange = (id, newValue) => {
-    const updatedComments = comments.map((comment) =>
-      comment.id === id ? { ...comment, rating: newValue } : comment
-    );
-    setComments(updatedComments);
-  };
-
   const handleSave = () => {
-    const updatedComments = comments.map((comment) =>
-      comment.id === currentComment.id
-        ? { ...comment, adminReplied: replyText }
+    const updatedComments = reviewsData.map((comment) =>
+      comment.reviewsId === currentComment.reviewsId
+        ? { ...comment, answer: replyText }
         : comment
     );
-    setComments(updatedComments);
+
+
     setOpenModal(false);
+    setReplyText("");
   };
 
   const handleClose = () => {
@@ -80,30 +55,46 @@ const CommentList = () => {
 
   return (
     <MainBox>
-      {comments.length > 0 ? (
-        comments.map(
-          ({ id, author, text, img, date, adminReplied, rating }) => (
+      {reviewsLoading ? (
+        <Typography variant="h6" align="center">
+          Загружаем комментарии...
+        </Typography>
+      ) : reviewsError ? (
+        <Typography variant="h6" color="error" align="center">
+          Ошибка загрузки комментариев
+        </Typography>
+      ) : reviewsData.length > 0 ? (
+        reviewsData.map(
+          ({
+            reviewsId,
+            fullName,
+            commentary,
+            image,
+            createdAt,
+            answer,
+            grade,
+          }) => (
             <Card
-              key={id}
+              key={reviewsId}
               sx={{
                 marginBottom: "20px",
                 display: "flex",
               }}
             >
               <StyledTypography component="div">
-                <img src={img} alt="person" />
+                <img src={image || Man} alt="person" />
               </StyledTypography>
               <StyledCardContent>
-                <span> {author}</span>
+                <span>{fullName}</span>
 
                 <Typography color="textSecondary" sx={{ mb: 1.5 }}>
-                  {date}
+                  {createdAt || "Дата не указана"}
 
                   <RatingBox>
                     <span>Оценка</span>
                     <Rating
-                      name={`rating-${id}`}
-                      value={rating || 0}
+                      name={`rating-${reviewsId}`}
+                      value={grade || 0}
                       size="small"
                       readOnly
                       sx={{
@@ -114,30 +105,33 @@ const CommentList = () => {
                           color: "gold",
                         },
                       }}
-                      onChange={(event, newValue) =>
-                        handleRatingChange(id, newValue)
-                      }
                     />
                   </RatingBox>
                 </Typography>
                 <Typography variant="body1" sx={{ marginBottom: "15px" }}>
-                  {text}
+                  {commentary}
                 </Typography>
 
-                {adminReplied && (
+                {answer && (
                   <AdminBox>
                     <span style={{ fontWeight: "bold" }}>
                       Ответ от представителя:
                     </span>
-                    <Typography variant="body2">{adminReplied}</Typography>
+                    <Typography variant="body2">{answer}</Typography>
                   </AdminBox>
                 )}
                 <StyledButtonBox>
                   <Button
                     variant="text"
-                    onClick={() => handleReply({ id, text, adminReplied })}
+                    onClick={() =>
+                      handleReply({
+                        reviewsId,
+                        commentary,
+                        answer,
+                      })
+                    }
                   >
-                    {adminReplied ? "Редактировать" : "Ответить"}
+                    {answer ? "Редактировать" : "Ответить"}
                   </Button>
                 </StyledButtonBox>
               </StyledCardContent>
@@ -153,7 +147,7 @@ const CommentList = () => {
       <Modal open={openModal} onClose={handleClose}>
         <StyledModalBox>
           <Typography variant="h6" component="h2" sx={{ marginBottom: 4 }}>
-            {currentComment?.adminReplied
+            {currentComment?.answer
               ? "Редактировать комментарий"
               : "Ответ на комментарий"}
           </Typography>
@@ -167,15 +161,15 @@ const CommentList = () => {
             variant="outlined"
             sx={{ marginBottom: 2 }}
           />
-          <UpdateBottunBox>
+          <UpdateButtonBox>
             <Button onClick={handleClose} sx={{ marginRight: 1 }}>
               Отменить
             </Button>
 
             <Button onClick={handleSave} variant="contained" color="primary">
-              {currentComment?.adminReplied ? "Сохранить" : "Добавить"}
+              {currentComment?.answer ? "Сохранить" : "Добавить"}
             </Button>
-          </UpdateBottunBox>
+          </UpdateButtonBox>
         </StyledModalBox>
       </Modal>
     </MainBox>
@@ -183,6 +177,8 @@ const CommentList = () => {
 };
 
 export default CommentList;
+
+// Styled components
 
 const MainBox = styled(Box)(() => ({
   maxWidth: "750px",
@@ -209,18 +205,18 @@ const AdminBox = styled(Box)(({ theme }) => ({
   borderRadius: "8px",
   marginBottom: "15px",
 }));
+
 const StyledButtonBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "flex-end",
-  width: "150px",
-  marginLeft: "480px",
+  marginTop: "15px",
   "& .MuiButton-root": {
     border: "none",
     textTransform: "none",
   },
 }));
 
-const UpdateBottunBox = styled(Box)(() => ({
+const UpdateButtonBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "flex-end",
   paddingTop: "15px",

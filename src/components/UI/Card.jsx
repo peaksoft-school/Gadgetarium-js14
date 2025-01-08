@@ -7,7 +7,15 @@ import {
   greyHeart,
   GroceryCart,
   DiscountClasIcon,
+  redHeart,
 } from "../../assets/icon";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postFavourites,
+  postToBasket,
+} from "../../store/product-catalog/productCatalogThunk";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   img,
@@ -17,58 +25,85 @@ const Card = ({
   reiting,
   reviews,
   newPrice,
-  oldPrice,
-  discountNew,
+  price,
   discountClas,
+  subProductId,
+  type = "default",
+  recommendet = false,
+  disPage = false,
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
+
+  const handleAddToFavourites = () => {
+    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+  };
+
+  const handlePostpostToBasket = () => {
+    dispatch(postToBasket({ subProductId }));
+  };
+
+  const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+
+  const handleNavigate = () => {
+    navigate(`/user/product/${subProductId}`);
+  };
 
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledIcanConteiner>
-          <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
-        </StyledIcanConteiner>
+        {type !== "viewed" && (
+          <StyledIcanConteiner>
+            <img src={Component} alt="compare" />
+            <img
+              src={discountClas ? redHeart : greyHeart}
+              alt="like"
+              onClick={handleAddToFavourites}
+            />
+          </StyledIcanConteiner>
+        )}
+        {type !== "viewed" && (
+          <BoxAicanContainer>
+            {discount ? (
+              <DiscountContainer>
+                <ProtsetBox>
+                  {disPage === true ? `-${discountPrice}%` : `-${discount}%`}
+                </ProtsetBox>
+              </DiscountContainer>
+            ) : null}
 
-        <BoxAicanContainer>
-          {discount ? (
-            <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
-            </DiscountContainer>
-          ) : null}
-
-          {discountNew ? (
-            <DiscountContainer>
-              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-            </DiscountContainer>
-          ) : null}
-
-          {discountClas ? (
-            <DiscountContainer>
-              <img
-                className="scitca"
-                src={DiscountClasIcon}
-                alt="Icon Two"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  position: "relative",
-                  top: "-35px",
-                }}
-              />
-            </DiscountContainer>
-          ) : null}
-        </BoxAicanContainer>
+            {recommendet ? (
+              <DiscountContainer>
+                <img
+                  className="scitca"
+                  src={DiscountClasIcon}
+                  alt="Icon Two"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
+                    top: "-35px",
+                  }}
+                />
+              </DiscountContainer>
+            ) : null}
+          </BoxAicanContainer>
+        )}
 
         <ImageContainer>
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
-        <Box padding={2}>
-          <Availability>{`В наличии (${title})`}</Availability>
-          <ProductName>{text}</ProductName>
+        <Box padding={2} sx={{ cursor: "pointer" }}>
+          {type !== "viewed" && (
+            <Availability>{`В наличии (${title})`}</Availability>
+          )}
+
+          <ProductName onClick={handleNavigate}>{text}</ProductName>
 
           <RatingContainer>
             <Typography
@@ -103,12 +138,27 @@ const Card = ({
 
           <StyledBoxProject>
             <Box>
-              <NewPrice>{newPrice}</NewPrice>
-              <OldPrice>{oldPrice}</OldPrice>
+              {discount === 0 ? (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                </>
+              ) : (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                  <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+                </>
+              )}
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+
+            {type !== "viewed" && (
+              <Button
+                className="buttonrever"
+                variant="contained"
+                onClick={handlePostpostToBasket}
+              >
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>
@@ -122,6 +172,7 @@ const StyledContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   gap: "16px",
+  width: "280px",
 });
 
 const StyledIcanConteiner = styled(Box)({
@@ -130,6 +181,7 @@ const StyledIcanConteiner = styled(Box)({
   padding: "5px",
   gap: "5px",
   zIndex: 1,
+  cursor: "pointer",
 });
 
 const DiscountContainer = styled(Box)({
@@ -145,14 +197,13 @@ const StyledBoxProject = styled(Box)(() => ({
   gap: "8px",
 }));
 
-const StyledCard = styled(Box)({
-  width: "280px",
+const StyledCard = styled(Box)(() => ({
   border: "1px solid #e0e0e0",
-  borderRadius: "12px",
+  borderRadius: "4px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#fff",
   position: "relative",
-});
+}));
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -181,6 +232,10 @@ const ProductName = styled(Typography)({
   fontWeight: "bold",
   fontSize: "16px",
   marginBottom: "8px",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const RatingContainer = styled(Box)({
@@ -204,9 +259,8 @@ const NewPrice = styled(Typography)({
 });
 const ProtsetBox = styled(Box)(() => ({
   borderRadius: "50%",
-  width: "40px",
-  height: "40px",
-  padding: "15px",
+  width: "50px",
+  height: "50px",
   backgroundColor: "#f43333",
   fontSize: "16px",
   fontWeight: "bold",

@@ -10,8 +10,6 @@ const AddBannerModal = ({ open, onClose, onFileChange, onSave }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const { imageLink } = useSelector((state) => state.productAdmin);
 
-  console.log(selectedImages);
-
   const onDrop = useCallback((acceptedFiles) => {
     setSelectedImages((prevImages) => {
       const newImages = acceptedFiles

@@ -58,11 +58,7 @@ const NewsletterModal = ({ open, onClose, data }) => {
 
   useEffect(() => {
     if (selectedImage) {
-      dispatch(uploadFile(selectedImage))
-        .unwrap()
-        .then((value) => {
-          console.log(value, "FFFF");
-        });
+      dispatch(uploadFile(selectedImage));
     }
   }, [selectedImage, dispatch]);
 
@@ -79,11 +75,10 @@ const NewsletterModal = ({ open, onClose, data }) => {
     formData.append("dateOfStart", data.startDate);
     formData.append("dateOfFinish", data.endDate);
     const serverData = {
- 
       name: data.title,
       description: data.description,
       dateOfStart: data.startDate,
-      dateOfFinish: data.endDate
+      dateOfFinish: data.endDate,
     };
 
     if (selectedImage) {
@@ -93,13 +88,10 @@ const NewsletterModal = ({ open, onClose, data }) => {
           const imageLink = response.link;
 
           formData.append("image", imageLink);
-          serverData.image = response.link
+          serverData.image = response.link;
           dispatch(mailingModal(formData));
 
           reset();
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
         });
     } else {
       dispatch(mailingModal(formData));

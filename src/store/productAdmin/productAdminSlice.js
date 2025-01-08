@@ -25,7 +25,6 @@ export const productAdminSlice = createSlice({
   initialState,
   reducers: {
     getIds(state, { payload }) {
-      console.log("Payload received:", payload);
       state.ids = payload;
     },
     setKeyWord(state, { payload }) {
@@ -39,7 +38,6 @@ export const productAdminSlice = createSlice({
         state.error = null;
       })
       .addCase(getProdates.fulfilled, (state, { payload }) => {
-        console.log("Data received from getProdates:", payload);
         state.loading = false;
         state.products = payload.elements;
         state.foundProducts = payload.foundProducts;
@@ -47,7 +45,6 @@ export const productAdminSlice = createSlice({
         state.totalPages = payload.totalPages;
       })
       .addCase(getProdates.rejected, (state, action) => {
-        console.error("Error in getProdates:", action.error.payload);
         state.loading = false;
         state.error = action.error.payload;
       })
@@ -101,7 +98,6 @@ export const productAdminSlice = createSlice({
 
       .addCase(saveBanner.fulfilled, (state, { payload }) => {
         state.loading = false;
-        console.log("tuura emes", payload);
       })
       .addCase(saveBanner.rejected, (state, { error }) => {
         state.loading = false;
@@ -113,8 +109,6 @@ export const productAdminSlice = createSlice({
       })
       .addCase(mailingModal.fulfilled, (state, { payload }) => {
         state.loading = false;
-
-        console.log("Mailing modal response:", payload);
       })
       .addCase(mailingModal.rejected, (state, action) => {
         state.loading = false;

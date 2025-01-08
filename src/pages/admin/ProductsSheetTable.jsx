@@ -5,7 +5,6 @@ import Button from "../../components/UI/Button";
 import Infografics from "../../components/UI/Infografics";
 import ProductTable from "../../components/UI/table/ProductTable";
 import { useDispatch, useSelector } from "react-redux";
-import AdminHeader from "../../components/UI/AdminHeader";
 import {
   deleteProdates,
   getProdates,
@@ -20,10 +19,12 @@ import AddBannerModal from "../../components/UI/AddBannerModal";
 import { useDebounce } from "./useDebounce";
 import SortPopup from "./SortPopup";
 import DateRangePicker from "./DateRangePicker";
+import { useNavigate } from "react-router-dom";
 
 const ProductsSheetTable = () => {
   const dispatch = useDispatch();
   const { products, loading } = useSelector((state) => state.productAdmin);
+  const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -42,12 +43,6 @@ const ProductsSheetTable = () => {
   const debautsTaimer = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    if (debautsTaimer) {
-      console.log(debautsTaimer, "day");
-    }
-    if (before && from) {
-      console.log(`Поиск от ${before} до ${from}`);
-    }
     dispatch(
       getProdates({ filter, from, before, sortBy, keyWord: debautsTaimer })
     );
@@ -62,38 +57,28 @@ const ProductsSheetTable = () => {
   };
 
   const handleFilterChange = (newFilter) => {
-    console.log(filter);
-
     setFilter(newFilter);
   };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    console.log("Selected file:", selectedFile);
     setFile(selectedFile);
     // dispatch(uploadFile(file));
   };
 
   const handleSaveBanner = () => {
     if (file) {
-      console.log("Selected file:", file);
       const formData = new FormData();
       formData.append("bannerList", file);
 
       dispatch(saveBanner(formData));
 
       setFile(null);
-    } else {
-      console.error("No file selected.");
     }
   };
   useEffect(() => {
     if (file) {
-      dispatch(uploadFile(file))
-        .unwrap()
-        .then((value) => {
-          console.log(value, "FFF");
-        });
+      dispatch(uploadFile(file)).unwrap();
     }
   }, [dispatch, file]);
 
@@ -120,6 +105,10 @@ const ProductsSheetTable = () => {
 
   const toggleDiscountModal = () => setOpenModalScitca((prev) => !prev);
 
+  const navigateToDetail = (id) => {
+    navigate(`/admin/${id}`);
+  };
+
   const columns = [
     { Header: "ID", accessorFn: (_, index) => index + 1 },
     {
@@ -135,7 +124,15 @@ const ProductsSheetTable = () => {
       ),
     },
     { Header: "Артикул", accessor: "itemNumber" },
-    { Header: "Наименование товара", accessor: "name" },
+    {
+      Header: "Наименование товара",
+      accessor: "name",
+      Cell: ({ row }) => (
+        <StyledText onClick={() => navigateToDetail(row.original.subProductId)}>
+          {row.original.name}
+        </StyledText>
+      ),
+    },
     { Header: "Дата создания", accessor: "createdAt" },
     { Header: "Кол-во", accessor: "quantity" },
     {
@@ -175,9 +172,12 @@ const ProductsSheetTable = () => {
     page * rowsPerPage
   );
 
+  const navigateToAddProduct = () => {
+    navigate("/admin/add-product");
+  };
+
   return (
     <>
-      <AdminHeader />
       {loading && <Loading />}
       <Box sx={{ boxSizing: "border-box", margin: "0 auto" }}>
         <StyledContainer>
@@ -217,7 +217,9 @@ const ProductsSheetTable = () => {
               </StyledButtonGroup>
             </Box>
             <Box className="action-buttons">
-              <Button className="add-product">Добавить товар</Button>
+              <Button className="add-product" onClick={navigateToAddProduct}>
+                Добавить товар
+              </Button>
               <Box>
                 <Button className="add-product" onClick={toggleDiscountModal}>
                   Создать скидку
@@ -314,6 +316,14 @@ const ProductsSheetTable = () => {
 };
 
 export default ProductsSheetTable;
+
+const StyledText = styled("p")(() => ({
+  cursor: "pointer",
+
+  ":hover": {
+    textDecoration: "underline",
+  },
+}));
 
 const StyledBoxTable = styled(Box)(() => ({
   width: "1130px",
