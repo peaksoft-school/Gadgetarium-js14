@@ -18,8 +18,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBeWFrb0BnbWFpbC5jb20iLCJpYXQiOjE3MzU5OTg1MjYsImV4cCI6MTczNzQzODUyNn0.MYIQ3bg8T9203SY3LXyqctGpv_bzdQo12vyNJhLUFWU";
+    const token = store?.getState().auth.userData?.token;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
@@ -27,6 +27,11 @@ axiosInstance.interceptors.request.use(
     return updateConfig;
   },
   function (error) {
+    if (error.response) {
+      const status = error.response.status;
+    } else {
+      console.error("Ошибка сети или сервера");
+    }
     return Promise.reject(error);
   }
 );

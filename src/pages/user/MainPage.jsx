@@ -44,18 +44,28 @@ const MainPage = () => {
           <StyledH1>Акции</StyledH1>
           <StyledBox>
             {discountElements.map((recommend, index) => {
-              const { image, productInfo, discount, price, quantity, rating } =
-                recommend;
+              const {
+                image,
+                productInfo,
+                discount,
+                price,
+                quantity,
+                rating,
+                subProductId,
+              } = recommend;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    disPage={true}
+                    subProductId={subProductId}
+                  />
+                </Box>
               );
             })}
           </StyledBox>
@@ -71,18 +81,29 @@ const MainPage = () => {
           <StyledH1>Новинки</StyledH1>
           <StyledBox>
             {news.map((item, index) => {
-              const { image, productInfo, discount, price, quantity, rating } =
-                item;
+              const {
+                image,
+                productInfo,
+                discount,
+                price,
+                quantity,
+                rating,
+                subProductId,
+              } = item;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    key={index}
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    disPage={true}
+                    subProductId={subProductId}
+                  />
+                </Box>
               );
             })}
           </StyledBox>
@@ -98,18 +119,30 @@ const MainPage = () => {
           <StyledH1>Мы рекомендуем</StyledH1>
           <StyledBox>
             {elements.map((recommend, index) => {
-              const { image, productInfo, discount, price, quantity, rating } =
-                recommend;
+              const {
+                image,
+                productInfo,
+                discount,
+                price,
+                quantity,
+                rating,
+                subProductId,
+              } = recommend;
               return (
-                <Card
-                  key={index}
-                  img={image}
-                  text={productInfo}
-                  discount={discount}
-                  title={quantity}
-                  reiting={rating}
-                  newPrice={price}
-                />
+                <Box key={index} sx={{ width: "280px" }}>
+                  <Card
+                    key={index}
+                    img={image}
+                    text={productInfo}
+                    discount={discount}
+                    title={quantity}
+                    reiting={rating}
+                    newPrice={price}
+                    recommendet={true}
+                    disPage={true}
+                    subProductId={subProductId}
+                  />
+                </Box>
               );
             })}
           </StyledBox>

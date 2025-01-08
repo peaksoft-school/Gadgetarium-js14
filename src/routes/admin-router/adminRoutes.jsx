@@ -17,7 +17,7 @@ export const adminRoutes = [
   },
 
   {
-    path: ROUTES.ADMIN.productInner,
+    path: ROUTES.ADMIN.productsInner,
 
     element: <InnerPageCard />,
   },

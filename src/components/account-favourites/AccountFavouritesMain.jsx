@@ -22,7 +22,7 @@ const AccountFavouritesMain = () => {
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
-    if (button === "Избранное") {
+    if (button === "История") {
       dispatch(getAccountFavourites());
     }
   };
