@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const axiosInstance = axios.create({
@@ -19,7 +18,7 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const { token } = store.getState().auth.userData;
+    const token = store?.getState().auth.userData?.token;
 
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
