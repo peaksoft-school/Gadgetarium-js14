@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveProfileImage } from "./profailAuthThunk";
+import { resetPassword, updateProfile, updateProfileImage, uploadFileToAWS } from "./profailAuthThunk";
 
 const initialState = {
+  profileData: null,
   loading: false,
   error: null,
-  profileData: null, // Add this to store fetched profile data if needed
 };
 
 export const profileSlice = createSlice({
@@ -13,18 +13,55 @@ export const profileSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(saveProfileImage.pending, (state) => {
+      .addCase(uploadFileToAWS.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
-      .addCase(saveProfileImage.fulfilled, (state, action) => {
+      .addCase(uploadFileToAWS.fulfilled, (state, action) => {
         state.loading = false;
-        state.profileData = action.payload; // Update with the response data
+        state.profileData = action.payload;
       })
-      .addCase(saveProfileImage.rejected, (state, action) => {
+      .addCase(uploadFileToAWS.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Capture error details
-      });
+        state.error = action.payload;
+      })
+      .addCase(updateProfileImage.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProfileImage.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profileData = action.payload;
+      })
+      .addCase(updateProfileImage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+      
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profileData = action.payload
+        
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(resetPassword.fulfilled,(state,action)=>{
+        state.loading=false
+        state.profileData=action.payload
+      })
+      .addCase(resetPassword.pending,(state)=>{
+        state.loading=true
+      })
+      .addCase(resetPassword.rejected,(state,action)=>{
+        state.loading=false
+        state.profileData=action.payload
+      })
+
+      
   },
 });
 
+export default profileSlice.reducer;

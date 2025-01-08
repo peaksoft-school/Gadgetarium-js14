@@ -26,7 +26,6 @@ const Input = forwardRef(
           onChange={onChange}
           type={type}
           variant="outlined"
-          defaultValue={"asdasdasd as daw dasd aw "}
           fullWidth
           inputRef={ref}
           error={error}

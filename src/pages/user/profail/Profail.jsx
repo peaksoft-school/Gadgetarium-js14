@@ -1,31 +1,102 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled, TextField, Button } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import { saveProfileImage } from "../../../store/profail/profailAuthThunk";
+import {
+  updateProfile,
+  resetPassword,
+  uploadFileToAWS,
+  updateProfileImage,
+} from "../../../store/profail/profailAuthThunk";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import Input from "../../../components/UI/Input";
+
+const schema = yup.object().shape({
+  name: yup.string().required("Имя обязательно"),
+  surename: yup.string().required("Фамилия обязательна"),
+  phone: yup.string().required("Телефон обязателен"),
+  email: yup
+    .string()
+    .email("Неверный формат Email")
+    .required("Email обязателен"),
+  adress: yup.string().required("Адрес обязательно"),
+});
+
+const passwordSchema = yup.object().shape({
+  oldPassword: yup.string().required("Старый пароль обязателен"),
+  newPassword: yup
+    .string()
+    .min(6, "Пароль должен содержать минимум 6 символов")
+    .required("Новый пароль обязателен"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword")], "Пароли должны совпадать")
+    .required("Подтвердите новый пароль"),
+});
 
 const Profail = () => {
-  const dispatch = useDispatch();
-  const { loading, profileData } = useSelector((state) => state.profile);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [showPasswordChange, setShowPasswordChange] = useState(false);
+  const { loading, profileData } = useSelector((state) => state.profile);
+  const { link } = profileData || {};
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const {
+    register: registerPassword,
+    handleSubmit: handlePasswordSubmit,
+    formState: { errors: passwordErrors },
+  } = useForm({
+    resolver: yupResolver(passwordSchema),
+  });
+
+  const dispatch = useDispatch();
 
   const handlePasswordChangeClick = () => {
     setShowPasswordChange((prev) => !prev);
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const onSubmitPassword = (data) => {
+    const { oldPassword, newPassword } = data;
+    dispatch(resetPassword({ currentPassword: oldPassword, newPassword }));
   };
 
-  const handleFileUpload = () => {
-    console.log(selectedFile);
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("image", selectedFile);
-      dispatch(saveProfileImage(formData));
-    }
+  const onSubmitProfile = (data) => {
+    const newUserData = {
+      firstName: data.name,
+      lastName: data.surename,
+      phoneNumber: data.phone,
+      email: data.email,
+      address: data.adress,
+    };
+    dispatch(updateProfile(newUserData));
+  };
+
+  const handleImageUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    dispatch(uploadFileToAWS(formData))
+      .unwrap()
+      .then((response) => {
+        const imageUrl = response.link;
+        const updatedLink = link || imageUrl;
+
+        dispatch(updateProfileImage(updatedLink));
+      })
+      .catch((error) => {
+        console.error("Ошибка загрузки изображения:", error);
+      });
   };
 
   return (
@@ -39,105 +110,112 @@ const Profail = () => {
           <StyledHr />
         </FirstBox>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: "20px",
-            padding: "0 120px",
-            marginBottom: "40px",
-          }}
-        >
-          <StyledButton>История заказов</StyledButton>
-          <StyledButton>Избранное</StyledButton>
-          <ActiveButton>Профиль</ActiveButton>
-        </Box>
-
         <ContentWrapper>
           <LeftSection>
             <AvatarPlaceholder>
               <img
-                src={profileData?.imageUrl || ""}
+                src={profileData?.imageUrl || "/default-avatar.png"}
                 alt="Avatar"
                 style={{ width: "100%", height: "100%" }}
               />
             </AvatarPlaceholder>
-            <label>
+            <label htmlFor="upload-image" style={{ cursor: "pointer" }}>
               <input
+                id="upload-image"
                 type="file"
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    handleImageUpload(file);
+                  } else {
+                    console.error("Файл не выбран");
+                  }
+                }}
                 style={{ display: "none" }}
               />
-              <span style={{ cursor: "pointer" }}>
-                Нажмите для <br /> добавления фотографии
-              </span>
+              Нажмите для <br /> добавления фотографии
             </label>
-            <Button
-              onClick={handleFileUpload}
-              disabled={loading || !selectedFile}
-              variant="contained"
-              sx={{ marginTop: "10px" }}
-            >
-              {loading ? "Загрузка..." : "Сохранить"}
-            </Button>
           </LeftSection>
           <RightSection>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmitProfile)}>
               <SectionTitle>Личные данные</SectionTitle>
               <FormRow>
-                <TextField label="Имя" />
-                <TextField label="Фамилия" />
+                <Input
+                  {...register("name")}
+                  placeholder="Напишите ваше имя"
+                  error={!!errors.name}
+                  helperText={errors.name ? errors.name.message : ""}
+                />
+                <Input
+                  {...register("surename")}
+                  placeholder="Напишите вашу фамилию"
+                  error={!!errors.surename}
+                  helperText={errors.surename ? errors.surename.message : ""}
+                />
               </FormRow>
               <FormRow>
-                <TextField label="E-mail" fullWidth />
-                <TextField label="Телефон" fullWidth />
+                <Input
+                  {...register("email")}
+                  placeholder="Напишите email"
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ""}
+                />
+                <Input
+                  {...register("phone")}
+                  placeholder="+996 (___) __ __ __"
+                  error={!!errors.phone}
+                  helperText={errors.phone ? errors.phone.message : ""}
+                />
               </FormRow>
-              <TextField
-                label="Адрес доставки"
-                required
-                fullWidth
-                sx={{ marginBottom: "40px" }}
+              <Input
+                {...register("adress")}
+                placeholder="Адрес"
+                error={!!errors.adress}
               />
 
-              <StyledEditButton onClick={handlePasswordChangeClick}>
-                {showPasswordChange ? "" : "Сменить пароль"}
-              </StyledEditButton>
-
-              {showPasswordChange && (
-                <>
-                  <SectionTitle>Смена пароля</SectionTitle>
-                  <FormRow>
-                    <TextField
-                      label="Старый пароль"
-                      type="password"
-                      fullWidth
-                      sx={{ marginBottom: "20px" }}
-                    />
-                  </FormRow>
-                  <FormRow>
-                    <TextField
-                      label="Новый пароль"
-                      type="password"
-                      fullWidth
-                      sx={{ marginBottom: "20px" }}
-                    />
-                  </FormRow>
-                  <FormRow>
-                    <TextField
-                      label="Подтвердите новый пароль"
-                      type="password"
-                      fullWidth
-                      sx={{ marginBottom: "40px" }}
-                    />
-                  </FormRow>
-                </>
-              )}
-
               <ActionButtons>
-                <StyledBackButton>Назад</StyledBackButton>
-                <StyledButtonRed>Редактировать</StyledButtonRed>
+                <p
+                  onClick={handlePasswordChangeClick}
+                  style={{ cursor: "pointer", color: "blue" }}
+                >
+                  сменить пороль
+                </p>
+                <button type="button">Назад</button>
+                <StyledButtonRed type="submit">Сохранить</StyledButtonRed>
               </ActionButtons>
             </Form>
+
+            {showPasswordChange && (
+              <PasswordChangeForm>
+                <Form onSubmit={handlePasswordSubmit(onSubmitPassword)}>
+                  <Input
+                    {...registerPassword("oldPassword")}
+                    placeholder="Старый пароль"
+                    type="password"
+                    error={!!passwordErrors.oldPassword}
+                    helperText={passwordErrors.oldPassword?.message}
+                  />
+                  <Input
+                    {...registerPassword("newPassword")}
+                    placeholder="Новый пароль"
+                    type="password"
+                    error={!!passwordErrors.newPassword}
+                    helperText={passwordErrors.newPassword?.message}
+                  />
+                  <Input
+                    {...registerPassword("confirmPassword")}
+                    placeholder="Подтвердите новый пароль"
+                    type="password"
+                    error={!!passwordErrors.confirmPassword}
+                    helperText={passwordErrors.confirmPassword?.message}
+                  />
+                  <StyledButtonRed type="submit">
+                    Сменить пароль
+                  </StyledButtonRed>
+                </Form>
+              </PasswordChangeForm>
+            )}
           </RightSection>
         </ContentWrapper>
       </WrapperMainBox>
@@ -148,7 +226,6 @@ const Profail = () => {
 
 export default Profail;
 
-/* Стили */
 const WrapperMainBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.lightGrey.light,
   width: "100%",
@@ -182,25 +259,6 @@ const StyledH2 = styled("h1")(() => ({
   fontFamily: "sans-serif",
 }));
 
-const StyledButton = styled(Button)(() => ({
-  padding: "10px 30px",
-  backgroundColor: "#e0e2e7",
-  color: "#3b4558",
-  borderRadius: "5px",
-  fontWeight: "bold",
-  fontSize: "16px",
-  textTransform: "none",
-  "&:hover": {
-    backgroundColor: "#384255",
-    color: "white",
-  },
-}));
-
-const ActiveButton = styled(StyledButton)(() => ({
-  backgroundColor: "#384255",
-  color: "white",
-}));
-
 const ContentWrapper = styled(Box)(() => ({
   display: "flex",
   padding: "0 120px 40px",
@@ -208,7 +266,6 @@ const ContentWrapper = styled(Box)(() => ({
 }));
 
 const LeftSection = styled(Box)(() => ({
-  // flex: '0 0 200px',
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -245,9 +302,7 @@ const FormRow = styled(Box)(() => ({
 }));
 
 const SectionTitle = styled("h3")(() => ({
-  // fontSize: '18px',
-  // fontWeight: 'bold',
-  // marginBottom: '20px',
+  marginBottom: "20px",
 }));
 
 const ActionButtons = styled(Box)(() => ({
@@ -256,37 +311,17 @@ const ActionButtons = styled(Box)(() => ({
   gap: "20px",
 }));
 
-const StyledBackButton = styled(Button)(() => ({
-  width: "200px",
-  padding: "10px 30px",
-  backgroundColor: "#e0e2e7",
-  color: "#3b4558",
-  borderRadius: "5px",
-  fontWeight: "bold",
-  fontSize: "16px",
-  textTransform: "none",
-  "&:hover": {
-    backgroundColor: "#d1cfcf",
-  },
-}));
-
 const StyledButtonRed = styled("button")(() => ({
-  padding: "10px 30px",
-  backgroundColor: "#d81b60",
+  backgroundColor: "#d32f2f",
   color: "white",
-  borderRadius: "5px",
-  fontWeight: "bold",
-  fontSize: "16px",
-  textTransform: "none",
-  "&:hover": {
-    backgroundColor: "#c2185b",
-  },
+  padding: "10px 20px",
+  border: "none",
+  cursor: "pointer",
+  borderRadius: "4px",
 }));
 
-const StyledEditButton = styled("p")(() => ({
-  color: "#cb11ab",
-  fontWeight: "bold",
-  fontSize: "16px",
-  textTransform: "none",
-  cursor: "pointer",
+const PasswordChangeForm = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 }));
