@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
     const updateConfig = { ...config };
 
     const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGtkaW5hQGdtYWlsLmNvbSIsImlhdCI6MTczNTc5MjE1NCwiZXhwIjoxNzM3MjMyMTU0fQ.xScs3FQZniH21YagVVpXCU3wLJ6rpLlgS8AA5OHtJNY";
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWRpbmFAZ21haWwuY29tIiwiaWF0IjoxNzM2MTQyMzgzLCJleHAiOjE3Mzc1ODIzODN9.eqdxKRfTuTKMvKg9C8NDoFk9ACMwDRwBWt7DbdpsAJg";
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }

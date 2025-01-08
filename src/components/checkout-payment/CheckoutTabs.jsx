@@ -311,7 +311,7 @@ const FirstBox = styled(Box)`
 const StyledWrapperBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.lightGrey.light,
   width: "100%",
-  padding: "40px 80px ",
+  padding: "40px 60px ",
 }));
 
 const StyledHr = styled("hr")({
