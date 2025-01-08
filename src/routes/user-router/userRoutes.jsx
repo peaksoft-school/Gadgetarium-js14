@@ -1,4 +1,5 @@
 import AboutStore from "../../components/AboutStore";
+import CompareMainPage from "../../components/compare/CompareMainPage";
 import Contacts from "../../components/Contacts";
 import FaqPage from "../../components/FaqPage";
 import ProductCardDescription from "../../components/product-card-description/ProductCardDescription";
@@ -19,4 +20,5 @@ export const userRoutes = [
   { path: ROUTES.USER.productCard, element: <ProductCardDescription /> },
   { path: ROUTES.USER.favourit, element: <TheChosenOne /> },
   { path: ROUTES.USER.basket, element: <ItemsInCard /> },
+  { path: ROUTES.USER.compare, element: <CompareMainPage /> },
 ];

@@ -12,6 +12,7 @@ import { theChosenOneSlice } from "./theChosenOne/theChosenOneSlice";
 import productCatalagSlice from "./product-catalog/productCatalogSlice";
 import { itemsInCardSlaice } from "./intemsInCard/itemsInCardSlaice";
 import { innerPageCardSlice } from "./innerPageCardAmin/innerPageCardSlice";
+import { compareSlice } from "./compare/compareSlice";
 
 const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ const store = configureStore({
     [theChosenOneSlice.name]: theChosenOneSlice.reducer,
     [itemsInCardSlaice.name]: itemsInCardSlaice.reducer,
     [innerPageCardSlice.name]: innerPageCardSlice.reducer,
+    [compareSlice.name]: compareSlice.reducer,
   },
 });
 

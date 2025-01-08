@@ -234,7 +234,11 @@ const Header = () => {
         )}
         {userData.isAuth && (
           <StyledImgBox>
-            <img src={IconShoppingCard} alt="" />
+            <img
+              src={IconShoppingCard}
+              alt=""
+              onClick={() => navigate("/user/compare")}
+            />
             <IconButton onClick={() => navigate("/user/basket")}>
               <img src={IconBasket} alt="like" />
             </IconButton>
