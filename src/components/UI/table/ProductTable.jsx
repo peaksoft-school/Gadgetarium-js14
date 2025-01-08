@@ -5,7 +5,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TableBody,
   Box,
@@ -17,7 +16,7 @@ import { usePagination, useTable } from "react-table";
 import { getIds } from "../../../store/productAdmin/productAdminSlice";
 import { useDispatch } from "react-redux";
 
-const ProductTable = ({ data, columns }) => {
+const ProductTable = ({ data, columns, onClick }) => {
   const [hoveredRowId, setHoveredRowId] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const dispatch = useDispatch();
@@ -91,6 +90,7 @@ const ProductTable = ({ data, columns }) => {
                           {index === 0 ? (
                             hoveredRowId === rowId ? (
                               <Checkbox
+                                onClick={onClick}
                                 checked={selectedIds.includes(rowId)}
                                 onChange={() => handleCheckboxClick(rowId)}
                               />

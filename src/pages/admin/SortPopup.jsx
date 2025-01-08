@@ -55,11 +55,47 @@ const SortPopup = ({ onClick }) => {
           },
         }}
       >
-        <MenuItem onClick={() => handleSortOptionClick("Новинки")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Новинки</MenuItem>
-        <MenuItem onClick={() => handleSortOptionClick('По акции')} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По акции</MenuItem>
-        <MenuItem onClick={() => handleSortOptionClick('Рекомендуемые')} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Рекомендуемые</MenuItem>
+        <MenuItem
+          onClick={() => handleSortOptionClick("Новинки")}
+          sx={{
+            fontWeight: 500,
+            padding: "10px 20px",
+            "&:hover": { color: "magenta" },
+          }}
+        >
+          Новинки
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleSortOptionClick("По акции")}
+          sx={{
+            fontWeight: 500,
+            padding: "10px 20px",
+            "&:hover": { color: "magenta" },
+          }}
+        >
+          По акции
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleSortOptionClick("Рекомендуемые")}
+          sx={{
+            fontWeight: 500,
+            padding: "10px 20px",
+            "&:hover": { color: "magenta" },
+          }}
+        >
+          Рекомендуемые
+        </MenuItem>
         {/* <MenuItem onClick={() => handleSortOptionClick("По увеличению цены")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По увеличению цены</MenuItem> */}
-        <MenuItem onClick={() => handleSortOptionClick("По уменьшению цены")} sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>По уменьшению цены</MenuItem>
+        <MenuItem
+          onClick={() => handleSortOptionClick("По уменьшению цены")}
+          sx={{
+            fontWeight: 500,
+            padding: "10px 20px",
+            "&:hover": { color: "magenta" },
+          }}
+        >
+          По уменьшению цены
+        </MenuItem>
       </Menu>
 
       {isSubMenuOpen && (
@@ -79,9 +115,33 @@ const SortPopup = ({ onClick }) => {
             },
           }}
         >
-          <MenuItem  sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Все акции</MenuItem>
-          <MenuItem sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>До 50%</MenuItem>
-          <MenuItem sx={{ fontWeight: 500, padding: "10px 20px", "&:hover": { color: "magenta" } }}>Свыше 50%</MenuItem>
+          <MenuItem
+            sx={{
+              fontWeight: 500,
+              padding: "10px 20px",
+              "&:hover": { color: "magenta" },
+            }}
+          >
+            Все акции
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontWeight: 500,
+              padding: "10px 20px",
+              "&:hover": { color: "magenta" },
+            }}
+          >
+            До 50%
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontWeight: 500,
+              padding: "10px 20px",
+              "&:hover": { color: "magenta" },
+            }}
+          >
+            Свыше 50%
+          </MenuItem>
         </Menu>
       )}
     </Box>

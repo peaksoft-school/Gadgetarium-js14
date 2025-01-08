@@ -8,6 +8,8 @@ import AddProducts from "../components/add-products/AddProducts";
 import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
 import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
+import OrdersAdmin from "../components/orders/OrdersAdmin";
+import OrdersData from "../components/orders/OrdersData";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -45,6 +47,8 @@ const AppRouter = () => {
           element: <ProductsSheetTable />,
         },
         { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
+        { path: ROUTES.ADMIN.orders, element: <OrdersAdmin /> },
+        { path: ROUTES.ADMIN.orderDetail, element: <OrdersData /> },
       ],
     },
     ,
