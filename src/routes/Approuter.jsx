@@ -1,15 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { useSelector } from "react-redux";
-import { userRoutes } from "./user-router/userRoutes";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
-import AdminProductComents from "../pages/admin/AdminProductComents";
 import { adminRoutes } from "./admin-router/adminRoutes";
-import AddProducts from "../components/add-products/AddProducts";
-import { ROUTES } from "../utils/routes";
 import UserLayout from "../layout/user/UserLayout";
+<<<<<<< HEAD
 import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
 import Profail from "../pages/user/profail/Profail";
+=======
+import { userRoutes } from "./userRoutes";
+>>>>>>> 7a669ebfaa008cdd376ea2516bf1b87e67c9f561
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -41,17 +41,7 @@ const AppRouter = () => {
         />
       ),
 
-      children: [
-        {
-          index: true,
-          element: <ProductsSheetTable />,
-        },
-        {
-          path: "reviews",
-          element: <AdminProductComents />,
-        },
-        { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
-      ],
+      children: adminRoutes,
     },
     ,
   ]);

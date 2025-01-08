@@ -18,70 +18,61 @@ import {
   Vector,
 } from "../../assets/icon";
 import styled from "@emotion/styled";
+import { ROUTES } from "../../utils/routes";
+import { NavLink } from "react-router-dom";
 
 const Arr = [
   {
     id: 1,
     name: "Смартфоны",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    path: "user/catalog/1",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Telefon,
   },
+
   {
     id: 2,
-    name: "Ноутбуки и планшеты",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Планшет",
+    path: "user/catalog/2",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Monitor,
   },
   {
     id: 3,
-    name: "Смарт-часы и браслеты",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Ноутбук",
+    path: "user/catalog/3",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Vector,
   },
   {
     id: 4,
-    name: "Аксессуары",
-    title: [
-      { name: "Ремешки для часов", navigate: "" },
-      { name: "Зарядные устройства", navigate: "" },
-      { name: "Защита экрана", navigate: "" },
-      { name: "Чехлы и корпусы", navigate: "" },
-      { name: "Подставки", navigate: "" },
-      { name: "Кабели и адаптеры", navigate: "" },
-      { name: "Внешние аккумуляторы", navigate: "" },
-      { name: "Наушники", navigate: "" },
-      { name: "Карта памяти и накопители", navigate: "" },
-    ],
+    name: "Смарт Часы",
+    path: "user/catalog/4",
+    // title: [
+    //   { name: "Apple", navigate: "" },
+    //   { name: "Samsung", navigate: "" },
+    //   { name: "Acer", navigate: "" },
+    //   { name: "Asus", navigate: "" },
+    //   { name: "Xiaomi", navigate: "" },
+    // ],
     img: Headphones,
     icon: Strelca,
   },
@@ -120,9 +111,10 @@ const SidebarMenu = () => {
             Категории
           </Typography>
           <StyledLink>
-            {Arr.map(({ img, id, name }) => (
-              <StyledButton
+            {Arr.map(({ img, id, name, path }) => (
+              <StyledNavlink
                 key={id}
+                to={path}
                 selected={expandedItem === id}
                 onMouseEnter={() => handleMouseEnter(id)}
                 onMouseLeave={handleMouseLeave}
@@ -140,18 +132,19 @@ const SidebarMenu = () => {
                   sx={{ textAlign: "start", textTransform: "capitalize" }}
                   primary={name}
                 />
+
                 <img
                   src={Strelca}
                   alt={name}
                   className="hello"
                   style={{ marginRight: 13, width: 9 }}
                 />
-              </StyledButton>
+              </StyledNavlink>
             ))}
           </StyledLink>
         </Paper>
       )}
-
+      {/* 
       {Arr.map(({ id, name, title }) => (
         <Collapse
           key={id}
@@ -173,7 +166,7 @@ const SidebarMenu = () => {
             </List>
           </Paper>
         </Collapse>
-      ))}
+      ))} */}
     </Container>
   );
 };
@@ -182,7 +175,7 @@ export default SidebarMenu;
 
 const Container = styled(Box)(() => ({
   position: "relative",
-  zIndex: 1,
+  zIndex: 10,
 
   "& .textButton": {
     color: "grey",
@@ -228,7 +221,7 @@ const Container = styled(Box)(() => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ selected }) => ({
+const StyledNavlink = styled(NavLink)(({ selected }) => ({
   width: "336px",
   height: "40px",
   display: "flex",
@@ -252,9 +245,10 @@ const StyledButton = styled(Button)(({ selected }) => ({
   "&:hover .hello": {
     filter: "brightness(0) invert(1)",
   },
+  textDecoration: "none",
 }));
 
-const StyledLink = styled(List)({
+const StyledLink = styled(Box)({
   backgroundColor: "#ffffff",
   padding: "10px",
   borderRadius: "8px",

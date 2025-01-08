@@ -7,7 +7,14 @@ import {
   greyHeart,
   GroceryCart,
   DiscountClasIcon,
+  redHeart,
 } from "../../assets/icon";
+import { useDispatch } from "react-redux";
+import {
+  postFavourites,
+  postToBasket,
+} from "../../store/product-catalog/productCatalogThunk";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   img,
@@ -17,98 +24,140 @@ const Card = ({
   reiting,
   reviews,
   newPrice,
-  oldPrice,
-  discountNew,
+  price,
   discountClas,
+  subProductId,
+  type = "default",
+  recommendet = false,
+  disPage = false,
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
+
+  const handleAddToFavourites = () => {
+    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+  };
+
+  const handlePostpostToBasket = () => {
+    dispatch(postToBasket({ subProductId, quantity: 1 }));
+  };
+
+  const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+
+  const handleNavigate = () => {
+    navigate(`/user/product/${subProductId}`);
+  };
 
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledIcanConteiner>
-          <img src={Component} alt="" />
-          <img src={greyHeart} alt="" />
-        </StyledIcanConteiner>
+        {type !== "viewed" && (
+          <StyledIcanConteiner>
+            <img src={Component} alt="compare" />
+            <img
+              src={discountClas ? redHeart : greyHeart}
+              alt="like"
+              onClick={handleAddToFavourites}
+            />
+          </StyledIcanConteiner>
+        )}
+        {type !== "viewed" && (
+          <BoxAicanContainer>
+            {discount ? (
+              <DiscountContainer>
+                <ProtsetBox>
+                  {disPage === true ? `-${discountPrice}%` : `-${discount}%`}
+                </ProtsetBox>
+              </DiscountContainer>
+            ) : null}
 
-        <BoxAicanContainer>
-          {discount ? (
-            <DiscountContainer>
-              <ProtsetBox>-{discount}%</ProtsetBox>
-            </DiscountContainer>
-          ) : null}
-
-          {discountNew ? (
-            <DiscountContainer>
-              <ProtsetBoxNew>{discountNew}</ProtsetBoxNew>
-            </DiscountContainer>
-          ) : null}
-
-          {discountClas ? (
-            <DiscountContainer>
-              <img
-                className="scitca"
-                src={DiscountClasIcon}
-                alt="Icon Two"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  position: "relative",
-                  top: "-35px",
-                }}
-              />
-            </DiscountContainer>
-          ) : null}
-        </BoxAicanContainer>
+            {recommendet ? (
+              <DiscountContainer>
+                <img
+                  className="scitca"
+                  src={DiscountClasIcon}
+                  alt="Icon Two"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "relative",
+                    top: "-35px",
+                  }}
+                />
+              </DiscountContainer>
+            ) : null}
+          </BoxAicanContainer>
+        )}
 
         <ImageContainer>
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
         <Box padding={2}>
-          <Availability>{`В наличии (${title})`}</Availability>
-          <ProductName>{text}</ProductName>
+          {type !== "compare" && (
+            <Availability>{`В наличии (${title})`}</Availability>
+          )}
+          <ProductName onClick={handleNavigate}>{text}</ProductName>
+          {type !== "compare" && (
+            <RatingContainer>
+              <Typography
+                variant="body2"
+                style={{
+                  fontWeight: "bold",
+                  color: "#909cb5",
+                  fontSize: "13px",
+                  marginRight: "8px",
+                }}
+              >
+                Рейтинг
+              </Typography>
 
-          <RatingContainer>
-            <Typography
-              variant="body2"
-              style={{
-                fontWeight: "bold",
-                color: "#909cb5",
-                fontSize: "13px",
-                marginRight: "8px",
-              }}
-            >
-              Рейтинг
-            </Typography>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {[...Array(fullStars)].map((_, i) => (
+                  <StarIcon key={i} style={{ color: "#FFC107" }} />
+                ))}
+                {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
+                {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map(
+                  (_, i) => (
+                    <StarIcon
+                      key={i + fullStars + (hasHalfStar ? 1 : 0)}
+                      style={{ color: "#909cb5" }}
+                    />
+                  )
+                )}
+              </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {[...Array(fullStars)].map((_, i) => (
-                <StarIcon key={i} style={{ color: "#FFC107" }} />
-              ))}
-              {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
-              {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-                <StarIcon
-                  key={i + fullStars + (hasHalfStar ? 1 : 0)}
-                  style={{ color: "#909cb5" }}
-                />
-              ))}
-            </div>
-
-            <Typography variant="body2" color="textSecondary">
-              ({reviews})
-            </Typography>
-          </RatingContainer>
-
+              <Typography variant="body2" color="textSecondary">
+                ({reviews})
+              </Typography>
+            </RatingContainer>
+          )}
           <StyledBoxProject>
             <Box>
-              <NewPrice>{newPrice}</NewPrice>
-              <OldPrice>{oldPrice}</OldPrice>
+              {discount === 0 ? (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                </>
+              ) : (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                  <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+                </>
+              )}
             </Box>
-            <Button className="buttonrever" variant="contained">
-              <img src={GroceryCart} alt="" />В корзину
-            </Button>
+
+            {type !== "viewed" && (
+              <Button
+                className="buttonrever"
+                variant="contained"
+                onClick={handlePostpostToBasket}
+              >
+                <img src={GroceryCart} alt="" />В корзину
+              </Button>
+            )}
           </StyledBoxProject>
         </Box>
       </StyledCard>
@@ -122,6 +171,7 @@ const StyledContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   gap: "16px",
+  width: "280px",
 });
 
 const StyledIcanConteiner = styled(Box)({
@@ -130,6 +180,7 @@ const StyledIcanConteiner = styled(Box)({
   padding: "5px",
   gap: "5px",
   zIndex: 1,
+  cursor: "pointer",
 });
 
 const DiscountContainer = styled(Box)({
@@ -138,21 +189,21 @@ const DiscountContainer = styled(Box)({
   gap: "5px",
 });
 
-const StyledBoxProject = styled(Box)(() => ({
+const StyledBoxProject = styled(Box)(({ type }) => ({
   display: "flex",
+  flexDirection: type === "compare" ? "column" : "row",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: type === "compare" ? "flex-start" : "center",
   gap: "8px",
 }));
 
-const StyledCard = styled(Box)({
-  width: "280px",
+const StyledCard = styled(Box)(() => ({
   border: "1px solid #e0e0e0",
-  borderRadius: "12px",
+  borderRadius: "4px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
   backgroundColor: "#fff",
   position: "relative",
-});
+}));
 
 const ImageContainer = styled(Box)({
   display: "flex",
@@ -181,6 +232,10 @@ const ProductName = styled(Typography)({
   fontWeight: "bold",
   fontSize: "16px",
   marginBottom: "8px",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const RatingContainer = styled(Box)({
@@ -204,9 +259,8 @@ const NewPrice = styled(Typography)({
 });
 const ProtsetBox = styled(Box)(() => ({
   borderRadius: "50%",
-  width: "40px",
-  height: "40px",
-  padding: "15px",
+  width: "50px",
+  height: "50px",
   backgroundColor: "#f43333",
   fontSize: "16px",
   fontWeight: "bold",

@@ -28,8 +28,9 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/auth/authSlice";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/routes";
+import LogOut from "./LogOut";
 
 const links = [
   { id: 2, text: "Главная", path: ROUTES.USER.index },
@@ -49,6 +50,10 @@ const suggestions = [
 ];
 
 const Header = () => {
+  const { userData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
   const [, setShowMainElements] = useState(true);
@@ -56,9 +61,8 @@ const Header = () => {
 
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
-
-  const { userData } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const toggleSignInModal = () => {
     setOpenSignIn((prev) => !prev);
@@ -68,7 +72,6 @@ const Header = () => {
     setOpenSignUp((prev) => !prev);
   };
 
-  const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -94,10 +97,15 @@ const Header = () => {
     };
   }, []);
 
+  const toggleLogout = () => {
+    setLogout((prev) => !prev);
+    handleClose();
+  };
+
   return (
     <>
       <FirstBox>
-        <StyledAdgetariumImg>
+        <StyledAdgetariumImg onClick={() => navigate("/")}>
           <img src={Gadgettarium} alt="iconG" />
         </StyledAdgetariumImg>
         <LinkBox>
@@ -112,7 +120,7 @@ const Header = () => {
           ))}
         </LinkBox>
         <StyledPersonBox>
-          <span> +996 220-30-20-01</span>
+          {userData.isAuth && <span>{userData.name}</span>}
           <Tooltip
             title="Профиль"
             PopperProps={{
@@ -164,14 +172,7 @@ const Header = () => {
                     <p>Профиль</p>
                   </StyledMenuItem>,
                   <StyledMenuItem key="logout">
-                    <p
-                      onClick={() => {
-                        dispatch(logout());
-                        handleClose();
-                      }}
-                    >
-                      Выйти
-                    </p>
+                    <p onClick={toggleLogout}>Выйти</p>
                   </StyledMenuItem>,
                 ]}
           </StyledMenu>
@@ -181,7 +182,7 @@ const Header = () => {
       <SecondBox>
         <BoxCatalog>
           {showAdgetariumImg && (
-            <StyledAdgetariumImg>
+            <StyledAdgetariumImg onClick={() => navigate("/")}>
               <img src={Gadgettarium} alt="Gadgetarium" />
             </StyledAdgetariumImg>
           )}
@@ -231,11 +232,23 @@ const Header = () => {
             <img src={IconWhatsApp} alt="whatsapp" />
           </StyledImg>
         )}
-        <StyledImgBox>
-          <img src={IconShoppingCard} alt="" />
-          <img src={IconBasket} alt="basket" />
-          <img src={IconLike} alt="like" />
-        </StyledImgBox>
+        {userData.isAuth && (
+          <StyledImgBox>
+            <img
+              src={IconShoppingCard}
+              alt=""
+              onClick={() => navigate("/user/compare")}
+            />
+            <IconButton onClick={() => navigate("/user/basket")}>
+              <img src={IconBasket} alt="like" />
+            </IconButton>
+            <img
+              src={IconLike}
+              alt="like"
+              onClick={() => navigate("/user/favourit")}
+            />
+          </StyledImgBox>
+        )}
       </SecondBox>
 
       <SignIn
@@ -248,6 +261,8 @@ const Header = () => {
         onClose={toggleSignUpModal}
         openSignIn={toggleSignInModal}
       />
+
+      <LogOut open={logout} onClose={toggleLogout} />
     </>
   );
 };
@@ -344,6 +359,7 @@ const StyledTextField = styled(TextField)(() => ({
 const StyledAdgetariumImg = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
+  cursor: "pointer",
 
   "& img:first-of-type": {
     alignSelf: "start",

@@ -29,16 +29,16 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
   switch (variant) {
     case "outlined":
       return {
-        "&.MuiButtonBase-root": {
-          width: "100%",
-          color: "#cb11ab",
-          fontSize: "18px",
-          borderRadius: "4px",
-          border: "1px solid #e313bf",
-          backgroundColor: "transparet",
-          "&:hover": {
-            color: "white",
-            backgroundColor: "#cb11ab",
+        '&.MuiButtonBase-root': {
+          width: '100%',
+          color: '#cb11ab',
+          fontSize: '18px',
+          borderRadius: '4px',
+          border: '1px solid #e313bf',
+          backgroundColor: 'transparet',
+          '&:hover': {
+            color: 'white',
+            backgroundColor: '#cb11ab',
           },
           "&:active": {
             backgroundColor: "#e313bf",
@@ -55,6 +55,7 @@ const StyledBtn = styled(MuiButton)(({ variant }) => {
           borderRadius: "4px",
           border: "1px solid #e313bf",
           backgroundColor: "#cb11ab",
+
           "&:hover": {
             color: "white",
             backgroundColor: "#cb11ab",

@@ -96,7 +96,9 @@ const StyledButton = styled("button")(({ active }) => ({
   alignItems: "center",
   justifyContent: "center",
   gap: "5px",
-
+  "& span": {
+    color: "#25A841",
+  },
   "&:hover": {
     backgroundColor: "#cb11ab",
     color: "#fff",
