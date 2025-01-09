@@ -4,12 +4,7 @@ import { useSelector } from "react-redux";
 import { ProtectedRouter } from "../routes/ProtectedRouter";
 import { adminRoutes } from "./admin-router/adminRoutes";
 import UserLayout from "../layout/user/UserLayout";
-<<<<<<< HEAD
-import ProductsSheetTable from "../pages/admin/ProductsSheetTable";
-import Profail from "../pages/user/profail/Profail";
-=======
 import { userRoutes } from "./userRoutes";
->>>>>>> 7a669ebfaa008cdd376ea2516bf1b87e67c9f561
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
