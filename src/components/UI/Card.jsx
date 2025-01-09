@@ -26,10 +26,9 @@ const Card = ({
   newPrice,
   price,
   discountClas,
-  subProductId,
   type = "default",
-  recommendet = false,
   disPage = false,
+  recommendet = false,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

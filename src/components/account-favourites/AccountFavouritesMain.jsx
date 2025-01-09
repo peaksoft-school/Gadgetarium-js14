@@ -9,7 +9,6 @@ import Loading from "../UI/Loading";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const AccountFavouritesMain = () => {
-  const [activeButton, setActiveButton] = useState("История");
   const { favouritesCards, isLoading } = useSelector(
     (state) => state.accountFavourites
   );
@@ -21,114 +20,62 @@ const AccountFavouritesMain = () => {
     dispatch(getAccountFavourites());
   }, [dispatch]);
 
-  const handleButtonClick = (button) => {
-    setActiveButton(button);
-    if (button === "Избранное") {
-      dispatch(getAccountFavourites());
-    }
-  };
-
-  const getStyledH2Text = () => {
-    switch (activeButton) {
-      case "Избранное":
-        return "Избранное";
-      case "История":
-        return "История заказов";
-      case "Профиль":
-        return "Профиль";
-      default:
-        return "Избранное";
-    }
-  };
-
   return (
     <WrapperBox>
       {isLoading && <Loading />}
 
-      <FirstBox>
-        <span>Главная »</span>
-        <span>{getStyledH2Text()}</span>
-        <StyledH2>{getStyledH2Text()}</StyledH2>
-        <StyledHr />
-      </FirstBox>
+      {favouritesCards.length === 0 ? (
+        <EmptyAccountFavourites />
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            padding: "20px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              flexWrap: "wrap",
+            }}
+          >
+            {favouritesCards.map((card, index) => (
+              <Box key={index}>
+                <Card
+                  type="viewed"
+                  img={card.images}
+                  // text={card.productName}
+                  // discount={card.discount}
+                  title={card.productName}
+                  reiting={card.rating}
+                  // reviews={card.reviews}
+                  newPrice={card.price}
+                  // oldPrice={card.oldPrice}
+                  // discountNew={card.discountNew}
+                  // discountClas={card.discountClas}
+                />
+              </Box>
+            ))}
+          </Box>
 
-      <StyledButtonDiv>
-        <StyledNavlink
-          isActive={activeButton === "История"}
-          onClick={() => handleButtonClick("История")}
-        >
-          История заказов
-        </StyledNavlink>
-        <StyledNavlink
-          isActive={activeButton === "Избранное"}
-          onClick={() => handleButtonClick("Избранное")}
-        >
-          Избранное
-        </StyledNavlink>
-        <StyledNavlink
-          isActive={activeButton === "Профиль"}
-          onClick={() => handleButtonClick("Профиль")}
-        >
-          Профиль
-        </StyledNavlink>
-      </StyledButtonDiv>
-
-      {!isLoading && activeButton === "Избранное" ? (
-        <>
-          {favouritesCards.length === 0 ? (
-            <EmptyAccountFavourites text={activeButton} />
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                padding: "20px",
-              }}
+          <Box
+            sx={{
+              marginTop: "20px",
+              alignSelf: "center",
+            }}
+          >
+            <Button
+              variant="outlined"
+              onClick={() => navigate("/user/catalog/1")}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: "20px",
-                  flexWrap: "wrap",
-                }}
-              >
-                {favouritesCards.map((card, index) => (
-                  <Box key={index}>
-                    <Card
-                      type="viewed"
-                      img={card.images}
-                      // text={card.productName}
-                      // discount={card.discount}
-                      title={card.productName}
-                      reiting={card.rating}
-                      // reviews={card.reviews}
-                      newPrice={card.price}
-                      // oldPrice={card.oldPrice}
-                      // discountNew={card.discountNew}
-                      // discountClas={card.discountClas}
-                    />
-                  </Box>
-                ))}
-              </Box>
-
-              <Box
-                sx={{
-                  marginTop: "20px",
-                  alignSelf: "center",
-                }}
-              >
-                <Button
-                  variant="outlined"
-                  onClick={() => navigate("/user/catalog/1")}
-                >
-                  Продолжить покупки
-                </Button>
-              </Box>
-            </Box>
-          )}
-        </>
-      ) : null}
+              Продолжить покупки
+            </Button>
+          </Box>
+        </Box>
+      )}
     </WrapperBox>
   );
 };

@@ -17,6 +17,7 @@ export const ROUTES = {
   USER: {
     index: "/",
     profile: "user/profile",
+    orderHistory: "user/account-order-history",
     compare: "user/compare",
     aboutStore: "/user/about-store",
     delivery: "/user/delivery",
