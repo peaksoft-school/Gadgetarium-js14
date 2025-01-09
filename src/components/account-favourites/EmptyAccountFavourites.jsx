@@ -3,7 +3,7 @@ import { AccountFavourites } from "../../assets/image";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
 
-const EmptyAccountFavourites = () => {
+const EmptyAccountFavourites = ({ text }) => {
   return (
     <div
       style={{
@@ -16,7 +16,7 @@ const EmptyAccountFavourites = () => {
       }}
     >
       <img src={AccountFavourites} alt="photo" />
-      <StyledP>В избранном пока пусто</StyledP>
+      <StyledP>В {text} пока пусто</StyledP>
       <StyledPy>
         Воспользуйтесь поиском или каталогом, <br />
         выберите нужные товары и добавьте их в избранное!

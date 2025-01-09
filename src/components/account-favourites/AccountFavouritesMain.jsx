@@ -6,13 +6,14 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccountFavourites } from "../../store/account-favourites/accountFavouritesThunk";
 import Loading from "../UI/Loading";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const AccountFavouritesMain = () => {
   const [activeButton, setActiveButton] = useState("История");
   const { favouritesCards, isLoading } = useSelector(
     (state) => state.accountFavourites
   );
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const AccountFavouritesMain = () => {
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
-    if (button === "История") {
+    if (button === "Избранное") {
       dispatch(getAccountFavourites());
     }
   };
@@ -75,7 +76,7 @@ const AccountFavouritesMain = () => {
       {!isLoading && activeButton === "Избранное" ? (
         <>
           {favouritesCards.length === 0 ? (
-            <EmptyAccountFavourites />
+            <EmptyAccountFavourites text={activeButton} />
           ) : (
             <Box
               sx={{
@@ -88,24 +89,24 @@ const AccountFavouritesMain = () => {
               <Box
                 sx={{
                   display: "flex",
-                  gap: "70px",
+                  gap: "20px",
                   flexWrap: "wrap",
                 }}
               >
                 {favouritesCards.map((card, index) => (
-                  <Box key={index} sx={{ width: "200px" }}>
+                  <Box key={index}>
                     <Card
                       type="viewed"
-                      img={card.img}
-                      text={card.text}
-                      discount={card.discount}
-                      title={card.title}
-                      reiting={card.reiting}
-                      reviews={card.reviews}
-                      newPrice={card.newPrice}
-                      oldPrice={card.oldPrice}
-                      discountNew={card.discountNew}
-                      discountClas={card.discountClas}
+                      img={card.images}
+                      // text={card.productName}
+                      // discount={card.discount}
+                      title={card.productName}
+                      reiting={card.rating}
+                      // reviews={card.reviews}
+                      newPrice={card.price}
+                      // oldPrice={card.oldPrice}
+                      // discountNew={card.discountNew}
+                      // discountClas={card.discountClas}
                     />
                   </Box>
                 ))}
@@ -117,7 +118,12 @@ const AccountFavouritesMain = () => {
                   alignSelf: "center",
                 }}
               >
-                <Button variant="outlined">Продолжить покупки</Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => navigate("/user/catalog/1")}
+                >
+                  Продолжить покупки
+                </Button>
               </Box>
             </Box>
           )}
