@@ -162,7 +162,10 @@ const Header = () => {
                   </StyledMenuItem>,
                 ]
               : [
-                  <StyledMenuItem key="history">
+                  <StyledMenuItem
+                    key="history"
+                    onClick={() => navigate("/user/account-favourites")}
+                  >
                     <p>История заказов</p>
                   </StyledMenuItem>,
                   <StyledMenuItem key="favorites">

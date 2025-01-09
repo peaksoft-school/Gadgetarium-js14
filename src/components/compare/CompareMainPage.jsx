@@ -142,29 +142,30 @@ const CompareMainPage = () => {
             </StyledBox>
           </Box>
           <Box sx={{ overflowX: "auto" }}>
-            <Box
-              sx={{
-                paddingLeft: "320px",
-                display: "flex",
-                gap: "20px",
-              }}
-            >
-              {cardDataArray && cardDataArray.length > 0 ? (
-                cardDataArray.map((card, index) => (
-                  <Card key={index} {...card} type="compare" />
-                ))
-              ) : (
-                <p>No data available</p>
-              )}
-            </Box>
             <Box sx={{ padding: "40px 0px 40px 60px" }}>
               <StyledTable>
+                <thead>
+                  <tr>
+                    <td></td>
+                    {cardDataArray && cardDataArray.length > 0 ? (
+                      cardDataArray.map((card, index) => (
+                        <td key={index}>
+                          <Card key={index} {...card} type="compare" />
+                        </td>
+                      ))
+                    ) : (
+                      <p>No data available</p>
+                    )}
+                  </tr>
+                </thead>
                 <tbody>
                   {Object.keys(data).map((rowName, rowIndex) => (
                     <tr key={rowIndex}>
                       <td>{rowName}</td>
                       {data[rowName].map((value, colIndex) => (
-                        <td key={colIndex}>{value}</td>
+                        <td align="right" key={colIndex}>
+                          {value}
+                        </td>
                       ))}
                     </tr>
                   ))}

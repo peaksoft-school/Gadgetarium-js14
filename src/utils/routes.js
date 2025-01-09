@@ -17,6 +17,7 @@ export const ROUTES = {
   USER: {
     index: "/",
     profile: "user/profile",
+    orderHistory: "user/account-order-history",
     compare: "user/compare",
     aboutStore: "/user/about-store",
     delivery: "/user/delivery",
@@ -26,6 +27,7 @@ export const ROUTES = {
     favourit: "/user/favourit",
     productCatalog: "/user/catalog/:category",
     basket: "/user/basket",
+    accountFavourites: "user/account-favourites",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };
