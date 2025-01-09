@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       console.error(
-        `Ошибка ${status}: ${error.response.data.message || error.message}`
+        ` Ошибка ${status}: ${error.response.data.message || error.message} `
       );
     } else {
       console.error("Ошибка сети или сервера");

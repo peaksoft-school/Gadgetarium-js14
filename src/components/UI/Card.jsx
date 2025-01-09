@@ -168,9 +168,6 @@ const Card = ({
 export default Card;
 
 const StyledContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  gap: "16px",
   width: "280px",
 });
 

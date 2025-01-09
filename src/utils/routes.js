@@ -26,6 +26,7 @@ export const ROUTES = {
     favourit: "/user/favourit",
     productCatalog: "/user/catalog/:category",
     basket: "/user/basket",
+    accountFavourites: "user/account-favourites",
   },
   GUEST: { index: "/", signIn: "sign-in", signUp: "sign-up" },
 };
