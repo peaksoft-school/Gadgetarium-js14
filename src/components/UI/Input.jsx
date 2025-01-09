@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { styled, TextField, InputAdornment } from "@mui/material";
+// eslint-disable-next-line no-unused-vars
 
 const Input = forwardRef(
   (
@@ -11,13 +12,14 @@ const Input = forwardRef(
       error = false,
       disabled = false,
       Icon,
+      sx,
       ...props
     },
     ref
   ) => {
     return (
       <LabelDiv>
-        <StyledLabel htmlFor="1">{label}sdfgsd</StyledLabel>
+        <StyledLabel htmlFor="1">{label}</StyledLabel>
         <StyledInput
           id="1"
           value={value}
@@ -27,6 +29,7 @@ const Input = forwardRef(
           fullWidth
           inputRef={ref}
           error={error}
+          sx={sx}
           disabled={disabled}
           InputProps={{
             startAdornment: Icon && (
