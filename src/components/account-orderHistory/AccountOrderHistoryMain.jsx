@@ -7,84 +7,76 @@ import OrderHistoryTable from "./OrderHistoryTable";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyOrderHistory from "./EmptyOrderHistory";
 import { getOrderHistory } from "../../store/account-order-history/orderHistoryThunk";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Tab } from "@mui/material";
+import AccountFavouritesMain from "../account-favourites/AccountFavouritesMain";
+import Loading from "../UI/Loading";
 
 const AccountOrderHistyryMain = () => {
-  const [activeButton, setActiveButton] = useState("История");
+  const [activeTab, setActiveTab] = useState(0);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const navigate = useNavigate();
-  const { orderHistory } = useSelector((state) => state.orderHistory);
+  const { orderHistory, isLoading } = useSelector(
+    (state) => state.orderHistory
+  );
   const dispatch = useDispatch();
 
   const getStyledH2Text = () => {
-    switch (activeButton) {
-      case "Избранное":
+    switch (activeTab) {
+      case 0:
         return "Избранное";
-      case "История":
+      case 1:
         return "История заказов";
-      case "Профиль":
+      case 2:
         return "Профиль";
       default:
         return "Избранное";
     }
   };
 
-  const handleButtonClick = (button, route) => {
-    setActiveButton(button);
-    navigate(route);
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
   };
 
   useEffect(() => {
-    dispatch(getOrderHistory());
-  }, []);
+    if (activeTab === 0) {
+      dispatch(getOrderHistory());
+    }
+  }, [activeTab]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <WrapperBox>
+      {isLoading && <Loading />}
+
       <FirstBox>
         <span>Главная »</span>
         <span>{getStyledH2Text()}</span>
         <StyledH2>{getStyledH2Text()}</StyledH2>
-        <StyledHr />
       </FirstBox>
-      {!selectedOrder && (
-        <StyledBox>
-          <StyledButtonDiv>
-            <StyledNavlink
-              isActive={activeButton === "История"}
-              onClick={() =>
-                handleButtonClick("История", ROUTES.USER.orderHistory)
-              }
-            >
-              История заказов
-            </StyledNavlink>
-            <StyledNavlink
-              isActive={activeButton === "Избранное"}
-              onClick={() => handleButtonClick("Избранное", "/favourites")}
-            >
-              Избранное
-            </StyledNavlink>
-            <StyledNavlink
-              isActive={activeButton === "Профиль"}
-              onClick={() => handleButtonClick("Профиль", "/profile")}
-            >
-              Профиль
-            </StyledNavlink>
-          </StyledButtonDiv>
-          {orderHistory.length > 0 && (
-            <div>
-              <img src={deleteX} alt="x" />
-              <StyledSpan>Очистить список </StyledSpan>
-            </div>
+      <TabContext value={activeTab}>
+        <TabList onChange={handleTabChange}>
+          <Tab label="Избранное" />
+          <Tab label="История заказов" />
+          <Tab label="Профиль" />
+        </TabList>
+        <TabPanel value={0}>
+          {orderHistory.length > 0 ? (
+            <OrderHistoryTable
+              selectedOrder={selectedOrder}
+              setSelectedOrder={setSelectedOrder}
+            />
+          ) : (
+            <EmptyOrderHistory />
           )}
-        </StyledBox>
-      )}
-      {orderHistory.length > 0 ? (
-        <OrderHistoryTable
-          selectedOrder={selectedOrder}
-          setSelectedOrder={setSelectedOrder}
-        />
-      ) : (
-        <EmptyOrderHistory />
-      )}
+        </TabPanel>
+
+        <TabPanel value={1}>
+          <AccountFavouritesMain />
+        </TabPanel>
+      </TabContext>
     </WrapperBox>
   );
 };
@@ -97,7 +89,7 @@ const WrapperBox = styled(Box)(({ theme }) => ({
   backgroundColor: "#f4f4f4",
 }));
 
-const FirstBox = styled(Box)(({  }) => ({
+const FirstBox = styled(Box)(({}) => ({
   fontSize: "15px",
   "& span": {
     display: "inline-block",

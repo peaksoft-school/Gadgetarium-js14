@@ -9,12 +9,12 @@ import {
   DiscountClasIcon,
   redHeart,
 } from "../../assets/icon";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   postFavourites,
   postToBasket,
 } from "../../store/product-catalog/productCatalogThunk";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   img,
@@ -27,20 +27,28 @@ const Card = ({
   price,
   discountClas,
   type = "default",
+  disPage = false,
+  recommendet = false,
 }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
-  const dispatch = useDispatch();
 
   const handleAddToFavourites = () => {
     dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
   };
 
   const handlePostpostToBasket = () => {
-    dispatch(postToBasket({ subProductId }));
+    dispatch(postToBasket({ subProductId, quantity: 1 }));
   };
 
   const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
+
+  const handleNavigate = () => {
+    navigate(`/user/product/${subProductId}`);
+  };
 
   return (
     <StyledContainer>
@@ -87,48 +95,57 @@ const Card = ({
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
-        <Box padding={2} sx={{ cursor: "pointer" }}>
-          {type !== "viewed" && (
+        <Box padding={2}>
+          {type !== "compare" && (
             <Availability>{`В наличии (${title})`}</Availability>
           )}
+          <ProductName onClick={handleNavigate}>{text}</ProductName>
+          {type !== "compare" && (
+            <RatingContainer>
+              <Typography
+                variant="body2"
+                style={{
+                  fontWeight: "bold",
+                  color: "#909cb5",
+                  fontSize: "13px",
+                  marginRight: "8px",
+                }}
+              >
+                Рейтинг
+              </Typography>
 
-          <ProductName>{text}</ProductName>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {[...Array(fullStars)].map((_, i) => (
+                  <StarIcon key={i} style={{ color: "#FFC107" }} />
+                ))}
+                {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
+                {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map(
+                  (_, i) => (
+                    <StarIcon
+                      key={i + fullStars + (hasHalfStar ? 1 : 0)}
+                      style={{ color: "#909cb5" }}
+                    />
+                  )
+                )}
+              </div>
 
-          <RatingContainer>
-            <Typography
-              variant="body2"
-              style={{
-                fontWeight: "bold",
-                color: "#909cb5",
-                fontSize: "13px",
-                marginRight: "8px",
-              }}
-            >
-              Рейтинг
-            </Typography>
-
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {[...Array(fullStars)].map((_, i) => (
-                <StarIcon key={i} style={{ color: "#FFC107" }} />
-              ))}
-              {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
-              {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-                <StarIcon
-                  key={i + fullStars + (hasHalfStar ? 1 : 0)}
-                  style={{ color: "#909cb5" }}
-                />
-              ))}
-            </div>
-
-            <Typography variant="body2" color="textSecondary">
-              ({reviews})
-            </Typography>
-          </RatingContainer>
-
+              <Typography variant="body2" color="textSecondary">
+                ({reviews})
+              </Typography>
+            </RatingContainer>
+          )}
           <StyledBoxProject>
             <Box>
-              <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
-              <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+              {discount === 0 ? (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                </>
+              ) : (
+                <>
+                  <NewPrice>{disPage === true ? discount : newPrice}</NewPrice>
+                  <OldPrice>{disPage === true ? newPrice : price}</OldPrice>
+                </>
+              )}
             </Box>
 
             {type !== "viewed" && (
@@ -150,9 +167,7 @@ const Card = ({
 export default Card;
 
 const StyledContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  gap: "16px",
+  width: "280px",
 });
 
 const StyledIcanConteiner = styled(Box)({
@@ -170,10 +185,11 @@ const DiscountContainer = styled(Box)({
   gap: "5px",
 });
 
-const StyledBoxProject = styled(Box)(() => ({
+const StyledBoxProject = styled(Box)(({ type }) => ({
   display: "flex",
+  flexDirection: type === "compare" ? "column" : "row",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: type === "compare" ? "flex-start" : "center",
   gap: "8px",
 }));
 
@@ -212,6 +228,10 @@ const ProductName = styled(Typography)({
   fontWeight: "bold",
   fontSize: "16px",
   marginBottom: "8px",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const RatingContainer = styled(Box)({

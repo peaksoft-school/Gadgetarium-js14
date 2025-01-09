@@ -106,6 +106,7 @@ const DropDownProduct = () => {
   const [selectedMenuValue, setSelectedMenuValue] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [subMenuEl, setSubMenuEl] = useState(null);
+  const [pageSize, setPageSize] = useState(12);
 
   const { categories, allCards, lastViews, isLoading } = useSelector(
     (state) => state.productCatalog
@@ -248,6 +249,7 @@ const DropDownProduct = () => {
       RAM: state.selectedRAM,
       price: state.price,
       menuValue: selectedMenuValue,
+      pageSize,
     };
 
     if (state.selectedBrand) {
@@ -270,7 +272,12 @@ const DropDownProduct = () => {
     selectedMenuValue,
     dispatch,
     category,
+    pageSize,
   ]);
+
+  const handlePageSize = () => {
+    setPageSize((prev) => prev + 5);
+  };
 
   return (
     <>
@@ -628,7 +635,7 @@ const DropDownProduct = () => {
                 </Typography>
               )}
               {allCards.productsResponses?.length > 0 && (
-                <StyledButtonBox>
+                <StyledButtonBox onClick={handlePageSize}>
                   <Button>Показать ещё</Button>
                 </StyledButtonBox>
               )}

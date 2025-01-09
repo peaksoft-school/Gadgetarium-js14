@@ -27,6 +27,8 @@ export const getAllCards = createAsyncThunk(
         });
       }
 
+      if (params.pageSize) queryString.append("pageSize", params.pageSize);
+
       const { data } = await axiosInstance.get(`/api/catalog/${categoryId}`, {
         params: queryString,
       });
@@ -97,6 +99,8 @@ export const getFilter = createAsyncThunk(
         });
       }
 
+      if (params.pageSize) queryString.append("pageSize", params.pageSize);
+
       const { data } = await axiosInstance.get(
         `/api/catalog/${categoryId}/${subCategoryId}`,
         {
@@ -149,10 +153,10 @@ export const getLastViews = createAsyncThunk(
 
 export const postToBasket = createAsyncThunk(
   "postToBasket",
-  async ({ subProductId }, { rejectWithValue }) => {
+  async ({ subProductId, quantity }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
-        `/api/basket/move_to_favorites_by_id/${subProductId}`
+        `/api/basket/add?id=${subProductId}&quantity=${quantity}`
       );
       return response.data;
     } catch (error) {

@@ -18,8 +18,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzamZoakBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMDI2NjIsImV4cCI6MTczNzU0MjY2Mn0.f_srjR5ojOENgZaOWHalnyVmG6q_UJTmN2quKRTpERA";
+    const token = store?.getState().auth.userData?.token;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       console.error(
-        `   Ошибка ${status}: ${error.response.data.message || error.message}  `
+        ` Ошибка ${status}: ${error.response.data.message || error.message} `
       );
     } else {
       console.error("Ошибка сети или сервера");
