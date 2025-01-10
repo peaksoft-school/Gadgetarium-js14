@@ -1,4 +1,3 @@
-import React from "react";
 import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import { styled } from "@mui/system";
 
