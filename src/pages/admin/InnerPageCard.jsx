@@ -1,44 +1,53 @@
-import { styled, Box, display } from "@mui/system";
-import {
-  garbage,
-  Left,
-  Right,
-  samsungphone,
-  systemUiconsDocumentList,
-} from "../../assets/icon";
-import { NavLink } from "react-router-dom";
-import Comments from "../../components/UI/Comments";
-import { Button, Rating, Typography } from "@mui/material";
-import AdminHeader from "../../components/UI/AdminHeader";
+import { styled, Box } from "@mui/system";
+import { garbage, Left, Right, samsungphone } from "../../assets/icon";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Button, Rating } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteProduct,
   getProdates,
-  getRating,
 } from "../../store/innerPageCardAmin/innerPageCardThunk";
+
+import TabsContent from "./TabsContent";
+import Loading from "../../components/UI/Loading";
 
 const InnerPageCard = () => {
   const dispatch = useDispatch();
-  const { products, ratingData } = useSelector((state) => state.innerPageCard);
+  const { products, loading } = useSelector((state) => state.innerPageCard);
+  const navigate = useNavigate();
+  const { productId } = useParams();
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     dispatch(
       getProdates({
-        productId: 1,
+        productId,
         color: "red",
       })
     );
-    dispatch(getRating({ productId: 2 }));
   }, [dispatch]);
 
-  const handleDelete = (productId) => {
-    dispatch(deleteProduct(productId));
+  const handleDelete = (id) => {
+    dispatch(deleteProduct(id));
   };
+
+  const handleLeftClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? products.images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleRightClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === products.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  if (loading) return <Loading />;
 
   return (
     <Box>
-      <AdminHeader />
       <StyledPapaDiv>
         <h1>{products?.name || "Название товара не доступно"}</h1>
         <p>{products?.description || "Описание товара не доступно"}</p>
@@ -49,32 +58,86 @@ const InnerPageCard = () => {
 
         <div>
           <StyledImg src={products?.logo || ""} alt="Product Logo" />
-          <StyledBr />
+          <hr />
         </div>
 
         <StyledButtonDiv>
           <StyledButton variant="contained">Товар</StyledButton>
-          <StyledButton>Детали Товара</StyledButton>
+          <StyledButton
+            variant="contained"
+            to={`/admin/${productId}/product-table`}
+          >
+            Детали Товара
+          </StyledButton>
         </StyledButtonDiv>
 
         <StyledFlex>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <StyledLargeImg
-              src={samsungphone}
-              // src={products?.images?.[0] || ""}
-              // alt="Product Image"
+              src={products.images[currentImageIndex]}
+              alt={`Product Image ${currentImageIndex + 1}`}
             />
 
             <StyledImgDiv>
-              <StyledArrowImg src={Left} alt="Left Arrow" />
+              <StyledArrowImg
+                src={Left}
+                alt="Left Arrow"
+                onClick={handleLeftClick}
+              />
               {products?.images && products.images.length > 0 ? (
                 products.images.map((image, index) => (
-                  <img key={index} src={image} alt={`Product ${index + 1}`} />
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: "0 10px",
+                      padding: "5px",
+                      width: "55px",
+                      height: "70px",
+                      border:
+                        index === currentImageIndex
+                          ? "2px solid #c812aa"
+                          : "1px solid transparent",
+                      borderRadius: "2px",
+                      cursor: "pointer",
+                      transition: "transform 0.2s, border 0.2s",
+                      "&:hover": {
+                        border: "2px solid #c812aa",
+                        transform: "scale(1.05)",
+                      },
+                      "&:active": {
+                        border: "2px solid #c812aa",
+                      },
+                    }}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <img
+                      src={image}
+                      alt={`Product ${index + 1}`}
+                      style={{
+                        width: "40px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Box>
                 ))
               ) : (
                 <div>No images available</div>
               )}
-              <StyledArrowImg src={Right} alt="Right Arrow" />
+
+              <StyledArrowImg
+                src={Right}
+                alt="Right Arrow"
+                onClick={handleRightClick}
+              />
             </StyledImgDiv>
           </div>
 
@@ -88,12 +151,19 @@ const InnerPageCard = () => {
                 В наличии ({products?.quantity || "неизвестно"})
               </div>
               <div>Артикул: {products?.itemNumber || "неизвестно"}</div>
+              <div>
+                <Rating
+                  precision={0.5}
+                  value={products?.rating || "неизвестно"}
+                >
+                  {products?.rating || "неизвестно"}
+                </Rating>
+              </div>
             </StyledText>
 
-            <StyledBr />
             <div style={{ display: "flex" }}>
               <div>
-                <h4>Цвет товара:</h4>
+                <h4 style={{ marginTop: "10px" }}>Цвет товара:</h4>
                 <StyledFlexColor>
                   {products?.colours && products.colours.length > 0 ? (
                     products.colours.map((color, index) => (
@@ -107,7 +177,9 @@ const InnerPageCard = () => {
                   )}
                 </StyledFlexColor>
                 <div>
-                  <h4>Коротко о товаре:</h4>
+                  <h4 style={{ marginTop: "10px", marginBottom: "10px" }}>
+                    Коротко о товаре:
+                  </h4>
                   <StyledIngredients>
                     <StyledIngredientItem>
                       Экран{" "}
@@ -191,7 +263,7 @@ const InnerPageCard = () => {
             <StyledButtonsDiv>
               <Button
                 variant="outlined"
-                onClick={() => handleDelete(products.productId)}
+                onClick={() => handleDelete(products.subProductId)}
               >
                 <img src={garbage} alt="Delete" />
               </Button>
@@ -205,113 +277,8 @@ const InnerPageCard = () => {
             </StyledButtonsDiv>
           </StyledBorder>
         </StyledFlex>
-
-        <StyledMiniFlex>
-          <StyledNav>
-            <StyledNavLink2 to={'/description'}>Описание</StyledNavLink2>
-            <StyledNavLink2 to={'/Characteristics'}>Характеристики</StyledNavLink2>
-            <StyledNavLink2 to ={'/reviwsUsers'}>Отзывы</StyledNavLink2>
-          </StyledNav>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <img
-              style={{ width: "25px", height: "25px" }}
-              src={systemUiconsDocumentList}
-              alt="Documents"
-            />
-            <StyledNavLink2>Скачать документы.pdf</StyledNavLink2>
-          </div>
-        </StyledMiniFlex>
-
-        <StyledBr />
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "30px",
-            gap: "20px",
-          }}
-        >
-          <h2>Отзывы</h2>
-          <RatingReviewsBorder>
-            <LeftColumn>
-              <DivCar>
-                <h3 variant="body2">{ratingData?.rating}</h3>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.rating || 0}
-                  precision={0.5}
-                />
-              </DivCar>
-              <Typography name="body2" value={ratingData?.rating || 2}>
-                отзывов
-              </Typography>
-            </LeftColumn>
-            <RightColumn>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="Rating"
-                  value={ratingData?.five || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.five || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="Rationg"
-                  value={ratingData?.four || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.four || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.three || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.three || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.two || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.two || 0} отзывов
-                </Typography>
-              </RatingWithText>
-              <RatingWithText>
-                <Rating
-                  sx={{ fontSize: "20px" }}
-                  name="half-rating"
-                  value={ratingData?.one || 0}
-                  precision={1}
-                />
-                <Typography variant="body2">
-                  {ratingData?.one || 0} отзывов
-                </Typography>
-              </RatingWithText>
-            </RightColumn>
-          </RatingReviewsBorder>
-        </div>
+        <TabsContent detailProduct={products} />
       </StyledPapaDiv>
-
-      <div>
-        <Comments />
-      </div>
     </Box>
   );
 };
@@ -320,15 +287,6 @@ export default InnerPageCard;
 
 const StyledPapaDiv = styled(Box)({
   padding: "60px",
-});
-const StyledMiniFlex = styled(Box)({
-  display: "flex",
-  marginTop: "80px",
-  justifyContent: "space-between",
-});
-const StyledNav = styled(Box)({
-  display: "flex",
-  gap: "30px",
 });
 
 const StyledDiv = styled(Box)({
@@ -342,13 +300,6 @@ const StyledNavLink = styled(NavLink)({
   fontSize: "15px",
   "&:active": {
     color: "grey",
-  },
-});
-const StyledNavLink2 = styled(NavLink)({
-  textDecoration: "none",
-  color: "inherit",
-  "&:hover": {
-    color: "#cb11ab",
   },
 });
 
@@ -366,25 +317,59 @@ const StyledDivFlex = styled(Box)({
 
 const StyledImg = styled("img")({
   marginTop: "35px",
-});
-
-const StyledBr = styled(Box)({
-  border: "1px solid #cdcdcd",
-  marginTop: "20px",
+  width: "150px",
+  objectFit: "cover",
 });
 
 const StyledButtonDiv = styled(Box)({
   display: "flex",
   gap: "20px",
+  marginTop: "30px",
+  marginBottom: "10px",
 });
 
-const StyledButton = styled(Button)({
-  maxWidth: "100%",
+const StyledButton = styled(NavLink)(({ theme }) => ({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "6px 16px",
+  height: "36px",
   borderRadius: "4px",
-  backgroundColor: "#384255",
-  color: "white",
-  marginTop: "40px",
-});
+  color: "#fff",
+  textDecoration: "none",
+  fontWeight: "500",
+  textTransform: "uppercase",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  transition: "background-color 0.3s ease, box-shadow 0.3s ease",
+
+  "&.active": {
+    backgroundColor: "#384255",
+  },
+
+  "&:hover": {
+    backgroundColor: "#1565c0",
+    boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+  },
+
+  "&:active": {
+    backgroundColor: "#0d47a1",
+  },
+
+  "&:focus": {
+    outline: "none",
+  },
+
+  "&:not(.active)": {
+    backgroundColor: "#E0E2E7",
+    color: "#384255",
+  },
+
+  "&:disabled": {
+    backgroundColor: "#e0e0e0",
+    color: "#b0b0b0",
+    cursor: "not-allowed",
+  },
+}));
 
 const StyledLargeImg = styled("img")({
   width: "200px",
@@ -394,13 +379,19 @@ const StyledLargeImg = styled("img")({
 });
 
 const StyledArrowImg = styled("img")({
-  width: "30px",
-  height: "auto",
+  marginLeft: "40px",
+  width: "50px",
+  height: "30px",
+  marginTop: "20px",
+  cursor: "pointer",
 });
 
 const StyledImgDiv = styled("div")({
   display: "flex",
   marginTop: "60px",
+  width: "100px",
+  height: "100px",
+  objectFit: "cover",
 });
 
 const StyledBorder = styled(Box)({
@@ -416,33 +407,6 @@ const StyledBlack = styled(Box)({
   height: "23px",
 });
 
-const StyledGrey = styled(Box)({
-  backgroundColor: "grey",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
-const StyledSvet = styled(Box)({
-  backgroundColor: "#795974",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
-const StyledRed = styled(Box)({
-  backgroundColor: "red",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-const StyledBlue = styled(Box)({
-  backgroundColor: "blue",
-  borderRadius: "50%",
-  width: "23px",
-  height: "23px",
-});
-
 const StyledFlex = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
@@ -452,12 +416,14 @@ const StyledFlex = styled(Box)({
 const StyledFlexColor = styled(Box)({
   display: "flex",
   gap: "10px",
+  marginTop: "10px",
 });
 
 const StyledIngredients = styled("ul")({
   padding: 0,
   listStyle: "none",
   width: "100%",
+  margin: "0 0 250px 0",
 });
 
 const StyledIngredientItem = styled("li")({
@@ -497,9 +463,8 @@ const StyledButtonsDiv = styled(Box)({
   display: "flex",
   gap: "20px",
   justifyContent: "flex-start",
-  marginTop: "20px",
   marginLeft: "380px",
-  marginTop: "-250px",
+  marginTop: "-300px",
 });
 
 const StyledSkidka = styled(Box)({
@@ -512,44 +477,4 @@ const StyledSkidka = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-});
-const RatingReviewsBorder = styled("div")({
-  backgroundColor: "#f4f4f4",
-  width: "500px",
-  height: "auto",
-  borderRadius: "5px",
-  display: "flex",
-  padding: "16px",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "50px",
-});
-
-const RatingColumn = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  gap: "8px",
-  alignItems: "center",
-});
-
-const RatingWithText = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  gap: "8px",
-});
-
-const LeftColumn = styled(RatingColumn)({
-  display: "flex",
-});
-
-const RightColumn = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-});
-
-const DivCar = styled("div")({
-  display: "flex",
-  flexDirection: "row",
 });

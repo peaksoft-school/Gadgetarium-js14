@@ -1,13 +1,48 @@
+import { patch } from "@mui/system";
+import InnerPageCard from "../../pages/admin/InnerPageCard";
 import React from "react";
 import AdminLayout from "../../layout/admin/AdminLayout";
 import { ROUTES } from "../../utils/routes";
+import Product from "../../pages/admin/Product";
+import ProductTable from "../../components/UI/table/ProductTable";
 import AddProducts from "../../components/add-products/AddProducts";
 import OrdersData from "../../components/orders/OrdersData";
 import OrdersAdmin from "../../components/orders/OrdersAdmin";
+import ProductsSheetTable from "../../pages/admin/ProductsSheetTable";
+import AdminProductComents from "../../pages/admin/AdminProductComents";
 
 export const adminRoutes = [
-  { path: ROUTES.ADMIN.users, element: <AdminLayout /> },
-  { path: ROUTES.ADMIN.addProduct, element: <AddProducts /> },
+  {
+    index: true,
+    element: <ProductsSheetTable />,
+  },
+
+  {
+    path: ROUTES.ADMIN.productsInner,
+
+    element: <InnerPageCard />,
+  },
+
+  {
+    path: ROUTES.ADMIN.productTable,
+    element: <Product />,
+  },
+
+  {
+    path: ROUTES.ADMIN.users,
+    element: <AdminLayout />,
+  },
+
+  {
+    path: ROUTES.ADMIN.addProduct,
+    element: <AddProducts />,
+  },
+
+  {
+    path: "reviews",
+    element: <AdminProductComents />,
+  },
+
   { path: ROUTES.ADMIN.productMain, element: <OrdersAdmin /> },
   { path: ROUTES.ADMIN.productsInner, element: <OrdersData /> },
 ];
