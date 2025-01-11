@@ -1,96 +1,115 @@
-import { useEffect, useState, useRef } from "react";
-import { Box, styled } from "@mui/material";
-import { banner, iphone, macBook, product } from "../../assets/icon";
+import React, { useEffect, useState, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+
+import { BannerSlider1, IphoneBanner } from "../../assets/icon";
+import { styled } from "@mui/system";
 
 const imageSets = [
   {
-    background: banner,
-    image:
-      "https://s3-alpha-sig.figma.com/img/2499/26ce/a56b1431e4ac5d9fd0bb563d7abca245?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EzuoE1TKhTVUhYSfOXqivF~Xv1aqxsAqnqYFFed-mqGh7FJ9h61QeS4cfFIXxeqAuhFE0wdE7TO5PeWClG2SPoCxUn7HHxVvuzlc4RzI44pSXAGM52HN9CgiO7m5Os6QMXNUSUbwOMStQAOPH8k7WDrXOozkNGZ4JH~RggLhpD8IjEzwxKfPqAEMcRzLTN1WtIewo115LXpJ6KROJd62u6jn~jNL3KukD2jLn4xCfzKOumVi15mVvYQLsZOCvYaZykKOrnR2SccyidyxJFA6p7neMrlcd-S19IBbfT3qVf34HywTrRANA9OMeOW3~v20hIVis9zQiQZyCgT0EbIY1Q__",
+    background: BannerSlider1,
+    image: IphoneBanner,
   },
   {
-    background: iphone,
+    video:
+      "https://www.apple.com/105/media/us/mac/family/2024/60fc0159-4236-4a03-8534-f5ba07e538c5/anim/welcome/large_2x.mp4",
   },
   {
-    background: macBook,
+    video:
+      "https://www.apple.com/105/media/ww/iphone/family/2024/cf19f185-dd7e-4350-97ff-e44860713b54/anim/welcome/large_2x.mp4",
   },
   {
-    background: product,
+    video:
+      "https://www.apple.com/105/media/ww/watch/2024/f0b51c31-e8a5-44d7-b23d-51bd2858454a/anim/hero/large_2x.mp4",
   },
 ];
 
 const BannerSlider = () => {
   const [currentSet, setCurrentSet] = useState(imageSets[0]);
-  const [fade, setFade] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef(null);
-
-  const startAutoSlide = () => {
-    intervalRef.current = setInterval(() => {
-      handleNextSlide();
-    }, 5000);
-  };
+  const videoRef = useRef(null);
 
   useEffect(() => {
     startAutoSlide();
 
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [activeIndex]);
 
-  const handleNextSlide = () => {
-    setFade(true);
-    setTimeout(() => {
+  const startAutoSlide = () => {
+    intervalRef.current = setInterval(() => {
       const nextIndex = (activeIndex + 1) % imageSets.length;
       setActiveIndex(nextIndex);
       setCurrentSet(imageSets[nextIndex]);
-      setFade(false);
-    }, 500);
+    }, 2000);
   };
 
-  const handleDotClick = (index) => {
-    clearInterval(intervalRef.current);
-    setFade(true);
-    setTimeout(() => {
-      setCurrentSet(imageSets[index]);
-      setActiveIndex(index);
-      setFade(false);
-      startAutoSlide();
-    }, 500);
+  const handleVideoEnd = () => {
+    setActiveIndex(0);
+    setCurrentSet(imageSets[0]);
   };
 
   return (
-    <div style={{ overflow: "hidden" }}>
-      <StyledBox
-        fade={fade}
-        style={{ backgroundImage: `url(${currentSet.background})` }}
+    <>
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={0}
+        pagination={{
+          clickable: true,
+        }}
+        loop={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        modules={[Pagination, Autoplay]}
+        onSlideChange={(swiper) => {
+          setActiveIndex(swiper.activeIndex);
+          setCurrentSet(imageSets[swiper.activeIndex]);
+        }}
+        className="mySwiper"
       >
-        {currentSet.image && <StyledImage src={currentSet.image} alt="" />}
-      </StyledBox>
-      <DotContainer>
-        {imageSets.map((_, index) => (
-          <Dot
-            key={index}
-            active={index === activeIndex}
-            onClick={() => handleDotClick(index)}
-          />
+        {imageSets.map((set, index) => (
+          <SwiperSlide key={index}>
+            <StyledBox
+              style={{
+                backgroundImage: set.video ? "none" : `url(${set.background})`,
+              }}
+            >
+              {!set.video && set.image && (
+                <StyledImage src={set.image} alt="Iphone" />
+              )}
+              {set.video && (
+                <StyledVideo
+                  ref={videoRef}
+                  autoPlay
+                  loop={false}
+                  muted
+                  onEnded={handleVideoEnd}
+                >
+                  <source src={set.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </StyledVideo>
+              )}
+            </StyledBox>
+          </SwiperSlide>
         ))}
-      </DotContainer>
-    </div>
+      </Swiper>
+    </>
   );
 };
 
 export default BannerSlider;
 
-const StyledBox = styled(Box)(({ fade }) => ({
+const StyledBox = styled("div")(() => ({
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  width: "100vw",
+  width: "100%",
   height: "500px",
   position: "relative",
-  overflow: "hidden",
-  transition: "opacity 0.5s ease-in-out",
-  opacity: fade ? 0 : 1,
 }));
 
 const StyledImage = styled("img")(() => ({
@@ -102,19 +121,12 @@ const StyledImage = styled("img")(() => ({
   zIndex: 1,
 }));
 
-const DotContainer = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "center",
-  marginTop: "20px",
-  gap: "8px",
-  alignItems: "center",
-}));
-
-const Dot = styled("div")(({ active }) => ({
-  width: active ? "12px" : "7px",
-  height: active ? "12px" : "7px",
-  borderRadius: "50%",
-  backgroundColor: active ? "#cb11ab" : "#e8c7e2",
-  transition: "background-color 0.3s, width 0.3s, height 0.3s",
-  cursor: "pointer",
+const StyledVideo = styled("video")(() => ({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  zIndex: 0,
 }));
