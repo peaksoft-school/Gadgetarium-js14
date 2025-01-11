@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const getOrdersAdmin = createAsyncThunk(
   "orderAdmin/getOrdersAdmin",
@@ -46,8 +47,13 @@ export const deleteAdminOrders = createAsyncThunk(
   async (ordersId, { rejectWithValue }) => {
     try {
       await axiosInstance.delete(`/api/admin/orders/${ordersId}`);
+      toastifyMessage({ message: "Успешно удалено" });
       return { id: ordersId };
     } catch (error) {
+      toastifyMessage({
+        message: "Не удалось удалить заказ",
+        status: "error",
+      });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
