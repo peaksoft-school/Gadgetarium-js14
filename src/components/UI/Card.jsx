@@ -15,6 +15,8 @@ import {
   postToBasket,
 } from "../../store/product-catalog/productCatalogThunk";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Card = ({
   img,
@@ -30,16 +32,19 @@ const Card = ({
   disPage = false,
   recommendet = false,
 }) => {
+  const [addOrDelete, setAddorDelete] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
 
+  const subProductId = "1";
   const handleAddToFavourites = () => {
-    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+    const updatedState = !addOrDelete;
+    setAddorDelete(updatedState);
+    dispatch(postFavourites({ subProductId, addOrDelete: updatedState })); // Отправляем обновленное значение
   };
-
   const handlePostpostToBasket = () => {
     dispatch(postToBasket({ subProductId, quantity: 1 }));
   };
@@ -57,7 +62,7 @@ const Card = ({
           <StyledIcanConteiner>
             <img src={Component} alt="compare" />
             <img
-              src={discountClas ? redHeart : greyHeart}
+              src={addOrDelete === true ? redHeart : greyHeart}
               alt="like"
               onClick={handleAddToFavourites}
             />

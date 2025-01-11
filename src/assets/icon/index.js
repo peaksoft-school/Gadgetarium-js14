@@ -106,3 +106,4 @@ export { default as XMLID } from "../icon/XMLID.svg";
 export { default as PaymentByCard } from "../icon/PaymentByCard.svg";
 export { default as arrow2 } from "../icon/arrow2.svg";
 export { default as samsungphone } from "../icon/samsungphone.png";
+export { default as Hands } from "../icon/Hands.svg";

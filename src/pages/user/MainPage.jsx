@@ -1,7 +1,16 @@
 import { useEffect } from "react";
 import BannerSlider from "../../components/banner/BannerSlider";
 import Card from "../../components/UI/Card";
-import { Box, styled } from "@mui/system";
+import {
+  Box,
+  color,
+  display,
+  height,
+  padding,
+  styled,
+  textAlign,
+  width,
+} from "@mui/system";
 import Button from "../../components/UI/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,6 +19,7 @@ import {
   getrecommendedCards,
 } from "../../store/cardProducts/cardThunk";
 import Loading from "../../components/UI/Loading";
+import { BankCart, Bus, Hands, Order, WorkKey } from "../../assets/icon";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -152,6 +162,28 @@ const MainPage = () => {
           </StyledButtonBox>
         </>
       ) : null}
+      <FooterBox>
+        <div>
+          <img src={Order} alt="distribute" />
+          <p>Официальный дистрибьютер</p>
+        </div>
+        <div>
+          <img src={WorkKey} alt="key" />
+          <p>Гарантийное обслуживание</p>
+        </div>
+        <div>
+          <img src={BankCart} alt="bankCard" />
+          <p>Оплата любым удобным способом</p>
+        </div>
+        <div>
+          <img src={Hands} alt="offer" />
+          <p>Оптовые продажи</p>
+        </div>
+        <div>
+          <img src={Bus} alt="delivery" />
+          <p>Доставка в любой регион Кыргызстана</p>
+        </div>
+      </FooterBox>
     </WrapperBox>
   );
 };
@@ -181,4 +213,23 @@ const StyledButtonBox = styled(Box)(() => ({
   margin: "auto",
   marginTop: "40px",
   marginBottom: "30px",
+}));
+
+const FooterBox = styled(Box)(() => ({
+  display: "flex",
+  gap: "30px",
+  "& div": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "222px",
+    height: "192px",
+    backgroundColor: "#fff",
+    textAlign: "center",
+    gap: "15px",
+    cursor: "pointer",
+  },
+  justifyContent: "center",
+  padding: "40px 0px 80px 0px",
 }));

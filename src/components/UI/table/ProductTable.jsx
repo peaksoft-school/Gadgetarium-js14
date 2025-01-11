@@ -23,6 +23,8 @@ const ProductTable = ({ data, columns }) => {
   const [selectedIds, setSelectedIds] = useState([]);
 
   const handleCheckboxClick = (id) => {
+    if (!id) return;
+
     setSelectedIds((prev) =>
       prev.includes(id)
         ? prev.filter((selectedId) => selectedId !== id)
@@ -77,18 +79,7 @@ const ProductTable = ({ data, columns }) => {
                     >
                       {row.cells.map((cell, index) => (
                         <StyledBodyCell {...cell.getCellProps()}>
-                          {index === 0 ? (
-                            hoveredRowId === rowId ? (
-                              <StyledCheckbox
-                                checked={selectedIds.includes(rowId)}
-                                onChange={() => handleCheckboxClick(rowId)}
-                              />
-                            ) : (
-                              rowId
-                            )
-                          ) : (
-                            cell.render("Cell")
-                          )}
+                          {cell.render("Cell")}
                         </StyledBodyCell>
                       ))}
                     </TableRow>
