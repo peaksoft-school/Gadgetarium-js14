@@ -43,6 +43,6 @@ export const adminRoutes = [
     element: <AdminProductComents />,
   },
 
-  { path: ROUTES.ADMIN.productMain, element: <OrdersAdmin /> },
-  { path: ROUTES.ADMIN.productsInner, element: <OrdersData /> },
+  { path: ROUTES.ADMIN.orders, element: <OrdersAdmin /> },
+  { path: ROUTES.ADMIN.orderDetail, element: <OrdersData /> },
 ];

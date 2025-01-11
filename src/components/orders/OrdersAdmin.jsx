@@ -59,9 +59,19 @@ const OrdersAdmin = () => {
     },
     {
       id: 3,
-      fullName: "Марлен Марленов",
+      fullName: "Джулия Курманова",
       orderNumber: "3",
       date: "2023-03-25",
+      totalPrice: 150000,
+      quantity: 3,
+      deliveryType: "Доставка",
+      status: "ONTHEWAY",
+    },
+    {
+      id: 3,
+      fullName: "Марлен Марленов",
+      orderNumber: "3",
+      date: "2025-01-14",
       quantity: 3,
       totalPrice: 150000,
       deliveryType: "Доставка",
@@ -104,9 +114,7 @@ const OrdersAdmin = () => {
     setOrders(filteredOrders);
   }, [debouncedSearchTerm, filter]);
   const handleSortOptionClick = (newStatus) => {
-    // Логика обновления статуса заказа
     console.log("Новый статус:", newStatus);
-    // Возможно, тут нужно будет вызвать API для обновления заказа
   };
 
   const handleChangePage = (event, value) => {
@@ -218,7 +226,6 @@ const OrdersAdmin = () => {
       Cell: ({ row }) => {
         const { deliveryType, status } = row.original;
 
-        // Определяем, какие статусы отображать в зависимости от типа доставки
         const statuses =
           deliveryType === "Самовывоз" ? selfPickupStatuses : deliveryStatuses;
 
@@ -271,12 +278,13 @@ const OrdersAdmin = () => {
         <StyledBoxDeleite>
           <div
             style={{
+              marginLeft: "20px",
               cursor: "pointer",
               textAlign: "center",
             }}
             onClick={() => handlerDeleteProduct(row.original.id)}
           >
-            <img src={garbage} onClick={handleOpen} />
+            <img src={garbage} onClick={() => handleOpen} />
           </div>
         </StyledBoxDeleite>
       ),
@@ -315,11 +323,18 @@ const OrdersAdmin = () => {
                   В обработке
                 </StyledButton>
                 <StyledButton
+                  selected={filter === "ONTHEWAY"}
+                  onClick={() => handleFilterChange("ONTHEWAY")}
+                >
+                  Курьер в пути
+                </StyledButton>
+                <StyledButton
                   selected={filter === "DELIVERED"}
                   onClick={() => handleFilterChange("DELIVERED")}
                 >
                   Доставлены
                 </StyledButton>
+
                 <StyledButton
                   selected={filter === "CANCELLED"}
                   onClick={() => handleFilterChange("CANCELLED")}
