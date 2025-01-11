@@ -15,10 +15,10 @@ export const uploadFileToAWS = createAsyncThunk(
           },
         }
       );
-      toastifyMessage({ message: "успешно" });
+      toastifyMessage({ message: "Успешна отправлен" });
       return data;
     } catch (error) {
-      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
+      toastifyMessage({ message: "ошибка отправки", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -39,8 +39,11 @@ export const updateProfileImage = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "Успешна загрузили" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка загруски", status: "error" });
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -53,12 +56,11 @@ export const updateProfile = createAsyncThunk(
   async (profileData, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.put("/api/profile", profileData);
-      toastifyMessage({ message: "успешно" });
+      toastifyMessage({ message: "  успешно отправлено" });
       return data;
     } catch (error) {
-      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
+      toastifyMessage({ message: "ошибка Личные данные ", status: "error" });
       return rejectWithValue(
-        
         error.response ? error.response.data : error.message
       );
     }
@@ -78,10 +80,10 @@ export const resetPassword = createAsyncThunk(
           },
         }
       );
-      toastifyMessage({ message: "успешно" });
+      toastifyMessage({ message: "Успешно изминили порль" });
       return data;
     } catch (error) {
-      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
+      toastifyMessage({ message: "ошибка изминени пороль ", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
