@@ -171,7 +171,10 @@ const Header = () => {
                   <StyledMenuItem key="favorites">
                     <p>Избранное</p>
                   </StyledMenuItem>,
-                  <StyledMenuItem key="profile">
+                  <StyledMenuItem
+                    key="profile"
+                    onClick={() => navigate("/user/profile")}
+                  >
                     <p>Профиль</p>
                   </StyledMenuItem>,
                   <StyledMenuItem key="logout">
