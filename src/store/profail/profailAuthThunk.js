@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const uploadFileToAWS = createAsyncThunk(
   "upload_file_to_aws",
@@ -14,8 +15,10 @@ export const uploadFileToAWS = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "успешно" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -50,9 +53,12 @@ export const updateProfile = createAsyncThunk(
   async (profileData, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.put("/api/profile", profileData);
+      toastifyMessage({ message: "успешно" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
       return rejectWithValue(
+        
         error.response ? error.response.data : error.message
       );
     }
@@ -72,8 +78,10 @@ export const resetPassword = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "успешно" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка загрузки" ,status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
