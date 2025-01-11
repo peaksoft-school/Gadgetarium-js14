@@ -50,6 +50,8 @@ const Profail = () => {
   const [showerer, setShowerer] = useState(false);
   const [imageLink, setImageLink] = useState(null);
 
+  const [newPassword, setNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { link } = profileData || {};
 
   const {
@@ -72,10 +74,6 @@ const Profail = () => {
 
   const handlePasswordChangeClick = () => {
     setShowPasswordChange((prev) => !prev);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
   };
 
   const onSubmitPassword = (data) => {
@@ -313,16 +311,16 @@ const Profail = () => {
                     }
                     {...registerPassword("newPassword")}
                     placeholder="Новый пароль"
-                    type="password"
                     error={!!passwordErrors.newPassword}
                     helperText={passwordErrors.newPassword?.message}
+                    type={newPassword ? "text" : "password"}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={() => setShoProtocol(!shoProtocol)}
+                            onClick={() => setNewPassword(!newPassword)}
                           >
-                            {shoProtocol ? <Visibility /> : <VisibilityOff />}
+                            {newPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -343,14 +341,22 @@ const Profail = () => {
                     }
                     {...registerPassword("confirmPassword")}
                     placeholder="Подтвердите новый пароль"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     error={!!passwordErrors.confirmPassword}
                     helperText={passwordErrors.confirmPassword?.message}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShowerer(!showerer)}>
-                            {showerer ? <Visibility /> : <VisibilityOff />}
+                          <IconButton
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                          >
+                            {showConfirmPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -445,7 +451,6 @@ const StyledButtonStonddd = styled("button")(() => ({
 const StyledInputbox = styled(Input)(() => ({
   width: "340px",
   borderRadius: "6px",
-  // border: "1px solid #c2c2c2",
   "& .MuiInputBase-input": {
     padding: "15px",
   },

@@ -15,8 +15,10 @@ export const uploadFileToAWS = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "Успешна отправлен" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка отправки", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -37,8 +39,11 @@ export const updateProfileImage = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "Успешна загрузили" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка загруски", status: "error" });
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -58,6 +63,7 @@ export const updateProfile = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка Личные данные ", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -78,8 +84,10 @@ export const resetPassword = createAsyncThunk(
           },
         }
       );
+      toastifyMessage({ message: "Успешно изминили порль" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "ошибка изминени пороль ", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );

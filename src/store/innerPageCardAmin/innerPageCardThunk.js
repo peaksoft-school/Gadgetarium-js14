@@ -30,7 +30,7 @@ const getRating = createAsyncThunk(
 
       return data;
     } catch (error) {
-      x("ошибка запроса рейтинга", error);
+      ("ошибка запроса рейтинга", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
