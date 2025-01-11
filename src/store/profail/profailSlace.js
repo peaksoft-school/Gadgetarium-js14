@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { resetPassword, updateProfile, updateProfileImage, uploadFileToAWS } from "./profailAuthThunk";
+import {
+  resetPassword,
+  updateProfile,
+  updateProfileImage,
+  uploadFileToAWS,
+} from "./profailAuthThunk";
 
 const initialState = {
   profileData: null,
@@ -23,7 +28,9 @@ export const profileSlice = createSlice({
       .addCase(uploadFileToAWS.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
+
+    builder
       .addCase(updateProfileImage.pending, (state) => {
         state.loading = true;
       })
@@ -34,33 +41,32 @@ export const profileSlice = createSlice({
       .addCase(updateProfileImage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
+
+    builder
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
-      
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.profileData = action.payload
-        
+        state.profileData = action.payload;
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(resetPassword.fulfilled,(state,action)=>{
-        state.loading=false
-        state.profileData=action.payload
-      })
-      .addCase(resetPassword.pending,(state)=>{
-        state.loading=true
-      })
-      .addCase(resetPassword.rejected,(state,action)=>{
-        state.loading=false
-        state.profileData=action.payload
-      })
 
-      
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profileData = action.payload;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.profileData = action.payload;
+      });
   },
 });
 

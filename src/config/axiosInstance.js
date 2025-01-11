@@ -18,8 +18,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqanNkaGpAZ21haWwuY29tIiwiaWF0IjoxNzM2MzMxNDE2LCJleHAiOjE3Mzc3NzE0MTZ9.nVDVOWEjSZni85DSlzE2UhIePoPnX6VJgjYJMxemDfE";
+    const token = store?.getState()?.auth?.userData.token;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }

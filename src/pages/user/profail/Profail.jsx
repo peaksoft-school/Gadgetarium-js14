@@ -47,8 +47,7 @@ const Profail = () => {
   const { loading, profileData } = useSelector((state) => state.profile);
   const [showPassword, setShowPassword] = useState(false);
   const [shoProtocol, setShoProtocol] = useState(false);
-  const [showerer,setShowerer]=useState(false)
-
+  const [showerer, setShowerer] = useState(false);
 
   const { link } = profileData || {};
 
@@ -276,13 +275,14 @@ const Profail = () => {
                     {...registerPassword("oldPassword")}
                     placeholder="Старый пароль"
                     type={showPassword ? "text" : "password"}
-
                     error={!!passwordErrors.oldPassword}
                     helperText={passwordErrors.oldPassword?.message}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShowPassword(!showPassword)}>
+                          <IconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
                             {showPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>
@@ -311,7 +311,9 @@ const Profail = () => {
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShoProtocol(!shoProtocol)}>
+                          <IconButton
+                            onClick={() => setShoProtocol(!shoProtocol)}
+                          >
                             {shoProtocol ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>

@@ -9,6 +9,7 @@ import TheChosenOne from "../layout/user/theCoseONe/TheChosenOne";
 import ItemsInCard from "../pages/user/ItemsInCard";
 import ProductCardDescription from "../components/product-card-description/ProductCardDescription";
 import CompareMainPage from "../components/compare/CompareMainPage";
+import Profail from "../pages/user/profail/Profail";
 
 export const userRoutes = [
   { path: ROUTES.USER.index, element: <MainPage /> },
@@ -21,4 +22,5 @@ export const userRoutes = [
   { path: ROUTES.USER.basket, element: <ItemsInCard /> },
   { path: ROUTES.USER.productCard, element: <ProductCardDescription /> },
   { path: ROUTES.USER.compare, element: <CompareMainPage /> },
+  { path: ROUTES.USER.profile, element: <Profail /> },
 ];
