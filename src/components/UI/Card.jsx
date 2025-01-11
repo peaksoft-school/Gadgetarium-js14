@@ -26,10 +26,9 @@ const Card = ({
   newPrice,
   price,
   discountClas,
-  subProductId,
   type = "default",
-  recommendet = false,
   disPage = false,
+  recommendet = false,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -168,9 +167,6 @@ const Card = ({
 export default Card;
 
 const StyledContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  gap: "16px",
   width: "280px",
 });
 
