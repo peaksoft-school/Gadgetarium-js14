@@ -102,6 +102,17 @@ const Header = () => {
     handleClose();
   };
 
+  const menuLinks = [
+    { key: "history", text: "История заказов", path: ROUTES.USER.orderHistory },
+    {
+      key: "favorites",
+      text: "Избранное",
+      path: ROUTES.USER.accountFavourites,
+    },
+    { key: "profile", text: "Профиль", path: ROUTES.USER.profile },
+    { key: "logout", text: "Выйти", action: toggleLogout },
+  ];
+
   return (
     <>
       <FirstBox>
@@ -162,24 +173,18 @@ const Header = () => {
                   </StyledMenuItem>,
                 ]
               : [
-                  <StyledMenuItem
-                    key="history"
-                    onClick={() => navigate("/user/account-favourites")}
-                  >
-                    <p>История заказов</p>
-                  </StyledMenuItem>,
-                  <StyledMenuItem key="favorites">
-                    <p>Избранное</p>
-                  </StyledMenuItem>,
-                  <StyledMenuItem
-                    key="profile"
-                    onClick={() => navigate("/user/profile")}
-                  >
-                    <p>Профиль</p>
-                  </StyledMenuItem>,
-                  <StyledMenuItem key="logout">
-                    <p onClick={toggleLogout}>Выйти</p>
-                  </StyledMenuItem>,
+                  <>
+                    {menuLinks.map((link) => (
+                      <StyledMenuItem
+                        key={link.key}
+                        onClick={
+                          link.action ? link.action : () => navigate(link.path)
+                        }
+                      >
+                        <p>{link.text}</p>
+                      </StyledMenuItem>
+                    ))}
+                  </>,
                 ]}
           </StyledMenu>
         </StyledPersonBox>
@@ -233,9 +238,28 @@ const Header = () => {
         />
         {!showAdgetariumImg && (
           <StyledImg>
-            <img src={IconFacebook} alt="face" />
-            <img src={IconInstagram} alt="insta" />
-            <img src={IconWhatsApp} alt="whatsapp" />
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://www.facebook.com/profile.php?id=61551382664778"
+            >
+              <img key={"1"} src={IconFacebook} alt="face" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/bayelbikiev/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img key={"3"} src={IconInstagram} alt="insta" />
+            </a>
+            <a
+              href="https://wa.me/996707507530"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img key={"5"} src={IconWhatsApp} alt="whatsapp" />
+            </a>
           </StyledImg>
         )}
         {userData.isAuth && (
@@ -391,6 +415,7 @@ const StyledPersonBox = styled(Box)(() => ({
 
 const StyledImg = styled(Box)(() => ({
   display: "flex",
+  alignItems: "center",
   gap: "15px",
   margin: "0 120px 0 0",
   cursor: "pointer",
@@ -399,9 +424,8 @@ const StyledImg = styled(Box)(() => ({
     height: "30px",
   },
   "& img:nth-of-type(2)": {
-    width: "26px",
-    height: "26px",
-    marginTop: "2px",
+    width: "24px",
+    height: "24px",
   },
 }));
 

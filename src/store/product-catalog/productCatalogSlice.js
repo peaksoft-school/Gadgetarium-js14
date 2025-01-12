@@ -35,8 +35,9 @@ export const productCatalagSlice = createSlice({
       .addCase(getCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
 
+    builder
       .addCase(getAllCards.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -48,7 +49,8 @@ export const productCatalagSlice = createSlice({
       .addCase(getAllCards.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
+    builder
       .addCase(getSubCategories.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -62,8 +64,9 @@ export const productCatalagSlice = createSlice({
       .addCase(getSubCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
 
+    builder
       .addCase(postFavourites.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -74,8 +77,9 @@ export const productCatalagSlice = createSlice({
       .addCase(postFavourites.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
 
+    builder
       .addCase(getLastViews.pending, (state) => {
         (state.isLoading = true), (state.error = null);
       })
@@ -87,8 +91,8 @@ export const productCatalagSlice = createSlice({
       .addCase(getLastViews.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
-
+      });
+    builder
       .addCase(postToBasket.pending, (state) => {
         (state.isLoading = true), (state.error = null);
       })
@@ -99,8 +103,9 @@ export const productCatalagSlice = createSlice({
       .addCase(postToBasket.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
 
+    builder
       .addCase(getFilter.pending, (state) => {
         (state.isLoading = true), (state.error = null);
       })

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Customer, HeadPhone, Kyrgyzstan } from "../assets/image";
+import { Customer, HeadPhone, Kyrgyzstan, Store } from "../assets/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -13,33 +13,80 @@ const contentData = [
   { main: "Главная »", store: "О магазине" },
   {
     id: 1,
-    titleSection: "Магазин Gadgetarium",
+    titleSection: "Магазин Gadgetarium ",
     list: [
-      "сплоченная команда людей, любящих спорт и здоровый образ жизни знающих свое дело и ориентирующихся во всех нюансах фитнес оборудования",
-      "широкая номенклатура качественной продукции ведущих мировых брендов с огромным выбором товаров в наличии;",
-      " склад запчастей для обеспечения качественного сервиса и бесперебойной работы оборудования",
-      "собственный колл-центр с информационной и технической поддержкой",
-      " строгое соблюдение всех обязательств перед партнерами",
-      " отличные цены и эксклюзивные условия для постоянных партнеров.",
+      "широкий ассортимент современных гаджетов от ведущих мировых брендов;",
+      "качественную продукцию с гарантией надежности;",
+      "склад запчастей и собственный сервисный центр для обслуживания устройств;",
+      " колл-центр с квалифицированной поддержкой для решения любых вопросов;",
+      "конкурентоспособные цены и выгодные условия для постоянных клиентов.",
     ],
   },
   {
     id: 2,
     titleSection: "В чем причина нашего успеха?",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi assumenda cumque in beatae iure, dignissimos repudiandae eos amet perspiciatis praesentium sunt maiores aperiam excepturi reprehenderit pariatur quas sed nam! Id quaerat totam omnis nostrum excepturi, quo consequuntur saepe quasi, atque officia et dignissimos molestias ex quae. Illum quidem, recusandae maiores nam doloribus exercitationem, fugit in laboriosam fuga inventore velit obcaecati dolore aperiam sint, corrupti et voluptatem tempore odio iure provident laborum libero quis fugiat. Modi perferendis beatae sint. Nobis totam odit fugiat voluptatum eum dolores reprehenderit voluptatem ratione adipisci minus, ex labore ad sit quisquam et cumque saepe consequuntur ipsa nostrum! Quam, enim aspernatur omnis iste non voluptatum et ratione libero natus illum dolorum magnam, numquam ad quos debitis asperiores",
+    reasons: [
+      {
+        title: "Мы знаем своих клиентов.",
+        description:
+          "Мы изучаем ваши потребности и предлагаем только те решения, которые действительно работают для вас. Каждый наш продукт — это ответ на запросы современного пользователя.",
+      },
+      {
+        title: "Качество превыше всего.",
+        description:
+          "Мы сотрудничаем только с проверенными поставщиками и мировыми брендами, чтобы вы получали технику, которая служит долго и работает без сбоев.",
+      },
+      {
+        title: "Сервис, которому можно доверять.",
+        description:
+          "Наша поддержка — это не просто формальность. Мы на связи, чтобы помочь вам на каждом этапе: от выбора устройства до его настройки и обслуживания.",
+      },
+      {
+        title: "Ассортимент для каждого.",
+        description:
+          "В нашем каталоге есть гаджеты на любой вкус и бюджет: от доступных устройств до премиум-техники, от новинок до проверенной классики.",
+      },
+      {
+        title: "Честные цены и выгодные предложения.",
+        description:
+          "Мы предлагаем лучшие условия на рынке и заботимся о том, чтобы технологии оставались доступными для всех.",
+      },
+      {
+        title: "Профессиональная команда.",
+        description:
+          "За каждым успехом стоят наши специалисты: от консультантов до сервисных инженеров. Это люди, которые знают всё о современных технологиях и любят свою работу.",
+      },
+      {
+        title: "Мы строим долгосрочные отношения.",
+        description:
+          "Наши клиенты остаются с нами надолго, потому что мы не просто продаем, а создаем ценность — заботу, комфорт и уверенность в выборе.",
+      },
+    ],
   },
   {
     id: 3,
     titleSection: "Мы сегодня — это",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    text: [
+      "Современный интернет-магазин, где новейшие технологии и стильные гаджеты становятся частью вашей жизни",
+      " ",
+      "Широкий ассортимент товаров, от умных часов и смартфонов до аксессуаров и техники для дома, который удовлетворит даже самых требовательных покупателей",
+      " ",
+      "Экспертная команда, которая знает всё о гаджетах и всегда готова помочь в выборе идеального устройства.",
+      "Надежный сервис, где каждая покупка сопровождается вниманием, поддержкой и гарантией качества.",
+      "Партнёр, который заботится о вас, предлагая лучшие условия, честные цены и специальные предложения для постоянных клиентов.",
+      "Лидер в своем сегменте, задающий тренды и вдохновляющий на использование передовых технологий.",
+    ],
     text2:
-      " Amet amet est orci volutpat placerat maecenas egestas augue ac. Tortor, sed magnis interdum massa. Id phasellus lectus duis nisl. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam.Non ultricies sollicitudin nisl quisque. Morbi integer quis tincidunt vitae penatibus. Feugiat quis tincidunt volutpat scelerisque elit fermentum nullam rhoncus adipiscing. Sem tortor molestie odio. Adipiscing etiam vitae in semper sed eget nec aliquet aliquam",
+      "Gadgetarium — это место, где технологии становятся ближе. Мы работаем для вас, чтобы каждая покупка приносила радость и уверенность в завтрашнем дне. Сегодня мы — это надежность, качество и инновации.",
     img: Kyrgyzstan,
   },
 ];
 
 const images = [
-  { id: "1", image: HeadPhone },
+  {
+    id: "1",
+    image: Customer,
+  },
   { id: "2", image: HeadPhone },
   { id: "3", image: Customer },
 ];
@@ -104,10 +151,27 @@ const AboutStore = () => {
       <WrapperBox>
         {contentData
           .slice(0, contentData.length - 1)
-          .map(({ id, titleSection, text, list }) => (
+          .map(({ id, titleSection, reasons, list, text }) => (
             <Box key={id}>
               <h2>{titleSection}</h2>
-              {list ? (
+              {reasons ? (
+                reasons.map((reason, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: "60%",
+                      paddingBottom: "20px",
+                      "& h3": {
+                        fontFamily: "sans-serif",
+                        padding: "12px 0px 4px 0px",
+                      },
+                    }}
+                  >
+                    <h3>{`${index + 1}. ${reason.title}`}</h3>
+                    <p>{reason.description}</p>
+                  </Box>
+                ))
+              ) : list ? (
                 <StyledUl>
                   {list.map((listItem, i) => (
                     <li key={i}>{listItem}</li>
@@ -118,7 +182,6 @@ const AboutStore = () => {
               )}
             </Box>
           ))}
-
         {contentData.slice(-1).map(({ id, titleSection, text, img, text2 }) => (
           <StyledBox key={id}>
             <Box>
@@ -126,7 +189,6 @@ const AboutStore = () => {
               <SmallTextBox>{text}</SmallTextBox>
               <SmallTextBox>{text2}</SmallTextBox>
             </Box>
-
             <img src={img} alt="kyrgyzstanImage" />
           </StyledBox>
         ))}
@@ -139,7 +201,7 @@ export default AboutStore;
 const WrapperBox = styled(Box)(({ theme }) => ({
   width: "100%",
   backgroundColor: theme.palette.lightGrey.light,
-  padding: "60px 120px",
+  padding: "60px",
 }));
 
 const StyledSlider = styled(Slider)(() => ({
@@ -159,7 +221,7 @@ const StyledSlider = styled(Slider)(() => ({
 
 const FirstBox = styled(Box)(({ theme }) => ({
   fontSize: "15px",
-  padding: "60px 120px",
+  padding: "60px",
   backgroundColor: theme.palette.lightGrey.light,
   "& span": {
     display: "inline-block",
@@ -212,6 +274,7 @@ const SmallTextBox = styled(Box)(() => ({
 
 const StyledBox = styled(Box)(() => ({
   display: "flex",
+  padding: "60px 0px",
   "& img": {
     width: "750px",
     height: "auto",

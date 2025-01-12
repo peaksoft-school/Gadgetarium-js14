@@ -23,6 +23,8 @@ const ProductTable = ({ data, columns, onClick }) => {
   const [selectedIds, setSelectedIds] = useState([]);
 
   const handleCheckboxClick = (id) => {
+    if (!id) return;
+
     setSelectedIds((prev) =>
       prev.includes(id)
         ? prev.filter((selectedId) => selectedId !== id)

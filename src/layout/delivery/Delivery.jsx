@@ -14,7 +14,7 @@ const Delivery = () => {
       <Background>
         <Divider>
           <StyledBlock>
-            <p>Главная</p>
+            <p>Главная »</p>
             <p>Контакты</p>
           </StyledBlock>
           <Header>Доставка</Header>
@@ -80,7 +80,7 @@ const Container = styled(Box)({
 
 const Background = styled(Box)({
   backgroundColor: "#f4f4f4",
-  padding: "0 95px",
+  padding: "0 60px",
 });
 
 const Divider = styled(Box)({
@@ -96,6 +96,17 @@ const StyledBlock = styled(Box)({
     margin: 0,
     transition: "color 0.3s ease",
     "&:hover": { color: "grey" },
+  },
+  "& span": {
+    display: "inline-block",
+    paddingBottom: "30px",
+  },
+  "& span:first-of-type": {
+    color: "grey",
+    paddingRight: "6px",
+  },
+  "& span:last-child": {
+    fontWeight: "bold",
   },
 });
 

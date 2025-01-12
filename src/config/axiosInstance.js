@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const axiosInstance = axios.create({
@@ -44,7 +45,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       console.error(
-        ` Ошибка ${status}: ${error.response.data.message || error.message} `
+        `Ошибка ${status}: ${error.response.data.message || error.message}`
       );
     } else {
       console.error("Ошибка сети или сервера");

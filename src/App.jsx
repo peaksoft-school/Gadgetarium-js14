@@ -5,6 +5,7 @@ import Notification from "./components/UI/Toastify";
 const App = () => {
   return (
     <div>
+      <Notification />
       <AppRouter />
       <Notification />
     </div>
