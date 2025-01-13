@@ -9,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { colorPaletteWithIds } from "..";
 import { Box, styled } from "@mui/system";
 import { IconColor } from "../../../assets/icon";
 import DropZone from "./DropZone";
@@ -18,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProductData } from "../../../store/admin-addproduct/productsSlice";
 import { postFile } from "../../../store/admin-addproduct/productsThunk";
 import Loading from "../../UI/Loading";
+import { colorPalette } from "..";
 
 const schema = yup.object().shape({
   color: yup.string().required("Цвет обязательно"),
@@ -163,9 +163,9 @@ const PhoneForm = ({ setNewValue }) => {
                 gap: 1,
               }}
             >
-              {colorPaletteWithIds.map((item) => (
+              {colorPalette.map((item) => (
                 <Box
-                  key={item.id}
+                  key={crypto.randomUUID()}
                   sx={{
                     width: 24,
                     height: 24,
@@ -174,7 +174,7 @@ const PhoneForm = ({ setNewValue }) => {
                     border: "1px solid #ccc",
                   }}
                   onClick={() => {
-                    setValue("color", item.color);
+                    setValue("color", item.value);
                     closePopover();
                   }}
                 />

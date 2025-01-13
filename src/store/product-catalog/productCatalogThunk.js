@@ -170,8 +170,6 @@ export const getLastViews = createAsyncThunk(
   }
 );
 
-
-
 export const postToBasket = createAsyncThunk(
   "postToBasket",
   async ({ subProductId, quantity }, { rejectWithValue }) => {
