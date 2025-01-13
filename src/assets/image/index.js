@@ -14,3 +14,4 @@ export { default as CompareImg } from "../image/CompareImg.png";
 export { default as SamsungText } from "../image/SamsungText.png";
 export { default as Group22 } from "../image/Group22.png";
 export { default as Smsung } from "../image/Smsung.png";
+export { default as Depature } from "../image/Store.png";

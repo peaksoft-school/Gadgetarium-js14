@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const axiosInstance = axios.create({
@@ -18,8 +19,8 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const updateConfig = { ...config };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrdWJhbnljaGJla292QGdtYWlsLmNvbSIsImlhdCI6MTczNjU4ODM1OCwiZXhwIjoxNzM4MDI4MzU4fQ.RTUbTJQ8PYeQDuen3apXSC9PB1a7qGMikw3ZAhNeADk";
+    const token = store?.getState()?.auth?.userData.token;
+
     if (token) {
       updateConfig.headers.Authorization = `Bearer ${token}`;
     }
@@ -44,7 +45,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       console.error(
-        `    Ошибка ${status}: ${error.response.data.message || error.message} `
+        `Ошибка ${status}: ${error.response.data.message || error.message}`
       );
     } else {
       console.error("Ошибка сети или сервера");

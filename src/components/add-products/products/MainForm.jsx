@@ -81,6 +81,7 @@ const MainForm = ({ setNewValue }) => {
       productId: Date.now(),
       size: 4,
     };
+    console.log("DATA", newProduct);
 
     dispatch(setMainData(newProduct));
 

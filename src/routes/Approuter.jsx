@@ -5,7 +5,6 @@ import { ProtectedRouter } from "../routes/ProtectedRouter";
 import { adminRoutes } from "./admin-router/adminRoutes";
 import UserLayout from "../layout/user/UserLayout";
 import { userRoutes } from "./userRoutes";
-import Profail from "../pages/user/profail/Profail";
 
 const AppRouter = () => {
   const { userData } = useSelector((state) => state.auth);
@@ -15,7 +14,7 @@ const AppRouter = () => {
       path: "/",
       element: (
         <ProtectedRouter
-          component={<Profail />}
+          component={<UserLayout />}
           role={userData.role}
           roles={["GUEST", "USER"]}
           fallbackPath={"/admin"}

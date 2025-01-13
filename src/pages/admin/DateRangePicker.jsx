@@ -1,5 +1,5 @@
 import React from "react";
-import { Box,  } from "@mui/material";
+import { Box } from "@mui/material";
 import Input from "../../components/UI/Input";
 
 const DateRangePicker = ({ from, before, onFromChange, onBeforeChange }) => {
@@ -25,7 +25,6 @@ const DateRangePicker = ({ from, before, onFromChange, onBeforeChange }) => {
   return (
     <Box display="flex" gap={2} alignItems="center">
       <Input
-        label="После"
         type="date"
         value={from}
         onChange={handleFromChange}
@@ -33,7 +32,6 @@ const DateRangePicker = ({ from, before, onFromChange, onBeforeChange }) => {
         inputProps={{ max: before || undefined }}
       />
       <Input
-        label="До"
         type="date"
         value={before}
         onChange={handleBeforeChange}

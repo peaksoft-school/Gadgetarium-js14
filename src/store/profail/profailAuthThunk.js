@@ -56,7 +56,11 @@ export const updateProfile = createAsyncThunk(
   async (profileData, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.put("/api/profile", profileData);
-      toastifyMessage({ message: "  успешно отправлено" });
+
+      toastifyMessage({
+        message: "Профиль успешно обновлен",
+        status: "success",
+      });
       return data;
     } catch (error) {
       toastifyMessage({ message: "ошибка Личные данные ", status: "error" });

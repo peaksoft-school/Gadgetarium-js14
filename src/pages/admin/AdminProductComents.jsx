@@ -5,7 +5,7 @@ import AdminReview from "../../components/UI/admin/AdminReview";
 import { getAllComments } from "../../store/slice/adminComents/adminCommentsAuth";
 import Infografics from "../../components/UI/Infografics";
 import AdminHeader from "../../components/UI/AdminHeader";
-import CircularProgress from "@mui/material/CircularProgress"; // Импортируем спиннер
+import CircularProgress from "@mui/material/CircularProgress";
 
 const AdminProductComents = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const AdminProductComents = () => {
   if (loading) {
     return (
       <LoaderContainer>
-        <CircularProgress size={50} /> {/* Спиннер вместо текста */}
+        <CircularProgress size={50} />
       </LoaderContainer>
     );
   }

@@ -46,6 +46,10 @@ const Profail = () => {
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const { loading, profileData } = useSelector((state) => state.profile);
   const [showPassword, setShowPassword] = useState(false);
+  const [shoProtocol, setShoProtocol] = useState(false);
+  const [showerer, setShowerer] = useState(false);
+  const [imageLink, setImageLink] = useState(null);
+
   const [newPassword, setNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { link } = profileData || {};
@@ -100,6 +104,8 @@ const Profail = () => {
         const imageUrl = response.link;
         const updatedLink = link || imageUrl;
 
+        setImageLink(imageUrl);
+
         dispatch(updateProfileImage(updatedLink));
       })
       .catch((error) => {
@@ -121,9 +127,14 @@ const Profail = () => {
           <LeftSection>
             <AvatarPlaceholder>
               <img
-                src={profileData?.imageUrl || "/default-avatar.png"}
+                src={profileData?.imageUrl || imageLink}
                 alt="Avatar"
-                style={{ width: "100%", height: "100%" }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
               />
             </AvatarPlaceholder>
             <label htmlFor="upload-image" style={{ cursor: "pointer" }}>

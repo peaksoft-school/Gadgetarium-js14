@@ -24,7 +24,7 @@ const Infografics = () => {
 
   return (
     <StyledWrapperBox>
-      <p style={{ fontFamily: "revert", fontSize: "14px" }}>ИФОГРАФИКА</p>
+      <p style={{ fontFamily: "revert", fontSize: "14px" }}>ИНФОГРАФИКА</p>
 
       <StyledFirstBox>
         <StyledDetailBox>

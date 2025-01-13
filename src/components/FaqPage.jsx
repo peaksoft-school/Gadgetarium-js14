@@ -24,7 +24,7 @@ const WrapperMainBox = styled(Box)(({ theme }) => ({
 
 const FirstBox = styled(Box)`
   font-size: 15px;
-  padding: 60px 120px;
+  padding: 60px;
   span {
     display: inline-block;
     padding-bottom: 30px;

@@ -7,6 +7,7 @@ const App = () => {
     <div>
       <Notification />
       <AppRouter />
+      <Notification />
     </div>
   );
 };
