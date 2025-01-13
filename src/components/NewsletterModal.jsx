@@ -98,6 +98,7 @@ const NewsletterModal = ({ open, onClose, data }) => {
 
       reset();
     }
+    onClose();
   };
 
   const handleDeleteImage = () => {

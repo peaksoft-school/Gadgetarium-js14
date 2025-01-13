@@ -27,7 +27,7 @@ export const deleteProdates = createAsyncThunk(
       return { id: productId };
     } catch (error) {
       toastifyMessage({ message: "не удалось удалить", status: "error" });
-      
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -49,9 +49,12 @@ export const createDiscount = createAsyncThunk(
         dateOfFinish,
         keyWord,
       });
+
       dispatch(getProdates(keyWord));
+      toastifyMessage({ message: "Скидка успешно добавлено!" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "Не удалось добавить скидка" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -112,9 +115,11 @@ export const mailingModal = createAsyncThunk(
         formData,
         {}
       );
+      toastifyMessage({ message: "Успешно отправлено" });
 
       return data;
     } catch (error) {
+      toastifyMessage({ message: "Ошибка отправки", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );

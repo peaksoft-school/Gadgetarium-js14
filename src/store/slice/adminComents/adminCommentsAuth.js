@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../../config/axiosInstance";
+import { toastifyMessage } from "../../../utils/helpers/ToastSetting";
 
 export const getAllComments = createAsyncThunk(
   "getAllComments",
@@ -32,10 +33,13 @@ export const deleteComment = createAsyncThunk(
       });
 
       dispatch(getAllComments("AllReviews"));
+        toastifyMessage({ message: "Успешна удалено" });
 
       return data;
     } catch (error) {
+        toastifyMessage({ message: "Ошибка при удалении " });
       if (error.response) {
+
         return rejectWithValue(error.response.data);
       }
       return rejectWithValue(error.message);
