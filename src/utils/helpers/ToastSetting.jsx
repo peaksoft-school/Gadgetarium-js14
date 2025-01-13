@@ -70,8 +70,13 @@ export const toastifyMessage = ({
         <img
           src={imageUrl}
           alt="Notification"
-          style={{ marginLeft: "8px", width: "24px", height: "24px", cursor: "pointer" }}
-          onClick={() => toast.dismiss()}  
+          style={{
+            marginLeft: "8px",
+            width: "24px",
+            height: "24px",
+            cursor: "pointer",
+          }}
+          onClick={() => toast.dismiss()}
         />
       )}
     </StyledMessage>

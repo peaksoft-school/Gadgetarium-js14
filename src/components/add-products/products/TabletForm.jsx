@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { colorPaletteWithIds } from "..";
+import { colorPalette } from "..";
 import { Box, styled } from "@mui/system";
 import { IconColor } from "../../../assets/icon";
 import DropZone from "./DropZone";
@@ -162,9 +162,9 @@ const TabletForm = ({ setNewValue }) => {
                 gap: 1,
               }}
             >
-              {colorPaletteWithIds.map((item) => (
+              {colorPalette.map((item) => (
                 <Box
-                  key={item.id}
+                  key={crypto.randomUUID()}
                   sx={{
                     width: 24,
                     height: 24,
@@ -173,7 +173,7 @@ const TabletForm = ({ setNewValue }) => {
                     border: "1px solid #ccc",
                   }}
                   onClick={() => {
-                    setValue("color", item.color);
+                    setValue("color", item.value);
                     closePopover();
                   }}
                 />
