@@ -14,10 +14,8 @@ const AdminHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  // const { loading, error } = useSelector((state) => state.productAdmin);
 
   const handlerOpen = () => {
-    // dispatch(mailingModal());
     setIsModalOpen(true);
   };
 

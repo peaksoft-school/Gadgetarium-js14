@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const postFile = createAsyncThunk(
   "postFile",
@@ -34,11 +35,16 @@ export const postAllProducts = createAsyncThunk(
         "/api/admin/products",
         products
       );
+      toastifyMessage({ message: "Товар успешно добавлен" });
 
       navigate("/admin");
 
       return data;
     } catch (error) {
+      toastifyMessage({
+        message: "Ошибка при добавлении товара!",
+        status: "error",
+      });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );

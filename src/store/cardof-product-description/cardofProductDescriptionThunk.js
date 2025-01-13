@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const getLastViews = createAsyncThunk(
   "getViews",
@@ -94,14 +95,17 @@ export const postToFavorites = createAsyncThunk(
     }
   }
 );
- export const postProduct = createAsyncThunk(
+export const postProduct = createAsyncThunk(
   "basket/postProduct",
   async ({ id, quantity }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/api/basket/add", {
-        params: { id, quantity },
-      });
-      tosty
+      const { data } = await axiosInstance.post(
+        `/api/basket/add?id=${id}&quantity=${quantity}`,
+        {
+          params: { id, quantity },
+        }
+      );
+      toastifyMessage({ massage: "Успешно" });
       return data;
     } catch (error) {
       return rejectWithValue(

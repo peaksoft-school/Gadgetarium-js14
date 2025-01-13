@@ -9,13 +9,14 @@ import {
   DiscountClasIcon,
   redHeart,
 } from "../../assets/icon";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   postFavourites,
   postToBasket,
 } from "../../store/product-catalog/productCatalogThunk";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Card = ({
   img,
@@ -27,24 +28,25 @@ const Card = ({
   newPrice,
   price,
   discountClas,
-  subProductId,
   type = "default",
-  recommendet = false,
   disPage = false,
+  recommendet = false,
 }) => {
+  const [addOrDelete, setAddorDelete] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isFavourite, setIsFavourite] = useState(false);
 
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
 
+  const subProductId = "1";
   const handleAddToFavourites = () => {
-    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+    const updatedState = !addOrDelete;
+    setAddorDelete(updatedState);
+    dispatch(postFavourites({ subProductId, addOrDelete: updatedState })); // Отправляем обновленное значение
   };
-
   const handlePostpostToBasket = () => {
-    dispatch(postToBasket({ subProductId }));
+    dispatch(postToBasket({ subProductId, quantity: 1 }));
   };
 
   const discountPrice = Math.round(((newPrice - discount) / newPrice) * 100);
@@ -60,7 +62,7 @@ const Card = ({
           <StyledIcanConteiner>
             <img src={Component} alt="compare" />
             <img
-              src={discountClas ? redHeart : greyHeart}
+              src={addOrDelete === true ? redHeart : greyHeart}
               alt="like"
               onClick={handleAddToFavourites}
             />
@@ -98,44 +100,45 @@ const Card = ({
           <img className="img" src={img} alt={text} />
         </ImageContainer>
 
-        <Box padding={2} sx={{ cursor: "pointer" }}>
-          {type !== "viewed" && (
+        <Box padding={2}>
+          {type !== "compare" && (
             <Availability>{`В наличии (${title})`}</Availability>
           )}
-
           <ProductName onClick={handleNavigate}>{text}</ProductName>
+          {type !== "compare" && (
+            <RatingContainer>
+              <Typography
+                variant="body2"
+                style={{
+                  fontWeight: "bold",
+                  color: "#909cb5",
+                  fontSize: "13px",
+                  marginRight: "8px",
+                }}
+              >
+                Рейтинг
+              </Typography>
 
-          <RatingContainer>
-            <Typography
-              variant="body2"
-              style={{
-                fontWeight: "bold",
-                color: "#909cb5",
-                fontSize: "13px",
-                marginRight: "8px",
-              }}
-            >
-              Рейтинг
-            </Typography>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {[...Array(fullStars)].map((_, i) => (
+                  <StarIcon key={i} style={{ color: "#FFC107" }} />
+                ))}
+                {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
+                {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map(
+                  (_, i) => (
+                    <StarIcon
+                      key={i + fullStars + (hasHalfStar ? 1 : 0)}
+                      style={{ color: "#909cb5" }}
+                    />
+                  )
+                )}
+              </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {[...Array(fullStars)].map((_, i) => (
-                <StarIcon key={i} style={{ color: "#FFC107" }} />
-              ))}
-              {hasHalfStar && <StarHalfIcon style={{ color: "#FFC107" }} />}
-              {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-                <StarIcon
-                  key={i + fullStars + (hasHalfStar ? 1 : 0)}
-                  style={{ color: "#909cb5" }}
-                />
-              ))}
-            </div>
-
-            <Typography variant="body2" color="textSecondary">
-              ({reviews})
-            </Typography>
-          </RatingContainer>
-
+              <Typography variant="body2" color="textSecondary">
+                ({reviews})
+              </Typography>
+            </RatingContainer>
+          )}
           <StyledBoxProject>
             <Box>
               {discount === 0 ? (
@@ -169,9 +172,6 @@ const Card = ({
 export default Card;
 
 const StyledContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  gap: "16px",
   width: "280px",
 });
 
@@ -190,10 +190,11 @@ const DiscountContainer = styled(Box)({
   gap: "5px",
 });
 
-const StyledBoxProject = styled(Box)(() => ({
+const StyledBoxProject = styled(Box)(({ type }) => ({
   display: "flex",
+  flexDirection: type === "compare" ? "column" : "row",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: type === "compare" ? "flex-start" : "center",
   gap: "8px",
 }));
 

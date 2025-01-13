@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ru";
 import theme from "./assets/theme/theme.js";
 import dayjs from "dayjs";
+import Notification from "./components/UI/Toastify.jsx";
 import { Provider } from "react-redux";
 import { injectStore } from "./config/axiosInstance.js";
 import store from "./store/store.js";
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Provider store={store}>
+          <Notification/>
           <App />
         </Provider>
       </LocalizationProvider>

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const getAllCards = createAsyncThunk(
   "getAllCards",
@@ -120,7 +121,10 @@ export default getSubCategories;
 
 export const postFavourites = createAsyncThunk(
   "postFavourit",
-  async ({ subProductId, addOrDelete }, { rejectWithValue, dispatch }) => {
+  async (
+    { subProductId, addOrDelete, navigate },
+    { rejectWithValue, dispatch }
+  ) => {
     try {
       const response = await axiosInstance.post(
         `/api/favourites/${subProductId}?addOrDelete=${addOrDelete}`
@@ -128,8 +132,23 @@ export const postFavourites = createAsyncThunk(
 
       dispatch(getAllCards(1));
 
+      if (addOrDelete === true) {
+        toastifyMessage({ message: "Товар успешно добавлен в избранное!" });
+      } else if (addOrDelete === false) {
+        toastifyMessage({
+          message: "Товар удалён из избранного!",
+          status: "error",
+        });
+      }
+
       return response.data;
     } catch (error) {
+      toastifyMessage(
+        error.response
+          ? error.response.data.message || "Ошибка запроса"
+          : "Что-то пошло не так!"
+      );
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -151,13 +170,17 @@ export const getLastViews = createAsyncThunk(
   }
 );
 
+
+
 export const postToBasket = createAsyncThunk(
   "postToBasket",
-  async ({ subProductId }, { rejectWithValue }) => {
+  async ({ subProductId, quantity }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
-        `/api/basket/move_to_favorites_by_id/${subProductId}`
+        `/api/basket/add?id=${subProductId}&quantity=${quantity}`
       );
+      toastifyMessage({ message: "Товар успешно добавлен в корзину" });
+
       return response.data;
     } catch (error) {
       return rejectWithValue(

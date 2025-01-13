@@ -2,6 +2,7 @@ import { Box, Modal, Typography } from "@mui/material";
 import React from "react";
 import Button from "./UI/Button";
 import { logout } from "../store/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -16,9 +17,11 @@ const style = {
 };
 
 const LogOut = ({ open, onClose }) => {
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
-    handleClose();
     dispatch(logout());
+    onClose();
   };
 
   return (

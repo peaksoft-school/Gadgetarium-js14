@@ -1,4 +1,7 @@
 import AboutStore from "../../components/AboutStore";
+import AccountOrderHistyryMain from "../../components/account-orderHistory/AccountOrderHistoryMain";
+import AccountFavouritesMain from "../../components/account-favourites/AccountFavouritesMain";
+import CompareMainPage from "../../components/compare/CompareMainPage";
 import Contacts from "../../components/Contacts";
 import FaqPage from "../../components/FaqPage";
 import ProductCardDescription from "../../components/product-card-description/ProductCardDescription";
@@ -17,4 +20,7 @@ export const userRoutes = [
   { path: ROUTES.USER.productCard, element: <ProductCardDescription /> },
   { path: ROUTES.USER.favourit, element: <TheChosenOne /> },
   { path: ROUTES.USER.basket, element: <ItemsInCard /> },
+  { path: ROUTES.USER.orderHistory, element: <AccountOrderHistyryMain /> },
+  { path: ROUTES.USER.accountFavourites, element: <AccountFavouritesMain /> },
+  { path: ROUTES.USER.compare, element: <CompareMainPage /> },
 ];
