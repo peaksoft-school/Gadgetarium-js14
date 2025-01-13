@@ -7,6 +7,7 @@ import {
   getLastViews,
   getProducts,
   postToFavorites,
+  postProduct,
 } from "../../store/cardof-product-description/cardofProductDescriptionThunk";
 import { Button, Rating } from "@mui/material";
 import {
@@ -65,12 +66,15 @@ const ProductCardDescription = () => {
     );
   };
 
+  const handleMovetoBasket = () => {
+    dispatch(postProduct({ id: 1, quantity: 1 }));
+  };
+
   useEffect(() => {
     dispatch(getLastViews());
   }, []);
 
   const { elements } = lastViews;
-  console.log("LAST", elements);
 
   const colour = "blue";
   useEffect(() => {
@@ -263,7 +267,11 @@ const ProductCardDescription = () => {
                       alt="Favourit"
                     />
                   </StyledFavouritBox>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    onClick={handleMovetoBasket}
+                    variant="contained"
+                    color="primary"
+                  >
                     <img src={IconBasket} alt="" />В корзину
                   </Button>
                 </StyledButtonsDiv>
@@ -405,7 +413,6 @@ const StyledHr = styled("hr")(() => ({
 
 const StyledH2 = styled("h2")(() => ({
   fontSize: "22px",
-  fontFamily: "serif",
 }));
 
 const StyledFlex = styled(Box)({

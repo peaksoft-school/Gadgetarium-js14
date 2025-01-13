@@ -94,3 +94,19 @@ export const postToFavorites = createAsyncThunk(
     }
   }
 );
+ export const postProduct = createAsyncThunk(
+  "basket/postProduct",
+  async ({ id, quantity }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post("/api/basket/add", {
+        params: { id, quantity },
+      });
+      tosty
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);

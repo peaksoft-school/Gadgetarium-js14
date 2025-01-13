@@ -6,6 +6,7 @@ import {
   getProducts,
   getRating,
   postToFavorites,
+  postProduct,
 } from "./cardofProductDescriptionThunk";
 
 const initialState = {
@@ -17,6 +18,9 @@ const initialState = {
   ratingData: null,
   reviewsData: [],
   pdfFile: null,
+  basket: [],
+  postError: null,
+  success: false,
 };
 
 export const cardofProductDescriptionSlice = createSlice({
@@ -101,6 +105,22 @@ export const cardofProductDescriptionSlice = createSlice({
       .addCase(getPDF.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      });
+    builder
+      .addCase(postProduct.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.postError = null;
+      })
+      .addCase(postProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.success = true;
+        state.basket.push(action.payload);
+      })
+      .addCase(postProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.postError = action.payload;
       });
   },
 });
