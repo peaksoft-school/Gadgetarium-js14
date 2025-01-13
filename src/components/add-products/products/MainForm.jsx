@@ -81,6 +81,7 @@ const MainForm = ({ setNewValue }) => {
       productId: Date.now(),
       size: 4,
     };
+    console.log("DATA", newProduct);
 
     dispatch(setMainData(newProduct));
 
@@ -130,6 +131,7 @@ const MainForm = ({ setNewValue }) => {
                 Выберите категорию
                 {errors.category && <span style={{ color: "red" }}>*</span>}
               </StyledLabel>
+
               <Select
                 {...register("category")}
                 value={watch("category") || ""}
@@ -140,12 +142,17 @@ const MainForm = ({ setNewValue }) => {
                   },
                 }}
               >
-                {categories.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(categories) && categories.length > 0 ? (
+                  categories.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>Категории отсутствуют</MenuItem>
+                )}
               </Select>
+
               {errors.category && (
                 <p style={{ color: "red" }}>{errors.category.message}</p>
               )}

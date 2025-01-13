@@ -42,4 +42,5 @@ const ButtonContainer = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   marginTop: "20px",
+  gap: "25px",
 });

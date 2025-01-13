@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ru";
 import theme from "./assets/theme/theme.js";
 import dayjs from "dayjs";
+import Notification from "./components/UI/Toastify.jsx";
 import { Provider } from "react-redux";
 import { injectStore } from "./config/axiosInstance.js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -27,6 +28,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Elements stripe={stripePromise}>
             <App />
           </Elements>
+          <Notification />
+          <App />
         </Provider>
       </LocalizationProvider>
     </ThemeProvider>

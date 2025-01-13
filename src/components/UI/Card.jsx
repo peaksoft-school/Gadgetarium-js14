@@ -9,12 +9,14 @@ import {
   DiscountClasIcon,
   redHeart,
 } from "../../assets/icon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   postFavourites,
   postToBasket,
 } from "../../store/product-catalog/productCatalogThunk";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Card = ({
   img,
@@ -26,19 +28,36 @@ const Card = ({
   newPrice,
   price,
   discountClas,
-  subProductId,
   type = "default",
-  recommendet = false,
   disPage = false,
+  recommendet = false,
 }) => {
+  const [addOrDelete, setAddorDelete] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { userData } = useSelector((state) => state.auth);
 
   const fullStars = Math.floor(reiting);
   const hasHalfStar = reiting % 1 !== 0;
 
+  const subProductId = "1";
+
+  // const handleAddToFavourites = () => {
+  //   const updatedState = !addOrDelete;
+  //   setAddorDelete(updatedState);
+  //   dispatch(postFavourites({ subProductId, addOrDelete: updatedState })); // Отправляем обновленное значение
+  // };
+
   const handleAddToFavourites = () => {
-    dispatch(postFavourites({ subProductId, addOrDelete: !discountClas }));
+    if (userData.token) {
+      const updatedState = !addOrDelete;
+      setAddorDelete(updatedState);
+
+      dispatch(postFavourites({ subProductId, addOrDelete: updatedState })); // Отправляем обновленное значение
+    } else {
+      toast.error("Для добавления в избранное необходимо войти в аккаунт.");
+    }
   };
 
   const handlePostpostToBasket = () => {
@@ -58,7 +77,7 @@ const Card = ({
           <StyledIcanConteiner>
             <img src={Component} alt="compare" />
             <img
-              src={discountClas ? redHeart : greyHeart}
+              src={addOrDelete === true ? redHeart : greyHeart}
               alt="like"
               onClick={handleAddToFavourites}
             />
@@ -168,9 +187,6 @@ const Card = ({
 export default Card;
 
 const StyledContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "center",
-  gap: "16px",
   width: "280px",
 });
 

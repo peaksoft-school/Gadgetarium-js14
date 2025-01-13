@@ -66,12 +66,11 @@ const TheChosenOne = () => {
                   <Card
                     key={item.id}
                     id={item.id}
-                    title={item.title}
+                    title={item.productInfo}
                     price={item.price}
-                    img={item.img}
-                    discount={item.discount}
-                    newPrice={item.newPrice}
-                    disPage={true}
+                    img={item.image}
+                    newPrice={item.discount}
+                    reiting={item.rating}
                   />
                 ))
               ) : (

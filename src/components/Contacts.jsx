@@ -16,7 +16,7 @@ const adress = [
 const Contacts = () => {
   return (
     <WrapperMainBox>
-      <Box sx={{ padding: "60px 120px" }}>
+      <Box sx={{ padding: "60px" }}>
         {adress[0].main && (
           <FirstBox>
             <span>{adress[0].main}</span>
@@ -155,8 +155,9 @@ const StyledAdress = styled(Box)(() => ({
 
 const SecondBox = styled(Box)(() => ({
   display: "flex",
-  justifyContent: "space-around",
+  justifyContent: "space-between",
   gap: "12rem",
+  padding: "0px 60px",
 }));
 
 const StyledForm = styled(Box)(() => ({

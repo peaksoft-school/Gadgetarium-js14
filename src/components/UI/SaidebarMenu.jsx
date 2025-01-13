@@ -20,19 +20,14 @@ import {
 import styled from "@emotion/styled";
 import { ROUTES } from "../../utils/routes";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Arr = [
   {
     id: 1,
     name: "Смартфоны",
     path: "user/catalog/1",
-    // title: [
-    //   { name: "Apple", navigate: "" },
-    //   { name: "Samsung", navigate: "" },
-    //   { name: "Acer", navigate: "" },
-    //   { name: "Asus", navigate: "" },
-    //   { name: "Xiaomi", navigate: "" },
-    // ],
     img: Telefon,
   },
 
@@ -40,20 +35,12 @@ const Arr = [
     id: 2,
     name: "Планшет",
     path: "user/catalog/2",
-    // title: [
-    //   { name: "Apple", navigate: "" },
-    //   { name: "Samsung", navigate: "" },
-    //   { name: "Acer", navigate: "" },
-    //   { name: "Asus", navigate: "" },
-    //   { name: "Xiaomi", navigate: "" },
-    // ],
     img: Monitor,
   },
   {
     id: 3,
     name: "Ноутбук",
     path: "user/catalog/3",
-    // title: [
     //   { name: "Apple", navigate: "" },
     //   { name: "Samsung", navigate: "" },
     //   { name: "Acer", navigate: "" },
@@ -66,13 +53,6 @@ const Arr = [
     id: 4,
     name: "Смарт Часы",
     path: "user/catalog/4",
-    // title: [
-    //   { name: "Apple", navigate: "" },
-    //   { name: "Samsung", navigate: "" },
-    //   { name: "Acer", navigate: "" },
-    //   { name: "Asus", navigate: "" },
-    //   { name: "Xiaomi", navigate: "" },
-    // ],
     img: Headphones,
     icon: Strelca,
   },
@@ -81,9 +61,14 @@ const Arr = [
 const SidebarMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
+  const { userData } = useSelector((state) => state.auth);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    if (userData.token) {
+      setIsMenuOpen(!isMenuOpen);
+    } else {
+      toast.error("Для перехода в каталог войдите в аккаунт.");
+    }
   };
 
   const handleMouseEnter = (item) => {
