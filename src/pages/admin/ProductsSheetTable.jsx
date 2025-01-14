@@ -337,7 +337,7 @@ const StyledInputDate = styled(Box)(() => ({
 
 const StyledContainer = styled("div")({
   boxSizing: "border-box",
-  margin: "0 auto",
+  // margin: "0 auto",
   width: "100%",
   padding: "15px 30px",
   gap: "20px",

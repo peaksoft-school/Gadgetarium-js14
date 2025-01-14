@@ -64,7 +64,7 @@ const MainPage = () => {
                 subProductId,
               } = recommend;
               return (
-                <Box key={index} sx={{ width: "280px" }}>
+                <Box key={index} sx={{ width: "280px",  gap:'50px'}}>
                   <Card
                     img={image}
                     text={productInfo}
@@ -198,7 +198,7 @@ const WrapperBox = styled(Box)(({ theme }) => ({
 const StyledBox = styled(Box)(() => ({
   display: "flex",
   flexWrap: "wrap",
-  gap: "5px",
+  gap: "60px",
   justifyContent: "center",
   overflow: "hidden",
 }));

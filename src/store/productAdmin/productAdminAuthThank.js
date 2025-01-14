@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const getProdates = createAsyncThunk(
   "getProdates",
@@ -22,8 +23,11 @@ export const deleteProdates = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       await axiosInstance.delete(`/api/admin/products/${productId}`);
+      toastifyMessage({ message: "Успешна удалено" });
       return { id: productId };
     } catch (error) {
+      toastifyMessage({ message: "не удалось удалить", status: "error" });
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -45,9 +49,12 @@ export const createDiscount = createAsyncThunk(
         dateOfFinish,
         keyWord,
       });
+
       dispatch(getProdates(keyWord));
+      toastifyMessage({ message: "Скидка успешно добавлено!" });
       return data;
     } catch (error) {
+      toastifyMessage({ message: "Не удалось добавить скидка" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -86,8 +93,12 @@ export const saveBanner = createAsyncThunk(
       const { data } = await axiosInstance.post("/api/banners", {
         bannerList,
       });
+      toastifyMessage({ message: "Успешна загрузили " });
+
       return data;
     } catch (error) {
+      toastifyMessage({ message: "Ошыпка загрузки", status: "error" });
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -104,9 +115,11 @@ export const mailingModal = createAsyncThunk(
         formData,
         {}
       );
+      toastifyMessage({ message: "Успешно отправлено" });
 
       return data;
     } catch (error) {
+      toastifyMessage({ message: "Ошибка отправки", status: "error" });
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
