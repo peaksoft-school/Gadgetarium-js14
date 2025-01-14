@@ -36,7 +36,7 @@ const OrdersAdmin = () => {
     "Доставлен",
     "Отменить",
   ];
-  const contentData = [
+  const NewcontentData = [
     {
       id: 1,
       fullName: "Азимбек Абдивалиев",
@@ -49,7 +49,7 @@ const OrdersAdmin = () => {
     },
     {
       id: 2,
-      fullName: "Бека Ташкенбаев",
+      fullName: "Сыймык Бейшекеев",
       orderNumber: "2",
       date: "2023-02-14",
       quantity: 2,
@@ -59,7 +59,7 @@ const OrdersAdmin = () => {
     },
     {
       id: 3,
-      fullName: "Джулия Курманова",
+      fullName: "Амантур Исмаилов",
       orderNumber: "3",
       date: "2023-03-25",
       totalPrice: 150000,
@@ -68,7 +68,7 @@ const OrdersAdmin = () => {
       status: "ONTHEWAY",
     },
     {
-      id: 3,
+      id: 4,
       fullName: "Марлен Марленов",
       orderNumber: "3",
       date: "2025-01014",
@@ -76,6 +76,16 @@ const OrdersAdmin = () => {
       totalPrice: 111000,
       deliveryType: "Доставка",
       status: "DELIVERED",
+    },
+    {
+      id: 5,
+      fullName: "Кутман",
+      orderNumber: "5",
+      date: "2023-03-25",
+      totalPrice: 200030,
+      quantity: 2,
+      deliveryType: "Самовывоз",
+      status: "PROCESSING",
     },
   ];
 
@@ -88,7 +98,7 @@ const OrdersAdmin = () => {
   const [from, setFrom] = useState("");
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [openBannerModal, setOpenBannerModal] = useState(false);
-  const [orders, setOrders] = useState(contentData);
+  const [orders, setOrders] = useState(NewcontentData);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const navigate = useNavigate();
@@ -101,7 +111,7 @@ const OrdersAdmin = () => {
   const { isLoading } = useSelector((state) => state.orderAdmin);
 
   useEffect(() => {
-    const filteredOrders = contentData.filter((product) => {
+    const filteredOrders = NewcontentData.filter((product) => {
       const matchesSearchTerm =
         product.orderNumber.includes(debouncedSearchTerm) ||
         product.fullName
