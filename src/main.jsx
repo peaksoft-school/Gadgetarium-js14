@@ -11,6 +11,10 @@ import dayjs from "dayjs";
 import Notification from "./components/UI/Toastify.jsx";
 import { Provider } from "react-redux";
 import { injectStore } from "./config/axiosInstance.js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe("ВАШ_PUBLIC_KEY");
 import store from "./store/store.js";
 
 injectStore(store);
@@ -21,7 +25,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Provider store={store}>
-          <Notification/>
+          <Elements stripe={stripePromise}>
+            <App />
+          </Elements>
+          <Notification />
           <App />
         </Provider>
       </LocalizationProvider>

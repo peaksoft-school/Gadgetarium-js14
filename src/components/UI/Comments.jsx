@@ -15,6 +15,7 @@ import { Man } from "../../assets/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../../store/innerPageCardAmin/innerPageCardThunk";
 
+
 const CommentList = () => {
   const dispatch = useDispatch();
   const { reviewsData, reviewsLoading, reviewsError } = useSelector(

@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   items: [],
+  combinedItems: [],
   error: null,
   loading: false,
 };

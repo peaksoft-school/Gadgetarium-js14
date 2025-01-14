@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../config/axiosInstance";
+import { toastifyMessage } from "../../utils/helpers/ToastSetting";
 
 export const signInRequest = createAsyncThunk(
   "auth/signIn",
@@ -11,8 +12,14 @@ export const signInRequest = createAsyncThunk(
         onClose();
       }
       localStorage.setItem("Gadgetarium", JSON.stringify(response));
+      toastifyMessage({ message: "Вы успешно авторизовались!" });
       return response;
     } catch (error) {
+      toastifyMessage(
+        error.response
+          ? error.response.data.message || "Ошибка запроса"
+          : "Что-то пошло не так!"
+      );
       return rejectWithValue(
         error.response?.data?.message || "Something went wrong during sign in"
       );
@@ -30,8 +37,14 @@ export const signUpRequest = createAsyncThunk(
         onClose();
       }
       localStorage.setItem("Gadgetarium", JSON.stringify(response));
+      toastifyMessage({ message: "Вы успешно зарегистрировались" });
       return response;
     } catch (error) {
+      toastifyMessage(
+        error.response
+          ? error.response.data.message || "Ошибка запроса"
+          : "Что-то пошло не так!"
+      );
       return rejectWithValue(
         error.response?.data?.message || "Something went wrong during sign up"
       );
@@ -41,6 +54,7 @@ export const signUpRequest = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logOut", () => {
   localStorage.removeItem("Gadgetarium");
+  toastifyMessage({ message: "Вы успешно вышли из аккаунта!" });
   return {
     name: "",
     email: "",

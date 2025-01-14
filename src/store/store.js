@@ -6,6 +6,7 @@ import { productSlice } from "./admin-addproduct/productsSlice";
 import { productAdminSlice } from "./productAdmin/productAdminSlice";
 import { infografictSlice } from "./productAdmin/infografictSlice";
 import cardSlice from "./cardProducts/cardSlice";
+import { checkoutPaymentSlice } from "./checkout-payment/checkoutPaymentSlice";
 import { orderAdminSlice } from "./ordersAdmin/orderAdminSlice";
 import { ordersDataSlice } from "./ordersAdmin/ordersDataSlice";
 import cardofProductDescriptionSlice from "./cardof-product-description/cardofProductDescriptionSlice";
@@ -27,6 +28,7 @@ const store = configureStore({
     [productAdminSlice.name]: productAdminSlice.reducer,
     [infografictSlice.name]: infografictSlice.reducer,
     [cardSlice.name]: cardSlice.reducer,
+    [checkoutPaymentSlice.name]: checkoutPaymentSlice.reducer,
     [orderAdminSlice.name]: orderAdminSlice.reducer,
     [ordersDataSlice.name]: ordersDataSlice.reducer,
     [orderHistorySlice.name]: orderHistorySlice.reducer,
