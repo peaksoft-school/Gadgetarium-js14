@@ -110,7 +110,9 @@ const StyledHeader = styled("div")(({ theme }) => ({
   display: "flex",
   padding: "10px",
   alignItems: "center",
-  justifyContent: "space-around",
+  justifyContent: "space-between",
+  paddingLeft: "30px",
+  paddingRight: "30px",
 }));
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
