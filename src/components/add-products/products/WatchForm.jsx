@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { colorPalette, colorPaletteWithIds } from "..";
+import { colorPalette } from "..";
 import { Box, styled, width } from "@mui/system";
 import { IconColor } from "../../../assets/icon";
 import DropZone from "./DropZone";

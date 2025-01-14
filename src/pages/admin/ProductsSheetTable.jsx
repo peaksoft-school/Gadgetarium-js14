@@ -57,6 +57,8 @@ const ProductsSheetTable = () => {
   };
 
   const handleFilterChange = (newFilter) => {
+    console.log(newFilter);
+
     setFilter(newFilter);
   };
 
@@ -106,7 +108,7 @@ const ProductsSheetTable = () => {
   const toggleDiscountModal = () => setOpenModalScitca((prev) => !prev);
 
   const navigateToDetail = (id) => {
-    navigate(`/admin/${id}`);
+    navigate(`/admin/products/${id}`);
   };
 
   const columns = [
